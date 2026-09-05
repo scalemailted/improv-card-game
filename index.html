@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#121725">
-  <meta name="description" content="Two Secrets is a private prompt deck for two-person improv scenes.">
+  <meta name="description" content="A private Stance-and-Drive prompt deck for two-person improv scenes.">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Two Secrets">
+  <meta name="apple-mobile-web-app-title" content="Improv Cards">
   <title>Two Secrets — Improv Card Game</title>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
@@ -20,91 +20,95 @@
 
   <div class="app-shell">
     <header class="app-header">
-      <div class="brand" aria-label="Two Secrets">
-        <span class="brand-mark" aria-hidden="true">
-          <span>2</span>
-        </span>
-        <span class="brand-copy">
-          <strong>Two Secrets</strong>
-          <small>Hidden prompts. Shared scene.</small>
-        </span>
+      <span class="brand-mark" aria-label="Two Secrets improv card game">
+        <span>2</span>
+      </span>
+
+      <div class="header-actions">
+        <button class="header-button" id="menuButton" type="button" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6M9 12h10"/></svg>
+          <span>Main menu</span>
+        </button>
+        <button class="icon-button" id="openRulesButton" type="button" aria-label="Open rules and settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 17.25h.01M9.7 9.1a2.45 2.45 0 1 1 3.32 2.29c-.74.3-1.02.74-1.02 1.61v.25M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/>
+          </svg>
+        </button>
       </div>
-      <button class="icon-button" id="openRulesButton" type="button" aria-label="Open rules and settings">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 17.25h.01M9.7 9.1a2.45 2.45 0 1 1 3.32 2.29c-.74.3-1.02.74-1.02 1.61v.25M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/>
-        </svg>
-      </button>
     </header>
 
     <main id="mainContent">
-      <section class="intro-panel" aria-labelledby="screenTitle">
+      <section class="screen menu-screen" id="menuScreen" aria-labelledby="menuTitle">
+        <h1 class="sr-only" id="menuTitle">Improv card game main menu</h1>
+
+        <div class="menu-deck-art" aria-hidden="true">
+          <span class="menu-card menu-card-stance">S</span>
+          <span class="menu-card menu-card-drive">D</span>
+        </div>
+
         <div class="scene-meta">
-          <span class="scene-pill" id="scenePill">Scene 1</span>
+          <span class="scene-pill scene-number">Scene 1</span>
           <span class="local-pill"><span class="status-dot" aria-hidden="true"></span>Private local deck</span>
         </div>
-        <h1 id="screenTitle">Your secret scene foundation</h1>
-        <p id="screenMessage">Draw one Stance and one Drive. Your scene partner draws independently on their own phone.</p>
-      </section>
 
-      <section class="cards-grid" id="cardsGrid" aria-label="Your private prompt cards">
-        <button class="prompt-card stance-card is-empty" id="stanceCard" type="button" aria-label="Stance card. Draw cards to begin." disabled>
-          <span class="card-back" aria-hidden="true">
-            <span class="back-kicker">STANCE</span>
-            <span class="back-symbol">S</span>
-            <span class="back-instruction">Your point of view</span>
-          </span>
-          <span class="card-front" aria-hidden="true">
-            <span class="card-topline">
-              <span class="card-type">STANCE</span>
-              <span class="card-id" id="stanceId"></span>
-            </span>
-            <span class="card-category" id="stanceCategory"></span>
-            <strong class="card-title" id="stanceTitle"></strong>
-            <span class="card-instruction" id="stanceInstruction"></span>
-            <span class="card-role"><span aria-hidden="true">↗</span> Opening move</span>
-          </span>
-        </button>
+        <p class="menu-message" id="menuMessage">Each player uses their own phone. Draw one private Stance and one private Drive for the scene.</p>
 
-        <button class="prompt-card drive-card is-empty" id="driveCard" type="button" aria-label="Drive card. Draw cards to begin." disabled>
-          <span class="card-back" aria-hidden="true">
-            <span class="back-kicker">DRIVE</span>
-            <span class="back-symbol">D</span>
-            <span class="back-instruction">What pulls you forward</span>
-          </span>
-          <span class="card-front" aria-hidden="true">
-            <span class="card-topline">
-              <span class="card-type">DRIVE</span>
-              <span class="card-id" id="driveId"></span>
-            </span>
-            <span class="card-category" id="driveCategory"></span>
-            <strong class="card-title" id="driveTitle"></strong>
-            <span class="card-instruction" id="driveInstruction"></span>
-            <span class="card-role"><span aria-hidden="true">↗</span> Slow burn</span>
-          </span>
-        </button>
-      </section>
-
-      <p class="privacy-note" id="privacyNote">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2M6 10h12v10H6V10Zm6 4v2"/></svg>
-        Your cards stay face-down until you tap them.
-      </p>
-
-      <section class="primary-actions" aria-label="Card actions">
-        <button class="primary-button" id="drawButton" type="button">
+        <button class="primary-button draw-button" id="drawButton" type="button">
           <span class="button-icon" aria-hidden="true">✦</span>
-          <span>Draw two secret cards</span>
+          <span id="drawButtonLabel">Draw my cards</span>
         </button>
 
-        <div class="active-actions is-hidden" id="activeActions">
-          <button class="primary-button" id="completeButton" type="button">
-            <span class="button-icon" aria-hidden="true">✓</span>
-            <span>Scene complete</span>
-          </button>
-          <div class="secondary-actions">
-            <button class="secondary-button" id="hideButton" type="button">Hide both</button>
-            <button class="text-button" id="vetoButton" type="button">Veto &amp; redraw</button>
-          </div>
+        <p class="menu-footnote">Both cards appear immediately on this private screen.</p>
+      </section>
+
+      <section class="screen cards-screen" id="cardsScreen" aria-labelledby="cardsTitle" hidden>
+        <h1 class="sr-only" id="cardsTitle">Your private improv cards</h1>
+
+        <div class="scene-meta cards-meta">
+          <span class="scene-pill scene-number">Scene 1</span>
+          <span class="local-pill"><span class="status-dot" aria-hidden="true"></span>Private local deck</span>
         </div>
+
+        <section class="cards-grid" aria-label="Your private prompt cards">
+          <button class="prompt-card stance-card" id="stanceCard" type="button" data-card-type="stance">
+            <span class="card-front">
+              <span class="card-topline">
+                <span class="card-type">STANCE</span>
+                <span class="card-id" id="stanceId"></span>
+              </span>
+              <span class="card-category" id="stanceCategory"></span>
+              <strong class="card-title" id="stanceTitle"></strong>
+              <span class="card-instruction" id="stanceInstruction"></span>
+              <span class="card-bottomline">
+                <span class="card-role"><span aria-hidden="true">↗</span> Opening move</span>
+                <span class="card-decision" id="stanceDecision"><span class="decision-icon" aria-hidden="true">⋯</span> Tap for options</span>
+              </span>
+            </span>
+          </button>
+
+          <button class="prompt-card drive-card" id="driveCard" type="button" data-card-type="drive">
+            <span class="card-front">
+              <span class="card-topline">
+                <span class="card-type">DRIVE</span>
+                <span class="card-id" id="driveId"></span>
+              </span>
+              <span class="card-category" id="driveCategory"></span>
+              <strong class="card-title" id="driveTitle"></strong>
+              <span class="card-instruction" id="driveInstruction"></span>
+              <span class="card-bottomline">
+                <span class="card-role"><span aria-hidden="true">↗</span> Slow burn</span>
+                <span class="card-decision" id="driveDecision"><span class="decision-icon" aria-hidden="true">⋯</span> Tap for options</span>
+              </span>
+            </span>
+          </button>
+        </section>
+
+        <p class="card-options-note">Tap either card to keep it or veto only that card.</p>
+
+        <button class="primary-button complete-button" id="completeButton" type="button">
+          <span class="button-icon" aria-hidden="true">✓</span>
+          <span>Scene complete</span>
+        </button>
       </section>
 
       <section class="deck-status" aria-label="Deck status">
@@ -124,10 +128,35 @@
     </main>
 
     <footer class="app-footer">
-      <span>Prototype deck v0.1</span>
+      <span>Prototype deck v0.2</span>
       <button class="footer-button" id="newDeckButton" type="button">New independent deck</button>
     </footer>
   </div>
+
+  <dialog class="choice-modal" id="cardDialog" aria-labelledby="cardDialogTitle">
+    <div class="choice-card" id="cardDialogPanel">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow" id="cardDialogType">CARD OPTIONS</span>
+          <h2 id="cardDialogTitle">Keep or veto?</h2>
+        </div>
+        <button class="icon-button modal-close" id="closeCardDialogButton" type="button" aria-label="Close card options">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+
+      <p class="choice-instruction" id="cardDialogInstruction"></p>
+      <p class="choice-explainer">Keep this prompt for the scene, or return it to its deck and draw a replacement. Your other card will not change.</p>
+
+      <div class="choice-actions">
+        <button class="primary-button" id="keepCardButton" type="button">
+          <span class="button-icon" aria-hidden="true">✓</span>
+          <span>Keep this card</span>
+        </button>
+        <button class="danger-button" id="vetoCardButton" type="button">Veto &amp; draw another</button>
+      </div>
+    </div>
+  </dialog>
 
   <dialog class="modal" id="rulesDialog" aria-labelledby="rulesTitle">
     <div class="modal-card">
@@ -142,10 +171,10 @@
       </div>
 
       <ol class="rules-list">
-        <li><span>1</span><p>Each improver opens the app on their own phone and draws a private <strong>Stance</strong> and <strong>Drive</strong>.</p></li>
-        <li><span>2</span><p>Use the Stance as your opening point of view. Let the Drive emerge as a slow burn.</p></li>
-        <li><span>3</span><p>Never quote or announce a card. Make it readable through choices, behavior, and reactions.</p></li>
-        <li><span>4</span><p>After the scene, guess what the other character believed or wanted—then reveal the cards.</p></li>
+        <li><span>1</span><p>Each improver opens the app on their own phone and taps <strong>Draw my cards</strong>.</p></li>
+        <li><span>2</span><p>Use the <strong>Stance</strong> as your opening point of view. Let the <strong>Drive</strong> emerge as a slow burn.</p></li>
+        <li><span>3</span><p>Tap either card to keep it or veto only that card. A vetoed card returns to its deck for a possible later draw.</p></li>
+        <li><span>4</span><p>Never quote or announce a card. Make it readable through choices, behavior, and reactions.</p></li>
       </ol>
 
       <div class="rule-callout">
@@ -183,7 +212,7 @@
   </dialog>
 
   <noscript>
-    <div class="noscript">Two Secrets needs JavaScript enabled to shuffle and store your private deck.</div>
+    <div class="noscript">This improv card game needs JavaScript enabled to shuffle and store your private deck.</div>
   </noscript>
 
   <script src="./cards.js"></script>

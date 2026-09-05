@@ -8,8 +8,22 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
   "use strict";
 
-  const STATE_VERSION = 1;
+  const STATE_VERSION = 2;
   const SAFE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const TYPE_CONFIG = Object.freeze({
+    stance: Object.freeze({
+      cardsKey: "stances",
+      queueKey: "stanceQueue",
+      currentKey: "stanceId",
+      keptKey: "stanceKept"
+    }),
+    drive: Object.freeze({
+      cardsKey: "drives",
+      queueKey: "driveQueue",
+      currentKey: "driveId",
+      keptKey: "driveKept"
+    })
+  });
 
   function secureRandom() {
     if (typeof crypto !== "undefined" && typeof crypto.getRandomValues === "function") {
@@ -41,9 +55,17 @@
     if (!cards || !Array.isArray(cards.stances) || !Array.isArray(cards.drives)) {
       throw new TypeError("Card data must include stances and drives arrays.");
     }
-    if (cards.stances.length === 0 || cards.drives.length === 0) {
-      throw new RangeError("Both decks must contain at least one card.");
+    if (cards.stances.length < 2 || cards.drives.length < 2) {
+      throw new RangeError("Both decks must contain at least two cards.");
     }
+  }
+
+  function allIds(cards, type) {
+    const config = TYPE_CONFIG[type];
+    if (!config) {
+      throw new TypeError(`Unknown card type: ${type}`);
+    }
+    return cards[config.cardsKey].map((card) => card.id);
   }
 
   function createState(cards, instanceId = createDeckId(), randomFn = secureRandom) {
@@ -51,57 +73,83 @@
     return {
       version: STATE_VERSION,
       instanceId,
-      stanceOrder: shuffle(cards.stances.map((card) => card.id), randomFn),
-      driveOrder: shuffle(cards.drives.map((card) => card.id), randomFn),
-      stancePosition: 0,
-      drivePosition: 0,
+      stanceQueue: shuffle(allIds(cards, "stance"), randomFn),
+      driveQueue: shuffle(allIds(cards, "drive"), randomFn),
       current: null,
       scenesCompleted: 0,
-      vetoes: 0,
-      cycle: 1,
+      vetoes: { stance: 0, drive: 0 },
+      cycles: { stance: 1, drive: 1 },
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
+  }
+
+  function isUniqueValidQueue(queue, validIds) {
+    return Array.isArray(queue)
+      && queue.every((id) => validIds.has(id))
+      && new Set(queue).size === queue.length;
+  }
+
+  function isCurrentUsable(current, stanceIds, driveIds, state) {
+    if (current === null) {
+      return true;
+    }
+    if (!current || typeof current !== "object") {
+      return false;
+    }
+    return stanceIds.has(current.stanceId)
+      && driveIds.has(current.driveId)
+      && typeof current.stanceKept === "boolean"
+      && typeof current.driveKept === "boolean"
+      && !state.stanceQueue.includes(current.stanceId)
+      && !state.driveQueue.includes(current.driveId);
   }
 
   function isStateUsable(state, cards, expectedId) {
     if (!state || state.version !== STATE_VERSION || state.instanceId !== expectedId) {
       return false;
     }
+
     try {
       validateCards(cards);
     } catch (_error) {
       return false;
     }
 
-    const stanceIds = new Set(cards.stances.map((card) => card.id));
-    const driveIds = new Set(cards.drives.map((card) => card.id));
-    const validStanceOrder = Array.isArray(state.stanceOrder)
-      && state.stanceOrder.length === stanceIds.size
-      && state.stanceOrder.every((id) => stanceIds.has(id));
-    const validDriveOrder = Array.isArray(state.driveOrder)
-      && state.driveOrder.length === driveIds.size
-      && state.driveOrder.every((id) => driveIds.has(id));
+    const stanceIds = new Set(allIds(cards, "stance"));
+    const driveIds = new Set(allIds(cards, "drive"));
+    const validCounters = Number.isInteger(state.scenesCompleted)
+      && state.scenesCompleted >= 0
+      && state.vetoes
+      && Number.isInteger(state.vetoes.stance)
+      && state.vetoes.stance >= 0
+      && Number.isInteger(state.vetoes.drive)
+      && state.vetoes.drive >= 0
+      && state.cycles
+      && Number.isInteger(state.cycles.stance)
+      && state.cycles.stance >= 1
+      && Number.isInteger(state.cycles.drive)
+      && state.cycles.drive >= 1;
 
-    return validStanceOrder
-      && validDriveOrder
-      && Number.isInteger(state.stancePosition)
-      && Number.isInteger(state.drivePosition)
-      && state.stancePosition >= 0
-      && state.drivePosition >= 0;
+    return validCounters
+      && isUniqueValidQueue(state.stanceQueue, stanceIds)
+      && isUniqueValidQueue(state.driveQueue, driveIds)
+      && isCurrentUsable(state.current, stanceIds, driveIds, state);
   }
 
-  function ensureCardsAvailable(state, cards, randomFn = secureRandom) {
-    const stanceEmpty = state.stancePosition >= state.stanceOrder.length;
-    const driveEmpty = state.drivePosition >= state.driveOrder.length;
+  function refillQueue(state, cards, type, randomFn = secureRandom, excludedId = null) {
+    const config = TYPE_CONFIG[type];
+    const ids = allIds(cards, type).filter((id) => id !== excludedId);
+    state[config.queueKey] = shuffle(ids, randomFn);
+    state.cycles[type] += 1;
+  }
 
-    if (stanceEmpty || driveEmpty) {
-      state.stanceOrder = shuffle(cards.stances.map((card) => card.id), randomFn);
-      state.driveOrder = shuffle(cards.drives.map((card) => card.id), randomFn);
-      state.stancePosition = 0;
-      state.drivePosition = 0;
-      state.cycle += 1;
+  function drawOne(state, cards, type, randomFn = secureRandom) {
+    const config = TYPE_CONFIG[type];
+    if (state[config.queueKey].length === 0) {
+      refillQueue(state, cards, type, randomFn);
     }
+    return state[config.queueKey].shift();
   }
 
   function drawPair(state, cards, randomFn = secureRandom) {
@@ -110,17 +158,63 @@
       return state.current;
     }
 
-    ensureCardsAvailable(state, cards, randomFn);
-
     state.current = {
-      stanceId: state.stanceOrder[state.stancePosition],
-      driveId: state.driveOrder[state.drivePosition],
+      stanceId: drawOne(state, cards, "stance", randomFn),
+      driveId: drawOne(state, cards, "drive", randomFn),
+      stanceKept: false,
+      driveKept: false,
       drawnAt: new Date().toISOString()
     };
-    state.stancePosition += 1;
-    state.drivePosition += 1;
     state.updatedAt = new Date().toISOString();
     return state.current;
+  }
+
+  function keepCard(state, type) {
+    const config = TYPE_CONFIG[type];
+    if (!config || !state.current) {
+      return false;
+    }
+    state.current[config.keptKey] = true;
+    state.updatedAt = new Date().toISOString();
+    return true;
+  }
+
+  function insertAtRandomPosition(queue, id, randomFn = secureRandom) {
+    const index = Math.floor(randomFn() * (queue.length + 1));
+    queue.splice(index, 0, id);
+    return index;
+  }
+
+  function vetoCard(state, cards, type, randomFn = secureRandom) {
+    validateCards(cards);
+    const config = TYPE_CONFIG[type];
+    if (!config || !state.current) {
+      return null;
+    }
+
+    const rejectedId = state.current[config.currentKey];
+
+    // When the unused queue is empty, begin a new cycle without the rejected
+    // card so the replacement is guaranteed to be different.
+    if (state[config.queueKey].length === 0) {
+      refillQueue(state, cards, type, randomFn, rejectedId);
+    }
+
+    const replacementId = state[config.queueKey].shift();
+    insertAtRandomPosition(state[config.queueKey], rejectedId, randomFn);
+
+    state.current[config.currentKey] = replacementId;
+    state.current[config.keptKey] = false;
+    state.current.replacedAt = new Date().toISOString();
+    state.vetoes[type] += 1;
+    state.updatedAt = new Date().toISOString();
+
+    return {
+      type,
+      rejectedId,
+      replacementId,
+      current: state.current
+    };
   }
 
   function completeScene(state) {
@@ -133,24 +227,19 @@
     return true;
   }
 
-  function vetoAndRedraw(state, cards, randomFn = secureRandom) {
-    if (state.current) {
-      state.current = null;
-      state.vetoes += 1;
-    }
-    return drawPair(state, cards, randomFn);
-  }
-
   function remaining(state) {
     return {
-      stances: Math.max(0, state.stanceOrder.length - state.stancePosition),
-      drives: Math.max(0, state.driveOrder.length - state.drivePosition)
+      stances: state.stanceQueue.length,
+      drives: state.driveQueue.length
     };
   }
 
   function findCard(cards, type, id) {
-    const list = type === "stance" ? cards.stances : cards.drives;
-    return list.find((card) => card.id === id) || null;
+    const config = TYPE_CONFIG[type];
+    if (!config) {
+      return null;
+    }
+    return cards[config.cardsKey].find((card) => card.id === id) || null;
   }
 
   return Object.freeze({
@@ -160,8 +249,9 @@
     createState,
     isStateUsable,
     drawPair,
+    keepCard,
+    vetoCard,
     completeScene,
-    vetoAndRedraw,
     remaining,
     findCard
   });

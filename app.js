@@ -4,33 +4,42 @@
   const cards = window.TWO_SECRETS_CARDS;
   const engine = window.TwoSecretsEngine;
   const HASH_PATTERN = /^#deck=([A-Z2-9]{8})$/;
-  const STORAGE_PREFIX = "two-secrets:v1:";
-  const ACTIVE_DECK_KEY = "two-secrets:v1:active-deck";
+  const STORAGE_PREFIX = "two-secrets:v2:";
+  const ACTIVE_DECK_KEY = "two-secrets:v2:active-deck";
 
   const elements = {
-    scenePill: document.getElementById("scenePill"),
-    screenTitle: document.getElementById("screenTitle"),
-    screenMessage: document.getElementById("screenMessage"),
+    menuScreen: document.getElementById("menuScreen"),
+    cardsScreen: document.getElementById("cardsScreen"),
+    sceneNumbers: Array.from(document.querySelectorAll(".scene-number")),
+    menuMessage: document.getElementById("menuMessage"),
+    menuButton: document.getElementById("menuButton"),
+    drawButton: document.getElementById("drawButton"),
+    drawButtonLabel: document.getElementById("drawButtonLabel"),
     stanceCard: document.getElementById("stanceCard"),
     driveCard: document.getElementById("driveCard"),
     stanceId: document.getElementById("stanceId"),
     stanceCategory: document.getElementById("stanceCategory"),
     stanceTitle: document.getElementById("stanceTitle"),
     stanceInstruction: document.getElementById("stanceInstruction"),
+    stanceDecision: document.getElementById("stanceDecision"),
     driveId: document.getElementById("driveId"),
     driveCategory: document.getElementById("driveCategory"),
     driveTitle: document.getElementById("driveTitle"),
     driveInstruction: document.getElementById("driveInstruction"),
-    privacyNote: document.getElementById("privacyNote"),
-    drawButton: document.getElementById("drawButton"),
-    activeActions: document.getElementById("activeActions"),
+    driveDecision: document.getElementById("driveDecision"),
     completeButton: document.getElementById("completeButton"),
-    hideButton: document.getElementById("hideButton"),
-    vetoButton: document.getElementById("vetoButton"),
     stancesRemaining: document.getElementById("stancesRemaining"),
     drivesRemaining: document.getElementById("drivesRemaining"),
     deckProgress: document.getElementById("deckProgress"),
     liveStatus: document.getElementById("liveStatus"),
+    cardDialog: document.getElementById("cardDialog"),
+    cardDialogPanel: document.getElementById("cardDialogPanel"),
+    cardDialogType: document.getElementById("cardDialogType"),
+    cardDialogTitle: document.getElementById("cardDialogTitle"),
+    cardDialogInstruction: document.getElementById("cardDialogInstruction"),
+    closeCardDialogButton: document.getElementById("closeCardDialogButton"),
+    keepCardButton: document.getElementById("keepCardButton"),
+    vetoCardButton: document.getElementById("vetoCardButton"),
     openRulesButton: document.getElementById("openRulesButton"),
     closeRulesButton: document.getElementById("closeRulesButton"),
     rulesDialog: document.getElementById("rulesDialog"),
@@ -45,7 +54,8 @@
 
   let deckId = getOrCreateDeckId();
   let state = loadState(deckId);
-  let visibility = { stance: false, drive: false };
+  let activeView = state.current ? "cards" : "menu";
+  let selectedCardType = null;
   let deferredInstallPrompt = null;
 
   function getOrCreateDeckId() {
@@ -90,11 +100,10 @@
     try {
       window.history.replaceState(null, "", nextUrl);
     } catch (_error) {
-      // A null-origin preview (for example, a local file) may reject replaceState.
       try {
         window.location.hash = nextHash;
       } catch (_ignored) {
-        // The deck still functions in memory even when the URL cannot be updated.
+        // The deck still functions in memory even when the URL cannot update.
       }
     }
   }
@@ -113,6 +122,7 @@
     } catch (error) {
       console.warn("Could not read the saved deck; starting a fresh local deck.", error);
     }
+
     const fresh = engine.createState(cards, id);
     saveState(fresh);
     return fresh;
@@ -133,134 +143,106 @@
     }, 20);
   }
 
-  function setCardContent(type, card) {
-    const prefix = type === "stance" ? "stance" : "drive";
-    elements[`${prefix}Id`].textContent = card.id;
-    elements[`${prefix}Category`].textContent = card.category;
-    elements[`${prefix}Title`].textContent = card.title;
-    elements[`${prefix}Instruction`].textContent = card.instruction;
+  function cardConfig(type) {
+    const isStance = type === "stance";
+    return {
+      label: isStance ? "Stance" : "Drive",
+      button: isStance ? elements.stanceCard : elements.driveCard,
+      id: isStance ? elements.stanceId : elements.driveId,
+      category: isStance ? elements.stanceCategory : elements.driveCategory,
+      title: isStance ? elements.stanceTitle : elements.driveTitle,
+      instruction: isStance ? elements.stanceInstruction : elements.driveInstruction,
+      decision: isStance ? elements.stanceDecision : elements.driveDecision,
+      currentKey: isStance ? "stanceId" : "driveId",
+      keptKey: isStance ? "stanceKept" : "driveKept"
+    };
   }
 
-  function setCardVisual(type, card, isRevealed) {
-    const button = type === "stance" ? elements.stanceCard : elements.driveCard;
-    const label = type === "stance" ? "Stance" : "Drive";
+  function replaceDecisionContent(element, kept) {
+    const icon = document.createElement("span");
+    icon.className = "decision-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = kept ? "✓" : "⋯";
+    element.replaceChildren(icon, document.createTextNode(kept ? " Kept · tap for options" : " Tap for options"));
+  }
 
-    button.classList.remove("is-empty");
-    button.disabled = false;
-    button.classList.toggle("is-revealed", isRevealed);
-    button.setAttribute("aria-pressed", String(isRevealed));
-    button.setAttribute(
+  function renderCard(type) {
+    if (!state.current) {
+      return;
+    }
+
+    const config = cardConfig(type);
+    const card = engine.findCard(cards, type, state.current[config.currentKey]);
+    const kept = state.current[config.keptKey];
+
+    config.id.textContent = card.id;
+    config.category.textContent = card.category;
+    config.title.textContent = card.title;
+    config.instruction.textContent = card.instruction;
+    config.button.classList.toggle("is-kept", kept);
+    replaceDecisionContent(config.decision, kept);
+    config.button.setAttribute(
       "aria-label",
-      isRevealed
-        ? `${label} card revealed: ${card.title}. ${card.instruction}. Tap to hide.`
-        : `${label} card face down. Tap to reveal privately.`
+      `${config.label} card: ${card.title}. ${card.instruction}. ${kept ? "Kept." : "Not yet marked as kept."} Tap for keep or veto options.`
     );
   }
 
   function render() {
-    const hasCurrent = Boolean(state.current);
+    if (activeView === "cards" && !state.current) {
+      activeView = "menu";
+    }
+
     const sceneNumber = state.scenesCompleted + 1;
     const remaining = engine.remaining(state);
-    const total = cards.stances.length;
-    const used = Math.max(state.stancePosition, state.drivePosition);
-    const progress = Math.min(100, (used / total) * 100);
+    const totalPerDeck = cards.stances.length;
+    const stanceUsed = totalPerDeck - remaining.stances;
+    const driveUsed = cards.drives.length - remaining.drives;
+    const progress = Math.min(100, (Math.max(stanceUsed, driveUsed) / totalPerDeck) * 100);
 
-    elements.scenePill.textContent = `Scene ${sceneNumber}`;
+    elements.sceneNumbers.forEach((element) => {
+      element.textContent = `Scene ${sceneNumber}`;
+    });
     elements.deckIdLabel.textContent = state.instanceId;
     elements.stancesRemaining.textContent = remaining.stances;
     elements.drivesRemaining.textContent = remaining.drives;
     elements.deckProgress.style.width = `${progress}%`;
 
-    if (!hasCurrent) {
-      elements.screenTitle.textContent = "Your secret scene foundation";
-      elements.screenMessage.textContent = "Draw one Stance and one Drive. Your scene partner draws independently on their own phone.";
-      elements.privacyNote.lastChild.textContent = " Your cards stay face-down until you tap them.";
-      elements.drawButton.classList.remove("is-hidden");
-      elements.activeActions.classList.add("is-hidden");
-      resetCardToEmpty(elements.stanceCard, "Stance card. Draw cards to begin.");
-      resetCardToEmpty(elements.driveCard, "Drive card. Draw cards to begin.");
-      return;
-    }
+    const showingCards = activeView === "cards";
+    elements.menuScreen.hidden = showingCards;
+    elements.cardsScreen.hidden = !showingCards;
+    elements.menuButton.hidden = !showingCards;
 
-    const stance = engine.findCard(cards, "stance", state.current.stanceId);
-    const drive = engine.findCard(cards, "drive", state.current.driveId);
-    setCardContent("stance", stance);
-    setCardContent("drive", drive);
-    setCardVisual("stance", stance, visibility.stance);
-    setCardVisual("drive", drive, visibility.drive);
-
-    const revealedCount = Number(visibility.stance) + Number(visibility.drive);
-    elements.screenTitle.textContent = revealedCount === 0 ? "Your cards are ready" : "Carry both secrets into the scene";
-    elements.screenMessage.textContent = revealedCount === 0
-      ? "Make sure only you can see the screen, then reveal each card."
-      : "Use your Stance early. Let your Drive emerge through repeated choices.";
-    elements.privacyNote.lastChild.textContent = revealedCount === 0
-      ? " Tap a card when the screen is private."
-      : " Tap a revealed card to hide it again.";
-    elements.drawButton.classList.add("is-hidden");
-    elements.activeActions.classList.remove("is-hidden");
-    elements.hideButton.disabled = revealedCount === 0;
-  }
-
-  function resetCardToEmpty(button, label) {
-    button.classList.add("is-empty");
-    button.classList.remove("is-revealed");
-    button.disabled = true;
-    button.removeAttribute("aria-pressed");
-    button.setAttribute("aria-label", label);
-  }
-
-  function drawCards() {
-    engine.drawPair(state, cards);
-    visibility = { stance: false, drive: false };
-    saveState();
-    render();
-    announce("Two private cards drawn. Tap each card to reveal it.");
-    if (navigator.vibrate) {
-      navigator.vibrate(18);
+    if (state.current) {
+      renderCard("stance");
+      renderCard("drive");
+      elements.drawButtonLabel.textContent = "Return to my cards";
+      elements.menuMessage.textContent = `Scene ${sceneNumber} is in progress on this phone. Your current cards are saved locally.`;
+    } else {
+      elements.drawButtonLabel.textContent = "Draw my cards";
+      elements.menuMessage.textContent = "Each player uses their own phone. Draw one private Stance and one private Drive for the scene.";
     }
   }
 
-  function toggleCard(type) {
+  function drawOrResumeCards() {
     if (!state.current) {
-      return;
+      engine.drawPair(state, cards);
+      saveState();
+      announce("One Stance and one Drive drawn.");
+      if (navigator.vibrate) {
+        navigator.vibrate(18);
+      }
     }
-    visibility[type] = !visibility[type];
-    render();
-    const action = visibility[type] ? "revealed" : "hidden";
-    announce(`${type === "stance" ? "Stance" : "Drive"} card ${action}.`);
-    if (visibility[type] && navigator.vibrate) {
-      navigator.vibrate(12);
-    }
-  }
 
-  function hideBoth() {
-    visibility = { stance: false, drive: false };
+    activeView = "cards";
     render();
-    announce("Both cards hidden.");
-  }
-
-  function completeScene() {
-    const completed = engine.completeScene(state);
-    if (!completed) {
-      return;
-    }
-    visibility = { stance: false, drive: false };
-    saveState();
-    render();
-    announce(`Scene complete. Ready for scene ${state.scenesCompleted + 1}.`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function vetoAndRedraw() {
-    engine.vetoAndRedraw(state, cards);
-    visibility = { stance: false, drive: false };
-    saveState();
+  function showMainMenu() {
+    activeView = "menu";
     render();
-    announce("Prompt pair replaced. Two new private cards are ready.");
-    if (navigator.vibrate) {
-      navigator.vibrate([12, 40, 12]);
-    }
+    announce("Main menu opened. Your current cards remain saved.");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function openDialog(dialog) {
@@ -279,8 +261,92 @@
     }
   }
 
+  function openCardOptions(type) {
+    if (!state.current) {
+      return;
+    }
+
+    selectedCardType = type;
+    const config = cardConfig(type);
+    const card = engine.findCard(cards, type, state.current[config.currentKey]);
+    const kept = state.current[config.keptKey];
+
+    elements.cardDialogPanel.dataset.cardType = type;
+    elements.cardDialogType.textContent = `${config.label.toUpperCase()} · ${card.id}`;
+    elements.cardDialogTitle.textContent = card.title;
+    elements.cardDialogInstruction.textContent = card.instruction;
+    elements.keepCardButton.querySelector("span:last-child").textContent = kept ? "Keep this card" : "Keep this card";
+    openDialog(elements.cardDialog);
+  }
+
+  function closeCardOptions() {
+    closeDialog(elements.cardDialog);
+    selectedCardType = null;
+  }
+
+  function keepSelectedCard() {
+    if (!selectedCardType || !state.current) {
+      return;
+    }
+
+    const type = selectedCardType;
+    engine.keepCard(state, type);
+    saveState();
+    render();
+    closeCardOptions();
+    announce(`${type === "stance" ? "Stance" : "Drive"} kept for this scene.`);
+    if (navigator.vibrate) {
+      navigator.vibrate(10);
+    }
+    cardConfig(type).button.focus({ preventScroll: true });
+  }
+
+  function flashReplacement(type) {
+    const button = cardConfig(type).button;
+    button.classList.remove("is-replaced");
+    // Force a reflow so repeated vetoes replay the replacement animation.
+    void button.offsetWidth;
+    button.classList.add("is-replaced");
+    window.setTimeout(() => button.classList.remove("is-replaced"), 520);
+  }
+
+  function vetoSelectedCard() {
+    if (!selectedCardType || !state.current) {
+      return;
+    }
+
+    const type = selectedCardType;
+    const result = engine.vetoCard(state, cards, type);
+    const replacement = engine.findCard(cards, type, result.replacementId);
+    saveState();
+    render();
+    closeCardOptions();
+    flashReplacement(type);
+    announce(`${type === "stance" ? "Stance" : "Drive"} replaced with ${replacement.title}. The vetoed card returned to its deck.`);
+    if (navigator.vibrate) {
+      navigator.vibrate([12, 36, 12]);
+    }
+    cardConfig(type).button.focus({ preventScroll: true });
+  }
+
+  function completeScene() {
+    if (!engine.completeScene(state)) {
+      return;
+    }
+    saveState();
+    activeView = "menu";
+    render();
+    announce(`Scene complete. Ready for scene ${state.scenesCompleted + 1}.`);
+    if (navigator.vibrate) {
+      navigator.vibrate(15);
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   function requestNewDeck() {
     closeDialog(elements.rulesDialog);
+    closeDialog(elements.cardDialog);
+    selectedCardType = null;
     openDialog(elements.confirmDialog);
   }
 
@@ -296,7 +362,8 @@
     setActiveDeckId(deckId);
     setDeckHash(deckId);
     state = engine.createState(cards, deckId);
-    visibility = { stance: false, drive: false };
+    activeView = "menu";
+    selectedCardType = null;
     saveState();
     closeDialog(elements.confirmDialog);
     render();
@@ -304,38 +371,36 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  function closeOnBackdrop(event, dialog) {
+    if (event.target === dialog) {
+      closeDialog(dialog);
+    }
+  }
+
   function registerEvents() {
-    elements.drawButton.addEventListener("click", drawCards);
-    elements.stanceCard.addEventListener("click", () => toggleCard("stance"));
-    elements.driveCard.addEventListener("click", () => toggleCard("drive"));
-    elements.hideButton.addEventListener("click", hideBoth);
+    elements.drawButton.addEventListener("click", drawOrResumeCards);
+    elements.menuButton.addEventListener("click", showMainMenu);
+    elements.stanceCard.addEventListener("click", () => openCardOptions("stance"));
+    elements.driveCard.addEventListener("click", () => openCardOptions("drive"));
     elements.completeButton.addEventListener("click", completeScene);
-    elements.vetoButton.addEventListener("click", vetoAndRedraw);
+
+    elements.closeCardDialogButton.addEventListener("click", closeCardOptions);
+    elements.keepCardButton.addEventListener("click", keepSelectedCard);
+    elements.vetoCardButton.addEventListener("click", vetoSelectedCard);
+    elements.cardDialog.addEventListener("click", (event) => closeOnBackdrop(event, elements.cardDialog));
+    elements.cardDialog.addEventListener("close", () => {
+      selectedCardType = null;
+    });
 
     elements.openRulesButton.addEventListener("click", () => openDialog(elements.rulesDialog));
     elements.closeRulesButton.addEventListener("click", () => closeDialog(elements.rulesDialog));
-    elements.rulesDialog.addEventListener("click", (event) => {
-      if (event.target === elements.rulesDialog) {
-        closeDialog(elements.rulesDialog);
-      }
-    });
+    elements.rulesDialog.addEventListener("click", (event) => closeOnBackdrop(event, elements.rulesDialog));
 
     elements.newDeckButton.addEventListener("click", requestNewDeck);
     elements.newDeckModalButton.addEventListener("click", requestNewDeck);
     elements.cancelNewDeckButton.addEventListener("click", () => closeDialog(elements.confirmDialog));
     elements.confirmNewDeckButton.addEventListener("click", replaceDeck);
-    elements.confirmDialog.addEventListener("click", (event) => {
-      if (event.target === elements.confirmDialog) {
-        closeDialog(elements.confirmDialog);
-      }
-    });
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden && (visibility.stance || visibility.drive)) {
-        visibility = { stance: false, drive: false };
-        render();
-      }
-    });
+    elements.confirmDialog.addEventListener("click", (event) => closeOnBackdrop(event, elements.confirmDialog));
 
     window.addEventListener("hashchange", () => {
       const match = window.location.hash.toUpperCase().match(HASH_PATTERN);
@@ -345,7 +410,8 @@
       deckId = match[1];
       setActiveDeckId(deckId);
       state = loadState(deckId);
-      visibility = { stance: false, drive: false };
+      activeView = state.current ? "cards" : "menu";
+      selectedCardType = null;
       render();
       announce("Local deck changed.");
     });

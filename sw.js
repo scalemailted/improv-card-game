@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "two-secrets-v1.0.0";
+const CACHE_NAME = "two-secrets-v1.1.0";
 const BASE_URL = new URL("./", self.location.href);
 const PRECACHE_PATHS = [
   "./",

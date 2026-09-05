@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "two-secrets-v1.1.0";
+const CACHE_NAME = "two-secrets-v1.2.0";
 const BASE_URL = new URL("./", self.location.href);
 const PRECACHE_PATHS = [
   "./",
@@ -10,6 +10,7 @@ const PRECACHE_PATHS = [
   "./deck-engine.js",
   "./app.js",
   "./manifest.webmanifest",
+  "./assets/improv-card-game-qr.png",
   "./icons/icon.svg",
   "./icons/icon-192.png",
   "./icons/icon-512.png"

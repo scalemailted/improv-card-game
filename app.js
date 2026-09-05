@@ -6,6 +6,8 @@
   const HASH_PATTERN = /^#deck=([A-Z2-9]{8})$/;
   const STORAGE_PREFIX = "two-secrets:v2:";
   const ACTIVE_DECK_KEY = "two-secrets:v2:active-deck";
+  const GAME_URL = "https://scalemailted.github.io/improv-card-game/";
+  const GAME_SHARE_TEXT = "Open the improv card game and draw your own independent Stance-and-Drive deck.";
 
   const elements = {
     menuScreen: document.getElementById("menuScreen"),
@@ -49,7 +51,15 @@
     confirmDialog: document.getElementById("confirmDialog"),
     cancelNewDeckButton: document.getElementById("cancelNewDeckButton"),
     confirmNewDeckButton: document.getElementById("confirmNewDeckButton"),
-    installButton: document.getElementById("installButton")
+    installButton: document.getElementById("installButton"),
+    openShareButton: document.getElementById("openShareButton"),
+    shareDialog: document.getElementById("shareDialog"),
+    closeShareButton: document.getElementById("closeShareButton"),
+    shareQrLink: document.getElementById("shareQrLink"),
+    shareUrlLink: document.getElementById("shareUrlLink"),
+    shareLinkButton: document.getElementById("shareLinkButton"),
+    copyLinkButton: document.getElementById("copyLinkButton"),
+    shareFeedback: document.getElementById("shareFeedback")
   };
 
   let deckId = getOrCreateDeckId();
@@ -261,6 +271,88 @@
     }
   }
 
+
+  function setShareFeedback(message, isError = false) {
+    elements.shareFeedback.textContent = message;
+    elements.shareFeedback.classList.toggle("is-error", isError);
+  }
+
+  function openSharePanel() {
+    // Always share the canonical public game URL. Never use location.href,
+    // because the current page contains a browser-local #deck identifier.
+    elements.shareQrLink.href = GAME_URL;
+    elements.shareUrlLink.href = GAME_URL;
+    elements.shareUrlLink.textContent = GAME_URL;
+    setShareFeedback("");
+    openDialog(elements.shareDialog);
+    announce("Game invitation QR code opened. Your private deck is not included.");
+  }
+
+  function closeSharePanel() {
+    closeDialog(elements.shareDialog);
+    setShareFeedback("");
+  }
+
+  async function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.setAttribute("readonly", "");
+    textArea.style.position = "fixed";
+    textArea.style.left = "-9999px";
+    textArea.style.opacity = "0";
+    document.body.appendChild(textArea);
+    textArea.select();
+    textArea.setSelectionRange(0, textArea.value.length);
+    const copied = document.execCommand("copy");
+    textArea.remove();
+    if (!copied) {
+      throw new Error("Copy command was not accepted by this browser.");
+    }
+  }
+
+  async function copyGameLink() {
+    try {
+      await copyText(GAME_URL);
+      setShareFeedback("Public game link copied. No deck information was included.");
+      announce("Public game link copied.");
+      if (navigator.vibrate) {
+        navigator.vibrate(10);
+      }
+    } catch (error) {
+      console.warn("Could not copy the game link.", error);
+      setShareFeedback("Copy was unavailable. Press and hold the displayed link to copy it.", true);
+      announce("The game link could not be copied automatically.");
+    }
+  }
+
+  async function shareGameLink() {
+    if (typeof navigator.share !== "function") {
+      await copyGameLink();
+      return;
+    }
+
+    try {
+      await navigator.share({
+        title: "Two Secrets — Improv Card Game",
+        text: GAME_SHARE_TEXT,
+        url: GAME_URL
+      });
+      setShareFeedback("Public game link shared. Your local deck stayed private.");
+      announce("Public game link shared.");
+    } catch (error) {
+      if (error && error.name === "AbortError") {
+        return;
+      }
+      console.warn("The system share sheet was unavailable; trying to copy the link instead.", error);
+      await copyGameLink();
+    }
+  }
+
   function openCardOptions(type) {
     if (!state.current) {
       return;
@@ -346,6 +438,7 @@
   function requestNewDeck() {
     closeDialog(elements.rulesDialog);
     closeDialog(elements.cardDialog);
+    closeDialog(elements.shareDialog);
     selectedCardType = null;
     openDialog(elements.confirmDialog);
   }
@@ -391,6 +484,12 @@
     elements.cardDialog.addEventListener("close", () => {
       selectedCardType = null;
     });
+
+    elements.openShareButton.addEventListener("click", openSharePanel);
+    elements.closeShareButton.addEventListener("click", closeSharePanel);
+    elements.shareLinkButton.addEventListener("click", shareGameLink);
+    elements.copyLinkButton.addEventListener("click", copyGameLink);
+    elements.shareDialog.addEventListener("click", (event) => closeOnBackdrop(event, elements.shareDialog));
 
     elements.openRulesButton.addEventListener("click", () => openDialog(elements.rulesDialog));
     elements.closeRulesButton.addEventListener("click", () => closeDialog(elements.rulesDialog));

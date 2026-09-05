@@ -5,7 +5,7 @@ A mobile-first, fully client-side prompt deck for two-person improv scenes. Each
 - **1 Stance** — how the character sees themself, the other person, or the situation.
 - **1 Drive** — what the character wants, hides, or repeatedly does.
 
-The prototype contains all **24 Stance cards** and **24 Drive cards** from deck version 0.2.
+The prototype contains all **24 Stance cards** and **24 Drive cards** from deck version 0.3.
 
 ## Open the live game on a phone
 
@@ -22,7 +22,7 @@ The prototype contains all **24 Stance cards** and **24 Drive cards** from deck 
 
 ## How this version works
 
-1. Each improver opens the site on their own phone.
+1. One player can tap **Invite** at any time to show the public game QR code. Other players scan it to open the game on their own phones.
 2. From the main menu, each player taps **Draw my cards**.
 3. One Stance and one Drive appear immediately on that private screen.
 4. Tapping either card opens its individual options:
@@ -35,6 +35,8 @@ There is no reveal/hide toggle because each player is already managing a private
 
 ## What the prototype does
 
+- Shows an in-game **Invite** panel with the public QR code, system share sheet, and copy-link option.
+- Always shares the fixed public URL without the current browser's local `#deck=…` fragment.
 - Gives every browser its own independently shuffled Stance and Drive decks.
 - Draws one unused Stance and one unused Drive for each scene.
 - Displays both cards immediately after the main-menu draw.
@@ -94,6 +96,18 @@ The fragment identifies a saved shuffle **inside that browser only**. It is not 
 
 Different phones have separate browser storage and therefore independent shuffles. Selecting **New independent deck** replaces the current shuffle, scene count, and unused-card order only on that browser.
 
+## In-game invitation and QR sharing
+
+Tap **Invite** from either the main menu or the card screen. The invitation panel displays the same public QR code shown above and offers **Share game link** and **Copy link** controls.
+
+The invitation feature always uses this exact URL:
+
+```text
+https://scalemailted.github.io/improv-card-game/
+```
+
+It deliberately does **not** share `window.location.href`, the browser-local deck fragment, the current cards, the scene number, or deck progress. A player who scans the QR code opens the general game and receives or resumes an independent local deck in their own browser.
+
 ## Veto behavior
 
 Each deck is maintained separately. When a player vetoes a Stance:
@@ -123,7 +137,8 @@ The same logic applies independently to Drive cards. If a player vetoes the fina
 │   ├── icon-192.png
 │   └── icon-512.png
 └── tests/
-    └── deck-engine.test.js
+    ├── deck-engine.test.js
+    └── share-link.test.js
 ```
 
 ## Editing cards
@@ -134,9 +149,10 @@ All card copy is in `cards.js`. Keep every ID unique and preserve the `stances` 
 
 ```bash
 node tests/deck-engine.test.js
+node tests/share-link.test.js
 ```
 
-The test checks:
+The tests check:
 
 - All 24 Stances and 24 Drives are present with unique IDs.
 - Normal draws do not repeat within a deck cycle.
@@ -147,3 +163,6 @@ The test checks:
 - A veto preserves the number of cards remaining.
 - The final-card veto edge case still produces a different replacement.
 - Invalid saved state is rejected safely.
+- The in-game share controls always use the canonical public URL.
+- The local `#deck=…` fragment is never used in the share payload.
+- The QR image is included in the offline precache.

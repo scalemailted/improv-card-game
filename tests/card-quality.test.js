@@ -6,9 +6,9 @@ const bible = require("../card-bible.js");
 const validator = require("../tools/card-validator.js");
 
 const allCards = [...cards.stances, ...cards.drives];
-assert.equal(new Set(allCards.map((card) => card.id)).size, 144);
-assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.title))).size, 144);
-assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.instruction))).size, 144);
+assert.equal(new Set(allCards.map((card) => card.id)).size, 192);
+assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.title))).size, 192);
+assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.instruction))).size, 192);
 
 for (const card of allCards) {
   const result = validator.validateCard(card);
@@ -23,14 +23,17 @@ for (const card of allCards) {
   } else if (card.packId === "everyday-friction") {
     assert.equal(card.status, "playtest");
     assert.equal(card.contentVersion, "0.9.0");
-  } else {
-    assert.equal(card.packId, "power-games");
+  } else if (card.packId === "power-games") {
     assert.equal(card.status, "playtest");
     assert.equal(card.contentVersion, "0.10.0");
+  } else {
+    assert.equal(card.packId, "relationship-knots");
+    assert.equal(card.status, "playtest");
+    assert.equal(card.contentVersion, "0.11.0");
   }
 }
 
-for (const packId of ["core-foundations", "everyday-friction", "power-games"]) {
+for (const packId of ["core-foundations", "everyday-friction", "power-games", "relationship-knots"]) {
   for (const category of bible.categories) {
     const categoryCards = allCards.filter((card) => card.packId === packId && card.categoryId === category.id);
     const expected = category.deck === "stance" ? 6 : category.id === "direct-objectives" ? 12 : 6;

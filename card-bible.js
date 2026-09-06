@@ -9,7 +9,7 @@
   "use strict";
 
   const CARD_SCHEMA_VERSION = 1;
-  const LIBRARY_PLAN_VERSION = "1.2.0";
+  const LIBRARY_PLAN_VERSION = "1.3.0";
   const TARGET_STANCE_COUNT = 240;
   const TARGET_DRIVE_COUNT = 240;
 
@@ -333,7 +333,14 @@
     { id: "enforcer", label: "Enforcer", definition: "Presses for compliance and makes rank or consequences visible." },
     { id: "gatekeeper", label: "Gatekeeper", definition: "Controls access, qualification, participation, or permission." },
     { id: "patron", label: "Patron", definition: "Uses support, protection, sponsorship, or favor to shape another person's options." },
-    { id: "successor", label: "Successor", definition: "Positions themself as the next, rightful, or more capable holder of authority." }
+    { id: "successor", label: "Successor", definition: "Positions themself as the next, rightful, or more capable holder of authority." },
+    { id: "attachment-seeker", label: "Attachment Seeker", definition: "Seeks signs of closeness, priority, reassurance, or continued connection." },
+    { id: "boundary-keeper", label: "Boundary Keeper", definition: "Defines, tests, or protects limits within a relationship." },
+    { id: "confidant", label: "Confidant", definition: "Builds privileged access through private knowledge and emotional trust." },
+    { id: "loyalist", label: "Loyalist", definition: "Treats allegiance to a person or relationship as a defining obligation." },
+    { id: "memory-keeper", label: "Memory Keeper", definition: "Uses shared history and remembrance to define the present relationship." },
+    { id: "peacemaker", label: "Peacemaker", definition: "Protects harmony, lowers conflict, or keeps people connected." },
+    { id: "reconciler", label: "Reconciler", definition: "Works to restore, redefine, or preserve a strained connection." }
   ];
 
   const motifs = [
@@ -344,7 +351,9 @@
     "pride", "recognition", "repair", "resources", "responsibility", "risk", "ritual", "routine",
     "rules", "secrecy", "space", "status", "time", "trust", "truth", "validation", "work",
     "absurdity", "loss", "access", "allegiance", "autonomy", "compliance", "hierarchy", "influence",
-    "leverage", "legitimacy", "patronage", "reputation", "succession", "territory"
+    "leverage", "legitimacy", "patronage", "reputation", "succession", "territory",
+    "abandonment", "affection", "attachment", "boundaries", "closeness", "connection", "distance",
+    "forgiveness", "intimacy", "jealousy", "memory", "promise", "reconciliation", "resentment", "sacrifice"
   ];
 
   const packPlan = [
@@ -385,12 +394,12 @@
       id: "relationship-knots",
       sequence: 4,
       title: "Relationship Knots",
-      status: "planned",
+      status: "playtest",
       stanceRange: [73, 96],
       driveRange: [73, 96],
       targetStances: 24,
       targetDrives: 24,
-      focus: "Affection, obligation, rivalry, dependence, family roles, mentorship, and unresolved connection."
+      focus: "Affection, rivalry, obligation, dependence, boundaries, and unfinished connection."
     },
     {
       id: "emotional-pressure",

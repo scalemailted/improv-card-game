@@ -5,7 +5,7 @@
 - **1 Stance** — how the performer enters, interprets, or reacts within the scene.
 - **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The active library now contains **72 Stances and 72 Drives** across Core Foundations plus the Everyday Friction and Power Games playtest packs. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
+The active library now contains **96 Stances and 96 Drives** across Core Foundations plus the Everyday Friction, Power Games, and Relationship Knots playtest packs. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
 
 ## Open the live game
 
@@ -19,6 +19,31 @@ The active library now contains **72 Stances and 72 Drives** across Core Foundat
   Scan the code or open<br>
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
+
+## What is new in v0.11.0
+
+v0.11.0 adds **Pack 4: Relationship Knots** as an active playtest pack:
+
+- 24 new Stances: S73–S96
+- 24 new Drives: D73–D96
+- 192 active cards total
+- 64-card documented candidate pool
+- completed 48-slot authoring matrix
+- relationship-specific coach roles and motifs
+- automatic insertion of Pack 4 IDs into existing independent decks
+
+Relationship Knots explores affection, rivalry, obligation, dependence, boundaries, shared history, partial forgiveness, and unfinished connection. The cards do not prescribe romance, family, friendship, or any other fixed label. They give only the holder a private relationship behavior, objective, secret, or recurring pattern.
+
+The expansion materially deepens **Relationship Pressure**, **Emotional Stakes**, **Crown & Heart**, **Past & Future**, and custom coach challenges centered on attachment, loyalty, memory, repair, or boundaries. Every phone still shuffles independently; no exercise shares cards or deck order.
+
+Relationship Knots is marked **playtest** pending independent blind reads and repeated live troupe testing. Its cards are available throughout Open Play, category-focused draws, Mirror and Paired exercises, custom exercises, gallery search, Practice Coverage, and immutable Scene Log snapshots.
+
+See:
+
+- `docs/packs/RELATIONSHIP-KNOTS-PACK-BRIEF.md`
+- `docs/packs/RELATIONSHIP-KNOTS-AUTHORING-MATRIX.md`
+- `docs/packs/RELATIONSHIP-KNOTS-CANDIDATE-POOL.md`
+- `cards/candidates/relationship-knots-candidate-pool.json`
 
 ## What is new in v0.10.0
 
@@ -97,7 +122,7 @@ Every future 48-card pack must contribute one card to every subtheme. Across ten
 | 1 | Core Foundations | S01–S24 | D01–D24 | Published |
 | 2 | Everyday Friction | S25–S48 | D25–D48 | **Playtest in v0.9.0** |
 | 3 | Power Games | S49–S72 | D49–D72 | **Playtest in v0.10.0** |
-| 4 | Relationship Knots | S73–S96 | D73–D96 | Planned |
+| 4 | Relationship Knots | S73–S96 | D73–D96 | **Playtest in v0.11.0** |
 | 5 | Emotional Pressure | S97–S120 | D97–D120 | Planned |
 | 6 | Secrets & Schemes | S121–S144 | D121–D144 | Planned |
 | 7 | Absurd Commitment | S145–S168 | D145–D168 | Planned |
@@ -259,7 +284,7 @@ Imprompt stores working state in browser local storage. A phone knows only its o
 
 The general **Invite players** QR always points to the plain public URL. Guided-exercise links contain only coaching configuration.
 
-Existing v0.5.x through v0.9.0 state remains compatible. Pack 3 IDs are inserted at randomized positions in each phone’s remaining queues without resetting current prompts, sessions, completed scenes, or consumed earlier cards.
+Existing v0.5.x through v0.10.0 state remains compatible. Pack 4 IDs are inserted at randomized positions in each phone’s remaining queues without resetting current prompts, sessions, completed scenes, custom exercises, or consumed earlier cards.
 
 ## Card-library architecture
 
@@ -273,6 +298,8 @@ cards/core-foundations.js
 cards/everyday-friction.js
     ↓
 cards/power-games.js
+    ↓
+cards/relationship-knots.js
     ↓
 cards.js
 ```
@@ -310,6 +337,7 @@ The active pack modules are:
 cards/core-foundations.js       # published
 cards/everyday-friction.js      # playtest
 cards/power-games.js            # playtest
+cards/relationship-knots.js     # playtest
 ```
 
 ## Run locally
@@ -334,7 +362,7 @@ npm run audit:cards
 npm run audit:cards:write
 ```
 
-`npm test` validates the application, deck engine, exercises, share links, QR generation, Card Bible taxonomy, all three active packs, hidden-information heuristics, pack quotas, migration behavior, and duplicate gates.
+`npm test` validates the application, deck engine, exercises, share links, QR generation, Card Bible taxonomy, all four active packs, hidden-information heuristics, pack quotas, migration behavior, and duplicate gates.
 
 `npm run audit:cards:write` regenerates:
 
@@ -379,13 +407,16 @@ All application assets use relative paths and work under the GitHub Pages projec
 ├── RELEASE-NOTES-v0.8.0.md
 ├── RELEASE-NOTES-v0.9.0.md
 ├── RELEASE-NOTES-v0.10.0.md
+├── RELEASE-NOTES-v0.11.0.md
 ├── cards/
 │   ├── core-foundations.js
 │   ├── everyday-friction.js
 │   ├── power-games.js
+│   ├── relationship-knots.js
 │   ├── candidates/
 │   │   ├── everyday-friction-candidate-pool.json
-│   │   └── power-games-candidate-pool.json
+│   │   ├── power-games-candidate-pool.json
+│   │   └── relationship-knots-candidate-pool.json
 │   ├── card.schema.json
 │   └── pack.schema.json
 ├── docs/
@@ -399,7 +430,10 @@ All application assets use relative paths and work under the GitHub Pages projec
 │       ├── EVERYDAY-FRICTION-CANDIDATE-POOL.md
 │       ├── POWER-GAMES-PACK-BRIEF.md
 │       ├── POWER-GAMES-AUTHORING-MATRIX.md
-│       └── POWER-GAMES-CANDIDATE-POOL.md
+│       ├── POWER-GAMES-CANDIDATE-POOL.md
+│       ├── RELATIONSHIP-KNOTS-PACK-BRIEF.md
+│       ├── RELATIONSHIP-KNOTS-AUTHORING-MATRIX.md
+│       └── RELATIONSHIP-KNOTS-CANDIDATE-POOL.md
 ├── tools/
 │   ├── card-validator.js
 │   └── card-audit.js
@@ -419,6 +453,7 @@ All application assets use relative paths and work under the GitHub Pages projec
     ├── card-quality.test.js
     ├── everyday-friction.test.js
     ├── power-games.test.js
+    ├── relationship-knots.test.js
     ├── browser-card-loading.test.js
     ├── app-content.test.js
     ├── deck-engine.test.js

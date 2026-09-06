@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "imprompt-v0.5.0";
+const CACHE_NAME = "imprompt-v0.5.1";
 const OWNED_CACHE_PREFIXES = ["imprompt-", "two-secrets-"];
 const BASE_URL = new URL("./", self.location.href);
 const PRECACHE_PATHS = [

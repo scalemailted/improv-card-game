@@ -1,8 +1,8 @@
 # The Imprompt Card Bible
 
 **Editorial and technical standard for the 480-card Imprompt library**  
-**Bible version:** 1.3.0  
-**Implemented foundation:** Imprompt v0.11.0  
+**Bible version:** 1.4.0  
+**Implemented foundation:** Imprompt v0.12.0  
 **Target release:** Imprompt v1.0  
 
 ---
@@ -125,7 +125,7 @@ Each pack contributes **one card to every defined subtheme**. Across ten packs, 
 | 2 | **Everyday Friction** | S25–S48 | D25–D48 | **Active playtest pack:** ordinary inconvenience, domestic strain, work tension, and small stakes treated seriously. |
 | 3 | **Power Games** | S49–S72 | D49–D72 | **Active playtest pack:** authority, legitimacy, leverage, dependency, hierarchy, and the struggle over who gets to decide. |
 | 4 | **Relationship Knots** | S73–S96 | D73–D96 | **Active playtest pack:** affection, rivalry, obligation, dependence, boundaries, and unfinished connection. |
-| 5 | **Emotional Pressure** | S97–S120 | D97–D120 | Longing, insecurity, validation, resentment, grief, hope, shame, and emotional contradiction. |
+| 5 | **Emotional Pressure** | S97–S120 | D97–D120 | **Active playtest pack:** longing, insecurity, validation, resentment, grief, hope, shame, and emotional contradiction. |
 | 6 | **Secrets & Schemes** | S121–S144 | D121–D144 | Concealment, investigation, recruitment, misdirection, confession, and plans under pressure. |
 | 7 | **Absurd Commitment** | S145–S168 | D145–D168 | Impossible logic, literal commitment, grounded responses, recurring nonsense, and heightened consequence. |
 | 8 | **Rules, Rituals & Institutions** | S169–S192 | D169–D192 | Bureaucracy, standards, customs, systems, traditions, and institutional behavior. |
@@ -1431,9 +1431,11 @@ Core Foundations establishes one published example in every subtheme.
 | `cards/everyday-friction.js` | Pack 2's 48 active playtest cards. |
 | `cards/power-games.js` | Pack 3's 48 active playtest cards. |
 | `cards/relationship-knots.js` | Pack 4's 48 active playtest cards. |
+| `cards/emotional-pressure.js` | Pack 5's 48 active playtest cards. |
 | `cards/candidates/everyday-friction-candidate-pool.json` | The complete Pack 2 drafting pool and editorial dispositions. |
 | `cards/candidates/power-games-candidate-pool.json` | The complete Pack 3 drafting pool and editorial dispositions. |
 | `cards/candidates/relationship-knots-candidate-pool.json` | The complete Pack 4 drafting pool and editorial dispositions. |
+| `cards/candidates/emotional-pressure-candidate-pool.json` | The complete Pack 5 drafting pool and editorial dispositions. |
 | `cards.js` | Runtime aggregator that preserves the application's existing `IMPROMPT_CARDS` interface. |
 | `cards/card.schema.json` | JSON Schema for an individual card. |
 | `cards/pack.schema.json` | JSON Schema for a pack. |
@@ -1490,4 +1492,18 @@ Relationship Knots is the third expansion authored under this Bible. It is activ
 The pack provides one S73–S96 or D73–D96 card in every formal subtheme. It adds seven coach roles—Attachment Seeker, Boundary Keeper, Confidant, Loyalist, Memory Keeper, Peacemaker, and Reconciler—and fifteen relationship-analysis motifs without changing the visible seven-category system.
 
 With Core Foundations, Everyday Friction, Power Games, and Relationship Knots, the active library now contains 96 Stances and 96 Drives, or 192 total cards. Relationship Knots remains subject to independent blind reads and repeated live troupe playtesting before final publication.
+
+# Appendix F — Emotional Pressure implementation
+
+Emotional Pressure is the fourth expansion authored under this Bible. It is active in Imprompt v0.12.0 with internal status `playtest`.
+
+- Pack brief: `docs/packs/EMOTIONAL-PRESSURE-PACK-BRIEF.md`
+- Authoring matrix: `docs/packs/EMOTIONAL-PRESSURE-AUTHORING-MATRIX.md`
+- Candidate pool: `docs/packs/EMOTIONAL-PRESSURE-CANDIDATE-POOL.md`
+- Machine-readable candidates: `cards/candidates/emotional-pressure-candidate-pool.json`
+- Runtime module: `cards/emotional-pressure.js`
+
+The pack provides one S97–S120 or D97–D120 card in every formal subtheme. It adds six coach roles—Griever, Hope Keeper, Reassurance Seeker, Shame Bearer, Emotional Buffer, and Comforter—and fifteen emotional-analysis motifs without changing the visible seven-category system.
+
+With Core Foundations, Everyday Friction, Power Games, Relationship Knots, and Emotional Pressure, the active library now contains 120 Stances and 120 Drives, or 240 total cards. Emotional Pressure remains subject to independent blind reads and repeated live troupe playtesting before final publication.
 

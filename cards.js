@@ -6,7 +6,8 @@
         require("./cards/core-foundations.js"),
         require("./cards/everyday-friction.js"),
         require("./cards/power-games.js"),
-        require("./cards/relationship-knots.js")
+        require("./cards/relationship-knots.js"),
+        require("./cards/emotional-pressure.js")
       ]
     : (root.IMPROMPT_CARD_PACKS || []);
   const cards = factory(bible, packs);

@@ -53,10 +53,10 @@ for (const motif of ["access", "allegiance", "autonomy", "compliance", "hierarch
   assert.ok(bible.motifs.includes(motif), `Missing Power Games motif: ${motif}`);
 }
 
-assert.equal(cards.libraryPlanVersion, "1.3.0");
-assert.equal(cards.stances.length, 96);
-assert.equal(cards.drives.length, 96);
-assert.equal(cards.activePackCount, 4);
-assert.equal(cards.playtestPackCount, 3);
+assert.equal(cards.libraryPlanVersion, "1.4.0");
+assert.equal(cards.stances.length, 120);
+assert.equal(cards.drives.length, 120);
+assert.equal(cards.activePackCount, 5);
+assert.equal(cards.playtestPackCount, 4);
 
 console.log("✓ Power Games pack, 64-card candidate pool, quota matrix, and power metadata passed");

@@ -5,7 +5,7 @@
 - **1 Stance** — how the performer enters, interprets, or reacts within the scene.
 - **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The active library now contains **96 Stances and 96 Drives** across Core Foundations plus the Everyday Friction, Power Games, and Relationship Knots playtest packs. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
+The active library now contains **120 Stances and 120 Drives** across Core Foundations plus the Everyday Friction, Power Games, Relationship Knots, and Emotional Pressure playtest packs. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
 
 ## Open the live game
 
@@ -19,6 +19,31 @@ The active library now contains **96 Stances and 96 Drives** across Core Foundat
   Scan the code or open<br>
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
+
+## What is new in v0.12.0
+
+v0.12.0 adds **Pack 5: Emotional Pressure** as an active playtest pack:
+
+- 24 new Stances: S97–S120
+- 24 new Drives: D97–D120
+- 240 active cards total
+- 64-card documented candidate pool
+- completed 48-slot authoring matrix
+- emotional-pressure coach roles and motifs
+- automatic insertion of Pack 5 IDs into existing independent decks
+
+Emotional Pressure turns insecurity, validation, resentment, hope, grief, shame, and uncertainty into observable choices. The prompts do not ask performers merely to “be emotional.” They convert pressure into status behavior, reassurance seeking, practical care, concealment, recurring contradiction, hopeful reframing, or a specific objective.
+
+The expansion materially deepens **Emotional Stakes**, **Crown & Heart**, **Relationship Pressure**, **Past & Future**, and custom coach challenges centered on vulnerability, hope, reassurance, grief, courage, shame, or emotional labor. Every phone still shuffles independently; no exercise shares cards or deck order.
+
+Emotional Pressure is marked **playtest** pending independent blind reads and repeated live troupe testing. Its cards are available throughout Open Play, category-focused draws, Mirror and Paired exercises, custom exercises, gallery search, Practice Coverage, and immutable Scene Log snapshots.
+
+See:
+
+- `docs/packs/EMOTIONAL-PRESSURE-PACK-BRIEF.md`
+- `docs/packs/EMOTIONAL-PRESSURE-AUTHORING-MATRIX.md`
+- `docs/packs/EMOTIONAL-PRESSURE-CANDIDATE-POOL.md`
+- `cards/candidates/emotional-pressure-candidate-pool.json`
 
 ## What is new in v0.11.0
 
@@ -123,7 +148,7 @@ Every future 48-card pack must contribute one card to every subtheme. Across ten
 | 2 | Everyday Friction | S25–S48 | D25–D48 | **Playtest in v0.9.0** |
 | 3 | Power Games | S49–S72 | D49–D72 | **Playtest in v0.10.0** |
 | 4 | Relationship Knots | S73–S96 | D73–D96 | **Playtest in v0.11.0** |
-| 5 | Emotional Pressure | S97–S120 | D97–D120 | Planned |
+| 5 | Emotional Pressure | S97–S120 | D97–D120 | **Playtest in v0.12.0** |
 | 6 | Secrets & Schemes | S121–S144 | D121–D144 | Planned |
 | 7 | Absurd Commitment | S145–S168 | D145–D168 | Planned |
 | 8 | Rules, Rituals & Institutions | S169–S192 | D169–D192 | Planned |
@@ -284,7 +309,7 @@ Imprompt stores working state in browser local storage. A phone knows only its o
 
 The general **Invite players** QR always points to the plain public URL. Guided-exercise links contain only coaching configuration.
 
-Existing v0.5.x through v0.10.0 state remains compatible. Pack 4 IDs are inserted at randomized positions in each phone’s remaining queues without resetting current prompts, sessions, completed scenes, custom exercises, or consumed earlier cards.
+Existing v0.5.x through v0.11.0 state remains compatible. Pack 5 IDs are inserted at randomized positions in each phone’s remaining queues without resetting current prompts, sessions, completed scenes, custom exercises, or consumed earlier cards.
 
 ## Card-library architecture
 
@@ -300,6 +325,8 @@ cards/everyday-friction.js
 cards/power-games.js
     ↓
 cards/relationship-knots.js
+    ↓
+cards/emotional-pressure.js
     ↓
 cards.js
 ```
@@ -338,6 +365,7 @@ cards/core-foundations.js       # published
 cards/everyday-friction.js      # playtest
 cards/power-games.js            # playtest
 cards/relationship-knots.js     # playtest
+cards/emotional-pressure.js     # playtest
 ```
 
 ## Run locally
@@ -362,7 +390,7 @@ npm run audit:cards
 npm run audit:cards:write
 ```
 
-`npm test` validates the application, deck engine, exercises, share links, QR generation, Card Bible taxonomy, all four active packs, hidden-information heuristics, pack quotas, migration behavior, and duplicate gates.
+`npm test` validates the application, deck engine, exercises, share links, QR generation, Card Bible taxonomy, all five active packs, hidden-information heuristics, pack quotas, migration behavior, and duplicate gates.
 
 `npm run audit:cards:write` regenerates:
 
@@ -408,15 +436,18 @@ All application assets use relative paths and work under the GitHub Pages projec
 ├── RELEASE-NOTES-v0.9.0.md
 ├── RELEASE-NOTES-v0.10.0.md
 ├── RELEASE-NOTES-v0.11.0.md
+├── RELEASE-NOTES-v0.12.0.md
 ├── cards/
 │   ├── core-foundations.js
 │   ├── everyday-friction.js
 │   ├── power-games.js
 │   ├── relationship-knots.js
+│   ├── emotional-pressure.js
 │   ├── candidates/
 │   │   ├── everyday-friction-candidate-pool.json
 │   │   ├── power-games-candidate-pool.json
-│   │   └── relationship-knots-candidate-pool.json
+│   │   ├── relationship-knots-candidate-pool.json
+│   │   └── emotional-pressure-candidate-pool.json
 │   ├── card.schema.json
 │   └── pack.schema.json
 ├── docs/
@@ -433,7 +464,10 @@ All application assets use relative paths and work under the GitHub Pages projec
 │       ├── POWER-GAMES-CANDIDATE-POOL.md
 │       ├── RELATIONSHIP-KNOTS-PACK-BRIEF.md
 │       ├── RELATIONSHIP-KNOTS-AUTHORING-MATRIX.md
-│       └── RELATIONSHIP-KNOTS-CANDIDATE-POOL.md
+│       ├── RELATIONSHIP-KNOTS-CANDIDATE-POOL.md
+│       ├── EMOTIONAL-PRESSURE-PACK-BRIEF.md
+│       ├── EMOTIONAL-PRESSURE-AUTHORING-MATRIX.md
+│       └── EMOTIONAL-PRESSURE-CANDIDATE-POOL.md
 ├── tools/
 │   ├── card-validator.js
 │   └── card-audit.js
@@ -454,6 +488,7 @@ All application assets use relative paths and work under the GitHub Pages projec
     ├── everyday-friction.test.js
     ├── power-games.test.js
     ├── relationship-knots.test.js
+    ├── emotional-pressure.test.js
     ├── browser-card-loading.test.js
     ├── app-content.test.js
     ├── deck-engine.test.js

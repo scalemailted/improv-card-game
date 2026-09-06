@@ -9,7 +9,7 @@
   "use strict";
 
   const CARD_SCHEMA_VERSION = 1;
-  const LIBRARY_PLAN_VERSION = "1.3.0";
+  const LIBRARY_PLAN_VERSION = "1.4.0";
   const TARGET_STANCE_COUNT = 240;
   const TARGET_DRIVE_COUNT = 240;
 
@@ -340,7 +340,13 @@
     { id: "loyalist", label: "Loyalist", definition: "Treats allegiance to a person or relationship as a defining obligation." },
     { id: "memory-keeper", label: "Memory Keeper", definition: "Uses shared history and remembrance to define the present relationship." },
     { id: "peacemaker", label: "Peacemaker", definition: "Protects harmony, lowers conflict, or keeps people connected." },
-    { id: "reconciler", label: "Reconciler", definition: "Works to restore, redefine, or preserve a strained connection." }
+    { id: "reconciler", label: "Reconciler", definition: "Works to restore, redefine, or preserve a strained connection." },
+    { id: "griever", label: "Griever", definition: "Lets loss, absence, or an ending shape attention and choices." },
+    { id: "hope-keeper", label: "Hope Keeper", definition: "Protects possibility and keeps investing while outcomes remain uncertain." },
+    { id: "reassurance-seeker", label: "Reassurance Seeker", definition: "Looks repeatedly for proof of safety, acceptance, or worth." },
+    { id: "shame-bearer", label: "Shame Bearer", definition: "Anticipates judgment and protects a threatened sense of worth." },
+    { id: "emotional-buffer", label: "Emotional Buffer", definition: "Absorbs, redirects, or softens emotional impact for other people." },
+    { id: "comforter", label: "Comforter", definition: "Responds to pressure by offering care, steadiness, and practical support." }
   ];
 
   const motifs = [
@@ -353,7 +359,9 @@
     "absurdity", "loss", "access", "allegiance", "autonomy", "compliance", "hierarchy", "influence",
     "leverage", "legitimacy", "patronage", "reputation", "succession", "territory",
     "abandonment", "affection", "attachment", "boundaries", "closeness", "connection", "distance",
-    "forgiveness", "intimacy", "jealousy", "memory", "promise", "reconciliation", "resentment", "sacrifice"
+    "forgiveness", "intimacy", "jealousy", "memory", "promise", "reconciliation", "resentment", "sacrifice",
+    "anxiety", "comfort", "courage", "disappointment", "dread", "grief", "hope", "longing",
+    "reassurance", "relief", "resilience", "shame", "uncertainty", "vulnerability", "worth"
   ];
 
   const packPlan = [
@@ -405,7 +413,7 @@
       id: "emotional-pressure",
       sequence: 5,
       title: "Emotional Pressure",
-      status: "planned",
+      status: "playtest",
       stanceRange: [97, 120],
       driveRange: [97, 120],
       targetStances: 24,

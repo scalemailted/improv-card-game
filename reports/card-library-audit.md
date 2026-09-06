@@ -1,6 +1,6 @@
 # Imprompt Card Library Audit
 
-Generated: 2026-09-06T22:12:38.358Z
+Generated: 2026-09-06T22:35:47.989Z
 
 **Result:** PASS
 
@@ -8,24 +8,24 @@ Generated: 2026-09-06T22:12:38.358Z
 
 | Measure | Available in app | v1.0 target | Progress |
 |---|---:|---:|---:|
-| Active packs | 5 | 10 | 50.0% |
+| Active packs | 6 | 10 | 60.0% |
 | Published packs | 1 | 10 | 10.0% |
-| Playtest packs | 4 | — | — |
-| Stance cards | 120 | 240 | 50.0% |
-| Drive cards | 120 | 240 | 50.0% |
-| Total cards | 240 | 480 | 50.0% |
+| Playtest packs | 5 | — | — |
+| Stance cards | 144 | 240 | 60.0% |
+| Drive cards | 144 | 240 | 60.0% |
+| Total cards | 288 | 480 | 60.0% |
 
 ## Active category counts
 
 | Deck | Category | Available | v1.0 target |
 |---|---|---:|---:|
-| Stance | Status & Authority | 30 | 60 |
-| Stance | History & Relationship | 30 | 60 |
-| Stance | Emotional Assumptions | 30 | 60 |
-| Stance | Worldview & Absurdity | 30 | 60 |
-| Drive | Direct Objectives | 60 | 120 |
-| Drive | Secrets & Avoidance | 30 | 60 |
-| Drive | Repeatable Behaviors | 30 | 60 |
+| Stance | Status & Authority | 36 | 60 |
+| Stance | History & Relationship | 36 | 60 |
+| Stance | Emotional Assumptions | 36 | 60 |
+| Stance | Worldview & Absurdity | 36 | 60 |
+| Drive | Direct Objectives | 72 | 120 |
+| Drive | Secrets & Avoidance | 36 | 60 |
+| Drive | Repeatable Behaviors | 36 | 60 |
 
 ## Editorial metadata distribution
 
@@ -33,31 +33,31 @@ Generated: 2026-09-06T22:12:38.358Z
 
 | Level | Cards |
 |---|---:|
-| beginner | 102 |
-| intermediate | 108 |
-| advanced | 30 |
+| beginner | 125 |
+| intermediate | 130 |
+| advanced | 33 |
 
 ### Intensity
 
 | Level | Cards |
 |---|---:|
 | low | 27 |
-| medium | 131 |
-| high | 82 |
+| medium | 160 |
+| high | 101 |
 
 ### Tone
 
 | Tone | Cards |
 |---|---:|
-| grounded | 186 |
-| heightened | 42 |
-| absurd | 1 |
+| grounded | 221 |
+| heightened | 53 |
+| absurd | 3 |
 | flexible | 11 |
 
 ## Copy profile
 
-- Average Stance instruction: **16.9 words**
-- Average Drive instruction: **13.2 words**
+- Average Stance instruction: **17.2 words**
+- Average Drive instruction: **13.6 words**
 
 ## Automated acceptance results
 

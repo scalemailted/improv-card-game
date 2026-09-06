@@ -5,7 +5,7 @@
 - **1 Stance** — how the performer enters, interprets, or reacts within the scene.
 - **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The active library now contains **120 Stances and 120 Drives** across Core Foundations plus the Everyday Friction, Power Games, Relationship Knots, and Emotional Pressure playtest packs. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
+The active library now contains **144 Stances and 144 Drives** across Core Foundations plus the Everyday Friction, Power Games, Relationship Knots, Emotional Pressure, and Secrets & Schemes playtest packs. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
 
 ## Open the live game
 
@@ -19,6 +19,31 @@ The active library now contains **120 Stances and 120 Drives** across Core Found
   Scan the code or open<br>
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
+
+## What is new in v0.13.0
+
+v0.13.0 adds **Pack 6: Secrets & Schemes** as an active playtest pack:
+
+- 24 new Stances: S121–S144
+- 24 new Drives: D121–D144
+- 288 active cards total
+- 64-card documented candidate pool
+- completed 48-slot authoring matrix
+- secrecy, investigation, misdirection, and strategy metadata
+- automatic insertion of Pack 6 IDs into existing independent decks
+
+Secrets & Schemes turns concealed information, uncertain motives, investigation, recruitment, confession, and plans under pressure into observable choices. It does not require a crime, detective, spy, or conspiracy premise. The actual secret remains open while the card supplies a private behavior, objective, concealment strategy, or repeatable engine.
+
+The expansion materially deepens **Pursuer & Avoider**, **Status Clash**, **Crown & Heart**, **Past & Future**, **Relationship Pressure**, and custom coach challenges centered on information, trust, evidence, recruitment, suspicion, or misdirection. Every phone still shuffles independently; exercise links never share cards or deck order.
+
+Secrets & Schemes is marked **playtest** pending independent blind reads and repeated live troupe testing. Its cards are available throughout Open Play, category-focused draws, Mirror and Paired exercises, custom exercises, gallery search, Practice Coverage, and immutable Scene Log snapshots.
+
+See:
+
+- `docs/packs/SECRETS-SCHEMES-PACK-BRIEF.md`
+- `docs/packs/SECRETS-SCHEMES-AUTHORING-MATRIX.md`
+- `docs/packs/SECRETS-SCHEMES-CANDIDATE-POOL.md`
+- `cards/candidates/secrets-schemes-candidate-pool.json`
 
 ## What is new in v0.12.0
 
@@ -149,7 +174,7 @@ Every future 48-card pack must contribute one card to every subtheme. Across ten
 | 3 | Power Games | S49–S72 | D49–D72 | **Playtest in v0.10.0** |
 | 4 | Relationship Knots | S73–S96 | D73–D96 | **Playtest in v0.11.0** |
 | 5 | Emotional Pressure | S97–S120 | D97–D120 | **Playtest in v0.12.0** |
-| 6 | Secrets & Schemes | S121–S144 | D121–D144 | Planned |
+| 6 | Secrets & Schemes | S121–S144 | D121–D144 | **Playtest in v0.13.0** |
 | 7 | Absurd Commitment | S145–S168 | D145–D168 | Planned |
 | 8 | Rules, Rituals & Institutions | S169–S192 | D169–D192 | Planned |
 | 9 | Competition & Consequences | S193–S216 | D193–D216 | Planned |
@@ -309,7 +334,7 @@ Imprompt stores working state in browser local storage. A phone knows only its o
 
 The general **Invite players** QR always points to the plain public URL. Guided-exercise links contain only coaching configuration.
 
-Existing v0.5.x through v0.11.0 state remains compatible. Pack 5 IDs are inserted at randomized positions in each phone’s remaining queues without resetting current prompts, sessions, completed scenes, custom exercises, or consumed earlier cards.
+Existing v0.5.x through v0.12.0 state remains compatible. Pack 6 IDs are inserted at randomized positions in each phone’s remaining queues without resetting current prompts, sessions, completed scenes, custom exercises, or consumed earlier cards.
 
 ## Card-library architecture
 
@@ -327,6 +352,8 @@ cards/power-games.js
 cards/relationship-knots.js
     ↓
 cards/emotional-pressure.js
+    ↓
+cards/secrets-schemes.js
     ↓
 cards.js
 ```
@@ -366,6 +393,7 @@ cards/everyday-friction.js      # playtest
 cards/power-games.js            # playtest
 cards/relationship-knots.js     # playtest
 cards/emotional-pressure.js     # playtest
+cards/secrets-schemes.js        # playtest
 ```
 
 ## Run locally
@@ -390,7 +418,7 @@ npm run audit:cards
 npm run audit:cards:write
 ```
 
-`npm test` validates the application, deck engine, exercises, share links, QR generation, Card Bible taxonomy, all five active packs, hidden-information heuristics, pack quotas, migration behavior, and duplicate gates.
+`npm test` validates the application, deck engine, exercises, share links, QR generation, Card Bible taxonomy, all six active packs, hidden-information heuristics, pack quotas, migration behavior, and duplicate gates.
 
 `npm run audit:cards:write` regenerates:
 
@@ -437,17 +465,20 @@ All application assets use relative paths and work under the GitHub Pages projec
 ├── RELEASE-NOTES-v0.10.0.md
 ├── RELEASE-NOTES-v0.11.0.md
 ├── RELEASE-NOTES-v0.12.0.md
+├── RELEASE-NOTES-v0.13.0.md
 ├── cards/
 │   ├── core-foundations.js
 │   ├── everyday-friction.js
 │   ├── power-games.js
 │   ├── relationship-knots.js
 │   ├── emotional-pressure.js
+│   ├── secrets-schemes.js
 │   ├── candidates/
 │   │   ├── everyday-friction-candidate-pool.json
 │   │   ├── power-games-candidate-pool.json
 │   │   ├── relationship-knots-candidate-pool.json
-│   │   └── emotional-pressure-candidate-pool.json
+│   │   ├── emotional-pressure-candidate-pool.json
+│   │   └── secrets-schemes-candidate-pool.json
 │   ├── card.schema.json
 │   └── pack.schema.json
 ├── docs/
@@ -467,7 +498,10 @@ All application assets use relative paths and work under the GitHub Pages projec
 │       ├── RELATIONSHIP-KNOTS-CANDIDATE-POOL.md
 │       ├── EMOTIONAL-PRESSURE-PACK-BRIEF.md
 │       ├── EMOTIONAL-PRESSURE-AUTHORING-MATRIX.md
-│       └── EMOTIONAL-PRESSURE-CANDIDATE-POOL.md
+│       ├── EMOTIONAL-PRESSURE-CANDIDATE-POOL.md
+│       ├── SECRETS-SCHEMES-PACK-BRIEF.md
+│       ├── SECRETS-SCHEMES-AUTHORING-MATRIX.md
+│       └── SECRETS-SCHEMES-CANDIDATE-POOL.md
 ├── tools/
 │   ├── card-validator.js
 │   └── card-audit.js
@@ -489,6 +523,7 @@ All application assets use relative paths and work under the GitHub Pages projec
     ├── power-games.test.js
     ├── relationship-knots.test.js
     ├── emotional-pressure.test.js
+    ├── secrets-schemes.test.js
     ├── browser-card-loading.test.js
     ├── app-content.test.js
     ├── deck-engine.test.js

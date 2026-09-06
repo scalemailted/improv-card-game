@@ -9,7 +9,7 @@
   "use strict";
 
   const CARD_SCHEMA_VERSION = 1;
-  const LIBRARY_PLAN_VERSION = "1.4.0";
+  const LIBRARY_PLAN_VERSION = "1.5.0";
   const TARGET_STANCE_COUNT = 240;
   const TARGET_DRIVE_COUNT = 240;
 
@@ -346,7 +346,13 @@
     { id: "reassurance-seeker", label: "Reassurance Seeker", definition: "Looks repeatedly for proof of safety, acceptance, or worth." },
     { id: "shame-bearer", label: "Shame Bearer", definition: "Anticipates judgment and protects a threatened sense of worth." },
     { id: "emotional-buffer", label: "Emotional Buffer", definition: "Absorbs, redirects, or softens emotional impact for other people." },
-    { id: "comforter", label: "Comforter", definition: "Responds to pressure by offering care, steadiness, and practical support." }
+    { id: "comforter", label: "Comforter", definition: "Responds to pressure by offering care, steadiness, and practical support." },
+    { id: "conspirator", label: "Conspirator", definition: "Coordinates a hidden plan through selective trust, timing, and shared secrecy." },
+    { id: "informant", label: "Informant", definition: "Controls, trades, or selectively releases privileged information." },
+    { id: "skeptic", label: "Skeptic", definition: "Tests surface explanations and treats inconsistency as a reason to keep probing." },
+    { id: "witness", label: "Witness", definition: "Carries knowledge whose disclosure could change the relationship or situation." },
+    { id: "decoy", label: "Decoy", definition: "Redirects attention away from a vulnerable truth, person, motive, or plan." },
+    { id: "strategist", label: "Strategist", definition: "Sequences actions and information toward an outcome that is not yet fully visible." }
   ];
 
   const motifs = [
@@ -361,7 +367,9 @@
     "abandonment", "affection", "attachment", "boundaries", "closeness", "connection", "distance",
     "forgiveness", "intimacy", "jealousy", "memory", "promise", "reconciliation", "resentment", "sacrifice",
     "anxiety", "comfort", "courage", "disappointment", "dread", "grief", "hope", "longing",
-    "reassurance", "relief", "resilience", "shame", "uncertainty", "vulnerability", "worth"
+    "reassurance", "relief", "resilience", "shame", "uncertainty", "vulnerability", "worth",
+    "alibi", "clues", "confession", "conspiracy", "deception", "evidence", "information", "investigation",
+    "misdirection", "motive", "mystery", "recruitment", "strategy", "suspicion", "witness"
   ];
 
   const packPlan = [
@@ -424,7 +432,7 @@
       id: "secrets-schemes",
       sequence: 6,
       title: "Secrets & Schemes",
-      status: "planned",
+      status: "playtest",
       stanceRange: [121, 144],
       driveRange: [121, 144],
       targetStances: 24,

@@ -66,8 +66,6 @@
     driveInstruction: document.getElementById("driveInstruction"),
     stanceAction: document.getElementById("stanceAction"),
     driveAction: document.getElementById("driveAction"),
-    stanceKeptBadge: document.getElementById("stanceKeptBadge"),
-    driveKeptBadge: document.getElementById("driveKeptBadge"),
     completeButton: document.getElementById("completeButton"),
     showStancesButton: document.getElementById("showStancesButton"),
     showDrivesButton: document.getElementById("showDrivesButton"),
@@ -210,7 +208,6 @@
       title: isStance ? elements.stanceTitle : elements.driveTitle,
       instruction: isStance ? elements.stanceInstruction : elements.driveInstruction,
       action: isStance ? elements.stanceAction : elements.driveAction,
-      keptBadge: isStance ? elements.stanceKeptBadge : elements.driveKeptBadge,
       currentKey: isStance ? "stanceId" : "driveId",
       keptKey: isStance ? "stanceKept" : "driveKept"
     };
@@ -271,7 +268,6 @@
     config.button.classList.toggle("is-concealed", !isRevealed);
     config.button.classList.toggle("is-revealed", isRevealed);
     config.button.classList.toggle("is-kept", isRevealed && isKept);
-    config.keptBadge.hidden = !(isRevealed && isKept);
 
     if (!isRevealed) {
       const copy = hiddenCopy[type];

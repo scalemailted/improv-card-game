@@ -47,7 +47,7 @@ It does not state that the other performer respects that status. Their private p
 
 ## Category visual language
 
-Version 0.5.1 gives each of the seven prompt categories a consistent **color, label, and SVG icon**. On revealed cards, the category chip is centered in the top metadata row while **STANCE** or **DRIVE** sits at the top right. In the gallery, the card position remains at the top left. This keeps the prompt title and acting instruction visually dominant while preserving instant category recognition. The category treatment appears only after a private play card is revealed, so a face-down card does not leak information. The same visual system is used in the prompt session, card gallery, and Keep/Veto dialog.
+Version 0.5.2 gives each of the seven prompt categories a consistent **color, label, and SVG icon**. On revealed cards, the category chip is aligned to the far left of the top metadata row while **STANCE** or **DRIVE** remains aligned to the far right. The gallery uses the same balanced two-part header and moves the card position to the bottom metadata line beside the card ID. This keeps the prompt title and acting instruction visually dominant while preserving instant category recognition. The category treatment appears only after a private play card is revealed, so a face-down card does not leak information. The same visual system is used in the prompt session, card gallery, and Keep/Veto dialog.
 
 | Category | Visual cue | Applies to |
 |---|---|---|
@@ -67,7 +67,7 @@ Color is never the only signal: every chip also retains a written label and uniq
 - Independent browser-local deck on every phone.
 - Private reveal-on-tap Stance and Drive panels.
 - Category-specific color-and-icon chips on revealed cards, gallery cards, and card options.
-- Compact three-part card header: status/count at left, category centered, and Stance/Drive at right.
+- Balanced two-part card header: category at the far left and Stance/Drive at the far right.
 - Per-card Keep and Veto controls.
 - Vetoed cards return to their own decks.
 - No repeated normal draw until the applicable 24-card cycle is exhausted.

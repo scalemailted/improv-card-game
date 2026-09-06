@@ -38,21 +38,29 @@ assert.match(app, /clearCategoryStyle\(config\.button, config\.category\)/);
 
 const stanceTopline = html.match(/<span class="card-topline">([\s\S]*?)<\/span>\s*<span class="card-role" id="stanceRole">/);
 assert.ok(stanceTopline, "Stance top metadata row should be present");
-assert.ok(stanceTopline[1].indexOf('id="stanceKeptBadge"') < stanceTopline[1].indexOf('id="stanceCategory"'));
 assert.ok(stanceTopline[1].indexOf('id="stanceCategory"') < stanceTopline[1].indexOf('>STANCE<'));
+assert.doesNotMatch(stanceTopline[1], /stanceKeptBadge|card-status-slot/);
 
 const driveTopline = html.match(/<span class="card-topline">([\s\S]*?)<\/span>\s*<span class="card-role" id="driveRole">/);
 assert.ok(driveTopline, "Drive top metadata row should be present");
-assert.ok(driveTopline[1].indexOf('id="driveKeptBadge"') < driveTopline[1].indexOf('id="driveCategory"'));
 assert.ok(driveTopline[1].indexOf('id="driveCategory"') < driveTopline[1].indexOf('>DRIVE<'));
+assert.doesNotMatch(driveTopline[1], /driveKeptBadge|card-status-slot/);
 
 const galleryTopline = html.match(/<div class="gallery-card-topline">([\s\S]*?)<\/div>\s*<h2 id="galleryTitle">/);
 assert.ok(galleryTopline, "Gallery top metadata row should be present");
-assert.ok(galleryTopline[1].indexOf('id="galleryCount"') < galleryTopline[1].indexOf('id="galleryCategory"'));
 assert.ok(galleryTopline[1].indexOf('id="galleryCategory"') < galleryTopline[1].indexOf('id="galleryType"'));
-assert.match(styles, /\.card-topline\s*\{[\s\S]*grid-template-columns:\s*minmax\(0, 1fr\) auto minmax\(0, 1fr\)/);
-assert.match(styles, /\.card-category\s*\{[\s\S]*grid-column:\s*2/);
-assert.match(styles, /\.card-type\s*\{[\s\S]*grid-column:\s*3/);
+assert.doesNotMatch(galleryTopline[1], /galleryCount/);
+
+const galleryMeta = html.match(/<div class="gallery-meta">([\s\S]*?)<\/div>/);
+assert.ok(galleryMeta, "Gallery bottom metadata row should be present");
+assert.ok(galleryMeta[1].indexOf('id="galleryId"') < galleryMeta[1].indexOf('id="galleryCount"'));
+
+assert.match(styles, /\.card-topline\s*\{[\s\S]*?display:\s*flex/);
+assert.match(styles, /\.card-topline\s*\{[\s\S]*?justify-content:\s*space-between/);
+assert.match(styles, /\.card-category\s*\{[\s\S]*?justify-content:\s*flex-start/);
+assert.match(styles, /\.gallery-card-topline\s*\{[\s\S]*?display:\s*flex/);
+assert.match(styles, /\.gallery-category\s*\{[\s\S]*?justify-content:\s*flex-start/);
+assert.doesNotMatch(app, /stanceKeptBadge|driveKeptBadge|config\.keptBadge/);
 
 const expectedCategories = [
   "Status & Authority",
@@ -89,4 +97,4 @@ for (const phrase of retiredAssumptions) {
   assert.equal(stanceCopy.includes(phrase), false, `Retired other-player assumption remains: ${phrase}`);
 }
 
-console.log("✓ Imprompt title, menu, reveal, centered category header, footer, and Stance-copy checks passed");
+console.log("✓ Imprompt title, menu, reveal, left-aligned category header, footer, and Stance-copy checks passed");

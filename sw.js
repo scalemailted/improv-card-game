@@ -1,29 +1,30 @@
 "use strict";
 
-const CACHE_NAME = "imprompt-v0.13.0";
+const CACHE_NAME = "imprompt-v0.14.0";
 const OWNED_CACHE_PREFIXES = ["imprompt-", "two-secrets-"];
 const BASE_URL = new URL("./", self.location.href);
 const PRECACHE_PATHS = [
   "./",
   "./index.html",
-  "./styles.css?v=0.13.0",
-  "./card-bible.js?v=0.13.0",
-  "./cards/core-foundations.js?v=0.13.0",
-  "./cards/everyday-friction.js?v=0.13.0",
-  "./cards/power-games.js?v=0.13.0",
-  "./cards/relationship-knots.js?v=0.13.0",
-  "./cards/emotional-pressure.js?v=0.13.0",
-  "./cards/secrets-schemes.js?v=0.13.0",
-  "./cards.js?v=0.13.0",
-  "./exercises.js?v=0.13.0",
-  "./deck-engine.js?v=0.13.0",
-  "./vendor/qrcode-core.js?v=0.13.0",
-  "./app.js?v=0.13.0",
-  "./manifest.webmanifest?v=0.13.0",
-  "./assets/improv-card-game-qr.png?v=0.13.0",
-  "./icons/icon.svg?v=0.13.0",
-  "./icons/icon-192.png?v=0.13.0",
-  "./icons/icon-512.png?v=0.13.0"
+  "./styles.css?v=0.14.0",
+  "./card-bible.js?v=0.14.0",
+  "./cards/core-foundations.js?v=0.14.0",
+  "./cards/everyday-friction.js?v=0.14.0",
+  "./cards/power-games.js?v=0.14.0",
+  "./cards/relationship-knots.js?v=0.14.0",
+  "./cards/emotional-pressure.js?v=0.14.0",
+  "./cards/secrets-schemes.js?v=0.14.0",
+  "./cards/absurd-commitment.js?v=0.14.0",
+  "./cards.js?v=0.14.0",
+  "./exercises.js?v=0.14.0",
+  "./deck-engine.js?v=0.14.0",
+  "./vendor/qrcode-core.js?v=0.14.0",
+  "./app.js?v=0.14.0",
+  "./manifest.webmanifest?v=0.14.0",
+  "./assets/improv-card-game-qr.png?v=0.14.0",
+  "./icons/icon.svg?v=0.14.0",
+  "./icons/icon-192.png?v=0.14.0",
+  "./icons/icon-512.png?v=0.14.0"
 ];
 const PRECACHE_URLS = PRECACHE_PATHS.map((path) => new URL(path, BASE_URL).href);
 

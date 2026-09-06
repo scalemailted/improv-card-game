@@ -6,9 +6,9 @@ const bible = require("../card-bible.js");
 const validator = require("../tools/card-validator.js");
 
 const allCards = [...cards.stances, ...cards.drives];
-assert.equal(new Set(allCards.map((card) => card.id)).size, 288);
-assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.title))).size, 288);
-assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.instruction))).size, 288);
+assert.equal(new Set(allCards.map((card) => card.id)).size, 336);
+assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.title))).size, 336);
+assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.instruction))).size, 336);
 
 for (const card of allCards) {
   const result = validator.validateCard(card);
@@ -32,14 +32,17 @@ for (const card of allCards) {
   } else if (card.packId === "emotional-pressure") {
     assert.equal(card.status, "playtest");
     assert.equal(card.contentVersion, "0.12.0");
-  } else {
-    assert.equal(card.packId, "secrets-schemes");
+  } else if (card.packId === "secrets-schemes") {
     assert.equal(card.status, "playtest");
     assert.equal(card.contentVersion, "0.13.0");
+  } else {
+    assert.equal(card.packId, "absurd-commitment");
+    assert.equal(card.status, "playtest");
+    assert.equal(card.contentVersion, "0.14.0");
   }
 }
 
-for (const packId of ["core-foundations", "everyday-friction", "power-games", "relationship-knots", "emotional-pressure", "secrets-schemes"]) {
+for (const packId of ["core-foundations", "everyday-friction", "power-games", "relationship-knots", "emotional-pressure", "secrets-schemes", "absurd-commitment"]) {
   for (const category of bible.categories) {
     const categoryCards = allCards.filter((card) => card.packId === packId && card.categoryId === category.id);
     const expected = category.deck === "stance" ? 6 : category.id === "direct-objectives" ? 12 : 6;

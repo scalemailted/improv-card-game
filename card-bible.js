@@ -9,7 +9,7 @@
   "use strict";
 
   const CARD_SCHEMA_VERSION = 1;
-  const LIBRARY_PLAN_VERSION = "1.5.0";
+  const LIBRARY_PLAN_VERSION = "1.6.0";
   const TARGET_STANCE_COUNT = 240;
   const TARGET_DRIVE_COUNT = 240;
 
@@ -352,7 +352,13 @@
     { id: "skeptic", label: "Skeptic", definition: "Tests surface explanations and treats inconsistency as a reason to keep probing." },
     { id: "witness", label: "Witness", definition: "Carries knowledge whose disclosure could change the relationship or situation." },
     { id: "decoy", label: "Decoy", definition: "Redirects attention away from a vulnerable truth, person, motive, or plan." },
-    { id: "strategist", label: "Strategist", definition: "Sequences actions and information toward an outcome that is not yet fully visible." }
+    { id: "strategist", label: "Strategist", definition: "Sequences actions and information toward an outcome that is not yet fully visible." },
+    { id: "believer", label: "Believer", definition: "Treats an unusual premise as true enough to guide immediate behavior." },
+    { id: "literalist", label: "Literalist", definition: "Turns language, symbols, and rules into concrete obligations and consequences." },
+    { id: "normalizer", label: "Normalizer", definition: "Makes extraordinary developments feel routine through calm acceptance and practical behavior." },
+    { id: "world-builder", label: "World Builder", definition: "Expands an unusual premise through consistent, responsive internal logic." },
+    { id: "consequence-keeper", label: "Consequence Keeper", definition: "Tracks what an unusual premise materially requires, changes, or costs." },
+    { id: "reality-tester", label: "Reality Tester", definition: "Tests the limits of a strange world through questions, evidence, and practical action." }
   ];
 
   const motifs = [
@@ -369,7 +375,9 @@
     "anxiety", "comfort", "courage", "disappointment", "dread", "grief", "hope", "longing",
     "reassurance", "relief", "resilience", "shame", "uncertainty", "vulnerability", "worth",
     "alibi", "clues", "confession", "conspiracy", "deception", "evidence", "information", "investigation",
-    "misdirection", "motive", "mystery", "recruitment", "strategy", "suspicion", "witness"
+    "misdirection", "motive", "mystery", "recruitment", "strategy", "suspicion", "witness",
+    "cause-effect", "consequences", "impossibility", "literalism", "logic", "metaphor", "normality",
+    "premise", "prophecy", "reality", "safety", "scale", "symbols", "transformation"
   ];
 
   const packPlan = [
@@ -443,12 +451,12 @@
       id: "absurd-commitment",
       sequence: 7,
       title: "Absurd Commitment",
-      status: "planned",
+      status: "playtest",
       stanceRange: [145, 168],
       driveRange: [145, 168],
       targetStances: 24,
       targetDrives: 24,
-      focus: "Impossible logic, literal commitment, grounded responses, recurring nonsense, and heightened consequence."
+      focus: "Impossible logic, literal commitment, grounded reaction, recurring nonsense, and heightened consequence."
     },
     {
       id: "rules-rituals-institutions",

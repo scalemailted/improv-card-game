@@ -53,10 +53,10 @@ for (const motif of ["abandonment", "affection", "attachment", "boundaries", "cl
   assert.ok(bible.motifs.includes(motif), `Missing Relationship Knots motif: ${motif}`);
 }
 
-assert.equal(cards.libraryPlanVersion, "1.5.0");
-assert.equal(cards.stances.length, 144);
-assert.equal(cards.drives.length, 144);
-assert.equal(cards.activePackCount, 6);
-assert.equal(cards.playtestPackCount, 5);
+assert.equal(cards.libraryPlanVersion, "1.6.0");
+assert.equal(cards.stances.length, 168);
+assert.equal(cards.drives.length, 168);
+assert.equal(cards.activePackCount, 7);
+assert.equal(cards.playtestPackCount, 6);
 
 console.log("✓ Relationship Knots pack, 64-card candidate pool, quota matrix, and relationship metadata passed");

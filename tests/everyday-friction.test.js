@@ -47,8 +47,8 @@ for (const motif of ["communication", "convenience", "etiquette", "fairness", "m
   assert.ok(bible.motifs.includes(motif), `Missing Everyday Friction motif: ${motif}`);
 }
 
-assert.equal(cards.libraryPlanVersion, "1.5.0");
-assert.equal(cards.stances.length, 144);
-assert.equal(cards.drives.length, 144);
+assert.equal(cards.libraryPlanVersion, "1.6.0");
+assert.equal(cards.stances.length, 168);
+assert.equal(cards.drives.length, 168);
 
 console.log("✓ Everyday Friction pack, 64-card candidate pool, quota matrix, and metadata passed");

@@ -28,6 +28,52 @@ assert.deepEqual(state.history, []);
 assert.deepEqual(state.sessions, []);
 assert.equal(state.activeSessionId, null);
 assert.deepEqual(engine.remaining(state), { stances: 24, drives: 24 });
+assert.deepEqual(state.library.stanceIds, cards.stances.map((card) => card.id));
+assert.deepEqual(state.library.driveIds, cards.drives.map((card) => card.id));
+
+// Future pack releases are inserted into an existing independent deck without resetting history or current state.
+const upgradeState = engine.createState(cards, "UPGRADE1", seededRandom(77));
+const expandedCards = {
+  ...cards,
+  stances: [...cards.stances, { ...cards.stances[0], id: "S25", packId: "everyday-friction", contentVersion: "0.1.0", status: "draft" }],
+  drives: [...cards.drives, { ...cards.drives[0], id: "D25", packId: "everyday-friction", contentVersion: "0.1.0", status: "draft" }]
+};
+const upgradeResult = engine.reconcileStateWithLibrary(upgradeState, expandedCards, seededRandom(78));
+assert.equal(upgradeResult.changed, true);
+assert.deepEqual(upgradeResult.added.stance, ["S25"]);
+assert.deepEqual(upgradeResult.added.drive, ["D25"]);
+assert.ok(upgradeState.stanceQueue.includes("S25"));
+assert.ok(upgradeState.driveQueue.includes("D25"));
+assert.equal(upgradeState.instanceId, "UPGRADE1");
+assert.deepEqual(upgradeState.history, []);
+assert.equal(engine.isStateUsable(upgradeState, expandedCards, "UPGRADE1"), true);
+
+// A v0.7-era state without a library snapshot treats S01-S24/D01-D24 as known and inserts only new pack IDs.
+const preBibleState = engine.createState(cards, "UPGRADE2", seededRandom(79));
+delete preBibleState.library;
+preBibleState.stanceQueue.shift();
+preBibleState.driveQueue.shift();
+const preBibleStanceLength = preBibleState.stanceQueue.length;
+const preBibleDriveLength = preBibleState.driveQueue.length;
+const preBibleResult = engine.reconcileStateWithLibrary(preBibleState, expandedCards, seededRandom(80));
+assert.deepEqual(preBibleResult.added.stance, ["S25"]);
+assert.deepEqual(preBibleResult.added.drive, ["D25"]);
+assert.equal(preBibleState.stanceQueue.length, preBibleStanceLength + 1, "Consumed Core cards must not be reinserted during upgrade");
+assert.equal(preBibleState.driveQueue.length, preBibleDriveLength + 1, "Consumed Core cards must not be reinserted during upgrade");
+
+// Retired IDs are removed during reconciliation before the state is accepted by the application.
+const retirementState = engine.createState(cards, "RETIRE01", seededRandom(81));
+const reducedCards = {
+  ...cards,
+  stances: cards.stances.filter((card) => card.id !== "S24"),
+  drives: cards.drives.filter((card) => card.id !== "D24")
+};
+const retirementResult = engine.reconcileStateWithLibrary(retirementState, reducedCards, seededRandom(82));
+assert.ok(retirementResult.removed.stance.includes("S24"));
+assert.ok(retirementResult.removed.drive.includes("D24"));
+assert.equal(retirementState.stanceQueue.includes("S24"), false);
+assert.equal(retirementState.driveQueue.includes("D24"), false);
+assert.equal(engine.isStateUsable(retirementState, reducedCards, "RETIRE01"), true);
 
 // Open Play creates a session, but starting a scene never pre-draws a card.
 const openSelection = exercises.createSessionSelection(exercises.OPEN_PLAY, "all");
@@ -58,6 +104,12 @@ assert.equal(firstEntry.stanceId, firstStanceId);
 assert.equal(firstEntry.driveId, firstDriveId);
 assert.deepEqual(firstEntry.stanceSnapshot, engine.snapshotCard(engine.findCard(cards, "stance", firstStanceId)));
 assert.deepEqual(firstEntry.driveSnapshot, engine.snapshotCard(engine.findCard(cards, "drive", firstDriveId)));
+assert.equal(firstEntry.stanceSnapshot.packId, "core-foundations");
+assert.equal(firstEntry.driveSnapshot.packId, "core-foundations");
+assert.ok(firstEntry.stanceSnapshot.subthemeId);
+assert.ok(firstEntry.driveSnapshot.subthemeId);
+assert.ok(firstEntry.stanceSnapshot.coachRoles.length >= 1);
+assert.ok(firstEntry.driveSnapshot.motifs.length >= 1);
 assert.equal(firstEntry.exerciseSnapshot.name, "Open Play");
 assert.equal(engine.activeSession(state).scenesCompleted, 1);
 assert.equal(state.current, null);

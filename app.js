@@ -111,12 +111,19 @@
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
       const parsed = raw ? JSON.parse(raw) : null;
-      if (parsed && engine.isStateUsable(parsed, cards, parsed.instanceId)) {
-        cleanLegacyHash();
-        return parsed;
+      if (parsed && parsed.version === engine.STATE_VERSION) {
+        const reconciliation = engine.reconcileStateWithLibrary(parsed, cards);
+        if (engine.isStateUsable(parsed, cards, parsed.instanceId)) {
+          if (reconciliation.changed) {
+            saveState(parsed);
+          }
+          cleanLegacyHash();
+          return parsed;
+        }
       }
       const migrated = parsed ? engine.migrateLegacyState(parsed, cards) : null;
       if (migrated && engine.isStateUsable(migrated, cards, migrated.instanceId)) {
+        engine.reconcileStateWithLibrary(migrated, cards);
         saveState(migrated);
         cleanLegacyHash();
         return migrated;
@@ -148,6 +155,7 @@
         const parsed = raw ? JSON.parse(raw) : null;
         const migrated = engine.migrateLegacyState(parsed, cards);
         if (migrated && engine.isStateUsable(migrated, cards, migrated.instanceId)) {
+          engine.reconcileStateWithLibrary(migrated, cards);
           return migrated;
         }
       }

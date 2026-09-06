@@ -91,6 +91,16 @@
     return [...new Set(cardsFor(cards, type).map((card) => card.category))];
   }
 
+  function librarySnapshot(cards) {
+    return {
+      schemaVersion: Number.isInteger(cards.schemaVersion) ? cards.schemaVersion : 1,
+      libraryPlanVersion: typeof cards.libraryPlanVersion === "string" ? cards.libraryPlanVersion : "legacy",
+      stanceIds: allIds(cards, "stance"),
+      driveIds: allIds(cards, "drive"),
+      syncedAt: nowIso()
+    };
+  }
+
   function isValidFilter(cards, type, filter) {
     return filter === ALL_CATEGORIES || categoriesFor(cards, type).includes(filter);
   }
@@ -101,6 +111,7 @@
     return {
       version: STATE_VERSION,
       instanceId,
+      library: librarySnapshot(cards),
       stanceQueue: shuffle(allIds(cards, "stance"), randomFn),
       driveQueue: shuffle(allIds(cards, "drive"), randomFn),
       current: null,
@@ -366,6 +377,84 @@
     return index;
   }
 
+  function reconcileStateWithLibrary(state, cards, randomFn = secureRandom) {
+    validateCards(cards);
+    if (!state || typeof state !== "object") {
+      return { changed: false, added: { stance: [], drive: [] }, removed: { stance: [], drive: [] } };
+    }
+
+    const previousLibrary = state.library && typeof state.library === "object" ? state.library : null;
+    const added = { stance: [], drive: [] };
+    const removed = { stance: [], drive: [] };
+    let changed = false;
+
+    for (const type of ["stance", "drive"]) {
+      const config = configFor(type);
+      const validIds = allIds(cards, type);
+      const validSet = new Set(validIds);
+      const previousIdsKey = type === "stance" ? "stanceIds" : "driveIds";
+      let knownIds;
+
+      if (previousLibrary && Array.isArray(previousLibrary[previousIdsKey])) {
+        knownIds = new Set(previousLibrary[previousIdsKey]);
+      } else {
+        // v0.7 and earlier v5 states knew only the original Core Foundations IDs.
+        // Treat those IDs as already known so consumed cards are not reinserted.
+        knownIds = new Set(validIds.filter((id) => {
+          const number = Number(id.slice(1));
+          return Number.isInteger(number) && number >= 1 && number <= 24;
+        }));
+      }
+
+      const originalQueue = Array.isArray(state[config.queueKey]) ? state[config.queueKey] : [];
+      const cleanedQueue = [];
+      const seen = new Set();
+      for (const id of originalQueue) {
+        if (!validSet.has(id)) {
+          removed[type].push(id);
+          changed = true;
+          continue;
+        }
+        if (seen.has(id)) {
+          changed = true;
+          continue;
+        }
+        seen.add(id);
+        cleanedQueue.push(id);
+      }
+      state[config.queueKey] = cleanedQueue;
+
+      if (state.current && state.current[config.currentKey] !== null && !validSet.has(state.current[config.currentKey])) {
+        removed[type].push(state.current[config.currentKey]);
+        state.current[config.currentKey] = null;
+        state.current[config.keptKey] = false;
+        changed = true;
+      }
+
+      const currentId = state.current ? state.current[config.currentKey] : null;
+      const newIds = validIds.filter((id) => !knownIds.has(id) && id !== currentId && !state[config.queueKey].includes(id));
+      for (const id of shuffle(newIds, randomFn)) {
+        insertAtRandomPosition(state[config.queueKey], id, randomFn);
+        added[type].push(id);
+        changed = true;
+      }
+    }
+
+    const nextLibrary = librarySnapshot(cards);
+    if (!previousLibrary
+      || JSON.stringify(previousLibrary.stanceIds || []) !== JSON.stringify(nextLibrary.stanceIds)
+      || JSON.stringify(previousLibrary.driveIds || []) !== JSON.stringify(nextLibrary.driveIds)
+      || previousLibrary.libraryPlanVersion !== nextLibrary.libraryPlanVersion) {
+      changed = true;
+    }
+    state.library = nextLibrary;
+    if (changed) {
+      state.updatedAt = nowIso();
+    }
+
+    return { changed, added, removed };
+  }
+
   function vetoCard(state, cards, type, randomFn = secureRandom) {
     validateCards(cards);
     const config = TYPE_CONFIG[type];
@@ -389,9 +478,22 @@
   function snapshotCard(card) {
     return {
       id: card.id,
+      type: card.type || (String(card.id).startsWith("S") ? "stance" : "drive"),
+      schemaVersion: card.schemaVersion || 1,
+      contentVersion: card.contentVersion || "legacy",
+      packId: card.packId || "legacy",
       title: card.title,
       instruction: card.instruction,
-      category: card.category
+      category: card.category,
+      categoryId: card.categoryId || null,
+      subtheme: card.subtheme || null,
+      subthemeId: card.subthemeId || null,
+      difficulty: card.difficulty || null,
+      intensity: card.intensity || null,
+      tone: card.tone || null,
+      orientation: card.orientation || null,
+      coachRoles: Array.isArray(card.coachRoles) ? [...card.coachRoles] : [],
+      motifs: Array.isArray(card.motifs) ? [...card.motifs] : []
     };
   }
 
@@ -636,6 +738,15 @@
     if (expectedId && state.instanceId !== expectedId) {
       return false;
     }
+    if (state.library !== undefined && state.library !== null) {
+      if (!state.library || typeof state.library !== "object"
+        || !Array.isArray(state.library.stanceIds)
+        || !Array.isArray(state.library.driveIds)
+        || new Set(state.library.stanceIds).size !== state.library.stanceIds.length
+        || new Set(state.library.driveIds).size !== state.library.driveIds.length) {
+        return false;
+      }
+    }
     const stanceIds = new Set(allIds(cards, "stance"));
     const driveIds = new Set(allIds(cards, "drive"));
     if (!isUniqueValidQueue(state.stanceQueue, stanceIds) || !isUniqueValidQueue(state.driveQueue, driveIds)) {
@@ -800,6 +911,7 @@
     const migrated = {
       version: STATE_VERSION,
       instanceId: typeof legacyState.instanceId === "string" ? legacyState.instanceId : createDeckId(8, randomFn),
+      library: librarySnapshot(cards),
       stanceQueue: [...legacyState.stanceQueue],
       driveQueue: [...legacyState.driveQueue],
       current,
@@ -832,6 +944,8 @@
     migrateLegacyState,
     categoriesFor,
     isValidFilter,
+    librarySnapshot,
+    reconcileStateWithLibrary,
     startSession,
     activeSession,
     sessionById,

@@ -1,0 +1,78 @@
+"use strict";
+
+const assert = require("node:assert/strict");
+const bible = require("../card-bible.js");
+const cards = require("../cards.js");
+const core = require("../cards/core-foundations.js");
+const validator = require("../tools/card-validator.js");
+
+assert.equal(bible.CARD_SCHEMA_VERSION, 1);
+assert.equal(bible.TARGET_STANCE_COUNT, 240);
+assert.equal(bible.TARGET_DRIVE_COUNT, 240);
+assert.equal(bible.categories.length, 7);
+assert.equal(bible.categories.reduce((sum, category) => sum + category.subthemes.length, 0), 48);
+assert.equal(bible.packPlan.length, 10);
+assert.equal(new Set(bible.packPlan.map((pack) => pack.id)).size, 10);
+assert.equal(new Set(bible.coachRoles.map((role) => role.id)).size, bible.coachRoles.length);
+assert.equal(new Set(bible.motifs).size, bible.motifs.length);
+
+const stanceCategories = bible.categories.filter((category) => category.deck === "stance");
+const driveCategories = bible.categories.filter((category) => category.deck === "drive");
+assert.equal(stanceCategories.length, 4);
+assert.equal(driveCategories.length, 3);
+assert.equal(stanceCategories.reduce((sum, category) => sum + category.targetCount, 0), 240);
+assert.equal(driveCategories.reduce((sum, category) => sum + category.targetCount, 0), 240);
+
+for (const category of stanceCategories) {
+  assert.equal(category.subthemes.length, 6, `${category.id} must have six Stance subthemes`);
+  assert.equal(category.subthemes.reduce((sum, subtheme) => sum + subtheme.targetCount, 0), 60);
+}
+assert.equal(bible.getCategory("direct-objectives").subthemes.length, 12);
+assert.equal(bible.getCategory("direct-objectives").subthemes.reduce((sum, subtheme) => sum + subtheme.targetCount, 0), 120);
+for (const categoryId of ["secrets-avoidance", "repeatable-behaviors"]) {
+  const category = bible.getCategory(categoryId);
+  assert.equal(category.subthemes.length, 6);
+  assert.equal(category.subthemes.reduce((sum, subtheme) => sum + subtheme.targetCount, 0), 60);
+}
+
+for (let index = 0; index < bible.packPlan.length; index += 1) {
+  const pack = bible.packPlan[index];
+  const expectedStart = index * 24 + 1;
+  const expectedEnd = expectedStart + 23;
+  assert.deepEqual(pack.stanceRange, [expectedStart, expectedEnd]);
+  assert.deepEqual(pack.driveRange, [expectedStart, expectedEnd]);
+  assert.equal(pack.targetStances, 24);
+  assert.equal(pack.targetDrives, 24);
+  assert.equal(bible.expectedPackForCardId(bible.formatCardId("stance", expectedStart)).id, pack.id);
+  assert.equal(bible.expectedPackForCardId(bible.formatCardId("drive", expectedEnd)).id, pack.id);
+}
+assert.equal(bible.formatCardId("stance", 1), "S01");
+assert.equal(bible.formatCardId("drive", 99), "D99");
+assert.equal(bible.formatCardId("stance", 100), "S100");
+assert.deepEqual(bible.parseCardId("D240"), { type: "drive", number: 240 });
+assert.equal(bible.parseCardId("S241"), null);
+
+assert.equal(core.id, "core-foundations");
+assert.equal(core.stances.length, 24);
+assert.equal(core.drives.length, 24);
+assert.equal(cards.stances.length, 24);
+assert.equal(cards.drives.length, 24);
+assert.equal(cards.cardPacks.length, 1);
+assert.equal(cards.publishedPackCount, 1);
+assert.equal(cards.targetPackCount, 10);
+assert.equal(cards.targetStanceCount, 240);
+assert.equal(cards.targetDriveCount, 240);
+
+assert.deepEqual(
+  Object.keys(cards.categoryStyles),
+  bible.categories.map((category) => category.label)
+);
+
+const audit = validator.auditLibrary(cards.cardPacks);
+assert.equal(audit.passed, true);
+assert.deepEqual(audit.errors, []);
+assert.deepEqual(audit.warnings, []);
+assert.equal(audit.summary.stances, 24);
+assert.equal(audit.summary.drives, 24);
+
+console.log("✓ Imprompt Card Bible taxonomy, ten-pack plan, and Core Foundations integration passed");

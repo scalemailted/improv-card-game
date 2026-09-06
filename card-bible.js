@@ -9,7 +9,7 @@
   "use strict";
 
   const CARD_SCHEMA_VERSION = 1;
-  const LIBRARY_PLAN_VERSION = "1.6.0";
+  const LIBRARY_PLAN_VERSION = "1.7.0";
   const TARGET_STANCE_COUNT = 240;
   const TARGET_DRIVE_COUNT = 240;
 
@@ -358,7 +358,13 @@
     { id: "normalizer", label: "Normalizer", definition: "Makes extraordinary developments feel routine through calm acceptance and practical behavior." },
     { id: "world-builder", label: "World Builder", definition: "Expands an unusual premise through consistent, responsive internal logic." },
     { id: "consequence-keeper", label: "Consequence Keeper", definition: "Tracks what an unusual premise materially requires, changes, or costs." },
-    { id: "reality-tester", label: "Reality Tester", definition: "Tests the limits of a strange world through questions, evidence, and practical action." }
+    { id: "reality-tester", label: "Reality Tester", definition: "Tests the limits of a strange world through questions, evidence, and practical action." },
+    { id: "administrator", label: "Administrator", definition: "Organizes people and decisions through sequence, documentation, assigned roles, and process." },
+    { id: "compliance-keeper", label: "Compliance Keeper", definition: "Monitors whether rules, standards, and required steps are followed." },
+    { id: "interpreter", label: "Interpreter", definition: "Translates systems, customs, rules, or official language into actionable meaning." },
+    { id: "archivist", label: "Archivist", definition: "Preserves records, precedent, and institutional memory as usable evidence." },
+    { id: "traditionalist", label: "Traditionalist", definition: "Protects inherited customs and continuity because their repetition carries meaning." },
+    { id: "exception-seeker", label: "Exception Seeker", definition: "Searches for waivers, loopholes, precedents, or special treatment within a system." }
   ];
 
   const motifs = [
@@ -377,7 +383,10 @@
     "alibi", "clues", "confession", "conspiracy", "deception", "evidence", "information", "investigation",
     "misdirection", "motive", "mystery", "recruitment", "strategy", "suspicion", "witness",
     "cause-effect", "consequences", "impossibility", "literalism", "logic", "metaphor", "normality",
-    "premise", "prophecy", "reality", "safety", "scale", "symbols", "transformation"
+    "premise", "prophecy", "reality", "safety", "scale", "symbols", "transformation",
+    "administration", "bureaucracy", "ceremony", "custom", "documentation", "exceptions", "formalities",
+    "institution", "loopholes", "oversight", "policy", "precedent", "procedure", "process", "protocol",
+    "record", "standards", "tradition"
   ];
 
   const packPlan = [
@@ -462,7 +471,7 @@
       id: "rules-rituals-institutions",
       sequence: 8,
       title: "Rules, Rituals & Institutions",
-      status: "planned",
+      status: "playtest",
       stanceRange: [169, 192],
       driveRange: [169, 192],
       targetStances: 24,

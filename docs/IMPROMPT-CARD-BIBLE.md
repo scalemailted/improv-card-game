@@ -1,8 +1,8 @@
 # The Imprompt Card Bible
 
 **Editorial and technical standard for the 480-card Imprompt library**  
-**Bible version:** 1.6.0  
-**Implemented foundation:** Imprompt v0.14.0  
+**Bible version:** 1.7.0  
+**Implemented foundation:** Imprompt v0.15.0  
 **Target release:** Imprompt v1.0  
 
 ---
@@ -128,7 +128,7 @@ Each pack contributes **one card to every defined subtheme**. Across ten packs, 
 | 5 | **Emotional Pressure** | S97–S120 | D97–D120 | **Active playtest pack:** longing, insecurity, validation, resentment, grief, hope, shame, and emotional contradiction. |
 | 6 | **Secrets & Schemes** | S121–S144 | D121–D144 | **Active playtest pack:** concealment, investigation, recruitment, misdirection, confession, and plans under pressure. |
 | 7 | **Absurd Commitment** | S145–S168 | D145–D168 | **Active playtest pack:** impossible logic, literal commitment, grounded reaction, recurring nonsense, and heightened consequence. |
-| 8 | **Rules, Rituals & Institutions** | S169–S192 | D169–D192 | Bureaucracy, standards, customs, systems, traditions, and institutional behavior. |
+| 8 | **Rules, Rituals & Institutions** | S169–S192 | D169–D192 | **Active playtest pack:** bureaucracy, process, standards, customs, systems, traditions, and institutional behavior. |
 | 9 | **Competition & Consequences** | S193–S216 | D193–D216 | Winning, comparison, bargains, accountability, sacrifice, and the cost of success. |
 | 10 | **Advanced Scene Engines** | S217–S240 | D217–D240 | Layered contradictions, delayed reveals, reversals, callbacks, and veteran-level pressure. |
 
@@ -1434,12 +1434,14 @@ Core Foundations establishes one published example in every subtheme.
 | `cards/emotional-pressure.js` | Pack 5's 48 active playtest cards. |
 | `cards/secrets-schemes.js` | Pack 6's 48 active playtest cards. |
 | `cards/absurd-commitment.js` | Pack 7's 48 active playtest cards. |
+| `cards/rules-rituals-institutions.js` | Pack 8's 48 active playtest cards. |
 | `cards/candidates/everyday-friction-candidate-pool.json` | The complete Pack 2 drafting pool and editorial dispositions. |
 | `cards/candidates/power-games-candidate-pool.json` | The complete Pack 3 drafting pool and editorial dispositions. |
 | `cards/candidates/relationship-knots-candidate-pool.json` | The complete Pack 4 drafting pool and editorial dispositions. |
 | `cards/candidates/emotional-pressure-candidate-pool.json` | The complete Pack 5 drafting pool and editorial dispositions. |
 | `cards/candidates/secrets-schemes-candidate-pool.json` | The complete Pack 6 drafting pool and editorial dispositions. |
 | `cards/candidates/absurd-commitment-candidate-pool.json` | The complete Pack 7 drafting pool and editorial dispositions. |
+| `cards/candidates/rules-rituals-institutions-candidate-pool.json` | The complete Pack 8 drafting pool and editorial dispositions. |
 | `cards.js` | Runtime aggregator that preserves the application's existing `IMPROMPT_CARDS` interface. |
 | `cards/card.schema.json` | JSON Schema for an individual card. |
 | `cards/pack.schema.json` | JSON Schema for a pack. |
@@ -1538,4 +1540,18 @@ Absurd Commitment is the sixth expansion authored under this Bible. It is active
 The pack provides one S145–S168 or D145–D168 card in every formal subtheme. It adds six coach roles—Believer, Literalist, Normalizer, World Builder, Consequence Keeper, and Reality Tester—and fourteen commitment-and-consequence motifs without changing the visible seven-category system.
 
 With Core Foundations and six active expansion packs, the active library now contains 168 Stances and 168 Drives, or 336 total cards. Absurd Commitment remains subject to independent blind reads and repeated live troupe playtesting before final publication.
+
+# Appendix I — Rules, Rituals & Institutions implementation
+
+Rules, Rituals & Institutions is the seventh expansion authored under this Bible. It is active in Imprompt v0.15.0 with internal status `playtest`.
+
+- Pack brief: `docs/packs/RULES-RITUALS-INSTITUTIONS-PACK-BRIEF.md`
+- Authoring matrix: `docs/packs/RULES-RITUALS-INSTITUTIONS-AUTHORING-MATRIX.md`
+- Candidate pool: `docs/packs/RULES-RITUALS-INSTITUTIONS-CANDIDATE-POOL.md`
+- Machine-readable candidates: `cards/candidates/rules-rituals-institutions-candidate-pool.json`
+- Runtime module: `cards/rules-rituals-institutions.js`
+
+The pack provides one S169–S192 or D169–D192 card in every formal subtheme. It adds six coach roles—Administrator, Compliance Keeper, Interpreter, Archivist, Traditionalist, and Exception Seeker—and eighteen system-and-tradition motifs without changing the visible seven-category interface.
+
+With Core Foundations and seven active expansion packs, the active library now contains 192 Stances and 192 Drives, or 384 total cards. Rules, Rituals & Institutions remains subject to independent blind reads and repeated live troupe playtesting before final publication.
 

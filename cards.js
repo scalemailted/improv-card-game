@@ -9,7 +9,8 @@
         require("./cards/relationship-knots.js"),
         require("./cards/emotional-pressure.js"),
         require("./cards/secrets-schemes.js"),
-        require("./cards/absurd-commitment.js")
+        require("./cards/absurd-commitment.js"),
+        require("./cards/rules-rituals-institutions.js")
       ]
     : (root.IMPROMPT_CARD_PACKS || []);
   const cards = factory(bible, packs);

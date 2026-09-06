@@ -5,7 +5,7 @@
 - **1 Stance** — how the performer enters, interprets, or reacts within the scene.
 - **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The active library now contains **168 Stances and 168 Drives** across Core Foundations plus the Everyday Friction, Power Games, Relationship Knots, Emotional Pressure, Secrets & Schemes, and Absurd Commitment playtest packs. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
+The active library now contains **192 Stances and 192 Drives** across Core Foundations plus the Everyday Friction, Power Games, Relationship Knots, Emotional Pressure, Secrets & Schemes, Absurd Commitment, and Rules, Rituals & Institutions playtest packs. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
 
 ## Open the live game
 
@@ -20,23 +20,41 @@ The active library now contains **168 Stances and 168 Drives** across Core Found
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
 
+## What is new in v0.15.0
+
+v0.15.0 adds **Pack 8: Rules, Rituals & Institutions** as an active playtest pack:
+
+- 24 new Stances: S169–S192
+- 24 new Drives: D169–D192
+- 384 active cards total
+- one new card in every formal Card Bible subtheme
+- a complete 64-card candidate pool with editorial dispositions
+
+Rules, Rituals & Institutions makes bureaucracy, customs, standards, process, documentation, precedent, ceremony, and tradition playable without requiring a fixed workplace or government premise. The cards ask how people preserve, interpret, enforce, resist, exploit, or hide inside systems.
+
+The expansion most directly deepens **Status Clash**, **Relationship Pressure**, **Pursuer & Avoider**, **Absurd Commitment**, and **Instigator & Anchor**. Every phone still shuffles independently; exercise links never share cards or deck order.
+
+The pack is marked **playtest** pending independent blind reads and repeated live troupe testing. Its cards are available throughout Open Play, category-focused draws, Mirror and Paired exercises, custom exercises, gallery search, Practice Coverage, and immutable Scene Log snapshots.
+
+See:
+
+- `docs/packs/RULES-RITUALS-INSTITUTIONS-PACK-BRIEF.md`
+- `docs/packs/RULES-RITUALS-INSTITUTIONS-AUTHORING-MATRIX.md`
+- `docs/packs/RULES-RITUALS-INSTITUTIONS-CANDIDATE-POOL.md`
+- `cards/candidates/rules-rituals-institutions-candidate-pool.json`
+
 ## What is new in v0.14.0
 
-v0.14.0 adds **Pack 7: Absurd Commitment** as an active playtest pack:
+v0.14.0 added **Pack 7: Absurd Commitment** as an active playtest pack:
 
-- 24 new Stances: S145–S168
-- 24 new Drives: D145–D168
+- 24 Stances: S145–S168
+- 24 Drives: D145–D168
 - 336 active cards total
-- 64-card documented candidate pool
-- completed 48-slot authoring matrix
-- commitment, literalism, world-building, and consequence metadata
+- a documented 64-card candidate pool and completed 48-slot matrix
+- impossible-logic, grounded-reaction, world-building, and consequence metadata
 - automatic insertion of Pack 7 IDs into existing independent decks
 
-Absurd Commitment turns impossible ideas into playable reality through specific belief, literal interpretation, practical consequence, and coherent heightening. It is not a randomness deck. Its cards ask performers to accept an unusual premise, discover how it works, and make each new offer matter inside that logic.
-
-The expansion most directly deepens **Absurd Commitment** and **Instigator & Anchor**, while adding prophetic authority, impossible expertise, strange relationship history, belief tests, grounded logistics, protective nonsense, and escalating world rules to every coach exercise. Every phone still shuffles independently; exercise links never share cards or deck order.
-
-Absurd Commitment is marked **playtest** pending independent blind reads and repeated live troupe testing. Its cards are available throughout Open Play, category-focused draws, Mirror and Paired exercises, custom exercises, gallery search, Practice Coverage, and immutable Scene Log snapshots.
+Absurd Commitment turns unusual premises into consistent, playable behavior rather than disconnected randomness. Its prompts emphasize literal commitment, coherent logic, practical grounding, repeatable patterns, and heightened consequences.
 
 See:
 
@@ -44,7 +62,6 @@ See:
 - `docs/packs/ABSURD-COMMITMENT-AUTHORING-MATRIX.md`
 - `docs/packs/ABSURD-COMMITMENT-CANDIDATE-POOL.md`
 - `cards/candidates/absurd-commitment-candidate-pool.json`
-
 ## What is new in v0.13.0
 
 v0.13.0 adds **Pack 6: Secrets & Schemes** as an active playtest pack:
@@ -201,7 +218,7 @@ Every future 48-card pack must contribute one card to every subtheme. Across ten
 | 5 | Emotional Pressure | S97–S120 | D97–D120 | **Playtest in v0.12.0** |
 | 6 | Secrets & Schemes | S121–S144 | D121–D144 | **Playtest in v0.13.0** |
 | 7 | Absurd Commitment | S145–S168 | D145–D168 | **Playtest in v0.14.0** |
-| 8 | Rules, Rituals & Institutions | S169–S192 | D169–D192 | Planned |
+| 8 | Rules, Rituals & Institutions | S169–S192 | D169–D192 | **Playtest in v0.15.0** |
 | 9 | Competition & Consequences | S193–S216 | D193–D216 | Planned |
 | 10 | Advanced Scene Engines | S217–S240 | D217–D240 | Planned |
 
@@ -359,7 +376,7 @@ Imprompt stores working state in browser local storage. A phone knows only its o
 
 The general **Invite players** QR always points to the plain public URL. Guided-exercise links contain only coaching configuration.
 
-Existing v0.5.x through v0.13.0 state remains compatible. Pack 7 IDs are inserted at randomized positions in each phone’s remaining queues without resetting current prompts, sessions, completed scenes, custom exercises, or consumed earlier cards.
+Existing v0.5.x through v0.14.0 state remains compatible. Pack 8 IDs are inserted at randomized positions in each phone’s remaining queues without resetting current prompts, sessions, completed scenes, custom exercises, or consumed earlier cards.
 
 ## Card-library architecture
 
@@ -382,6 +399,8 @@ cards/secrets-schemes.js
     ↓
 cards/absurd-commitment.js
     ↓
+cards/rules-rituals-institutions.js
+    ↓
 cards.js
 ```
 
@@ -391,7 +410,7 @@ cards.js
 
 Future packs should not be pasted into one giant source file.
 
-The deck engine also records the library IDs known by each local deck. When a future pack is published, only newly introduced IDs are inserted at randomized positions in the remaining queues. Current prompts, completed scenes, sessions, and consumed Core cards are preserved.
+The deck engine also records the library IDs known by each local deck. When a future pack is published, only newly introduced IDs are inserted at randomized positions in the remaining queues. Current prompts, completed scenes, sessions, and previously consumed cards are preserved.
 
 ## Editing or adding cards
 
@@ -446,7 +465,7 @@ npm run audit:cards
 npm run audit:cards:write
 ```
 
-`npm test` validates the application, deck engine, exercises, share links, QR generation, Card Bible taxonomy, all seven active packs, hidden-information heuristics, pack quotas, migration behavior, and duplicate gates.
+`npm test` validates the application, deck engine, exercises, share links, QR generation, Card Bible taxonomy, all eight active packs, hidden-information heuristics, pack quotas, migration behavior, and duplicate gates.
 
 `npm run audit:cards:write` regenerates:
 
@@ -495,6 +514,7 @@ All application assets use relative paths and work under the GitHub Pages projec
 ├── RELEASE-NOTES-v0.12.0.md
 ├── RELEASE-NOTES-v0.13.0.md
 ├── RELEASE-NOTES-v0.14.0.md
+├── RELEASE-NOTES-v0.15.0.md
 ├── cards/
 │   ├── core-foundations.js
 │   ├── everyday-friction.js
@@ -503,13 +523,15 @@ All application assets use relative paths and work under the GitHub Pages projec
 │   ├── emotional-pressure.js
 │   ├── secrets-schemes.js
 │   ├── absurd-commitment.js
+│   ├── rules-rituals-institutions.js
 │   ├── candidates/
 │   │   ├── everyday-friction-candidate-pool.json
 │   │   ├── power-games-candidate-pool.json
 │   │   ├── relationship-knots-candidate-pool.json
 │   │   ├── emotional-pressure-candidate-pool.json
 │   │   ├── secrets-schemes-candidate-pool.json
-│   │   └── absurd-commitment-candidate-pool.json
+│   │   ├── absurd-commitment-candidate-pool.json
+│   │   └── rules-rituals-institutions-candidate-pool.json
 │   ├── card.schema.json
 │   └── pack.schema.json
 ├── docs/
@@ -535,7 +557,10 @@ All application assets use relative paths and work under the GitHub Pages projec
 │       ├── SECRETS-SCHEMES-CANDIDATE-POOL.md
 │       ├── ABSURD-COMMITMENT-PACK-BRIEF.md
 │       ├── ABSURD-COMMITMENT-AUTHORING-MATRIX.md
-│       └── ABSURD-COMMITMENT-CANDIDATE-POOL.md
+│       ├── ABSURD-COMMITMENT-CANDIDATE-POOL.md
+│       ├── RULES-RITUALS-INSTITUTIONS-PACK-BRIEF.md
+│       ├── RULES-RITUALS-INSTITUTIONS-AUTHORING-MATRIX.md
+│       └── RULES-RITUALS-INSTITUTIONS-CANDIDATE-POOL.md
 ├── tools/
 │   ├── card-validator.js
 │   └── card-audit.js
@@ -559,6 +584,7 @@ All application assets use relative paths and work under the GitHub Pages projec
     ├── emotional-pressure.test.js
     ├── secrets-schemes.test.js
     ├── absurd-commitment.test.js
+    ├── rules-rituals-institutions.test.js
     ├── browser-card-loading.test.js
     ├── app-content.test.js
     ├── deck-engine.test.js

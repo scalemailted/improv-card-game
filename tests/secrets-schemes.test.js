@@ -53,10 +53,10 @@ for (const motif of ["alibi", "clues", "confession", "conspiracy", "deception", 
   assert.ok(bible.motifs.includes(motif), `Missing Secrets & Schemes motif: ${motif}`);
 }
 
-assert.equal(cards.libraryPlanVersion, "1.6.0");
-assert.equal(cards.stances.length, 168);
-assert.equal(cards.drives.length, 168);
-assert.equal(cards.activePackCount, 7);
-assert.equal(cards.playtestPackCount, 6);
+assert.equal(cards.libraryPlanVersion, "1.7.0");
+assert.equal(cards.stances.length, 192);
+assert.equal(cards.drives.length, 192);
+assert.equal(cards.activePackCount, 8);
+assert.equal(cards.playtestPackCount, 7);
 
 console.log("✓ Secrets & Schemes pack, 64-card candidate pool, quota matrix, and secrecy metadata passed");

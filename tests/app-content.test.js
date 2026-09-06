@@ -21,11 +21,11 @@ assert.match(html, /Guided exercises/i);
 assert.match(html, /Scene log &amp; coverage/i);
 assert.match(html, /Learn to play/i);
 assert.match(html, /Card gallery/i);
-assert.match(html, /all 336 prompts/i);
-assert.match(html, /id="stancesRemaining">168<\/strong>/);
-assert.match(html, /id="drivesRemaining">168<\/strong>/);
-assert.match(html, /id="galleryResultsCount">168 cards<\/span>/);
-assert.match(html, /id="galleryCount">1 of 168<\/span>/);
+assert.match(html, /all 384 prompts/i);
+assert.match(html, /id="stancesRemaining">192<\/strong>/);
+assert.match(html, /id="drivesRemaining">192<\/strong>/);
+assert.match(html, /id="galleryResultsCount">192 cards<\/span>/);
+assert.match(html, /id="galleryCount">1 of 192<\/span>/);
 assert.match(html, /Invite players/i);
 assert.match(html, /Every phone still shuffles independently/i);
 assert.doesNotMatch(html, /Prototype deck/i);
@@ -108,29 +108,30 @@ assert.equal(exercises.getPresets("mirror").length, 4);
 assert.equal(exercises.getPresets("paired").length, 4);
 
 // Card Bible runtime files load before the compatibility aggregator.
-assert.ok(html.indexOf("./card-bible.js?v=0.14.0") < html.indexOf("./cards/core-foundations.js?v=0.14.0"));
-assert.ok(html.indexOf("./cards/core-foundations.js?v=0.14.0") < html.indexOf("./cards/everyday-friction.js?v=0.14.0"));
-assert.ok(html.indexOf("./cards/everyday-friction.js?v=0.14.0") < html.indexOf("./cards/power-games.js?v=0.14.0"));
-assert.ok(html.indexOf("./cards/power-games.js?v=0.14.0") < html.indexOf("./cards/relationship-knots.js?v=0.14.0"));
-assert.ok(html.indexOf("./cards/relationship-knots.js?v=0.14.0") < html.indexOf("./cards/emotional-pressure.js?v=0.14.0"));
-assert.ok(html.indexOf("./cards/emotional-pressure.js?v=0.14.0") < html.indexOf("./cards/secrets-schemes.js?v=0.14.0"));
-assert.ok(html.indexOf("./cards/secrets-schemes.js?v=0.14.0") < html.indexOf("./cards/absurd-commitment.js?v=0.14.0"));
-assert.ok(html.indexOf("./cards/absurd-commitment.js?v=0.14.0") < html.indexOf("./cards.js?v=0.14.0"));
-assert.equal(cards.activePackCount, 7);
+assert.ok(html.indexOf("./card-bible.js?v=0.15.0") < html.indexOf("./cards/core-foundations.js?v=0.15.0"));
+assert.ok(html.indexOf("./cards/core-foundations.js?v=0.15.0") < html.indexOf("./cards/everyday-friction.js?v=0.15.0"));
+assert.ok(html.indexOf("./cards/everyday-friction.js?v=0.15.0") < html.indexOf("./cards/power-games.js?v=0.15.0"));
+assert.ok(html.indexOf("./cards/power-games.js?v=0.15.0") < html.indexOf("./cards/relationship-knots.js?v=0.15.0"));
+assert.ok(html.indexOf("./cards/relationship-knots.js?v=0.15.0") < html.indexOf("./cards/emotional-pressure.js?v=0.15.0"));
+assert.ok(html.indexOf("./cards/emotional-pressure.js?v=0.15.0") < html.indexOf("./cards/secrets-schemes.js?v=0.15.0"));
+assert.ok(html.indexOf("./cards/secrets-schemes.js?v=0.15.0") < html.indexOf("./cards/absurd-commitment.js?v=0.15.0"));
+assert.ok(html.indexOf("./cards/absurd-commitment.js?v=0.15.0") < html.indexOf("./cards/rules-rituals-institutions.js?v=0.15.0"));
+assert.ok(html.indexOf("./cards/rules-rituals-institutions.js?v=0.15.0") < html.indexOf("./cards.js?v=0.15.0"));
+assert.equal(cards.activePackCount, 8);
 assert.equal(cards.publishedPackCount, 1);
-assert.equal(cards.playtestPackCount, 6);
-assert.equal(cards.stances.length, 168);
-assert.equal(cards.drives.length, 168);
+assert.equal(cards.playtestPackCount, 7);
+assert.equal(cards.stances.length, 192);
+assert.equal(cards.drives.length, 192);
 assert.equal(cards.targetPackCount, 10);
 assert.equal(cards.targetStanceCount, 240);
 assert.equal(cards.targetDriveCount, 240);
 
 // Release and offline contract.
-for (const asset of ["styles.css", "card-bible.js", "cards/core-foundations.js", "cards/everyday-friction.js", "cards/power-games.js", "cards/relationship-knots.js", "cards/emotional-pressure.js", "cards/secrets-schemes.js", "cards/absurd-commitment.js", "cards.js", "exercises.js", "deck-engine.js", "vendor/qrcode-core.js", "app.js"]) {
-  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.14\\.0`));
-  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.14\\.0`));
+for (const asset of ["styles.css", "card-bible.js", "cards/core-foundations.js", "cards/everyday-friction.js", "cards/power-games.js", "cards/relationship-knots.js", "cards/emotional-pressure.js", "cards/secrets-schemes.js", "cards/absurd-commitment.js", "cards/rules-rituals-institutions.js", "cards.js", "exercises.js", "deck-engine.js", "vendor/qrcode-core.js", "app.js"]) {
+  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.15\\.0`));
+  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.15\\.0`));
 }
-assert.match(serviceWorker, /imprompt-v0\.14\.0/);
+assert.match(serviceWorker, /imprompt-v0\.15\.0/);
 assert.doesNotMatch(serviceWorker, /skipWaiting/);
 assert.match(app, /updateViaCache:\s*"none"/);
 assert.match(manifest, /"short_name": "Imprompt"/);
@@ -139,4 +140,4 @@ assert.match(manifest, /coach-guided Mirror and Paired exercises/);
 // QR SVG modules must not inherit the global rounded SVG stroke.
 assert.match(styles, /\.dynamic-qr-panel svg,\s*\.dynamic-qr-panel svg \*[\s\S]*?stroke:\s*none\s*!important/);
 
-console.log("✓ Imprompt v0.14 application, Card Bible, guided-exercise, gallery, history, and cache contracts passed");
+console.log("✓ Imprompt v0.15 application, Card Bible, guided-exercise, gallery, history, and cache contracts passed");

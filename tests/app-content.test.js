@@ -103,19 +103,24 @@ assert.equal(exercises.getPresets("mirror").length, 4);
 assert.equal(exercises.getPresets("paired").length, 4);
 
 // Card Bible runtime files load before the compatibility aggregator.
-assert.ok(html.indexOf("./card-bible.js?v=0.8.0") < html.indexOf("./cards/core-foundations.js?v=0.8.0"));
-assert.ok(html.indexOf("./cards/core-foundations.js?v=0.8.0") < html.indexOf("./cards.js?v=0.8.0"));
+assert.ok(html.indexOf("./card-bible.js?v=0.9.0") < html.indexOf("./cards/core-foundations.js?v=0.9.0"));
+assert.ok(html.indexOf("./cards/core-foundations.js?v=0.9.0") < html.indexOf("./cards/everyday-friction.js?v=0.9.0"));
+assert.ok(html.indexOf("./cards/everyday-friction.js?v=0.9.0") < html.indexOf("./cards.js?v=0.9.0"));
+assert.equal(cards.activePackCount, 2);
 assert.equal(cards.publishedPackCount, 1);
+assert.equal(cards.playtestPackCount, 1);
+assert.equal(cards.stances.length, 48);
+assert.equal(cards.drives.length, 48);
 assert.equal(cards.targetPackCount, 10);
 assert.equal(cards.targetStanceCount, 240);
 assert.equal(cards.targetDriveCount, 240);
 
 // Release and offline contract.
-for (const asset of ["styles.css", "card-bible.js", "cards/core-foundations.js", "cards.js", "exercises.js", "deck-engine.js", "vendor/qrcode-core.js", "app.js"]) {
-  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.8\\.0`));
-  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.8\\.0`));
+for (const asset of ["styles.css", "card-bible.js", "cards/core-foundations.js", "cards/everyday-friction.js", "cards.js", "exercises.js", "deck-engine.js", "vendor/qrcode-core.js", "app.js"]) {
+  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.9\\.0`));
+  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.9\\.0`));
 }
-assert.match(serviceWorker, /imprompt-v0\.8\.0/);
+assert.match(serviceWorker, /imprompt-v0\.9\.0/);
 assert.doesNotMatch(serviceWorker, /skipWaiting/);
 assert.match(app, /updateViaCache:\s*"none"/);
 assert.match(manifest, /"short_name": "Imprompt"/);
@@ -124,4 +129,4 @@ assert.match(manifest, /coach-guided Mirror and Paired exercises/);
 // QR SVG modules must not inherit the global rounded SVG stroke.
 assert.match(styles, /\.dynamic-qr-panel svg,\s*\.dynamic-qr-panel svg \*[\s\S]*?stroke:\s*none\s*!important/);
 
-console.log("✓ Imprompt v0.8 application, Card Bible, guided-exercise, gallery, history, and cache contracts passed");
+console.log("✓ Imprompt v0.9 application, Card Bible, guided-exercise, gallery, history, and cache contracts passed");

@@ -23,16 +23,18 @@ function markdownReport(result) {
     "",
     "## Library progress",
     "",
-    "| Measure | Published | v1.0 target | Progress |",
+    "| Measure | Available in app | v1.0 target | Progress |",
     "|---|---:|---:|---:|",
-    `| Official packs | ${summary.publishedPacks} | ${summary.plannedPacks} | ${percentage(summary.publishedPacks, summary.plannedPacks)} |`,
+    `| Active packs | ${summary.activePacks} | ${summary.plannedPacks} | ${percentage(summary.activePacks, summary.plannedPacks)} |`,
+    `| Published packs | ${summary.publishedPacks} | ${summary.plannedPacks} | ${percentage(summary.publishedPacks, summary.plannedPacks)} |`,
+    `| Playtest packs | ${summary.playtestPacks} | — | — |`,
     `| Stance cards | ${summary.stances} | ${summary.targetStances} | ${percentage(summary.stances, summary.targetStances)} |`,
     `| Drive cards | ${summary.drives} | ${summary.targetDrives} | ${percentage(summary.drives, summary.targetDrives)} |`,
     `| Total cards | ${totalCards} | ${summary.targetStances + summary.targetDrives} | ${percentage(totalCards, summary.targetStances + summary.targetDrives)} |`,
     "",
-    "## Published category counts",
+    "## Active category counts",
     "",
-    "| Deck | Category | Published | v1.0 target |",
+    "| Deck | Category | Available | v1.0 target |",
     "|---|---|---:|---:|"
   ];
 
@@ -106,7 +108,8 @@ function printConsole(result) {
   console.log("Imprompt Card Library Audit");
   console.log("===========================");
   console.log(`Result: ${result.passed ? "PASS" : "FAIL"}`);
-  console.log(`Published: ${summary.stances} Stances + ${summary.drives} Drives across ${summary.publishedPacks} pack(s)`);
+  console.log(`Available: ${summary.stances} Stances + ${summary.drives} Drives across ${summary.activePacks} active pack(s)`);
+  console.log(`Pack status: ${summary.publishedPacks} published + ${summary.playtestPacks} playtest`);
   console.log(`Target: ${summary.targetStances} Stances + ${summary.targetDrives} Drives across ${summary.plannedPacks} packs`);
   console.log(`Errors: ${result.errors.length}`);
   console.log(`Warnings: ${result.warnings.length}`);

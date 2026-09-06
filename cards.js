@@ -2,7 +2,10 @@
   const isCommonJs = typeof module === "object" && module.exports;
   const bible = isCommonJs ? require("./card-bible.js") : root.IMPROMPT_CARD_BIBLE;
   const packs = isCommonJs
-    ? [require("./cards/core-foundations.js")]
+    ? [
+        require("./cards/core-foundations.js"),
+        require("./cards/everyday-friction.js")
+      ]
     : (root.IMPROMPT_CARD_PACKS || []);
   const cards = factory(bible, packs);
 
@@ -29,24 +32,33 @@
     return value;
   }
 
-  const publishedPacks = [...packs]
-    .filter((pack) => pack && pack.status === "published")
+  const activeStatuses = new Set(["published", "playtest"]);
+  const activePacks = [...packs]
+    .filter((pack) => pack && activeStatuses.has(pack.status))
     .sort((left, right) => left.sequence - right.sequence);
+  const publishedPacks = activePacks.filter((pack) => pack.status === "published");
+  const playtestPacks = activePacks.filter((pack) => pack.status === "playtest");
 
-  const stances = publishedPacks.flatMap((pack) => pack.stances || []);
-  const drives = publishedPacks.flatMap((pack) => pack.drives || []);
+  const stances = activePacks.flatMap((pack) => pack.stances || []);
+  const drives = activePacks.flatMap((pack) => pack.drives || []);
 
   const library = {
     schemaVersion: bible.CARD_SCHEMA_VERSION,
     libraryPlanVersion: bible.LIBRARY_PLAN_VERSION,
+    activePackCount: activePacks.length,
     publishedPackCount: publishedPacks.length,
+    playtestPackCount: playtestPacks.length,
     targetPackCount: bible.packPlan.length,
-    publishedStanceCount: stances.length,
-    publishedDriveCount: drives.length,
+    activeStanceCount: stances.length,
+    activeDriveCount: drives.length,
+    publishedStanceCount: publishedPacks.reduce((sum, pack) => sum + (pack.stances || []).length, 0),
+    publishedDriveCount: publishedPacks.reduce((sum, pack) => sum + (pack.drives || []).length, 0),
+    playtestStanceCount: playtestPacks.reduce((sum, pack) => sum + (pack.stances || []).length, 0),
+    playtestDriveCount: playtestPacks.reduce((sum, pack) => sum + (pack.drives || []).length, 0),
     targetStanceCount: bible.TARGET_STANCE_COUNT,
     targetDriveCount: bible.TARGET_DRIVE_COUNT,
-    cardPacks: publishedPacks,
-    packs: publishedPacks.map((pack) => ({
+    cardPacks: activePacks,
+    packs: activePacks.map((pack) => ({
       id: pack.id,
       title: pack.title,
       version: pack.version,

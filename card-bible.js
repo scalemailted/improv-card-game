@@ -9,7 +9,7 @@
   "use strict";
 
   const CARD_SCHEMA_VERSION = 1;
-  const LIBRARY_PLAN_VERSION = "1.0.0";
+  const LIBRARY_PLAN_VERSION = "1.1.0";
   const TARGET_STANCE_COUNT = 240;
   const TARGET_DRIVE_COUNT = 240;
 
@@ -331,10 +331,12 @@
 
   const motifs = [
     "admiration", "anger", "approval", "authority", "belonging", "care", "celebration",
-    "choice", "competition", "control", "crisis", "dependence", "envy", "expertise", "fear",
-    "familiarity", "guilt", "history", "identity", "loyalty", "obligation", "optimism", "patterns",
-    "permission", "pride", "recognition", "repair", "risk", "ritual", "rules", "secrecy", "status",
-    "trust", "truth", "validation", "absurdity", "loss"
+    "choice", "communication", "competition", "control", "convenience", "crisis", "dependence",
+    "envy", "etiquette", "expertise", "fairness", "fear", "familiarity", "guilt", "history",
+    "identity", "loyalty", "maintenance", "mess", "obligation", "optimism", "patterns", "permission",
+    "pride", "recognition", "repair", "resources", "responsibility", "risk", "ritual", "routine",
+    "rules", "secrecy", "space", "status", "time", "trust", "truth", "validation", "work",
+    "absurdity", "loss"
   ];
 
   const packPlan = [
@@ -353,7 +355,7 @@
       id: "everyday-friction",
       sequence: 2,
       title: "Everyday Friction",
-      status: "planned",
+      status: "playtest",
       stanceRange: [25, 48],
       driveRange: [25, 48],
       targetStances: 24,

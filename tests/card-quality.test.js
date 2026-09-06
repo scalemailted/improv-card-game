@@ -6,9 +6,9 @@ const bible = require("../card-bible.js");
 const validator = require("../tools/card-validator.js");
 
 const allCards = [...cards.stances, ...cards.drives];
-assert.equal(new Set(allCards.map((card) => card.id)).size, 48);
-assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.title))).size, 48);
-assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.instruction))).size, 48);
+assert.equal(new Set(allCards.map((card) => card.id)).size, 96);
+assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.title))).size, 96);
+assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.instruction))).size, 96);
 
 for (const card of allCards) {
   const result = validator.validateCard(card);
@@ -17,21 +17,28 @@ for (const card of allCards) {
   assert.ok(card.coachRoles.length >= 1 && card.coachRoles.length <= 4);
   assert.ok(card.motifs.length >= 1 && card.motifs.length <= 5);
   assert.ok(card.recommendedModes.includes("open"));
-  assert.equal(card.status, "published");
-  assert.equal(card.packId, "core-foundations");
-  assert.equal(card.contentVersion, "1.0.0");
+  if (card.packId === "core-foundations") {
+    assert.equal(card.status, "published");
+    assert.equal(card.contentVersion, "1.0.0");
+  } else {
+    assert.equal(card.packId, "everyday-friction");
+    assert.equal(card.status, "playtest");
+    assert.equal(card.contentVersion, "0.9.0");
+  }
 }
 
-for (const category of bible.categories) {
-  const categoryCards = allCards.filter((card) => card.categoryId === category.id);
-  const expected = category.deck === "stance" ? 6 : category.id === "direct-objectives" ? 12 : 6;
-  assert.equal(categoryCards.length, expected, `${category.label} Core Foundations quota`);
-  for (const subtheme of category.subthemes) {
-    assert.equal(
-      categoryCards.filter((card) => card.subthemeId === subtheme.id).length,
-      1,
-      `${category.label} / ${subtheme.label} must have one Core Foundations card`
-    );
+for (const packId of ["core-foundations", "everyday-friction"]) {
+  for (const category of bible.categories) {
+    const categoryCards = allCards.filter((card) => card.packId === packId && card.categoryId === category.id);
+    const expected = category.deck === "stance" ? 6 : category.id === "direct-objectives" ? 12 : 6;
+    assert.equal(categoryCards.length, expected, `${category.label} ${packId} quota`);
+    for (const subtheme of category.subthemes) {
+      assert.equal(
+        categoryCards.filter((card) => card.subthemeId === subtheme.id).length,
+        1,
+        `${category.label} / ${subtheme.label} must have one ${packId} card`
+      );
+    }
   }
 }
 

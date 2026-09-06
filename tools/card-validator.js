@@ -10,10 +10,11 @@ const RECOMMENDED_WORD_RANGES = Object.freeze({
 });
 
 const PLAYABLE_OPENERS = new Set([
-  "accept", "act", "agree", "approach", "avoid", "be", "behave", "carry", "choose", "coax",
-  "correct", "create", "defend", "find", "frame", "get", "hide", "invent", "interpret", "keep",
-  "make", "maneuver", "meet", "perform", "persuade", "probe", "project", "protect", "recruit",
-  "redirect", "remain", "seek", "take", "treat", "turn", "use", "you"
+  "accept", "act", "agree", "answer", "approach", "ask", "avoid", "be", "behave", "carry",
+  "celebrate", "choose", "coax", "comply", "correct", "create", "defend", "describe", "find",
+  "frame", "get", "hide", "invent", "interpret", "keep", "make", "maneuver", "meet", "perform",
+  "persuade", "price", "probe", "project", "protect", "recruit", "redirect", "remain", "return",
+  "seek", "take", "treat", "turn", "use", "you"
 ]);
 
 const PARTNER_ASSERTION_PATTERNS = [
@@ -278,9 +279,16 @@ function validatePack(pack) {
     if (card.packId !== pack.id) {
       errors.push(issue("error", "pack-card-membership", `${card.id} claims packId ${card.packId}.`, { packId: pack.id, cardId: card.id }));
     }
+    if (pack.status === "published" && card.status !== "published") {
+      errors.push(issue("error", "pack-card-status", `${card.id} must be published because its pack is published.`, { packId: pack.id, cardId: card.id }));
+    }
+    if (pack.status === "playtest" && !["playtest", "published"].includes(card.status)) {
+      errors.push(issue("error", "pack-card-status", `${card.id} must be playtest or published because its pack is in playtest.`, { packId: pack.id, cardId: card.id }));
+    }
   }
 
-  if (pack.status === "published" && plan) {
+  const quotaStatuses = new Set(["published", "playtest"]);
+  if (quotaStatuses.has(pack.status) && plan) {
     if (pack.stances.length !== plan.targetStances) {
       errors.push(issue("error", "pack-stance-count", `Published pack requires ${plan.targetStances} Stances; found ${pack.stances.length}.`, { packId: pack.id }));
     }
@@ -389,12 +397,17 @@ function auditLibrary(cardPacks) {
     allCards.filter((card) => card.tone === value).length
   ]));
 
+  const publishedPackCount = packs.filter((pack) => pack.status === "published").length;
+  const playtestPackCount = packs.filter((pack) => pack.status === "playtest").length;
+
   return {
     passed: errors.length === 0,
     errors,
     warnings,
     summary: {
-      publishedPacks: packs.length,
+      activePacks: packs.length,
+      publishedPacks: publishedPackCount,
+      playtestPacks: playtestPackCount,
       plannedPacks: bible.packPlan.length,
       stances: stances.length,
       drives: drives.length,

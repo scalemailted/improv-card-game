@@ -5,7 +5,7 @@
 - **1 Stance** — how the performer enters, interprets, or reacts within the scene.
 - **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The currently published **Core Foundations** pack contains 24 Stances and 24 Drives. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
+The active library now contains **48 Stances and 48 Drives** across Core Foundations and the Everyday Friction playtest pack. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
 
 ## Open the live game
 
@@ -20,7 +20,30 @@ The currently published **Core Foundations** pack contains 24 Stances and 24 Dri
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
 
-## What is new in v0.8.0
+## What is new in v0.9.0
+
+v0.9.0 adds **Pack 2: Everyday Friction** as an active playtest pack:
+
+- 24 new Stances: S25–S48
+- 24 new Drives: D25–D48
+- 96 active cards total
+- 64-card documented candidate pool
+- completed 48-slot authoring matrix
+- pack brief, metadata profile, and playtest questions
+- automatic insertion of new card IDs into existing independent decks
+
+Everyday Friction turns small practical problems—routines, favors, scheduling, shared responsibilities, cleanup, etiquette, handoffs, and minor inconvenience—into playable character behavior without fixing a location or relationship.
+
+The pack is marked **playtest** rather than fully published because independent blind reads and repeated live troupe testing remain pending. Its cards are nevertheless available in Open Play, focused category draws, Mirror and Paired exercises, the gallery, coverage, and Scene Log snapshots.
+
+See:
+
+- `docs/packs/EVERYDAY-FRICTION-PACK-BRIEF.md`
+- `docs/packs/EVERYDAY-FRICTION-AUTHORING-MATRIX.md`
+- `docs/packs/EVERYDAY-FRICTION-CANDIDATE-POOL.md`
+- `cards/candidates/everyday-friction-candidate-pool.json`
+
+## What was introduced in v0.8.0
 
 v0.8.0 introduces the **Imprompt Card Bible**, the editorial and technical foundation for expanding the official library from 48 cards to:
 
@@ -47,7 +70,7 @@ Every future 48-card pack must contribute one card to every subtheme. Across ten
 | # | Pack | Stance IDs | Drive IDs | Status |
 |---:|---|---|---|---|
 | 1 | Core Foundations | S01–S24 | D01–D24 | Published |
-| 2 | Everyday Friction | S25–S48 | D25–D48 | Planned |
+| 2 | Everyday Friction | S25–S48 | D25–D48 | **Playtest in v0.9.0** |
 | 3 | Power Games | S49–S72 | D49–D72 | Planned |
 | 4 | Relationship Knots | S73–S96 | D73–D96 | Planned |
 | 5 | Emotional Pressure | S97–S120 | D97–D120 | Planned |
@@ -227,7 +250,7 @@ cards.js
 
 - `card-bible.js` owns the canonical taxonomy, pack plan, enums, coach roles, motifs, and ID helpers.
 - Each official pack lives in its own file under `cards/` and registers itself with the browser.
-- `cards.js` aggregates published packs and preserves the existing `IMPROMPT_CARDS` API used by the application.
+- `cards.js` aggregates published and active playtest packs and preserves the existing `IMPROMPT_CARDS` API used by the application.
 
 Future packs should not be pasted into one giant source file.
 
@@ -321,17 +344,25 @@ All application assets use relative paths and work under the GitHub Pages projec
 ├── package.json
 ├── .nojekyll
 ├── README.md
-├── RELEASE-NOTES-v0.8.0.md
 ├── RELEASE-NOTES-v0.7.0.md
+├── RELEASE-NOTES-v0.8.0.md
+├── RELEASE-NOTES-v0.9.0.md
 ├── cards/
 │   ├── core-foundations.js
+│   ├── everyday-friction.js
+│   ├── candidates/
+│   │   └── everyday-friction-candidate-pool.json
 │   ├── card.schema.json
 │   └── pack.schema.json
 ├── docs/
 │   ├── IMPROMPT-CARD-BIBLE.md
 │   ├── CARD-AUTHORING-WORKSHEET.md
 │   ├── CARD-REVIEW-SCORECARD.md
-│   └── PACK-BRIEF-TEMPLATE.md
+│   ├── PACK-BRIEF-TEMPLATE.md
+│   └── packs/
+│       ├── EVERYDAY-FRICTION-PACK-BRIEF.md
+│       ├── EVERYDAY-FRICTION-AUTHORING-MATRIX.md
+│       └── EVERYDAY-FRICTION-CANDIDATE-POOL.md
 ├── tools/
 │   ├── card-validator.js
 │   └── card-audit.js
@@ -349,6 +380,7 @@ All application assets use relative paths and work under the GitHub Pages projec
 └── tests/
     ├── card-bible.test.js
     ├── card-quality.test.js
+    ├── everyday-friction.test.js
     ├── browser-card-loading.test.js
     ├── app-content.test.js
     ├── deck-engine.test.js

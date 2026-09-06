@@ -2,7 +2,7 @@
 
 **Editorial and technical standard for the 480-card Imprompt library**  
 **Bible version:** 1.0.0  
-**Implemented foundation:** Imprompt v0.8.0  
+**Implemented foundation:** Imprompt v0.9.0  
 **Target release:** Imprompt v1.0  
 
 ---
@@ -122,7 +122,7 @@ Each pack contributes **one card to every defined subtheme**. Across ten packs, 
 | # | Pack | Stance IDs | Drive IDs | Editorial focus |
 |---:|---|---|---|---|
 | 1 | **Core Foundations** | S01–S24 | D01–D24 | Broad, portable fundamentals that establish the Imprompt voice. |
-| 2 | **Everyday Friction** | S25–S48 | D25–D48 | Ordinary inconvenience, domestic strain, work tension, and small stakes treated seriously. |
+| 2 | **Everyday Friction** | S25–S48 | D25–D48 | **Active playtest pack:** ordinary inconvenience, domestic strain, work tension, and small stakes treated seriously. |
 | 3 | **Power Games** | S49–S72 | D49–D72 | Hierarchy, legitimacy, gatekeeping, leverage, command, and status reversal. |
 | 4 | **Relationship Knots** | S73–S96 | D73–D96 | Affection, obligation, rivalry, dependence, family roles, mentorship, and unfinished connection. |
 | 5 | **Emotional Pressure** | S97–S120 | D97–D120 | Longing, insecurity, validation, resentment, grief, hope, shame, and emotional contradiction. |
@@ -1408,7 +1408,9 @@ Core Foundations establishes one published example in every subtheme.
 | File | Purpose |
 |---|---|
 | `card-bible.js` | Canonical machine-readable taxonomy, pack plan, enums, roles, motifs, and ID helpers. |
-| `cards/core-foundations.js` | The original 48 cards, now fully tagged to the Bible. |
+| `cards/core-foundations.js` | The original 48 cards, fully tagged to the Bible. |
+| `cards/everyday-friction.js` | Pack 2's 48 active playtest cards. |
+| `cards/candidates/everyday-friction-candidate-pool.json` | The complete Pack 2 drafting pool and editorial dispositions. |
 | `cards.js` | Runtime aggregator that preserves the application's existing `IMPROMPT_CARDS` interface. |
 | `cards/card.schema.json` | JSON Schema for an individual card. |
 | `cards/pack.schema.json` | JSON Schema for a pack. |
@@ -1424,3 +1426,16 @@ Core Foundations establishes one published example in every subtheme.
 > **Final editorial test:** Would this card cause a performer to make clearer, more committed, more responsive choices without deciding what the partner has to do?
 >
 > If yes, it may belong in Imprompt. If no, revise it before adding more metadata.
+
+
+# Appendix C — Everyday Friction implementation
+
+Everyday Friction is the first expansion authored under this Bible. It is active in Imprompt v0.9.0 with internal status `playtest`.
+
+- Pack brief: `docs/packs/EVERYDAY-FRICTION-PACK-BRIEF.md`
+- Authoring matrix: `docs/packs/EVERYDAY-FRICTION-AUTHORING-MATRIX.md`
+- Candidate pool: `docs/packs/EVERYDAY-FRICTION-CANDIDATE-POOL.md`
+- Machine-readable candidates: `cards/candidates/everyday-friction-candidate-pool.json`
+- Runtime module: `cards/everyday-friction.js`
+
+The pack provides one S25–S48 or D25–D48 card in every subtheme, expands the active library to 96 cards, and remains subject to blind-read and live-playtest revision before final publication.

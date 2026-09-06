@@ -1,109 +1,147 @@
 # Imprompt — Prompts for Improv
 
-**Imprompt** is a mobile-first, fully client-side prompt deck for improv comedy. Each performer opens the game on their own phone and privately receives:
+**Imprompt** is a mobile-first, fully client-side prompt deck and coaching tool for improv comedy. Each performer uses their own phone and privately receives:
 
-- **1 Stance** — the holder’s attitude, relationship lens, status, or way of interpreting the scene.
-- **1 Drive** — the holder’s objective, secret, avoidance, or repeatable behavior.
+- **1 Stance** — how the performer enters, interprets, or reacts within the scene.
+- **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The deck contains **24 Stance cards** and **24 Drive cards**. Every phone maintains its own independent shuffle, draw settings, current scene, and scene log. There is no multiplayer room, synchronized state, account, tracking, or backend.
+The core deck contains **24 Stance cards** and **24 Drive cards**. Every browser maintains its own independent shuffle, current prompts, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
 
-## Open the live game on a phone
+## Open the live game
 
 <p align="center">
   <a href="https://scalemailted.github.io/improv-card-game/">
-    <img src="./assets/improv-card-game-qr.png" width="300" alt="QR code linking to Imprompt">
+    <img src="./assets/improv-card-game-qr.png" width="300" alt="QR code linking to the public Imprompt game">
   </a>
 </p>
 
 <p align="center">
-  Scan the code or tap it to open:<br>
+  Scan the code or open<br>
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
 
-## What is new in v0.6.0
+## What is new in v0.7.0
 
-### Scene Log
+### Guided exercises
 
-Completing a scene now saves that player’s final Stance and Drive in a private **Scene Log** available from the main menu.
+A coach can now coordinate the **draw rules** without sharing anyone's cards. Imprompt includes two exercise structures:
 
-Each entry records:
+- **Mirror exercises** give every performer the same category pools on independently shuffled phones.
+- **Paired exercises** give Player A and Player B different but complementary category pools.
 
-- The local scene number
+Eight built-in exercises are included:
+
+| Mirror exercises | Stance | Drive |
+|---|---|---|
+| **Status Clash** | Status & Authority | Direct Objectives |
+| **Emotional Stakes** | Emotional Assumptions | Random All |
+| **Absurd Commitment** | Worldview & Absurdity | Repeatable Behaviors |
+| **Relationship Pressure** | History & Relationship | Secrets & Avoidance |
+
+| Paired exercises | Player A | Player B |
+|---|---|---|
+| **Pursuer & Avoider** | Random Stance + Direct Objectives | Random Stance + Secrets & Avoidance |
+| **Crown & Heart** | Status & Authority + Direct Objectives | Emotional Assumptions + Secrets & Avoidance |
+| **Past & Future** | History & Relationship + Secrets & Avoidance | Status & Authority + Direct Objectives |
+| **Instigator & Anchor** | Worldview & Absurdity + Repeatable Behaviors | History & Relationship + Direct Objectives |
+
+Players can select a built-in exercise on their own phones after a coach announces it. A coach can also display an exercise QR code so each phone receives the same setup automatically.
+
+### Exercise sharing by QR
+
+An exercise QR shares only a small configuration describing:
+
+- Exercise name and structure
+- Stance and Drive category pools
+- Whether the category selectors are locked or suggested
+- A paired assignment when a role-specific QR is used
+
+It does **not** share card IDs, prompt text, shuffle order, Scene Log entries, scene count, or local deck identity.
+
+Mirror exercises use one QR. Paired exercises support:
+
+- A **chooser QR**, after which the player selects Player A or Player B
+- A **Player A QR**
+- A **Player B QR**
+
+The role-specific option is useful when the coach wants each performer to see only their own assignment. All QR codes are generated locally in the browser and continue to work without an external QR service.
+
+### Custom exercise builder
+
+Coaches can create and save custom Mirror or Paired exercises on their own device. The builder supports:
+
+- A custom exercise name and coaching focus
+- Independent Stance and Drive pools for each assignment
+- Locked categories for structured coaching
+- Suggested categories that players may change during play
+- Hidden paired roles or an open structure in which both assignments are shown
+- Local saving, editing, deletion, and QR sharing
+
+Starting a new independent card deck clears prompts and history but preserves the saved custom-exercise library on that phone.
+
+### Sessions, Scene Log, and practice coverage
+
+Each exercise starts a distinct local session at **Scene 1** while preserving the remaining cards in the player's independent deck. The Scene Log is grouped by session and records:
+
 - The final Stance and Drive used
-- Both cards’ category labels, colors, and icons
-- The completion time
-- The number of redraws used before the final card, when applicable
+- Immutable copies of the actual card wording
+- Card categories and exercise assignment
+- Completion time
+- Per-card redraw totals
 
-Only completed scenes appear in the log. A vetoed card is returned to its deck and is not recorded as the scene’s played card. The log lives only in the same browser as the deck; it is never shared through the invite link.
+The **Coverage** tab summarizes how often each Stance and Drive category has appeared in the current session or across all saved sessions on that phone.
 
-Because every performer has an independent phone, each person’s log contains only **their own two hidden prompts**. During a group postmortem, performers can compare their logs to reconstruct the four-card collision that produced the scene.
+### Expanded Card Gallery
 
-Starting a new independent deck also starts a fresh scene count and clears that phone’s Scene Log after confirmation.
+The gallery now supports:
 
-### Category-focused draws
+- Stance and Drive tabs
+- Category filters with card totals
+- Search by title, instruction, or category
+- Full-card and compact-list views
+- Previous, next, and random navigation within the active filter
 
-Every undrawn Stance and Drive now has its own draw selector. The default is **Random All**, but a coach or player can focus either card on a specific category before drawing it.
+Gallery browsing never changes the shuffled gameplay deck.
 
-Stance choices:
+## Ways to play
 
-- Random All
-- Status & Authority
-- History & Relationship
-- Emotional Assumptions
-- Worldview & Absurdity
+### Open Play
 
-Drive choices:
-
-- Random All
-- Direct Objectives
-- Secrets & Avoidance
-- Repeatable Behaviors
-
-The two selectors are independent. For example, one performer can draw an **Emotional Assumptions** Stance while leaving their Drive on **Random All**, while another performer uses a different combination on another phone.
-
-A category choice remains active for later scenes until that player changes it. Vetoing a card draws its replacement using the same selected mode.
-
-- Used exclusively, **Random All** avoids repeats until the full 24-card deck is exhausted.
-- A **focused category** avoids repeats within that category until all its cards have appeared, then cycles that category while leaving the other categories available in the deck.
-
-## Player flow
-
-1. Open Imprompt on each performer’s phone.
-2. Enter the app and choose **Start a prompt session**.
-3. Leave each selector on **Random All**, or tap it to focus that Stance or Drive on one category.
-4. Tap each generic card panel to draw and reveal its private prompt.
+1. Each performer opens Imprompt on their own phone.
+2. Select **Start Open Play**.
+3. Leave both selectors on **Random All**, or focus either card on a category.
+4. Tap each generic panel to draw and reveal a private card.
 5. Tap a revealed card again to **Keep** it or **Veto & draw another**.
 6. Play the scene without announcing or quoting the prompts.
-7. Tap **Scene complete** to save the final two cards and advance the local scene count.
-8. Open **Scene Log** from the main menu during the postmortem.
+7. Tap **Scene complete** to save the final pair to the local Scene Log.
 
-## Main menu
+### Mirror exercise
 
-The main menu provides:
+1. The coach announces a built-in Mirror theme or shares its QR.
+2. Every performer enters the same exercise on their own phone.
+3. Each phone independently draws from the same category pools.
+4. The scene explores what happens when both performers bring the same broad kind of pressure through different private cards.
 
-- **Start or resume a prompt session**
-- **Scene Log**
-- **Learn to play**
-- **Card gallery**
-- **Invite players**
+### Paired exercise
 
-The Scene Log option displays a count badge after the first scene is completed.
+1. The coach assigns Player A and Player B verbally or displays the two role-specific QR codes.
+2. Each performer starts only their assigned configuration.
+3. The phones draw independently from complementary category pools.
+4. The performers discover the other assignment through behavior rather than shared card information.
 
 ## Hidden-information design
 
-Every prompt belongs only to the performer who drew it. A Stance tells the holder how to behave, interpret, react, or carry themself. It never requires another performer to respond in a prescribed way.
+A Stance directs only the holder. It may tell the performer how to carry themself, interpret the interaction, or respond to offers, but it never dictates what another performer must do.
 
-For example, a Stance may tell a player to:
+A Drive gives the holder playable action: pursue something, protect something, avoid something, or establish a behavior that can repeat and heighten.
 
-> Carry yourself as the highest-status person present. Treat questions as requests for your approval.
-
-It does not state that another performer respects that status. Their private prompt may produce the opposite interpretation, and that collision is part of the game.
+The cards should influence performance immediately, but they should not be announced or treated as exact phrases the partner must guess.
 
 ## Category visual language
 
-Each of the seven prompt categories has a consistent **color, written label, and SVG icon**. On revealed cards, the category is aligned to the far left of the top metadata row while **STANCE** or **DRIVE** remains aligned to the far right. The same visual language appears in the card gallery, Keep/Veto dialog, category selector, and Scene Log.
+Every revealed card carries a category label, color, and SVG icon. Color is never the only identifier.
 
-| Category | Visual cue | Applies to |
+| Category | Visual cue | Deck |
 |---|---|---|
 | Status & Authority | Indigo crown | Stance |
 | History & Relationship | Teal link | Stance |
@@ -113,46 +151,28 @@ Each of the seven prompt categories has a consistent **color, written label, and
 | Secrets & Avoidance | Gold lock | Drive |
 | Repeatable Behaviors | Green repeat arrows | Drive |
 
-Color is never the only signal: every category retains a readable name and unique icon. A neutral shuffle treatment identifies **Random All**.
+## Independent local data
 
-## Independent deck behavior
+Imprompt stores its working state in the browser's local storage. A phone knows only its own:
 
-Deck state is stored locally in the browser and is not written into the page URL. Opening or sharing the public address exposes no local deck identifier, cards, filters, scene count, or history.
+- Shuffle order and unused cards
+- Current scene and private prompts
+- Category settings
+- Guided-exercise assignment
+- Sessions and Scene Log
+- Saved custom exercises
 
-A different phone receives its own shuffled deck automatically. **Start a new independent deck** replaces the following only on the device where the button is pressed:
+The general **Invite players** QR always points to the plain public URL and contains no exercise or local state. Guided-exercise links contain only the selected coaching configuration.
 
-- Current prompts
-- Stance and Drive draw order
-- Category draw selections
-- Scene count
-- Scene Log
-- Veto totals and deck-cycle progress
+A valid v0.5.x or v0.6.0 local deck is migrated into the v0.7.0 state structure. Existing v0.6 Scene Log entries become part of a migrated Open Play session. Older releases that never stored completed card identities cannot have those scenes reconstructed retroactively.
 
-A valid v0.5.2 deck is migrated to the v0.6.0 state structure. Earlier completed scene cards cannot be reconstructed because prior releases did not store them; Scene Log entries begin with the first scene completed after migration.
+## Progressive web app and offline use
 
-## Invite behavior
-
-The **Invite players** option appears on the main menu and remains available during a prompt session. It shows the public QR code and offers native Share and Copy controls.
-
-The invitation always points to:
-
-```text
-https://scalemailted.github.io/improv-card-game/
-```
-
-It never shares current prompts, scene progress, card order, category settings, local storage, or Scene Log entries.
-
-## Progressive web app and release caching
-
-Imprompt remains installable and available offline after a successful online visit. Release-specific query strings are used for JavaScript, CSS, icons, and the manifest so a new HTML document cannot accidentally load incompatible assets from an older release cache.
-
-The service-worker URL remains stable as `sw.js`. New workers do not force activation with `skipWaiting()`, which allows an existing open session to finish before the browser adopts a new release.
+After a successful online visit, Imprompt can be installed and used offline. Static assets use release-specific URLs, while the service-worker address remains stable at `sw.js`. This prevents a newly deployed page from mixing incompatible JavaScript or CSS from an older cached version.
 
 ## Run locally
 
-The service worker and manifest require HTTP rather than `file://`.
-
-### Python
+The service worker and manifest require an HTTP origin rather than `file://`.
 
 ```bash
 python -m http.server 8000
@@ -160,86 +180,101 @@ python -m http.server 8000
 
 Then open `http://localhost:8000`.
 
-### VS Code
-
-Open the folder and serve it with a static-server extension such as Live Server.
+A static-server extension such as Live Server may also be used in VS Code.
 
 ## Publish with GitHub Pages
 
-This package is ready for:
+This package is configured for:
 
 ```text
 https://scalemailted.github.io/improv-card-game/
 ```
 
-1. Place the contents of this folder at the root of the `improv-card-game` repository.
+1. Place the contents of this folder directly at the repository root.
 2. Commit and push the files to the `main` branch.
-3. Open **Settings → Pages** in the repository.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select `main` and the root (`/`) folder.
-6. Save and wait for the Pages deployment to complete.
+3. Open **Settings → Pages** in the GitHub repository.
+4. Choose **Deploy from a branch**.
+5. Select `main` and `/ (root)`.
+6. Save and wait for the deployment to finish.
 
-All application assets use relative paths, so they work under the GitHub Pages project path.
+All application assets use relative paths and work under the GitHub Pages project path.
 
-## File structure
+## Project structure
 
 ```text
 .
 ├── index.html
 ├── styles.css
 ├── cards.js
+├── exercises.js
 ├── deck-engine.js
 ├── app.js
 ├── manifest.webmanifest
 ├── sw.js
 ├── .nojekyll
-├── RELEASE-NOTES-v0.6.0.md
+├── README.md
+├── RELEASE-NOTES-v0.7.0.md
 ├── assets/
 │   └── improv-card-game-qr.png
 ├── icons/
 │   ├── icon.svg
 │   ├── icon-192.png
 │   └── icon-512.png
+├── vendor/
+│   ├── qrcode-core.js
+│   └── THIRD-PARTY-NOTICES.md
 └── tests/
     ├── app-content.test.js
     ├── deck-engine.test.js
+    ├── exercises.test.js
+    ├── qr-core.test.js
     └── share-link.test.js
 ```
 
 ## Editing cards and categories
 
-All prompt copy and category metadata are in `cards.js`. Keep every card ID unique and preserve the `stances` and `drives` arrays. Stances should remain holder-centered: they may direct the player to treat, interpret, or respond to others in a particular way, but they should never dictate another performer’s behavior or reaction.
+All official card copy and category metadata are in `cards.js`. Keep card IDs unique and retain separate `stances` and `drives` arrays.
 
-To add a category:
+All built-in exercise definitions are in `exercises.js`. Each exercise defines:
 
-1. Assign its exact label to the relevant cards.
-2. Add a matching entry to `categoryStyles` in `cards.js`.
-3. Add a CSS color token for its `data-category` ID.
-4. Add an SVG symbol for its icon in `index.html`.
+- `mode`: `mirror` or `paired`
+- `locked`: whether players can change the category selectors
+- `roleVisibility`: `hidden` or `open`
+- One Mirror role or two Paired roles
+- A Stance and Drive filter for every role
 
-The category selector is generated from the card data, so a properly configured category automatically appears under the correct Stance or Drive draw choices.
+When adding a category, update:
 
-When changing card IDs, deck sizes, or persisted state structure, increment the state version in `deck-engine.js` and the release cache name in `sw.js`. Update the `?v=` asset query strings in `index.html` and `sw.js` together.
+1. The cards in `cards.js`
+2. `categoryStyles` in `cards.js`
+3. The category color variables in `styles.css`
+4. The SVG icon symbol in `index.html`
 
-## Run tests
+When changing the persisted state structure, increment `STATE_VERSION` in `deck-engine.js` and add an explicit migration path. For every release, update the `?v=` asset values in `index.html`, the cache name and precache list in `sw.js`, and the version in the release notes together.
+
+## Run the automated tests
 
 ```bash
 node tests/deck-engine.test.js
+node tests/exercises.test.js
+node tests/qr-core.test.js
 node tests/share-link.test.js
 node tests/app-content.test.js
 ```
 
 The tests verify:
 
-- All 48 cards and category mappings
-- Random All nonrepeating cycles when used exclusively
-- Category-focused draws and category cycling
-- Independent Stance and Drive filters
-- Per-card Keep and Veto behavior
-- Filter-respecting replacements
-- Final-card Scene Log entries
-- Incomplete-scene protection
-- v0.5 state migration
-- Canonical public sharing
-- Release-specific asset URLs and service-worker cache behavior
-- Main-menu, card-header, filter-dialog, gallery, and history markup contracts
+- All 48 cards, IDs, and category mappings
+- Open Play, Mirror, and Paired session rules
+- Different Player A and Player B category assignments
+- Nonrepeating Random All cycles
+- Focused-category cycles and filter-respecting veto replacements
+- Immutable Scene Log snapshots and session grouping data
+- v0.5/v0.6 state migration
+- Custom-exercise normalization and storage
+- Preset, chooser, and role-specific share links
+- Absence of card, deck, scene, or history data in shared URLs
+- Offline QR matrix generation
+- Versioned static assets and service-worker cache contracts
+
+See `vendor/THIRD-PARTY-NOTICES.md` for the locally bundled QR generator notice.

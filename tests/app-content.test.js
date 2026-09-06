@@ -4,6 +4,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const cards = require("../cards.js");
+const exercises = require("../exercises.js");
 
 const root = path.resolve(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
@@ -13,71 +14,73 @@ const styles = read("styles.css");
 const serviceWorker = read("sw.js");
 const manifest = read("manifest.webmanifest");
 
+// Brand, top-level navigation, and private-deck language.
 assert.match(html, /<span>im<\/span>prompt/i);
-assert.match(html, /Start a prompt session/);
-assert.match(html, /Scene log/);
-assert.match(html, /Learn to play/);
-assert.match(html, /Card gallery/);
-assert.match(html, /Invite players/);
+assert.match(html, /Start Open Play/);
+assert.match(html, /Guided exercises/i);
+assert.match(html, /Scene log &amp; coverage/i);
+assert.match(html, /Learn to play/i);
+assert.match(html, /Card gallery/i);
+assert.match(html, /Invite players/i);
+assert.match(html, /Every phone still shuffles independently/i);
+assert.doesNotMatch(html, /Prototype deck/i);
+assert.match(html, /<footer class="app-footer"[^>]*>[\s\S]*id="newDeckButton"/);
+
+// Guided exercise surfaces.
+for (const id of [
+  "exercisesScreen", "exerciseDetailScreen", "customExerciseScreen", "exerciseShareScreen",
+  "joinExerciseScreen", "mirrorExerciseList", "pairedExerciseList", "exerciseRoleGrid",
+  "customExerciseForm", "shareRoleChooserButton", "exerciseQrCode", "acceptExerciseInviteButton"
+]) {
+  assert.match(html, new RegExp(`id=["']${id}["']`));
+}
+assert.match(html, /Mirror asks:/);
+assert.match(html, /Paired asks:/);
+assert.match(html, /Lock category choices during play/);
+assert.match(html, /Make both role assignments public/);
+assert.match(app, /exercises\.createSessionSelection/);
+assert.match(app, /exercises\.buildShareUrl/);
+assert.match(app, /exercises\.parseInviteUrl/);
+assert.match(app, /engine\.startSession/);
+assert.match(app, /function renderExerciseShare/);
+assert.match(app, /function renderJoinExercise/);
+assert.match(app, /function saveCustomExercise/);
+assert.match(app, /const savedExercises = state\.savedExercises\.map/);
+assert.match(html, /Saved custom exercises will remain available/);
+
+// Scene sessions, immutable history snapshots, and coverage.
+assert.match(html, /id="historyScenesTab"/);
+assert.match(html, /id="historyCoverageTab"/);
+assert.match(html, /id="stanceCoverageList"/);
+assert.match(html, /id="driveCoverageList"/);
+assert.match(app, /stanceSnapshot/);
+assert.match(app, /driveSnapshot/);
+assert.match(app, /function createHistorySessionGroup/);
+assert.match(app, /function renderCoverage/);
+assert.match(app, /engine\.completeScene\(state, cards\)/);
+
+// Improved gallery.
+for (const id of [
+  "gallerySearchInput", "galleryCategoryFilters", "galleryCardViewButton", "galleryListViewButton",
+  "galleryListPanel", "galleryResultsCount"
+]) {
+  assert.match(html, new RegExp(`id=["']${id}["']`));
+}
+assert.match(app, /function galleryFilteredCards/);
+assert.match(app, /function renderGalleryFilters/);
+assert.match(app, /function createGalleryListRow/);
+
+// Existing hidden-card and individual-veto mechanics remain present.
 assert.match(html, /How you enter the scene/);
 assert.match(html, /What keeps you playing/);
-assert.match(html, /id="historyScreen"/);
-assert.match(html, /id="historyList"/);
-assert.match(html, /id="historyButton"/);
 assert.match(html, /id="stanceFilterButton"/);
 assert.match(html, /id="driveFilterButton"/);
 assert.match(html, /id="filterDialog"/);
-assert.match(html, /id="filterOptions"/);
-assert.match(html, /Random All/);
-assert.match(html, /category-icon-shuffle/);
-assert.match(html, /Complete and review/);
-assert.match(html, /scene log, category choices/i);
-
-assert.match(app, /engine\.startScene\(state\)/);
 assert.match(app, /engine\.drawCard\(state, cards, type\)/);
-assert.match(app, /engine\.setDrawFilter\(state, cards, type, filter\)/);
-assert.match(app, /function renderHistory\(\)/);
-assert.match(app, /function createHistoryEntry/);
-assert.match(app, /function openFilterDialog/);
-assert.match(app, /state\.history/);
-assert.match(app, /if \(state\.current\[config\.currentKey\] === null\)/);
+assert.match(app, /engine\.vetoCard\(state, cards, type\)/);
 assert.doesNotMatch(app, /engine\.drawPair\(state, cards\);/);
-assert.doesNotMatch(html, /Prototype deck/i);
-assert.match(html, /<footer class="app-footer"[^>]*>[\s\S]*id="newDeckButton"/);
-assert.match(manifest, /"short_name": "Imprompt"/);
 
-assert.match(html, /styles\.css\?v=0\.6\.0/);
-assert.match(html, /app\.js\?v=0\.6\.0/);
-assert.match(html, /cards\.js\?v=0\.6\.0/);
-assert.match(html, /deck-engine\.js\?v=0\.6\.0/);
-assert.match(serviceWorker, /imprompt-v0\.6\.0/);
-assert.doesNotMatch(serviceWorker, /skipWaiting/);
-assert.match(app, /updateViaCache:\s*"none"/);
-
-assert.match(html, /id="stanceCategory"/);
-assert.match(html, /id="driveCategory"/);
-assert.match(html, /id="galleryCategoryIcon"/);
-assert.match(html, /id="cardDialogCategory"/);
-assert.match(html, /category-icon-crown/);
-assert.match(html, /category-icon-repeat/);
-assert.match(app, /function applyCategoryStyle/);
-assert.match(app, /clearCategoryStyle\(config\.button, config\.category\)/);
-
-const stanceTopline = html.match(/<span class="card-topline">([\s\S]*?)<\/span>\s*<span class="card-role" id="stanceRole">/);
-assert.ok(stanceTopline, "Stance top metadata row should be present");
-assert.ok(stanceTopline[1].indexOf('id="stanceCategory"') < stanceTopline[1].indexOf('>STANCE<'));
-
-const driveTopline = html.match(/<span class="card-topline">([\s\S]*?)<\/span>\s*<span class="card-role" id="driveRole">/);
-assert.ok(driveTopline, "Drive top metadata row should be present");
-assert.ok(driveTopline[1].indexOf('id="driveCategory"') < driveTopline[1].indexOf('>DRIVE<'));
-
-assert.match(styles, /\.draw-filter-trigger\s*\{/);
-assert.match(styles, /\.history-entry\s*\{/);
-assert.match(styles, /\.history-prompt-grid\s*\{/);
-assert.match(styles, /\.filter-option\s*\{/);
-assert.match(styles, /\.card-topline\s*\{[\s\S]*?display:\s*flex/);
-assert.match(styles, /\.card-topline\s*\{[\s\S]*?justify-content:\s*space-between/);
-
+// Category identity remains consistent and accessible by color, icon, and written label.
 const expectedCategories = [
   "Status & Authority",
   "History & Relationship",
@@ -88,15 +91,28 @@ const expectedCategories = [
   "Repeatable Behaviors"
 ];
 assert.deepEqual(Object.keys(cards.categoryStyles), expectedCategories);
-const allCards = [...cards.stances, ...cards.drives];
-for (const card of allCards) {
-  assert.ok(cards.categoryStyles[card.category], `Missing visual style for ${card.id}: ${card.category}`);
+for (const card of [...cards.stances, ...cards.drives]) {
+  assert.ok(cards.categoryStyles[card.category], `Missing category style for ${card.id}`);
 }
 for (const category of Object.values(cards.categoryStyles)) {
   assert.match(styles, new RegExp(`data-category=["']${category.id}["']`));
   assert.match(html, new RegExp(`category-icon-${category.icon}`));
 }
-assert.equal(new Set(cards.stances.map((card) => card.category)).size, 4);
-assert.equal(new Set(cards.drives.map((card) => card.category)).size, 3);
+assert.equal(exercises.getPresets("mirror").length, 4);
+assert.equal(exercises.getPresets("paired").length, 4);
 
-console.log("✓ Imprompt v0.6 scene-log, category-filter, layout, and cache-contract checks passed");
+// Release and offline contract.
+for (const asset of ["styles.css", "cards.js", "exercises.js", "deck-engine.js", "vendor/qrcode-core.js", "app.js"]) {
+  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.7\\.0`));
+  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.7\\.0`));
+}
+assert.match(serviceWorker, /imprompt-v0\.7\.0/);
+assert.doesNotMatch(serviceWorker, /skipWaiting/);
+assert.match(app, /updateViaCache:\s*"none"/);
+assert.match(manifest, /"short_name": "Imprompt"/);
+assert.match(manifest, /coach-guided Mirror and Paired exercises/);
+
+// QR SVG modules must not inherit the global rounded SVG stroke.
+assert.match(styles, /\.dynamic-qr-panel svg,\s*\.dynamic-qr-panel svg \*[\s\S]*?stroke:\s*none\s*!important/);
+
+console.log("✓ Imprompt v0.7 application, guided-exercise, gallery, history, and cache contracts passed");

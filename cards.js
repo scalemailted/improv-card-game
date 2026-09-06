@@ -4,7 +4,8 @@
   const packs = isCommonJs
     ? [
         require("./cards/core-foundations.js"),
-        require("./cards/everyday-friction.js")
+        require("./cards/everyday-friction.js"),
+        require("./cards/power-games.js")
       ]
     : (root.IMPROMPT_CARD_PACKS || []);
   const cards = factory(bible, packs);

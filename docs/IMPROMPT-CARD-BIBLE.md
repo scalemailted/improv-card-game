@@ -1,8 +1,8 @@
 # The Imprompt Card Bible
 
 **Editorial and technical standard for the 480-card Imprompt library**  
-**Bible version:** 1.0.0  
-**Implemented foundation:** Imprompt v0.9.0  
+**Bible version:** 1.2.0  
+**Implemented foundation:** Imprompt v0.10.0  
 **Target release:** Imprompt v1.0  
 
 ---
@@ -123,7 +123,7 @@ Each pack contributes **one card to every defined subtheme**. Across ten packs, 
 |---:|---|---|---|---|
 | 1 | **Core Foundations** | S01–S24 | D01–D24 | Broad, portable fundamentals that establish the Imprompt voice. |
 | 2 | **Everyday Friction** | S25–S48 | D25–D48 | **Active playtest pack:** ordinary inconvenience, domestic strain, work tension, and small stakes treated seriously. |
-| 3 | **Power Games** | S49–S72 | D49–D72 | Hierarchy, legitimacy, gatekeeping, leverage, command, and status reversal. |
+| 3 | **Power Games** | S49–S72 | D49–D72 | **Active playtest pack:** authority, legitimacy, leverage, dependency, hierarchy, and the struggle over who gets to decide. |
 | 4 | **Relationship Knots** | S73–S96 | D73–D96 | Affection, obligation, rivalry, dependence, family roles, mentorship, and unfinished connection. |
 | 5 | **Emotional Pressure** | S97–S120 | D97–D120 | Longing, insecurity, validation, resentment, grief, hope, shame, and emotional contradiction. |
 | 6 | **Secrets & Schemes** | S121–S144 | D121–D144 | Concealment, investigation, recruitment, misdirection, confession, and plans under pressure. |
@@ -491,6 +491,13 @@ Examples include:
 - controller
 - escalator
 - stabilizer
+- broker
+- challenger
+- claimant
+- enforcer
+- gatekeeper
+- patron
+- successor
 
 A card should normally receive **one to three** coach roles. Four is the hard maximum. Tags must describe how the card functions in play, not every concept the text happens to mention.
 
@@ -512,24 +519,36 @@ The exercise still distributes private cards. The role tag narrows the eligible 
 
 Motifs describe recurring content and emotional material, such as:
 
+- access
+- allegiance
 - approval
+- autonomy
 - belonging
 - competition
+- compliance
 - control
 - dependence
 - fear
+- hierarchy
 - history
 - identity
+- influence
+- leverage
+- legitimacy
 - loyalty
 - obligation
 - optimism
+- patronage
 - recognition
 - repair
+- reputation
 - risk
 - ritual
 - rules
 - secrecy
 - status
+- succession
+- territory
 - trust
 - truth
 - validation
@@ -1410,7 +1429,9 @@ Core Foundations establishes one published example in every subtheme.
 | `card-bible.js` | Canonical machine-readable taxonomy, pack plan, enums, roles, motifs, and ID helpers. |
 | `cards/core-foundations.js` | The original 48 cards, fully tagged to the Bible. |
 | `cards/everyday-friction.js` | Pack 2's 48 active playtest cards. |
+| `cards/power-games.js` | Pack 3's 48 active playtest cards. |
 | `cards/candidates/everyday-friction-candidate-pool.json` | The complete Pack 2 drafting pool and editorial dispositions. |
+| `cards/candidates/power-games-candidate-pool.json` | The complete Pack 3 drafting pool and editorial dispositions. |
 | `cards.js` | Runtime aggregator that preserves the application's existing `IMPROMPT_CARDS` interface. |
 | `cards/card.schema.json` | JSON Schema for an individual card. |
 | `cards/pack.schema.json` | JSON Schema for a pack. |
@@ -1439,3 +1460,18 @@ Everyday Friction is the first expansion authored under this Bible. It is active
 - Runtime module: `cards/everyday-friction.js`
 
 The pack provides one S25–S48 or D25–D48 card in every subtheme, expands the active library to 96 cards, and remains subject to blind-read and live-playtest revision before final publication.
+
+# Appendix D — Power Games implementation
+
+Power Games is the second expansion authored under this Bible. It is active in Imprompt v0.10.0 with internal status `playtest`.
+
+- Pack brief: `docs/packs/POWER-GAMES-PACK-BRIEF.md`
+- Authoring matrix: `docs/packs/POWER-GAMES-AUTHORING-MATRIX.md`
+- Candidate pool: `docs/packs/POWER-GAMES-CANDIDATE-POOL.md`
+- Machine-readable candidates: `cards/candidates/power-games-candidate-pool.json`
+- Runtime module: `cards/power-games.js`
+
+The pack provides one S49–S72 or D49–D72 card in every formal subtheme. It adds seven coach roles—Broker, Challenger, Claimant, Enforcer, Gatekeeper, Patron, and Successor—and twelve power-analysis motifs without changing the visible seven-category system.
+
+With Core Foundations and Everyday Friction, the active library now contains 72 Stances and 72 Drives, or 144 total cards. Power Games remains subject to independent blind reads and repeated live troupe playtesting before final publication.
+

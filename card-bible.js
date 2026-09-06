@@ -9,7 +9,7 @@
   "use strict";
 
   const CARD_SCHEMA_VERSION = 1;
-  const LIBRARY_PLAN_VERSION = "1.1.0";
+  const LIBRARY_PLAN_VERSION = "1.2.0";
   const TARGET_STANCE_COUNT = 240;
   const TARGET_DRIVE_COUNT = 240;
 
@@ -326,7 +326,14 @@
     { id: "controller", label: "Controller", definition: "Reinterprets agreement or care to preserve personal control." },
     { id: "escalator", label: "Escalator", definition: "Heightens a recurring pattern or consequence." },
     { id: "stabilizer", label: "Stabilizer", definition: "Keeps the scene concrete, practical, and responsive." },
-    { id: "truth-seeker", label: "Truth Seeker", definition: "Pursues information, admission, or clarity." }
+    { id: "truth-seeker", label: "Truth Seeker", definition: "Pursues information, admission, or clarity." },
+    { id: "broker", label: "Broker", definition: "Converts access, information, resources, or relationships into influence." },
+    { id: "challenger", label: "Challenger", definition: "Tests, resists, or contests another claim to authority." },
+    { id: "claimant", label: "Claimant", definition: "Asserts a rightful position, privilege, title, or jurisdiction." },
+    { id: "enforcer", label: "Enforcer", definition: "Presses for compliance and makes rank or consequences visible." },
+    { id: "gatekeeper", label: "Gatekeeper", definition: "Controls access, qualification, participation, or permission." },
+    { id: "patron", label: "Patron", definition: "Uses support, protection, sponsorship, or favor to shape another person's options." },
+    { id: "successor", label: "Successor", definition: "Positions themself as the next, rightful, or more capable holder of authority." }
   ];
 
   const motifs = [
@@ -336,7 +343,8 @@
     "identity", "loyalty", "maintenance", "mess", "obligation", "optimism", "patterns", "permission",
     "pride", "recognition", "repair", "resources", "responsibility", "risk", "ritual", "routine",
     "rules", "secrecy", "space", "status", "time", "trust", "truth", "validation", "work",
-    "absurdity", "loss"
+    "absurdity", "loss", "access", "allegiance", "autonomy", "compliance", "hierarchy", "influence",
+    "leverage", "legitimacy", "patronage", "reputation", "succession", "territory"
   ];
 
   const packPlan = [
@@ -366,12 +374,12 @@
       id: "power-games",
       sequence: 3,
       title: "Power Games",
-      status: "planned",
+      status: "playtest",
       stanceRange: [49, 72],
       driveRange: [49, 72],
       targetStances: 24,
       targetDrives: 24,
-      focus: "Hierarchy, legitimacy, gatekeeping, leverage, compliance, command, and status reversal."
+      focus: "Authority, legitimacy, leverage, dependency, hierarchy, access, compliance, and the struggle over who gets to decide."
     },
     {
       id: "relationship-knots",

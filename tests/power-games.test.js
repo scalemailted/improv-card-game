@@ -4,16 +4,17 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const bible = require("../card-bible.js");
-const pack = require("../cards/everyday-friction.js");
+const pack = require("../cards/power-games.js");
 const cards = require("../cards.js");
 const validator = require("../tools/card-validator.js");
 
-assert.equal(pack.id, "everyday-friction");
+assert.equal(pack.id, "power-games");
 assert.equal(pack.status, "playtest");
+assert.equal(pack.version, "0.10.0");
 assert.equal(pack.stances.length, 24);
 assert.equal(pack.drives.length, 24);
-assert.deepEqual(pack.stances.map((card) => card.id), Array.from({ length: 24 }, (_, index) => `S${index + 25}`));
-assert.deepEqual(pack.drives.map((card) => card.id), Array.from({ length: 24 }, (_, index) => `D${index + 25}`));
+assert.deepEqual(pack.stances.map((card) => card.id), Array.from({ length: 24 }, (_, index) => `S${index + 49}`));
+assert.deepEqual(pack.drives.map((card) => card.id), Array.from({ length: 24 }, (_, index) => `D${index + 49}`));
 
 const packAudit = validator.validatePack(pack);
 assert.deepEqual(packAudit.errors, []);
@@ -28,12 +29,14 @@ for (const category of bible.categories) {
   }
 }
 
-const candidatePath = path.resolve(__dirname, "../cards/candidates/everyday-friction-candidate-pool.json");
+const candidatePath = path.resolve(__dirname, "../cards/candidates/power-games-candidate-pool.json");
 const pool = JSON.parse(fs.readFileSync(candidatePath, "utf8"));
 assert.equal(pool.counts.total, 64);
 assert.equal(pool.counts.selected, 48);
 assert.equal(pool.counts.held, 8);
 assert.equal(pool.counts.rejected, 8);
+assert.equal(pool.counts.stanceCandidates, 32);
+assert.equal(pool.counts.driveCandidates, 32);
 assert.equal(pool.candidates.length, 64);
 assert.equal(pool.candidates.filter((item) => item.disposition === "selected").length, 48);
 assert.equal(new Set(pool.candidates.map((item) => item.candidateId)).size, 64);
@@ -43,12 +46,17 @@ for (const card of [...pack.stances, ...pack.drives]) {
   assert.ok(selectedIds.has(card.id), `Candidate pool must select ${card.id}`);
 }
 
-for (const motif of ["communication", "convenience", "etiquette", "fairness", "maintenance", "mess", "resources", "responsibility", "routine", "space", "time", "work"]) {
-  assert.ok(bible.motifs.includes(motif), `Missing Everyday Friction motif: ${motif}`);
+for (const role of ["broker", "challenger", "claimant", "enforcer", "gatekeeper", "patron", "successor"]) {
+  assert.ok(bible.getCoachRole(role), `Missing Power Games coach role: ${role}`);
+}
+for (const motif of ["access", "allegiance", "autonomy", "compliance", "hierarchy", "influence", "leverage", "legitimacy", "patronage", "reputation", "succession", "territory"]) {
+  assert.ok(bible.motifs.includes(motif), `Missing Power Games motif: ${motif}`);
 }
 
 assert.equal(cards.libraryPlanVersion, "1.2.0");
 assert.equal(cards.stances.length, 72);
 assert.equal(cards.drives.length, 72);
+assert.equal(cards.activePackCount, 3);
+assert.equal(cards.playtestPackCount, 2);
 
-console.log("✓ Everyday Friction pack, 64-card candidate pool, quota matrix, and metadata passed");
+console.log("✓ Power Games pack, 64-card candidate pool, quota matrix, and power metadata passed");

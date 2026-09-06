@@ -5,7 +5,7 @@
 - **1 Stance** — how the performer enters, interprets, or reacts within the scene.
 - **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The active library now contains **48 Stances and 48 Drives** across Core Foundations and the Everyday Friction playtest pack. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
+The active library now contains **72 Stances and 72 Drives** across Core Foundations plus the Everyday Friction and Power Games playtest packs. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
 
 ## Open the live game
 
@@ -19,6 +19,31 @@ The active library now contains **48 Stances and 48 Drives** across Core Foundat
   Scan the code or open<br>
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
+
+## What is new in v0.10.0
+
+v0.10.0 adds **Pack 3: Power Games** as an active playtest pack:
+
+- 24 new Stances: S49–S72
+- 24 new Drives: D49–D72
+- 144 active cards total
+- 64-card documented candidate pool
+- completed 48-slot authoring matrix
+- pack brief, power-specific metadata, and playtest questions
+- automatic insertion of Pack 3 IDs into existing independent decks
+
+Power Games explores authority, legitimacy, leverage, dependency, hierarchy, access, patronage, succession, compliance, and the struggle over who gets to decide. The prompts remain portable: they can function among friends, relatives, coworkers, adventurers, performers, ghosts, or anyone negotiating influence.
+
+The expansion materially deepens **Status Clash**, **Crown & Heart**, **Past & Future**, and custom coach challenges centered on authority or leverage. Every phone still shuffles independently; no exercise shares cards or deck order.
+
+Power Games is marked **playtest** pending independent blind reads and repeated live troupe testing. Its cards are available throughout Open Play, category-focused draws, Mirror and Paired exercises, custom exercises, gallery search, Practice Coverage, and immutable Scene Log snapshots.
+
+See:
+
+- `docs/packs/POWER-GAMES-PACK-BRIEF.md`
+- `docs/packs/POWER-GAMES-AUTHORING-MATRIX.md`
+- `docs/packs/POWER-GAMES-CANDIDATE-POOL.md`
+- `cards/candidates/power-games-candidate-pool.json`
 
 ## What is new in v0.9.0
 
@@ -71,7 +96,7 @@ Every future 48-card pack must contribute one card to every subtheme. Across ten
 |---:|---|---|---|---|
 | 1 | Core Foundations | S01–S24 | D01–D24 | Published |
 | 2 | Everyday Friction | S25–S48 | D25–D48 | **Playtest in v0.9.0** |
-| 3 | Power Games | S49–S72 | D49–D72 | Planned |
+| 3 | Power Games | S49–S72 | D49–D72 | **Playtest in v0.10.0** |
 | 4 | Relationship Knots | S73–S96 | D73–D96 | Planned |
 | 5 | Emotional Pressure | S97–S120 | D97–D120 | Planned |
 | 6 | Secrets & Schemes | S121–S144 | D121–D144 | Planned |
@@ -82,7 +107,7 @@ Every future 48-card pack must contribute one card to every subtheme. Across ten
 
 ### Structured card metadata
 
-The original 48 cards are now fully tagged with:
+All active cards are tagged with:
 
 - Pack and content version
 - Category and subtheme
@@ -100,7 +125,7 @@ The existing UI continues to use the same title, instruction, category, icon, an
 
 The package now includes:
 
-- A 7,000+ word Card Bible
+- An 8,000+ word Card Bible
 - Reusable authoring and review worksheets
 - A pack-planning template
 - Machine-readable card and pack schemas
@@ -234,7 +259,7 @@ Imprompt stores working state in browser local storage. A phone knows only its o
 
 The general **Invite players** QR always points to the plain public URL. Guided-exercise links contain only coaching configuration.
 
-Existing v0.5.x, v0.6.0, and v0.7.0 state remains compatible. The card IDs and visible copy in Core Foundations are unchanged; v0.8.0 adds metadata around those stable cards.
+Existing v0.5.x through v0.9.0 state remains compatible. Pack 3 IDs are inserted at randomized positions in each phone’s remaining queues without resetting current prompts, sessions, completed scenes, or consumed earlier cards.
 
 ## Card-library architecture
 
@@ -244,6 +269,10 @@ The browser loads card content in this order:
 card-bible.js
     ↓
 cards/core-foundations.js
+    ↓
+cards/everyday-friction.js
+    ↓
+cards/power-games.js
     ↓
 cards.js
 ```
@@ -275,10 +304,12 @@ cards/card.schema.json
 cards/pack.schema.json
 ```
 
-The current published pack is:
+The active pack modules are:
 
 ```text
-cards/core-foundations.js
+cards/core-foundations.js       # published
+cards/everyday-friction.js      # playtest
+cards/power-games.js            # playtest
 ```
 
 ## Run locally
@@ -303,7 +334,7 @@ npm run audit:cards
 npm run audit:cards:write
 ```
 
-`npm test` validates the application, deck engine, exercises, share links, QR generation, Card Bible taxonomy, Core Foundations metadata, hidden-information heuristics, pack quotas, and duplicate gates.
+`npm test` validates the application, deck engine, exercises, share links, QR generation, Card Bible taxonomy, all three active packs, hidden-information heuristics, pack quotas, migration behavior, and duplicate gates.
 
 `npm run audit:cards:write` regenerates:
 
@@ -347,11 +378,14 @@ All application assets use relative paths and work under the GitHub Pages projec
 ├── RELEASE-NOTES-v0.7.0.md
 ├── RELEASE-NOTES-v0.8.0.md
 ├── RELEASE-NOTES-v0.9.0.md
+├── RELEASE-NOTES-v0.10.0.md
 ├── cards/
 │   ├── core-foundations.js
 │   ├── everyday-friction.js
+│   ├── power-games.js
 │   ├── candidates/
-│   │   └── everyday-friction-candidate-pool.json
+│   │   ├── everyday-friction-candidate-pool.json
+│   │   └── power-games-candidate-pool.json
 │   ├── card.schema.json
 │   └── pack.schema.json
 ├── docs/
@@ -362,7 +396,10 @@ All application assets use relative paths and work under the GitHub Pages projec
 │   └── packs/
 │       ├── EVERYDAY-FRICTION-PACK-BRIEF.md
 │       ├── EVERYDAY-FRICTION-AUTHORING-MATRIX.md
-│       └── EVERYDAY-FRICTION-CANDIDATE-POOL.md
+│       ├── EVERYDAY-FRICTION-CANDIDATE-POOL.md
+│       ├── POWER-GAMES-PACK-BRIEF.md
+│       ├── POWER-GAMES-AUTHORING-MATRIX.md
+│       └── POWER-GAMES-CANDIDATE-POOL.md
 ├── tools/
 │   ├── card-validator.js
 │   └── card-audit.js
@@ -381,6 +418,7 @@ All application assets use relative paths and work under the GitHub Pages projec
     ├── card-bible.test.js
     ├── card-quality.test.js
     ├── everyday-friction.test.js
+    ├── power-games.test.js
     ├── browser-card-loading.test.js
     ├── app-content.test.js
     ├── deck-engine.test.js

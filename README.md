@@ -45,11 +45,28 @@ For example, a Stance may tell a player to:
 
 It does not state that the other performer respects that status. Their private prompt may produce the opposite interpretation, and that collision is part of the game.
 
+## Category visual language
+
+Version 0.5 gives each of the seven prompt categories a consistent **color, label, and SVG icon**. The category treatment appears only after a private card is revealed, so a face-down card does not leak information. The same visual system is used in the prompt session, card gallery, and Keep/Veto dialog.
+
+| Category | Visual cue | Applies to |
+|---|---|---|
+| Status & Authority | Indigo crown | Stance |
+| History & Relationship | Teal link | Stance |
+| Emotional Assumptions | Rose heart | Stance |
+| Worldview & Absurdity | Violet sparkles | Stance |
+| Direct Objectives | Blue target | Drive |
+| Secrets & Avoidance | Gold lock | Drive |
+| Repeatable Behaviors | Green repeat arrows | Drive |
+
+Color is never the only signal: every chip also retains a written label and unique icon. A neutral fallback style is included for future categories that have not yet received their own visual treatment.
+
 ## Main features
 
 - Branded **Imprompt** launch screen and menu flow.
 - Independent browser-local deck on every phone.
 - Private reveal-on-tap Stance and Drive panels.
+- Category-specific color-and-icon chips on revealed cards, gallery cards, and card options.
 - Per-card Keep and Veto controls.
 - Vetoed cards return to their own decks.
 - No repeated normal draw until the applicable 24-card cycle is exhausted.
@@ -138,7 +155,9 @@ All application assets use relative paths, so they work under the GitHub Pages p
 
 ## Editing cards
 
-All prompt copy is in `cards.js`. Keep every card ID unique and preserve the `stances` and `drives` arrays. Stances should remain holder-centered: they may direct the player to treat, interpret, or respond to others in a particular way, but they should never dictate another performer’s behavior or reaction.
+All prompt copy and the category-to-icon mapping are in `cards.js`. Keep every card ID unique and preserve the `stances` and `drives` arrays. Stances should remain holder-centered: they may direct the player to treat, interpret, or respond to others in a particular way, but they should never dictate another performer’s behavior or reaction.
+
+To add a category, add its label to the relevant cards and define a matching entry in `categoryStyles`. Add a CSS color token for its `data-category` ID and an SVG symbol for its icon. Categories without a configured style automatically use the neutral fallback chip.
 
 When changing card IDs, deck sizes, or persisted state structure, update the state version in `deck-engine.js`, the storage key in `app.js`, and the cache name in `sw.js`.
 
@@ -150,4 +169,4 @@ node tests/share-link.test.js
 node tests/app-content.test.js
 ```
 
-The tests verify card counts and IDs, normal nonrepeating draws, reshuffling, individual veto behavior, legacy-state migration, canonical public sharing, title/menu structure, generic reveal panels, rebranding, and removal of the old play-screen clutter.
+The tests verify card counts and IDs, normal nonrepeating draws, reshuffling, individual veto behavior, legacy-state migration, canonical public sharing, title/menu structure, generic reveal panels, all seven category mappings, icon hooks, rebranding, and removal of the old play-screen clutter.

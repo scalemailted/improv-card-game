@@ -54,6 +54,12 @@
     driveCard: document.getElementById("driveCard"),
     stanceRole: document.getElementById("stanceRole"),
     driveRole: document.getElementById("driveRole"),
+    stanceCategory: document.getElementById("stanceCategory"),
+    driveCategory: document.getElementById("driveCategory"),
+    stanceCategoryLabel: document.getElementById("stanceCategoryLabel"),
+    driveCategoryLabel: document.getElementById("driveCategoryLabel"),
+    stanceCategoryIcon: document.getElementById("stanceCategoryIcon"),
+    driveCategoryIcon: document.getElementById("driveCategoryIcon"),
     stanceTitle: document.getElementById("stanceTitle"),
     driveTitle: document.getElementById("driveTitle"),
     stanceInstruction: document.getElementById("stanceInstruction"),
@@ -69,6 +75,8 @@
     galleryType: document.getElementById("galleryType"),
     galleryCount: document.getElementById("galleryCount"),
     galleryCategory: document.getElementById("galleryCategory"),
+    galleryCategoryLabel: document.getElementById("galleryCategoryLabel"),
+    galleryCategoryIcon: document.getElementById("galleryCategoryIcon"),
     galleryTitle: document.getElementById("galleryTitle"),
     galleryInstruction: document.getElementById("galleryInstruction"),
     galleryId: document.getElementById("galleryId"),
@@ -83,6 +91,9 @@
     cardDialog: document.getElementById("cardDialog"),
     cardDialogPanel: document.getElementById("cardDialogPanel"),
     cardDialogType: document.getElementById("cardDialogType"),
+    cardDialogCategory: document.getElementById("cardDialogCategory"),
+    cardDialogCategoryLabel: document.getElementById("cardDialogCategoryLabel"),
+    cardDialogCategoryIcon: document.getElementById("cardDialogCategoryIcon"),
     cardDialogTitle: document.getElementById("cardDialogTitle"),
     cardDialogInstruction: document.getElementById("cardDialogInstruction"),
     closeCardDialogButton: document.getElementById("closeCardDialogButton"),
@@ -193,6 +204,9 @@
       label: isStance ? "Stance" : "Drive",
       button: isStance ? elements.stanceCard : elements.driveCard,
       role: isStance ? elements.stanceRole : elements.driveRole,
+      category: isStance ? elements.stanceCategory : elements.driveCategory,
+      categoryLabel: isStance ? elements.stanceCategoryLabel : elements.driveCategoryLabel,
+      categoryIcon: isStance ? elements.stanceCategoryIcon : elements.driveCategoryIcon,
       title: isStance ? elements.stanceTitle : elements.driveTitle,
       instruction: isStance ? elements.stanceInstruction : elements.driveInstruction,
       action: isStance ? elements.stanceAction : elements.driveAction,
@@ -207,6 +221,41 @@
     icon.setAttribute("aria-hidden", "true");
     icon.textContent = iconText;
     element.replaceChildren(icon, document.createTextNode(` ${text}`));
+  }
+
+  function categoryStyleFor(categoryName) {
+    const configured = cards.categoryStyles && cards.categoryStyles[categoryName];
+    if (configured) {
+      return configured;
+    }
+
+    const fallback = cards.defaultCategoryStyle || { id: "general", label: "General Prompt", icon: "sparkles" };
+    return {
+      id: fallback.id,
+      label: categoryName || fallback.label,
+      icon: fallback.icon
+    };
+  }
+
+  function setCategoryIcon(useElement, iconName) {
+    const href = `#category-icon-${iconName}`;
+    useElement.setAttribute("href", href);
+    useElement.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", href);
+  }
+
+  function applyCategoryStyle(surface, chip, labelElement, iconElement, categoryName) {
+    const style = categoryStyleFor(categoryName);
+    surface.dataset.category = style.id;
+    chip.dataset.category = style.id;
+    labelElement.textContent = style.label;
+    setCategoryIcon(iconElement, style.icon);
+    chip.hidden = false;
+  }
+
+  function clearCategoryStyle(surface, chip) {
+    delete surface.dataset.category;
+    delete chip.dataset.category;
+    chip.hidden = true;
   }
 
   function renderPlayCard(type) {
@@ -226,6 +275,8 @@
 
     if (!isRevealed) {
       const copy = hiddenCopy[type];
+      clearCategoryStyle(config.button, config.category);
+      config.role.hidden = false;
       config.role.textContent = copy.role;
       config.title.textContent = copy.title;
       config.instruction.textContent = copy.instruction;
@@ -234,13 +285,14 @@
       return;
     }
 
-    config.role.textContent = type === "stance" ? "YOUR PRIVATE STANCE" : "YOUR PRIVATE DRIVE";
+    config.role.hidden = true;
+    applyCategoryStyle(config.button, config.category, config.categoryLabel, config.categoryIcon, card.category);
     config.title.textContent = card.title;
     config.instruction.textContent = card.instruction;
     setCardAction(config.action, isKept ? "Kept · tap for options" : "Tap again to keep or veto", isKept ? "✓" : "⋯");
     config.button.setAttribute(
       "aria-label",
-      `${config.label}: ${card.title}. ${card.instruction}. ${isKept ? "Kept. " : ""}Tap again for card options.`
+      `${config.label}, ${card.category}: ${card.title}. ${card.instruction}. ${isKept ? "Kept. " : ""}Tap again for card options.`
     );
   }
 
@@ -258,7 +310,13 @@
     elements.galleryCard.classList.toggle("drive-card", !isStance);
     elements.galleryType.textContent = isStance ? "STANCE" : "DRIVE";
     elements.galleryCount.textContent = `${galleryIndex + 1} of ${deck.length}`;
-    elements.galleryCategory.textContent = card.category;
+    applyCategoryStyle(
+      elements.galleryCard,
+      elements.galleryCategory,
+      elements.galleryCategoryLabel,
+      elements.galleryCategoryIcon,
+      card.category
+    );
     elements.galleryTitle.textContent = card.title;
     elements.galleryInstruction.textContent = card.instruction;
     elements.galleryId.textContent = card.id;
@@ -359,6 +417,13 @@
     const card = engine.findCard(cards, type, state.current[config.currentKey]);
     elements.cardDialogPanel.dataset.cardType = type;
     elements.cardDialogType.textContent = `${config.label.toUpperCase()} OPTIONS`;
+    applyCategoryStyle(
+      elements.cardDialogPanel,
+      elements.cardDialogCategory,
+      elements.cardDialogCategoryLabel,
+      elements.cardDialogCategoryIcon,
+      card.category
+    );
     elements.cardDialogTitle.textContent = card.title;
     elements.cardDialogInstruction.textContent = card.instruction;
     openDialog(elements.cardDialog);

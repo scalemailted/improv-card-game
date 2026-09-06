@@ -5,7 +5,7 @@
 - **1 Stance** — the holder’s attitude, relationship lens, status, or way of interpreting the scene.
 - **1 Drive** — the holder’s objective, secret, avoidance, or repeatable behavior.
 
-The prototype contains **24 Stance cards** and **24 Drive cards**. Every phone maintains its own independent shuffle; there is no multiplayer room, synchronized state, account, tracking, or backend.
+The deck contains **24 Stance cards** and **24 Drive cards**. Every phone maintains its own independent shuffle, draw settings, current scene, and scene log. There is no multiplayer room, synchronized state, account, tracking, or backend.
 
 ## Open the live game on a phone
 
@@ -20,34 +20,88 @@ The prototype contains **24 Stance cards** and **24 Drive cards**. Every phone m
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
 
+## What is new in v0.6.0
+
+### Scene Log
+
+Completing a scene now saves that player’s final Stance and Drive in a private **Scene Log** available from the main menu.
+
+Each entry records:
+
+- The local scene number
+- The final Stance and Drive used
+- Both cards’ category labels, colors, and icons
+- The completion time
+- The number of redraws used before the final card, when applicable
+
+Only completed scenes appear in the log. A vetoed card is returned to its deck and is not recorded as the scene’s played card. The log lives only in the same browser as the deck; it is never shared through the invite link.
+
+Because every performer has an independent phone, each person’s log contains only **their own two hidden prompts**. During a group postmortem, performers can compare their logs to reconstruct the four-card collision that produced the scene.
+
+Starting a new independent deck also starts a fresh scene count and clears that phone’s Scene Log after confirmation.
+
+### Category-focused draws
+
+Every undrawn Stance and Drive now has its own draw selector. The default is **Random All**, but a coach or player can focus either card on a specific category before drawing it.
+
+Stance choices:
+
+- Random All
+- Status & Authority
+- History & Relationship
+- Emotional Assumptions
+- Worldview & Absurdity
+
+Drive choices:
+
+- Random All
+- Direct Objectives
+- Secrets & Avoidance
+- Repeatable Behaviors
+
+The two selectors are independent. For example, one performer can draw an **Emotional Assumptions** Stance while leaving their Drive on **Random All**, while another performer uses a different combination on another phone.
+
+A category choice remains active for later scenes until that player changes it. Vetoing a card draws its replacement using the same selected mode.
+
+- Used exclusively, **Random All** avoids repeats until the full 24-card deck is exhausted.
+- A **focused category** avoids repeats within that category until all its cards have appeared, then cycles that category while leaving the other categories available in the deck.
+
 ## Player flow
 
-1. The app opens on an **Imprompt title screen** rather than immediately entering the deck.
-2. The main menu offers:
-   - **Start a prompt session**
-   - **Learn to play**
-   - **Card gallery**
-   - **Invite players**
-3. Starting a session privately draws one Stance and one Drive.
-4. The play screen initially shows two generic face-down panels explaining what a Stance and Drive do.
-5. The first tap on a panel reveals its private prompt.
-6. A second tap opens that card’s individual **Keep** or **Veto** choices.
-7. Vetoing replaces only the selected card. The rejected card returns to a randomized future position in its own deck, and the replacement starts face-down.
-8. **Scene complete** advances the local scene count and returns to the main menu.
+1. Open Imprompt on each performer’s phone.
+2. Enter the app and choose **Start a prompt session**.
+3. Leave each selector on **Random All**, or tap it to focus that Stance or Drive on one category.
+4. Tap each generic card panel to draw and reveal its private prompt.
+5. Tap a revealed card again to **Keep** it or **Veto & draw another**.
+6. Play the scene without announcing or quoting the prompts.
+7. Tap **Scene complete** to save the final two cards and advance the local scene count.
+8. Open **Scene Log** from the main menu during the postmortem.
+
+## Main menu
+
+The main menu provides:
+
+- **Start or resume a prompt session**
+- **Scene Log**
+- **Learn to play**
+- **Card gallery**
+- **Invite players**
+
+The Scene Log option displays a count badge after the first scene is completed.
 
 ## Hidden-information design
 
-Every prompt belongs only to the performer who drew it. The revised Stance deck tells the holder how to behave, interpret, react, or carry themself. It never requires another performer to respond in a prescribed way.
+Every prompt belongs only to the performer who drew it. A Stance tells the holder how to behave, interpret, react, or carry themself. It never requires another performer to respond in a prescribed way.
 
 For example, a Stance may tell a player to:
 
 > Carry yourself as the highest-status person present. Treat questions as requests for your approval.
 
-It does not state that the other performer respects that status. Their private prompt may produce the opposite interpretation, and that collision is part of the game.
+It does not state that another performer respects that status. Their private prompt may produce the opposite interpretation, and that collision is part of the game.
 
 ## Category visual language
 
-Version 0.5.2 gives each of the seven prompt categories a consistent **color, label, and SVG icon**. On revealed cards, the category chip is aligned to the far left of the top metadata row while **STANCE** or **DRIVE** remains aligned to the far right. The gallery uses the same balanced two-part header and moves the card position to the bottom metadata line beside the card ID. This keeps the prompt title and acting instruction visually dominant while preserving instant category recognition. The category treatment appears only after a private play card is revealed, so a face-down card does not leak information. The same visual system is used in the prompt session, card gallery, and Keep/Veto dialog.
+Each of the seven prompt categories has a consistent **color, written label, and SVG icon**. On revealed cards, the category is aligned to the far left of the top metadata row while **STANCE** or **DRIVE** remains aligned to the far right. The same visual language appears in the card gallery, Keep/Veto dialog, category selector, and Scene Log.
 
 | Category | Visual cue | Applies to |
 |---|---|---|
@@ -59,35 +113,26 @@ Version 0.5.2 gives each of the seven prompt categories a consistent **color, la
 | Secrets & Avoidance | Gold lock | Drive |
 | Repeatable Behaviors | Green repeat arrows | Drive |
 
-Color is never the only signal: every chip also retains a written label and unique icon. A neutral fallback style is included for future categories that have not yet received their own visual treatment.
-
-## Main features
-
-- Branded **Imprompt** launch screen and menu flow.
-- Independent browser-local deck on every phone.
-- Private reveal-on-tap Stance and Drive panels.
-- Category-specific color-and-icon chips on revealed cards, gallery cards, and card options.
-- Balanced two-part card header: category at the far left and Stance/Drive at the far right.
-- Per-card Keep and Veto controls.
-- Vetoed cards return to their own decks.
-- No repeated normal draw until the applicable 24-card cycle is exhausted.
-- In-progress prompt pair restored after a reload.
-- Card gallery with Stance/Drive switching, previous/next controls, and random browsing.
-- Learn-to-play screen explaining the hidden-information rules.
-- Public invite QR code, native share sheet, and copy-link control.
-- The invite always uses the fixed public URL and never transmits local deck state.
-- Installable progressive web app with offline support after the first successful visit.
-- Migration of a valid local deck from the previous prototype storage format.
+Color is never the only signal: every category retains a readable name and unique icon. A neutral shuffle treatment identifies **Random All**.
 
 ## Independent deck behavior
 
-Deck state is stored under a single browser-local key. It is no longer written into the page URL. Opening or sharing the public address therefore exposes no local deck identifier.
+Deck state is stored locally in the browser and is not written into the page URL. Opening or sharing the public address exposes no local deck identifier, cards, filters, scene count, or history.
 
-A different phone receives its own shuffled deck automatically. **Start a new independent deck** replaces the current shuffle, prompt pair, scene count, and unused-card order only on the device where the button is pressed.
+A different phone receives its own shuffled deck automatically. **Start a new independent deck** replaces the following only on the device where the button is pressed:
+
+- Current prompts
+- Stance and Drive draw order
+- Category draw selections
+- Scene count
+- Scene Log
+- Veto totals and deck-cycle progress
+
+A valid v0.5.2 deck is migrated to the v0.6.0 state structure. Earlier completed scene cards cannot be reconstructed because prior releases did not store them; Scene Log entries begin with the first scene completed after migration.
 
 ## Invite behavior
 
-The **Invite players** option appears on the main menu and remains available during a prompt session. It shows the same public QR code used in this README and offers native Share and Copy controls.
+The **Invite players** option appears on the main menu and remains available during a prompt session. It shows the public QR code and offers native Share and Copy controls.
 
 The invitation always points to:
 
@@ -95,7 +140,13 @@ The invitation always points to:
 https://scalemailted.github.io/improv-card-game/
 ```
 
-It never shares current prompts, scene progress, card order, local storage, or a specific deck.
+It never shares current prompts, scene progress, card order, category settings, local storage, or Scene Log entries.
+
+## Progressive web app and release caching
+
+Imprompt remains installable and available offline after a successful online visit. Release-specific query strings are used for JavaScript, CSS, icons, and the manifest so a new HTML document cannot accidentally load incompatible assets from an older release cache.
+
+The service-worker URL remains stable as `sw.js`. New workers do not force activation with `skipWaiting()`, which allows an existing open session to finish before the browser adopts a new release.
 
 ## Run locally
 
@@ -142,6 +193,7 @@ All application assets use relative paths, so they work under the GitHub Pages p
 ├── manifest.webmanifest
 ├── sw.js
 ├── .nojekyll
+├── RELEASE-NOTES-v0.6.0.md
 ├── assets/
 │   └── improv-card-game-qr.png
 ├── icons/
@@ -154,13 +206,20 @@ All application assets use relative paths, so they work under the GitHub Pages p
     └── share-link.test.js
 ```
 
-## Editing cards
+## Editing cards and categories
 
-All prompt copy and the category-to-icon mapping are in `cards.js`. Keep every card ID unique and preserve the `stances` and `drives` arrays. Stances should remain holder-centered: they may direct the player to treat, interpret, or respond to others in a particular way, but they should never dictate another performer’s behavior or reaction.
+All prompt copy and category metadata are in `cards.js`. Keep every card ID unique and preserve the `stances` and `drives` arrays. Stances should remain holder-centered: they may direct the player to treat, interpret, or respond to others in a particular way, but they should never dictate another performer’s behavior or reaction.
 
-To add a category, add its label to the relevant cards and define a matching entry in `categoryStyles`. Add a CSS color token for its `data-category` ID and an SVG symbol for its icon. Categories without a configured style automatically use the neutral fallback chip.
+To add a category:
 
-When changing card IDs, deck sizes, or persisted state structure, update the state version in `deck-engine.js`, the storage key in `app.js`, and the cache name in `sw.js`.
+1. Assign its exact label to the relevant cards.
+2. Add a matching entry to `categoryStyles` in `cards.js`.
+3. Add a CSS color token for its `data-category` ID.
+4. Add an SVG symbol for its icon in `index.html`.
+
+The category selector is generated from the card data, so a properly configured category automatically appears under the correct Stance or Drive draw choices.
+
+When changing card IDs, deck sizes, or persisted state structure, increment the state version in `deck-engine.js` and the release cache name in `sw.js`. Update the `?v=` asset query strings in `index.html` and `sw.js` together.
 
 ## Run tests
 
@@ -170,4 +229,17 @@ node tests/share-link.test.js
 node tests/app-content.test.js
 ```
 
-The tests verify card counts and IDs, normal nonrepeating draws, reshuffling, individual veto behavior, legacy-state migration, canonical public sharing, title/menu structure, generic reveal panels, all seven category mappings, icon hooks, rebranding, and removal of the old play-screen clutter.
+The tests verify:
+
+- All 48 cards and category mappings
+- Random All nonrepeating cycles when used exclusively
+- Category-focused draws and category cycling
+- Independent Stance and Drive filters
+- Per-card Keep and Veto behavior
+- Filter-respecting replacements
+- Final-card Scene Log entries
+- Incomplete-scene protection
+- v0.5 state migration
+- Canonical public sharing
+- Release-specific asset URLs and service-worker cache behavior
+- Main-menu, card-header, filter-dialog, gallery, and history markup contracts

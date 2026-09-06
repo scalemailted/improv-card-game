@@ -1,17 +1,17 @@
-# Two Secrets — Improv Card Game
+# Imprompt — Prompts for Improv
 
-A mobile-first, fully client-side prompt deck for two-person improv scenes. Each player opens the game on their own phone and privately draws:
+**Imprompt** is a mobile-first, fully client-side prompt deck for improv comedy. Each performer opens the game on their own phone and privately receives:
 
-- **1 Stance** — how the character sees themself, the other person, or the situation.
-- **1 Drive** — what the character wants, hides, or repeatedly does.
+- **1 Stance** — the holder’s attitude, relationship lens, status, or way of interpreting the scene.
+- **1 Drive** — the holder’s objective, secret, avoidance, or repeatable behavior.
 
-The prototype contains all **24 Stance cards** and **24 Drive cards** from deck version 0.3.
+The prototype contains **24 Stance cards** and **24 Drive cards**. Every phone maintains its own independent shuffle; there is no multiplayer room, synchronized state, account, tracking, or backend.
 
 ## Open the live game on a phone
 
 <p align="center">
   <a href="https://scalemailted.github.io/improv-card-game/">
-    <img src="./assets/improv-card-game-qr.png" width="300" alt="QR code linking to the Two Secrets improv card game">
+    <img src="./assets/improv-card-game-qr.png" width="300" alt="QR code linking to Imprompt">
   </a>
 </p>
 
@@ -20,38 +20,68 @@ The prototype contains all **24 Stance cards** and **24 Drive cards** from deck 
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
 
-## How this version works
+## Player flow
 
-1. One player can tap **Invite** at any time to show the public game QR code. Other players scan it to open the game on their own phones.
-2. From the main menu, each player taps **Draw my cards**.
-3. One Stance and one Drive appear immediately on that private screen.
-4. Tapping either card opens its individual options:
-   - **Keep this card** marks it as accepted for the scene.
-   - **Veto & draw another** replaces only that card.
-5. A vetoed card is returned to a random future position in its own deck. The other card does not change.
-6. When the scene ends, tap **Scene complete** to return to the main menu and prepare the next draw.
+1. The app opens on an **Imprompt title screen** rather than immediately entering the deck.
+2. The main menu offers:
+   - **Start a prompt session**
+   - **Learn to play**
+   - **Card gallery**
+   - **Invite players**
+3. Starting a session privately draws one Stance and one Drive.
+4. The play screen initially shows two generic face-down panels explaining what a Stance and Drive do.
+5. The first tap on a panel reveals its private prompt.
+6. A second tap opens that card’s individual **Keep** or **Veto** choices.
+7. Vetoing replaces only the selected card. The rejected card returns to a randomized future position in its own deck, and the replacement starts face-down.
+8. **Scene complete** advances the local scene count and returns to the main menu.
 
-There is no reveal/hide toggle because each player is already managing a private deck on their own phone.
+## Hidden-information design
 
-## What the prototype does
+Every prompt belongs only to the performer who drew it. The revised Stance deck tells the holder how to behave, interpret, react, or carry themself. It never requires another performer to respond in a prescribed way.
 
-- Shows an in-game **Invite** panel with the public QR code, system share sheet, and copy-link option.
-- Always shares the fixed public URL without the current browser's local `#deck=…` fragment.
-- Gives every browser its own independently shuffled Stance and Drive decks.
-- Draws one unused Stance and one unused Drive for each scene.
-- Displays both cards immediately after the main-menu draw.
-- Supports per-card keep and veto decisions.
-- Returns a vetoed card to its deck instead of permanently consuming it.
-- Preserves the other card whenever one card is vetoed.
-- Avoids repeating accepted cards until a deck cycle is exhausted, then reshuffles automatically.
-- Stores deck progress locally in the browser—there is no account, room, shared state, tracking, or backend.
-- Restores an in-progress scene after a reload.
-- Works offline after the first successful visit through its service worker.
-- Can be installed to a phone's home screen when the browser supports web-app installation.
+For example, a Stance may tell a player to:
+
+> Carry yourself as the highest-status person present. Treat questions as requests for your approval.
+
+It does not state that the other performer respects that status. Their private prompt may produce the opposite interpretation, and that collision is part of the game.
+
+## Main features
+
+- Branded **Imprompt** launch screen and menu flow.
+- Independent browser-local deck on every phone.
+- Private reveal-on-tap Stance and Drive panels.
+- Per-card Keep and Veto controls.
+- Vetoed cards return to their own decks.
+- No repeated normal draw until the applicable 24-card cycle is exhausted.
+- In-progress prompt pair restored after a reload.
+- Card gallery with Stance/Drive switching, previous/next controls, and random browsing.
+- Learn-to-play screen explaining the hidden-information rules.
+- Public invite QR code, native share sheet, and copy-link control.
+- The invite always uses the fixed public URL and never transmits local deck state.
+- Installable progressive web app with offline support after the first successful visit.
+- Migration of a valid local deck from the previous prototype storage format.
+
+## Independent deck behavior
+
+Deck state is stored under a single browser-local key. It is no longer written into the page URL. Opening or sharing the public address therefore exposes no local deck identifier.
+
+A different phone receives its own shuffled deck automatically. **Start a new independent deck** replaces the current shuffle, prompt pair, scene count, and unused-card order only on the device where the button is pressed.
+
+## Invite behavior
+
+The **Invite players** option appears on the main menu and remains available during a prompt session. It shows the same public QR code used in this README and offers native Share and Copy controls.
+
+The invitation always points to:
+
+```text
+https://scalemailted.github.io/improv-card-game/
+```
+
+It never shares current prompts, scene progress, card order, local storage, or a specific deck.
 
 ## Run locally
 
-The service worker and manifest require HTTP rather than `file://`. Serve the folder with a small local web server.
+The service worker and manifest require HTTP rather than `file://`.
 
 ### Python
 
@@ -63,60 +93,24 @@ Then open `http://localhost:8000`.
 
 ### VS Code
 
-Open the folder and use a static-server extension such as Live Server.
+Open the folder and serve it with a static-server extension such as Live Server.
 
 ## Publish with GitHub Pages
 
-This package is ready for the project URL:
+This package is ready for:
 
 ```text
 https://scalemailted.github.io/improv-card-game/
 ```
 
-To publish or update it:
-
-1. Put the files from this folder at the root of the `improv-card-game` repository. `index.html` must remain at the repository root.
+1. Place the contents of this folder at the root of the `improv-card-game` repository.
 2. Commit and push the files to the `main` branch.
-3. In the repository, open **Settings → Pages**.
+3. Open **Settings → Pages** in the repository.
 4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select the `main` branch and the root (`/`) folder, then save.
-6. Wait for the Pages deployment to finish, then open the live URL above.
+5. Select `main` and the root (`/`) folder.
+6. Save and wait for the Pages deployment to complete.
 
-All application asset links are relative, so the site works correctly at the GitHub Pages project path.
-
-## Independent deck behavior
-
-The URL receives a local fragment such as:
-
-```text
-#deck=7QF4K9TA
-```
-
-The fragment identifies a saved shuffle **inside that browser only**. It is not a multiplayer room code and sends nothing across the network. The browser remembers the active deck, so reopening the base site or launching an installed copy returns to the same local progress.
-
-Different phones have separate browser storage and therefore independent shuffles. Selecting **New independent deck** replaces the current shuffle, scene count, and unused-card order only on that browser.
-
-## In-game invitation and QR sharing
-
-Tap **Invite** from either the main menu or the card screen. The invitation panel displays the same public QR code shown above and offers **Share game link** and **Copy link** controls.
-
-The invitation feature always uses this exact URL:
-
-```text
-https://scalemailted.github.io/improv-card-game/
-```
-
-It deliberately does **not** share `window.location.href`, the browser-local deck fragment, the current cards, the scene number, or deck progress. A player who scans the QR code opens the general game and receives or resumes an independent local deck in their own browser.
-
-## Veto behavior
-
-Each deck is maintained separately. When a player vetoes a Stance:
-
-- The current Drive stays unchanged.
-- A different Stance is drawn from the unused Stance queue.
-- The rejected Stance is inserted back at a random future position in that queue.
-
-The same logic applies independently to Drive cards. If a player vetoes the final unused card in a deck cycle, the app starts a new cycle without that rejected card, draws a different replacement, and then returns the rejected card to the new queue.
+All application assets use relative paths, so they work under the GitHub Pages project path.
 
 ## File structure
 
@@ -137,32 +131,23 @@ The same logic applies independently to Drive cards. If a player vetoes the fina
 │   ├── icon-192.png
 │   └── icon-512.png
 └── tests/
+    ├── app-content.test.js
     ├── deck-engine.test.js
     └── share-link.test.js
 ```
 
 ## Editing cards
 
-All card copy is in `cards.js`. Keep every ID unique and preserve the `stances` and `drives` arrays. If card IDs or deck sizes change after publishing, increment the state version in `deck-engine.js`, the storage prefix in `app.js`, and the cache name in `sw.js`.
+All prompt copy is in `cards.js`. Keep every card ID unique and preserve the `stances` and `drives` arrays. Stances should remain holder-centered: they may direct the player to treat, interpret, or respond to others in a particular way, but they should never dictate another performer’s behavior or reaction.
 
-## Test the deck engine
+When changing card IDs, deck sizes, or persisted state structure, update the state version in `deck-engine.js`, the storage key in `app.js`, and the cache name in `sw.js`.
+
+## Run tests
 
 ```bash
 node tests/deck-engine.test.js
 node tests/share-link.test.js
+node tests/app-content.test.js
 ```
 
-The tests check:
-
-- All 24 Stances and 24 Drives are present with unique IDs.
-- Normal draws do not repeat within a deck cycle.
-- Decks reshuffle after exhaustion.
-- Keeping one card does not affect the other.
-- Vetoing replaces only the selected card.
-- A vetoed card returns to its own deck.
-- A veto preserves the number of cards remaining.
-- The final-card veto edge case still produces a different replacement.
-- Invalid saved state is rejected safely.
-- The in-game share controls always use the canonical public URL.
-- The local `#deck=…` fragment is never used in the share payload.
-- The QR image is included in the offline precache.
+The tests verify card counts and IDs, normal nonrepeating draws, reshuffling, individual veto behavior, legacy-state migration, canonical public sharing, title/menu structure, generic reveal panels, rebranding, and removal of the old play-screen clutter.

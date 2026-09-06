@@ -1,6 +1,7 @@
 "use strict";
 
-const CACHE_NAME = "two-secrets-v1.2.0";
+const CACHE_NAME = "imprompt-v0.4.0";
+const OWNED_CACHE_PREFIXES = ["imprompt-", "two-secrets-"];
 const BASE_URL = new URL("./", self.location.href);
 const PRECACHE_PATHS = [
   "./",
@@ -28,7 +29,7 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys()
-      .then((names) => Promise.all(names.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name))))
+      .then((names) => Promise.all(names.filter((name) => name !== CACHE_NAME && OWNED_CACHE_PREFIXES.some((prefix) => name.startsWith(prefix))).map((name) => caches.delete(name))))
       .then(() => self.clients.claim())
   );
 });

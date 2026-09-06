@@ -19,16 +19,17 @@ assert.match(app, /elements\.shareUrlLink\.href\s*=\s*GAME_URL/);
 
 const shareFunction = app.slice(
   app.indexOf("async function shareGameLink"),
-  app.indexOf("function openCardOptions")
+  app.indexOf("function requestNewDeck")
 );
 assert.ok(shareFunction.length > 0, "The share function should be present.");
 assert.doesNotMatch(shareFunction, /window\.location\.href|location\.href/);
 
-assert.match(html, /id="openShareButton"/);
-assert.match(html, /id="shareDialog"/);
+assert.match(html, /id="inviteButton"/);
+assert.match(html, /id="playInviteButton"/);
+assert.match(html, /id="inviteScreen"/);
 assert.match(html, /id="shareQrLink"/);
 assert.match(html, /id="shareUrlLink"/);
 assert.ok(html.includes(`href="${publicUrl}"`));
 assert.match(serviceWorker, /\.\/assets\/improv-card-game-qr\.png/);
 
-console.log("✓ Canonical public share-link tests passed");
+console.log("✓ Canonical Imprompt share-link tests passed");

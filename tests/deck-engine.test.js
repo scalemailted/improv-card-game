@@ -19,6 +19,7 @@ assert.equal(new Set(cards.drives.map((card) => card.id)).size, 24, "Drive IDs m
 
 const random = seededRandom();
 const state = engine.createState(cards, "ABCDEFGH", random);
+assert.equal(state.version, 3);
 assert.equal(state.instanceId, "ABCDEFGH");
 assert.equal(engine.isStateUsable(state, cards, "ABCDEFGH"), true);
 assert.deepEqual(engine.remaining(state), { stances: 24, drives: 24 });
@@ -41,7 +42,7 @@ assert.deepEqual(engine.remaining(state), { stances: 0, drives: 0 });
 const firstNextCycle = engine.drawPair(state, cards, random);
 assert.ok(firstNextCycle.stanceId);
 assert.ok(firstNextCycle.driveId);
-assert.deepEqual(state.cycles, { stance: 2, drive: 2 }, "Both decks should start a new cycle");
+assert.deepEqual(state.cycles, { stance: 2, drive: 2 });
 assert.deepEqual(engine.remaining(state), { stances: 23, drives: 23 });
 
 assert.equal(engine.keepCard(state, "stance"), true);
@@ -53,22 +54,20 @@ const originalDrive = state.current.driveId;
 const beforeVeto = engine.remaining(state);
 const stanceVeto = engine.vetoCard(state, cards, "stance", random);
 assert.equal(stanceVeto.rejectedId, originalStance);
-assert.notEqual(stanceVeto.replacementId, originalStance, "A veto must produce a different card");
+assert.notEqual(stanceVeto.replacementId, originalStance);
 assert.equal(state.current.driveId, originalDrive, "Vetoing Stance must not replace Drive");
-assert.equal(state.current.stanceKept, false, "Replacement begins unconfirmed");
+assert.equal(state.current.stanceKept, false);
 assert.equal(state.stanceQueue.includes(originalStance), true, "Rejected Stance returns to its deck");
-assert.deepEqual(engine.remaining(state), beforeVeto, "Individual veto should preserve deck size");
+assert.deepEqual(engine.remaining(state), beforeVeto, "Individual veto preserves deck size");
 assert.deepEqual(state.vetoes, { stance: 1, drive: 0 });
 
 const acceptedStance = state.current.stanceId;
 const driveVeto = engine.vetoCard(state, cards, "drive", random);
-assert.notEqual(driveVeto.replacementId, originalDrive, "Drive veto must produce a different card");
+assert.notEqual(driveVeto.replacementId, originalDrive);
 assert.equal(state.current.stanceId, acceptedStance, "Vetoing Drive must not replace Stance");
 assert.equal(state.driveQueue.includes(originalDrive), true, "Rejected Drive returns to its deck");
 assert.deepEqual(state.vetoes, { stance: 1, drive: 1 });
 
-// Exercise the edge case where a deck has no unused cards left. The rejected
-// card must still be replaced with a different card and returned to the new cycle.
 const edgeRandom = seededRandom(987654321);
 const edgeState = engine.createState(cards, "HGFEDCBA", edgeRandom);
 for (let i = 0; i < 24; i += 1) {
@@ -85,7 +84,14 @@ assert.equal(edgeState.stanceQueue.includes(finalStance), true);
 assert.equal(edgeState.stanceQueue.length, 23);
 assert.equal(edgeState.cycles.stance, 2);
 
+const legacyState = { ...state, version: 2 };
+const migrated = engine.migrateLegacyState(legacyState, cards);
+assert.ok(migrated, "A valid v2 state should migrate");
+assert.equal(migrated.version, 3);
+assert.equal(engine.isStateUsable(migrated, cards, migrated.instanceId), true);
+
 const badState = { ...state, stanceQueue: ["NOPE"] };
 assert.equal(engine.isStateUsable(badState, cards, "ABCDEFGH"), false);
+assert.equal(engine.migrateLegacyState({ ...badState, version: 2 }, cards), null);
 
-console.log("✓ Two Secrets deck-engine v2 tests passed");
+console.log("✓ Imprompt deck-engine v3 tests passed");

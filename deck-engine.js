@@ -3,12 +3,12 @@
   if (typeof module === "object" && module.exports) {
     module.exports = engine;
   } else {
-    root.TwoSecretsEngine = engine;
+    root.ImpromptEngine = engine;
   }
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
   "use strict";
 
-  const STATE_VERSION = 2;
+  const STATE_VERSION = 3;
   const SAFE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   const TYPE_CONFIG = Object.freeze({
     stance: Object.freeze({
@@ -105,14 +105,17 @@
       && !state.driveQueue.includes(current.driveId);
   }
 
-  function isStateUsable(state, cards, expectedId) {
-    if (!state || state.version !== STATE_VERSION || state.instanceId !== expectedId) {
-      return false;
-    }
-
+  function isStateShapeUsable(state, cards, expectedId) {
     try {
       validateCards(cards);
     } catch (_error) {
+      return false;
+    }
+
+    if (!state || typeof state !== "object" || typeof state.instanceId !== "string") {
+      return false;
+    }
+    if (expectedId && state.instanceId !== expectedId) {
       return false;
     }
 
@@ -135,6 +138,24 @@
       && isUniqueValidQueue(state.stanceQueue, stanceIds)
       && isUniqueValidQueue(state.driveQueue, driveIds)
       && isCurrentUsable(state.current, stanceIds, driveIds, state);
+  }
+
+  function isStateUsable(state, cards, expectedId) {
+    return Boolean(state)
+      && state.version === STATE_VERSION
+      && isStateShapeUsable(state, cards, expectedId);
+  }
+
+  function migrateLegacyState(legacyState, cards) {
+    if (!legacyState || legacyState.version !== 2 || !isStateShapeUsable(legacyState, cards, legacyState.instanceId)) {
+      return null;
+    }
+
+    return {
+      ...legacyState,
+      version: STATE_VERSION,
+      updatedAt: new Date().toISOString()
+    };
   }
 
   function refillQueue(state, cards, type, randomFn = secureRandom, excludedId = null) {
@@ -194,8 +215,6 @@
 
     const rejectedId = state.current[config.currentKey];
 
-    // When the unused queue is empty, begin a new cycle without the rejected
-    // card so the replacement is guaranteed to be different.
     if (state[config.queueKey].length === 0) {
       refillQueue(state, cards, type, randomFn, rejectedId);
     }
@@ -209,12 +228,7 @@
     state.vetoes[type] += 1;
     state.updatedAt = new Date().toISOString();
 
-    return {
-      type,
-      rejectedId,
-      replacementId,
-      current: state.current
-    };
+    return { type, rejectedId, replacementId, current: state.current };
   }
 
   function completeScene(state) {
@@ -248,6 +262,7 @@
     shuffle,
     createState,
     isStateUsable,
+    migrateLegacyState,
     drawPair,
     keepCard,
     vetoCard,

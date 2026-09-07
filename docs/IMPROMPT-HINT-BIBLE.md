@@ -1,8 +1,8 @@
 # The Imprompt Hint Bible
 
 **Editorial and technical standard for optional local coaching guidance**  
-**Hint Bible version:** 2.0.0  
-**Implemented in:** Imprompt v0.21.1  
+**Hint Bible version:** 2.1.0  
+**Implemented in:** Imprompt v0.21.2  
 **Relationship to the Card Bible:** subordinate companion standard
 
 ---
@@ -45,7 +45,26 @@ A useful fusion hint passes four tests:
 
 `Another angle` must change the tactic, not merely paraphrase the same abstract principle.
 
-## 1.2 Card-integrated action standard
+## 1.2 Concrete action extraction and fusion profiles
+
+v0.21.2 corrects an implementation defect that allowed a pair-aware hint to remain behaviorally generic. A resolved card hint contains two parts:
+
+1. **Pack context** — the broad kind of detail through which that pack tends to manifest.
+2. **Concrete action** — the subtheme-specific behavior the performer can actually try.
+
+The combination engine must consume the concrete action. It may not substitute the pack preface for the action merely because the preface appears first in the displayed single-card nudge.
+
+The corrected engine also uses a normalized fusion-profile library:
+
+- **24 Stance profiles**, one for every Stance subtheme, defining a visible instrument, interpretation rule, escalation, and tension.
+- **24 Drive profiles**, one for every Drive subtheme, defining an aim, opening tactic, blocked tactic, traction path, repeatable loop, and underlying pressure.
+- **20 pack anchors**, two for each official pack, grounding the suggestion in the selected cards' editorial territory.
+
+A full pair hint therefore depends on the actual Stance title, Drive title, both subthemes, both pack contexts, both concrete actions, and the selected structural angle. Replacing either card must change the demonstrated tactic—not merely the names printed in an otherwise generic paragraph.
+
+The first move must not contain a pack-only preface such as “Keep the first move direct and easy to read” in place of the card-specific action.
+
+## 1.3 Card-integrated action standard
 
 Beginning with v0.21.1, revealed cards contain their own optional assistance and replacement controls. Veto sits at the bottom left and Nudge at the bottom right. The controls are separate accessible buttons layered within the card boundary; they are never nested inside the main card button.
 
@@ -97,7 +116,7 @@ Example:
 
 ### Level 3: Two-card combination hint
 
-After both cards are revealed, the local engine proposes one structural relationship between them. It can describe the Stance lens, Drive pressure, blend, and next beat.
+After both cards are revealed, the local engine demonstrates one concrete relationship between them through **One way to play the pair**, **Your first move**, **The repeatable loop**, and **When the scene changes**. The individual-card summaries are not repeated; the emphasis is the fused behavior.
 
 ### Level 4: Another structural angle
 

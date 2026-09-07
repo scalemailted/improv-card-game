@@ -169,10 +169,16 @@
       patternId: pattern.id,
       patternLabel: pattern.label,
       principle: pattern.principle,
+      fusionVersion: fusion.fusionVersion,
+      profileVersion: fusion.profileVersion,
+      pairSpecificOverride: fusion.pairSpecificOverride,
       wayIn: fusion.wayIn,
       firstMove: fusion.firstMove,
       repeatableLoop: fusion.repeatableLoop,
-      adaptation: fusion.adaptation
+      adaptation: fusion.adaptation,
+      stanceAction: fusion.stanceAction,
+      driveAction: fusion.driveAction,
+      anchor: fusion.anchor
     };
   }
 

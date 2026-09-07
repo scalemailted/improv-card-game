@@ -62,11 +62,15 @@
         {
           id: `${card.id}-a`,
           label: "First move",
+          context: packLens.manifestations[0],
+          action: guidance.manifestations[0],
           text: composeManifestation(packLens, guidance, 0)
         },
         {
           id: `${card.id}-b`,
           label: "Another angle",
+          context: packLens.manifestations[1],
+          action: guidance.manifestations[1],
           text: composeManifestation(packLens, guidance, 1)
         }
       ],

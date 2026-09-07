@@ -7,7 +7,7 @@ const cardHints = require("../hints/card-hints.js");
 const { validate } = require("../tools/hint-validator.js");
 
 assert.equal(hintBible.HINT_SCHEMA_VERSION, 2);
-assert.equal(hintBible.HINT_LIBRARY_VERSION, "2.0.0");
+assert.equal(hintBible.HINT_LIBRARY_VERSION, "2.1.0");
 assert.equal(hintBible.DEFAULT_HINT_POLICY, "full");
 assert.deepEqual(hintBible.policies.map((policy) => policy.id), ["full", "nudges", "after-attempt", "off"]);
 assert.deepEqual(hintBible.combinationPatterns.map((pattern) => pattern.id), [

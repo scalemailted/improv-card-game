@@ -16,7 +16,7 @@
   }
 
   const HINT_SCHEMA_VERSION = 2;
-  const HINT_LIBRARY_VERSION = "2.0.0";
+  const HINT_LIBRARY_VERSION = "2.1.0";
   const DEFAULT_HINT_POLICY = "full";
 
   function deepFreeze(value) {

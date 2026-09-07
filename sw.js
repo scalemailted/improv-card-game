@@ -1,37 +1,38 @@
 "use strict";
 
-const CACHE_NAME = "imprompt-v0.21.1";
+const CACHE_NAME = "imprompt-v0.21.2";
 const OWNED_CACHE_PREFIXES = ["imprompt-", "two-secrets-"];
 const BASE_URL = new URL("./", self.location.href);
 const PRECACHE_PATHS = [
   "./",
   "./index.html",
-  "./styles.css?v=0.21.1",
-  "./card-bible.js?v=0.21.1",
-  "./cards/core-foundations.js?v=0.21.1",
-  "./cards/everyday-friction.js?v=0.21.1",
-  "./cards/power-games.js?v=0.21.1",
-  "./cards/relationship-knots.js?v=0.21.1",
-  "./cards/emotional-pressure.js?v=0.21.1",
-  "./cards/secrets-schemes.js?v=0.21.1",
-  "./cards/absurd-commitment.js?v=0.21.1",
-  "./cards/rules-rituals-institutions.js?v=0.21.1",
-  "./cards/competition-consequences.js?v=0.21.1",
-  "./cards/advanced-scene-engines.js?v=0.21.1",
-  "./cards.js?v=0.21.1",
-  "./hint-bible.js?v=0.21.1",
-  "./hints/card-hints.js?v=0.21.1",
-  "./hints/concrete-fusion.js?v=0.21.1",
-  "./hint-engine.js?v=0.21.1",
-  "./exercises.js?v=0.21.1",
-  "./deck-engine.js?v=0.21.1",
-  "./vendor/qrcode-core.js?v=0.21.1",
-  "./app.js?v=0.21.1",
-  "./manifest.webmanifest?v=0.21.1",
-  "./assets/improv-card-game-qr.png?v=0.21.1",
-  "./icons/icon.svg?v=0.21.1",
-  "./icons/icon-192.png?v=0.21.1",
-  "./icons/icon-512.png?v=0.21.1"
+  "./styles.css?v=0.21.2",
+  "./card-bible.js?v=0.21.2",
+  "./cards/core-foundations.js?v=0.21.2",
+  "./cards/everyday-friction.js?v=0.21.2",
+  "./cards/power-games.js?v=0.21.2",
+  "./cards/relationship-knots.js?v=0.21.2",
+  "./cards/emotional-pressure.js?v=0.21.2",
+  "./cards/secrets-schemes.js?v=0.21.2",
+  "./cards/absurd-commitment.js?v=0.21.2",
+  "./cards/rules-rituals-institutions.js?v=0.21.2",
+  "./cards/competition-consequences.js?v=0.21.2",
+  "./cards/advanced-scene-engines.js?v=0.21.2",
+  "./cards.js?v=0.21.2",
+  "./hint-bible.js?v=0.21.2",
+  "./hints/card-hints.js?v=0.21.2",
+  "./hints/fusion-profiles.js?v=0.21.2",
+  "./hints/concrete-fusion.js?v=0.21.2",
+  "./hint-engine.js?v=0.21.2",
+  "./exercises.js?v=0.21.2",
+  "./deck-engine.js?v=0.21.2",
+  "./vendor/qrcode-core.js?v=0.21.2",
+  "./app.js?v=0.21.2",
+  "./manifest.webmanifest?v=0.21.2",
+  "./assets/improv-card-game-qr.png?v=0.21.2",
+  "./icons/icon.svg?v=0.21.2",
+  "./icons/icon-192.png?v=0.21.2",
+  "./icons/icon-512.png?v=0.21.2"
 ];
 const PRECACHE_URLS = PRECACHE_PATHS.map((path) => new URL(path, BASE_URL).href);
 

@@ -5,7 +5,7 @@
 - **1 Stance** — how the performer enters, interprets, or reacts within the scene.
 - **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The active library contains **240 Stances and 240 Drives** across the complete ten-pack roadmap. v0.21.1 combines the concrete two-card fusion guidance introduced in v0.21.0 with card-integrated **Veto** and **Need a nudge?** controls designed for phone play. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, Scene Log, and hint state. There is no account, synchronized room, tracking service, model download, analytics, or backend.
+The active library contains **240 Stances and 240 Drives** across the complete ten-pack roadmap. v0.21.2 repairs the pair-specific Concrete Fusion system while retaining the card-integrated **Veto** and **Need a nudge?** controls from v0.21.1. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, Scene Log, and hint state. There is no account, synchronized room, tracking service, model download, analytics, or backend.
 
 ## Open the live game
 
@@ -20,9 +20,22 @@ The active library contains **240 Stances and 240 Drives** across the complete t
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
 
+## What is new in v0.21.2
+
+v0.21.2 repairs the two-card hint so that it actually demonstrates the selected Stance and Drive as one concrete behavior:
+
+- The engine now uses the card-specific action in each resolved hint rather than accidentally extracting the generic pack preface.
+- A new fusion-profile library defines the playable method of all 24 Stance subthemes and the pressure, opening tactic, blocked tactic, and repeatable loop of all 24 Drive subthemes.
+- Pack-specific anchors keep cards from the same subtheme distinct across the ten official packs.
+- **One way to play the pair**, **Your first move**, **The repeatable loop**, and **When the scene changes** are generated from both actual selected cards.
+- Three representative pairings are hand-audited regression fixtures, and all 57,600 hands remain locally generated and offline-capable.
+- The card-integrated Veto and Nudge controls remain unchanged.
+
+See `RELEASE-NOTES-v0.21.2.md` and `docs/IMPROMPT-HINT-BIBLE.md`.
+
 ## What is new in v0.21.1
 
-v0.21.1 moves the per-card actions into the card itself:
+v0.21.1 moved the per-card actions into the card itself:
 
 - **Veto** is anchored at the bottom left of each revealed card.
 - **Need a nudge?** is anchored at the bottom right when hints are available.

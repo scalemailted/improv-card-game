@@ -4,6 +4,8 @@ const cardBible = require("../card-bible.js");
 const cards = require("../cards.js");
 const hintBible = require("../hint-bible.js");
 const cardHints = require("../hints/card-hints.js");
+const fusionProfiles = require("../hints/fusion-profiles.js");
+const concreteFusion = require("../hints/concrete-fusion.js");
 const hintEngine = require("../hint-engine.js");
 
 const FORBIDDEN_PARTNER_CONTROL = [
@@ -26,11 +28,52 @@ function validate(options = {}) {
   const packLensIds = Object.keys(hintBible.packLenses || {});
 
   if (hintBible.HINT_SCHEMA_VERSION !== 2) errors.push("Hint schema version must be 2 for v0.21.x.");
-  if (hintBible.HINT_LIBRARY_VERSION !== "2.0.0") errors.push("Hint library version must be 2.0.0 for v0.21.x.");
+  if (hintBible.HINT_LIBRARY_VERSION !== "2.1.0") errors.push("Hint library version must be 2.1.0 for v0.21.2.");
   if (hintBible.policies.length !== 4) errors.push(`Expected 4 hint policies; found ${hintBible.policies.length}.`);
   if (hintBible.combinationPatterns.length !== 6) errors.push(`Expected 6 combination patterns; found ${hintBible.combinationPatterns.length}.`);
   if (guidanceIds.length !== expectedSubthemes.length) errors.push(`Expected guidance for ${expectedSubthemes.length} subthemes; found ${guidanceIds.length}.`);
   if (packLensIds.length !== expectedPackIds.length) errors.push(`Expected manifestation lenses for ${expectedPackIds.length} packs; found ${packLensIds.length}.`);
+
+  const stanceSubthemes = cardBible.categories
+    .filter((category) => category.deck === "stance")
+    .flatMap((category) => category.subthemes.map((subtheme) => subtheme.id));
+  const driveSubthemes = cardBible.categories
+    .filter((category) => category.deck === "drive")
+    .flatMap((category) => category.subthemes.map((subtheme) => subtheme.id));
+  if (fusionProfiles.PROFILE_VERSION !== "1.0.0") errors.push("Fusion profile version must be 1.0.0 for v0.21.2.");
+  if (concreteFusion.FUSION_VERSION !== "2.1.0") errors.push("Concrete fusion version must be 2.1.0 for v0.21.2.");
+  if (Object.keys(fusionProfiles.stanceProfiles).length !== stanceSubthemes.length) {
+    errors.push(`Expected ${stanceSubthemes.length} Stance fusion profiles; found ${Object.keys(fusionProfiles.stanceProfiles).length}.`);
+  }
+  if (Object.keys(fusionProfiles.driveProfiles).length !== driveSubthemes.length) {
+    errors.push(`Expected ${driveSubthemes.length} Drive fusion profiles; found ${Object.keys(fusionProfiles.driveProfiles).length}.`);
+  }
+  for (const id of stanceSubthemes) {
+    const profile = fusionProfiles.getStance(id);
+    if (!profile) {
+      errors.push(`Missing Stance fusion profile ${id}.`);
+      continue;
+    }
+    for (const field of ["instrument", "reading", "escalation", "tension"]) {
+      if (!String(profile[field] || "").trim()) errors.push(`${id} Stance fusion profile is missing ${field}.`);
+    }
+  }
+  for (const id of driveSubthemes) {
+    const profile = fusionProfiles.getDrive(id);
+    if (!profile) {
+      errors.push(`Missing Drive fusion profile ${id}.`);
+      continue;
+    }
+    for (const field of ["aim", "opening", "blocked", "traction", "loop", "pressure"]) {
+      if (!String(profile[field] || "").trim()) errors.push(`${id} Drive fusion profile is missing ${field}.`);
+    }
+  }
+  for (const packId of expectedPackIds) {
+    const anchors = fusionProfiles.packAnchors[packId];
+    if (!Array.isArray(anchors) || anchors.length !== 2) {
+      errors.push(`${packId} must define exactly two fusion anchors.`);
+    }
+  }
 
   for (const id of expectedPackIds) {
     const lens = hintBible.getPackLens(id);
@@ -87,6 +130,11 @@ function validate(options = {}) {
       for (const [index, seed] of hint.manifestationSeeds.entries()) {
         const count = words(seed.text);
         if (count < 14 || count > 55) errors.push(`${card.id} resolved seed ${index + 1} has ${count} words; expected 14–55.`);
+        if (!String(seed.context || "").trim()) errors.push(`${card.id} resolved seed ${index + 1} is missing its pack context.`);
+        if (!String(seed.action || "").trim()) errors.push(`${card.id} resolved seed ${index + 1} is missing its concrete action.`);
+        if (String(seed.text || "").trim() !== `${String(seed.context || "").trim()} ${String(seed.action || "").trim()}`.trim()) {
+          errors.push(`${card.id} resolved seed ${index + 1} must preserve context and action as the displayed text.`);
+        }
         if (resolvedSeedTexts.has(seed.text)) errors.push(`${card.id} resolved seed ${index + 1} duplicates another card-specific seed.`);
         resolvedSeedTexts.add(seed.text);
         for (const pattern of FORBIDDEN_PARTNER_CONTROL) {
@@ -138,6 +186,18 @@ function validate(options = {}) {
           if (!hint.firstMove || !hint.repeatableLoop || !hint.adaptation) {
             errors.push(`${stance.id}+${drive.id} angle ${angle} lacks full concrete coaching depth.`);
           }
+          if (hint.fusionVersion !== concreteFusion.FUSION_VERSION || hint.profileVersion !== fusionProfiles.PROFILE_VERSION) {
+            errors.push(`${stance.id}+${drive.id} angle ${angle} reports the wrong fusion/profile version.`);
+          }
+          if (!hint.stanceAction || !hint.driveAction || !hint.anchor) {
+            errors.push(`${stance.id}+${drive.id} angle ${angle} is missing resolved pair-specific action data.`);
+          }
+          if (/Keep the first move direct and easy to read|Play the central behavior plainly before adding complication/i.test(hint.firstMove)) {
+            errors.push(`${stance.id}+${drive.id} angle ${angle} leaked a generic pack preface into the concrete first move.`);
+          }
+          if (words(hint.firstMove) < 16) {
+            errors.push(`${stance.id}+${drive.id} angle ${angle} first move is too thin to demonstrate the pair.`);
+          }
           for (const pattern of FORBIDDEN_PARTNER_CONTROL) {
             if (pattern.test(`${hint.principle} ${hint.wayIn} ${hint.firstMove} ${hint.repeatableLoop} ${hint.adaptation}`)) {
               errors.push(`${stance.id}+${drive.id} angle ${angle} may prescribe another performer.`);
@@ -175,7 +235,11 @@ function validate(options = {}) {
       personalHands: cards.stances.length * cards.drives.length,
       generatedStructuralAngles: cards.stances.length * cards.drives.length * hintBible.combinationPatterns.length,
       policies: hintBible.policies.length,
-      patterns: hintBible.combinationPatterns.length
+      patterns: hintBible.combinationPatterns.length,
+      stanceFusionProfiles: Object.keys(fusionProfiles.stanceProfiles).length,
+      driveFusionProfiles: Object.keys(fusionProfiles.driveProfiles).length,
+      packFusionAnchors: Object.values(fusionProfiles.packAnchors).reduce((sum, anchors) => sum + anchors.length, 0),
+      curatedPairOverrides: concreteFusion.pairOverrideKeys.length
     }
   };
 }

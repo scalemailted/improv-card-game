@@ -1,7 +1,7 @@
 # Imprompt Hint Library Audit
 
-**Release:** Imprompt v0.21.1  
-**Hint Bible:** 2.0.0  
+**Release:** Imprompt v0.21.2  
+**Hint Bible:** 2.1.0  
 **Result:** PASS
 
 ## Coverage
@@ -14,6 +14,10 @@
 - Personal Stance–Drive hands validated: **57,600**
 - Structural combination angles generated and checked: **345,600**
 - Reusable combination patterns: **6**
+- Stance fusion profiles: **24**
+- Drive fusion profiles: **24**
+- Pack-specific fusion anchors: **20**
+- Hand-audited exemplar pairings: **3**
 - Coach hint policies: **4**
 
 ## Acceptance gates
@@ -27,8 +31,12 @@
 - Full versus concise policy depth: checked
 - After-first-attempt gating: checked
 - Hints-off suppression: checked
+- Separate pack context and concrete action for every resolved card seed: checked
+- Generic pack-preface leakage into first moves: rejected
+- Complete Stance and Drive fusion-profile coverage: checked
 - Six distinct concrete fusion angles per hand: checked
 - Integrated way-in, first move, repeatable loop, and adaptation: checked
+- Known-pair exemplar regressions: checked
 
 ## Errors
 
@@ -40,4 +48,4 @@
 
 ## Interpretation
 
-This audit validates the deterministic, local coaching system. It does not claim that every generated hint is the only or best interpretation of a hand. The interface deliberately labels each output as one possible way in and lets players request another structural angle.
+This audit validates the deterministic, local coaching system and the v0.21.2 concrete-action extraction repair. It does not claim that every generated hint is the only or best interpretation of a hand. The interface deliberately labels each output as one possible way in and lets players request another structural angle.

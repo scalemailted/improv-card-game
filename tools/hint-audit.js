@@ -15,8 +15,8 @@ const m = audit.metrics;
 const lines = [
   "# Imprompt Hint Library Audit",
   "",
-  "**Release:** Imprompt v0.21.1  ",
-  "**Hint Bible:** 2.0.0  ",
+  "**Release:** Imprompt v0.21.2  ",
+  "**Hint Bible:** 2.1.0  ",
   `**Result:** ${audit.result}`,
   "",
   "## Coverage",
@@ -29,6 +29,10 @@ const lines = [
   `- Personal Stance–Drive hands validated: **${m.personalHands.toLocaleString()}**`,
   `- Structural combination angles generated and checked: **${m.generatedStructuralAngles.toLocaleString()}**`,
   `- Reusable combination patterns: **${m.patterns}**`,
+  `- Stance fusion profiles: **${m.stanceFusionProfiles}**`,
+  `- Drive fusion profiles: **${m.driveFusionProfiles}**`,
+  `- Pack-specific fusion anchors: **${m.packFusionAnchors}**`,
+  `- Hand-audited exemplar pairings: **${m.curatedPairOverrides}**`,
   `- Coach hint policies: **${m.policies}**`,
   "",
   "## Acceptance gates",
@@ -42,8 +46,12 @@ const lines = [
   "- Full versus concise policy depth: checked",
   "- After-first-attempt gating: checked",
   "- Hints-off suppression: checked",
+  "- Separate pack context and concrete action for every resolved card seed: checked",
+  "- Generic pack-preface leakage into first moves: rejected",
+  "- Complete Stance and Drive fusion-profile coverage: checked",
   "- Six distinct concrete fusion angles per hand: checked",
   "- Integrated way-in, first move, repeatable loop, and adaptation: checked",
+  "- Known-pair exemplar regressions: checked",
   "",
   "## Errors",
   "",
@@ -55,7 +63,7 @@ const lines = [
   "",
   "## Interpretation",
   "",
-  "This audit validates the deterministic, local coaching system. It does not claim that every generated hint is the only or best interpretation of a hand. The interface deliberately labels each output as one possible way in and lets players request another structural angle.",
+  "This audit validates the deterministic, local coaching system and the v0.21.2 concrete-action extraction repair. It does not claim that every generated hint is the only or best interpretation of a hand. The interface deliberately labels each output as one possible way in and lets players request another structural angle.",
   ""
 ];
 const report = lines.join("\n");

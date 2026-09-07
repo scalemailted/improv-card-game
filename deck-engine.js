@@ -10,6 +10,8 @@
 
   const STATE_VERSION = 5;
   const ALL_CATEGORIES = "all";
+  const HINT_POLICIES = Object.freeze(["full", "nudges", "after-attempt", "off"]);
+  const DEFAULT_HINT_POLICY = "full";
   const SAFE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   const TYPE_CONFIG = Object.freeze({
     stance: Object.freeze({
@@ -136,6 +138,10 @@
       .slice(0, maxLength);
   }
 
+  function normalizeHintPolicy(value) {
+    return HINT_POLICIES.includes(value) ? value : DEFAULT_HINT_POLICY;
+  }
+
   function uniqueSessionId(state, randomFn = secureRandom) {
     const existing = new Set((state.sessions || []).map((session) => session.id));
     for (let attempt = 0; attempt < 20; attempt += 1) {
@@ -169,6 +175,7 @@
       focus: cleanText(selection.focus, 180),
       locked: Boolean(selection.locked),
       roleVisibility: selection.roleVisibility === "open" ? "open" : "hidden",
+      hintPolicy: normalizeHintPolicy(selection.hintPolicy),
       roleId,
       roleLabel: cleanText(selection.roleLabel, 36) || (mode === "paired" ? `Player ${roleId.toUpperCase()}` : mode === "mirror" ? "Mirror" : "Open Play"),
       roleShortLabel: cleanText(selection.roleShortLabel, 24) || (mode === "paired" ? `Player ${roleId.toUpperCase()}` : mode === "mirror" ? "Mirror" : "Open"),
@@ -231,6 +238,7 @@
       focus: "Let each performer discover the scene without a shared coaching constraint.",
       locked: false,
       roleVisibility: "open",
+      hintPolicy: DEFAULT_HINT_POLICY,
       roleId: "all",
       roleLabel: "Open Play",
       roleShortLabel: "Open",
@@ -257,6 +265,7 @@
       driveFilter: session.exercise.driveFilter,
       stanceVetoes: 0,
       driveVetoes: 0,
+      hintsUnlocked: session.exercise.hintPolicy !== "after-attempt",
       startedAt: nowIso(),
       stanceDrawnAt: null,
       driveDrawnAt: null
@@ -440,6 +449,44 @@
       }
     }
 
+    // v0.20 adds coach-controlled hint access without invalidating existing v5 local decks.
+    if (Array.isArray(state.sessions)) {
+      for (const session of state.sessions) {
+        if (session && session.exercise) {
+          const normalizedPolicy = normalizeHintPolicy(session.exercise.hintPolicy);
+          if (session.exercise.hintPolicy !== normalizedPolicy) {
+            session.exercise.hintPolicy = normalizedPolicy;
+            changed = true;
+          }
+        }
+      }
+    }
+    if (Array.isArray(state.savedExercises)) {
+      for (const exercise of state.savedExercises) {
+        if (exercise) {
+          const normalizedPolicy = normalizeHintPolicy(exercise.hintPolicy);
+          if (exercise.hintPolicy !== normalizedPolicy) {
+            exercise.hintPolicy = normalizedPolicy;
+            changed = true;
+          }
+        }
+      }
+    }
+    if (state.current && typeof state.current.hintsUnlocked !== "boolean") {
+      const session = sessionById(state, state.current.sessionId);
+      const policy = session && session.exercise ? normalizeHintPolicy(session.exercise.hintPolicy) : DEFAULT_HINT_POLICY;
+      state.current.hintsUnlocked = policy !== "after-attempt";
+      changed = true;
+    }
+    if (Array.isArray(state.history)) {
+      for (const entry of state.history) {
+        if (entry && entry.exerciseSnapshot && !entry.exerciseSnapshot.hintPolicy) {
+          entry.exerciseSnapshot.hintPolicy = DEFAULT_HINT_POLICY;
+          changed = true;
+        }
+      }
+    }
+
     const nextLibrary = librarySnapshot(cards);
     if (!previousLibrary
       || JSON.stringify(previousLibrary.stanceIds || []) !== JSON.stringify(nextLibrary.stanceIds)
@@ -510,10 +557,20 @@
       roleLabel: exercise.roleLabel,
       roleShortLabel: exercise.roleShortLabel,
       roleVisibility: exercise.roleVisibility,
+      hintPolicy: normalizeHintPolicy(exercise.hintPolicy),
       locked: exercise.locked,
       stanceFilter: exercise.stanceFilter,
       driveFilter: exercise.driveFilter
     };
+  }
+
+  function unlockHints(state) {
+    if (!state || !state.current) {
+      return false;
+    }
+    state.current.hintsUnlocked = true;
+    state.updatedAt = nowIso();
+    return true;
   }
 
   function completeScene(state, cards) {
@@ -638,6 +695,7 @@
       && ["open", "mirror", "paired"].includes(exercise.mode)
       && ["open", "preset", "custom"].includes(exercise.source)
       && typeof exercise.locked === "boolean"
+      && HINT_POLICIES.includes(exercise.hintPolicy)
       && ["open", "hidden"].includes(exercise.roleVisibility)
       && ["all", "a", "b"].includes(exercise.roleId)
       && isValidFilter(cards, "stance", exercise.stanceFilter)
@@ -707,6 +765,7 @@
       && current.stanceVetoes >= 0
       && Number.isInteger(current.driveVetoes)
       && current.driveVetoes >= 0
+      && typeof current.hintsUnlocked === "boolean"
       && isIsoLike(current.startedAt);
   }
 
@@ -718,6 +777,9 @@
       return false;
     }
     if (!Array.isArray(exercise.roles) || exercise.roles.length !== (exercise.mode === "paired" ? 2 : 1)) {
+      return false;
+    }
+    if (!HINT_POLICIES.includes(exercise.hintPolicy)) {
       return false;
     }
     return exercise.roles.every((role) => role
@@ -902,6 +964,7 @@
           : drawFilters.drive,
         stanceVetoes: legacyState.version === 4 && Number.isInteger(legacyState.current.stanceVetoes) ? legacyState.current.stanceVetoes : 0,
         driveVetoes: legacyState.version === 4 && Number.isInteger(legacyState.current.driveVetoes) ? legacyState.current.driveVetoes : 0,
+        hintsUnlocked: true,
         startedAt: legacyState.current.startedAt || legacyState.current.drawnAt || timestamp,
         stanceDrawnAt: legacyState.current.stanceDrawnAt || legacyState.current.drawnAt || null,
         driveDrawnAt: legacyState.current.driveDrawnAt || legacyState.current.drawnAt || null
@@ -937,6 +1000,8 @@
   return Object.freeze({
     STATE_VERSION,
     ALL_CATEGORIES,
+    HINT_POLICIES,
+    DEFAULT_HINT_POLICY,
     createDeckId,
     shuffle,
     createState,
@@ -955,6 +1020,7 @@
     drawPair,
     keepCard,
     vetoCard,
+    unlockHints,
     completeScene,
     discardCurrentScene,
     remaining,

@@ -25,15 +25,16 @@ for (const preset of exercises.getPresets()) {
 
 const mirror = exercises.getPreset("status-clash");
 const mirrorUrl = exercises.buildShareUrl(baseUrl, mirror, "all");
-assert.equal(mirrorUrl, `${baseUrl}?xv=1&x=status-clash`);
+assert.equal(mirrorUrl, `${baseUrl}?xv=2&h=f&x=status-clash`);
 const parsedMirror = exercises.parseInviteUrl(mirrorUrl);
 assert.equal(parsedMirror.exercise.id, "status-clash");
 assert.equal(parsedMirror.exercise.mode, "mirror");
 assert.equal(parsedMirror.roleId, null);
+assert.equal(parsedMirror.exercise.hintPolicy, "full");
 
 const paired = exercises.getPreset("pursuer-avoider");
 const chooserUrl = exercises.buildShareUrl(baseUrl, paired, null);
-assert.equal(chooserUrl, `${baseUrl}?xv=1&x=pursuer-avoider`);
+assert.equal(chooserUrl, `${baseUrl}?xv=2&h=f&x=pursuer-avoider`);
 const parsedChooser = exercises.parseInviteUrl(chooserUrl);
 assert.equal(parsedChooser.exercise.id, "pursuer-avoider");
 assert.equal(parsedChooser.roleId, null);
@@ -62,6 +63,7 @@ const custom = exercises.normalizeExercise({
   focus: "Practice grounded emotion against repeatable escalation.",
   locked: true,
   roleVisibility: "hidden",
+  hintPolicy: "after-attempt",
   roles: [
     {
       id: "a",
@@ -90,6 +92,8 @@ assert.equal(parsedCustom.exercise.name, custom.name);
 assert.equal(parsedCustom.exercise.mode, "paired");
 assert.equal(parsedCustom.exercise.locked, true);
 assert.equal(parsedCustom.exercise.roleVisibility, "hidden");
+assert.equal(parsedCustom.exercise.hintPolicy, "after-attempt");
+assert.match(customUrl, /[?&]h=a(?:&|$)/);
 assert.equal(parsedCustom.exercise.roles[0].label, "Calm");
 assert.equal(parsedCustom.exercise.roles[0].stanceFilter, "Emotional Assumptions");
 assert.equal(parsedCustom.exercise.roles[0].driveFilter, "Secrets & Avoidance");
@@ -104,10 +108,14 @@ assert.equal(selection.mode, "paired");
 assert.equal(selection.roleLabel, "Chaos");
 assert.equal(selection.stanceFilter, "Worldview & Absurdity");
 assert.equal(selection.driveFilter, "Repeatable Behaviors");
+assert.equal(selection.hintPolicy, "after-attempt");
 
 assert.equal(exercises.parseInviteUrl(baseUrl), null);
 assert.equal(exercises.parseInviteUrl(`${baseUrl}?x=not-a-real-exercise`), null);
 assert.equal(exercises.slugToFilter("status-authority"), "Status & Authority");
 assert.equal(exercises.filterToSlug("Secrets & Avoidance"), "secrets-avoidance");
+assert.equal(exercises.codeToHintPolicy("n"), "nudges");
+assert.equal(exercises.hintPolicyToCode("off"), "o");
+assert.equal(exercises.parseInviteUrl(`${baseUrl}?x=status-clash`).exercise.hintPolicy, "full");
 
-console.log("✓ Imprompt guided-exercise preset, paired-role, and private share-link tests passed");
+console.log("✓ Imprompt guided-exercise preset, paired-role, hint-policy, and private share-link tests passed");

@@ -2,6 +2,9 @@
   "use strict";
 
   const cards = window.IMPROMPT_CARDS;
+  const hintBible = window.IMPROMPT_HINT_BIBLE;
+  const cardHints = window.IMPROMPT_CARD_HINTS;
+  const hintEngine = window.IMPROMPT_HINT_ENGINE;
   const exercises = window.IMPROMPT_EXERCISES;
   const engine = window.ImpromptEngine;
   const qrCore = window.IMPROMPT_QR_CORE;
@@ -38,18 +41,20 @@
     "pairedExerciseList", "mirrorExerciseCount", "pairedExerciseCount", "savedExercisesSection",
     "savedExerciseList", "savedExerciseCount", "createExerciseButton", "exerciseDetailBackButton",
     "exerciseDetailMode", "exerciseDetailHeading", "exerciseDetailSummary", "exerciseDetailFocus",
-    "exerciseRoleGrid", "exerciseLockNote", "exerciseDetailActions", "customExerciseActions",
+    "exerciseRoleGrid", "exerciseLockNote", "exerciseHintPolicySelect", "exerciseHintPolicyDescription",
+    "exerciseDetailActions", "customExerciseActions",
     "editCustomExerciseButton", "deleteCustomExerciseButton", "customExerciseBackButton", "customExerciseHeading",
     "customExerciseForm", "customExerciseName", "customExerciseFocus", "customModeControl",
     "customMirrorModeButton", "customPairedModeButton", "customModeHelp", "customRoleAGroup",
     "customRoleALetter", "customRoleAHeading", "customRoleASubtitle", "customRoleANameField",
     "customRoleAName", "customRoleAStance", "customRoleADrive", "customRoleBGroup", "customRoleBName",
     "customRoleBStance", "customRoleBDrive", "customExerciseLocked", "customVisibilityRow",
-    "customExerciseOpenRoles", "saveCustomExerciseButton", "exerciseShareBackButton", "exerciseShareHeading",
+    "customExerciseOpenRoles", "customHintPolicySelect", "customHintPolicyDescription", "saveCustomExerciseButton",
+    "exerciseShareBackButton", "exerciseShareHeading",
     "exerciseShareSummary", "shareRoleTabs", "shareRoleChooserButton", "shareRoleAButton",
-    "shareRoleBButton", "shareAssignmentSummary", "exerciseQrCode", "exerciseShareUrl",
+    "shareRoleBButton", "shareAssignmentSummary", "shareHintPolicySummary", "exerciseQrCode", "exerciseShareUrl",
     "shareExerciseLinkButton", "copyExerciseLinkButton", "exerciseShareFeedback", "acceptExerciseInviteButton",
-    "declineExerciseInviteButton", "joinModePill", "joinExerciseHeading", "joinExerciseSummary",
+    "declineExerciseInviteButton", "joinModePill", "joinExerciseHeading", "joinExerciseSummary", "joinHintPolicySummary",
     "joinRoleChoices", "joinAssignment", "playMenuButton", "playInviteButton", "sceneLabel",
     "playSessionBadge", "playExerciseName", "playExerciseRole", "stanceCardWrap", "driveCardWrap",
     "stanceCard", "driveCard", "stanceRole", "driveRole", "stanceCategory", "driveCategory",
@@ -57,6 +62,7 @@
     "driveTitle", "stanceInstruction", "driveInstruction", "stanceAction", "driveAction",
     "stanceFilterButton", "driveFilterButton", "stanceFilterLabel", "driveFilterLabel", "stanceFilterIcon",
     "driveFilterIcon", "stanceFilterChevron", "driveFilterChevron", "stanceFilterLock", "driveFilterLock",
+    "stanceNudgeButton", "driveNudgeButton", "playHintActions", "combinationHintButton", "hintUnlockCard", "unlockHintsButton",
     "playNote", "driveHelpButton", "completeButton", "historyBackButton", "historyStartButton", "historyScenesTab",
     "historyCoverageTab", "historyScenesPanel", "historyCoveragePanel", "historyCount", "historyList",
     "historyEmpty", "historyEmptyCopy", "historyPostmortemGuide", "historyGuideButton", "coverageCurrentButton", "coverageAllButton", "coverageSummary",
@@ -69,7 +75,10 @@
     "shareQrLink", "shareUrlLink", "shareLinkButton", "copyLinkButton", "shareFeedback", "cardDialog",
     "cardDialogPanel", "cardDialogType", "cardDialogCategory", "cardDialogCategoryLabel",
     "cardDialogCategoryIcon", "cardDialogTitle", "cardDialogInstruction", "closeCardDialogButton",
-    "keepCardButton", "vetoCardButton", "filterDialog", "filterDialogPanel", "filterDialogType",
+    "keepCardButton", "vetoCardButton", "hintDialog", "hintDialogPanel", "hintDialogEyebrow", "hintDialogTitle",
+    "closeHintDialogButton", "hintDialogIntro", "hintPatternPill", "hintPatternLabel", "hintPatternPrinciple",
+    "hintDialogBody", "anotherHintAngleButton", "hintAngleCount", "doneHintButton",
+    "filterDialog", "filterDialogPanel", "filterDialogType",
     "filterDialogTitle", "filterDialogDescription", "filterOptions", "closeFilterDialogButton", "confirmDialog",
     "cancelNewDeckButton", "confirmNewDeckButton", "sessionConflictDialog", "sessionConflictCopy",
     "cancelSessionChangeButton", "confirmSessionChangeButton", "deleteExerciseDialog",
@@ -106,6 +115,7 @@
   let galleryView = "card";
   let galleryIndex = 0;
   let deferredInstallPrompt = null;
+  let activeHintContext = null;
   const revealed = { stance: false, drive: false };
 
   function loadState() {
@@ -296,6 +306,73 @@
     return "OPEN PLAY";
   }
 
+  function hintPolicyForExercise(exercise) {
+    return hintBible.normalizePolicy(exercise && exercise.hintPolicy);
+  }
+
+  function currentHintPolicyId() {
+    const session = activeSession();
+    return hintPolicyForExercise(session && session.exercise);
+  }
+
+  function currentHintPolicy() {
+    return hintBible.getPolicy(currentHintPolicyId());
+  }
+
+  function hintPolicySummary(policyId, context = "play") {
+    const policy = hintBible.getPolicy(policyId);
+    const title = context === "share" ? `Hint access: ${policy.label}` : policy.label;
+    return { title, description: policy.description };
+  }
+
+  function populateHintPolicySelect(select, selectedPolicy) {
+    if (!select) {
+      return;
+    }
+    const selected = hintBible.normalizePolicy(selectedPolicy);
+    const fragment = document.createDocumentFragment();
+    hintBible.policies.forEach((policy) => {
+      const option = document.createElement("option");
+      option.value = policy.id;
+      option.textContent = policy.label;
+      fragment.append(option);
+    });
+    select.replaceChildren(fragment);
+    select.value = selected;
+  }
+
+  function renderHintPolicyDescription(select, descriptionElement) {
+    if (!select || !descriptionElement) {
+      return;
+    }
+    const policy = hintBible.getPolicy(select.value);
+    descriptionElement.textContent = policy.description;
+  }
+
+  function renderHintPolicySummary(container, policyId, options = {}) {
+    if (!container) {
+      return;
+    }
+    const policy = hintBible.getPolicy(policyId);
+    const eyebrow = document.createElement("span");
+    eyebrow.className = "eyebrow";
+    eyebrow.textContent = options.eyebrow || "HINT ACCESS";
+    const title = document.createElement("strong");
+    title.textContent = policy.label;
+    const description = document.createElement("p");
+    description.textContent = policy.description;
+    container.replaceChildren(eyebrow, title, description);
+    container.dataset.policy = policy.id;
+  }
+
+  function sceneHintsUnlocked() {
+    return Boolean(state.current && state.current.hintsUnlocked);
+  }
+
+  function hintsAvailableNow() {
+    return hintEngine.isAvailable(currentHintPolicyId(), sceneHintsUnlocked());
+  }
+
   function cardConfig(type) {
     const isStance = type === "stance";
     return {
@@ -310,6 +387,7 @@
       title: isStance ? elements.stanceTitle : elements.driveTitle,
       instruction: isStance ? elements.stanceInstruction : elements.driveInstruction,
       action: isStance ? elements.stanceAction : elements.driveAction,
+      nudgeButton: isStance ? elements.stanceNudgeButton : elements.driveNudgeButton,
       filterButton: isStance ? elements.stanceFilterButton : elements.driveFilterButton,
       filterLabel: isStance ? elements.stanceFilterLabel : elements.driveFilterLabel,
       filterIcon: isStance ? elements.stanceFilterIcon : elements.driveFilterIcon,
@@ -494,6 +572,135 @@
       : "Tap each panel to draw. Category choices remain open for this session; tap a revealed card again to keep or veto it.";
   }
 
+  function createHintBlock(label, text, className = "") {
+    const block = document.createElement("section");
+    block.className = `hint-block${className ? ` ${className}` : ""}`;
+    const heading = document.createElement("span");
+    heading.textContent = label;
+    const copy = document.createElement("p");
+    copy.textContent = text;
+    block.append(heading, copy);
+    return block;
+  }
+
+  function renderHintControls() {
+    const hasScene = Boolean(state.current);
+    const policy = currentHintPolicy();
+    const unlocked = sceneHintsUnlocked();
+    const available = hasScene && hintEngine.isAvailable(policy.id, unlocked);
+    const stanceReady = hasScene && state.current.stanceId !== null && revealed.stance;
+    const driveReady = hasScene && state.current.driveId !== null && revealed.drive;
+
+    elements.stanceNudgeButton.hidden = !(available && policy.allowsSingle && stanceReady);
+    elements.driveNudgeButton.hidden = !(available && policy.allowsSingle && driveReady);
+    elements.combinationHintButton.hidden = !(available && policy.allowsCombination && stanceReady && driveReady);
+    elements.hintUnlockCard.hidden = !(hasScene && policy.requiresUnlock && !unlocked && stanceReady && driveReady);
+    elements.playHintActions.hidden = elements.combinationHintButton.hidden && elements.hintUnlockCard.hidden;
+  }
+
+  function unlockSceneHints() {
+    if (!state.current || currentHintPolicyId() !== "after-attempt") {
+      return;
+    }
+    engine.unlockHints(state);
+    saveState();
+    renderHintControls();
+    announce("Private hints unlocked for this scene.");
+    if (!elements.combinationHintButton.hidden) {
+      elements.combinationHintButton.focus({ preventScroll: true });
+    }
+  }
+
+  function closeHintDialog() {
+    closeDialog(elements.hintDialog);
+    activeHintContext = null;
+  }
+
+  function renderHintDialog() {
+    if (!activeHintContext) {
+      return;
+    }
+    const policyId = currentHintPolicyId();
+    let result = null;
+    if (activeHintContext.kind === "single") {
+      const config = cardConfig(activeHintContext.type);
+      const card = state.current && engine.findCard(cards, activeHintContext.type, state.current[config.currentKey]);
+      result = hintEngine.getSingleHint(card, activeHintContext.angle, policyId);
+      if (!result) {
+        closeHintDialog();
+        return;
+      }
+      elements.hintDialogPanel.dataset.cardType = activeHintContext.type;
+      elements.hintDialogEyebrow.textContent = `${config.label.toUpperCase()} NUDGE`;
+      elements.hintDialogTitle.textContent = result.cardTitle;
+      elements.hintDialogIntro.textContent = "One possible way in. Keep the wording private, try the behavior, then return your attention to your partner.";
+      elements.hintPatternPill.hidden = true;
+      const blocks = [createHintBlock(result.angleLabel.toUpperCase(), result.manifestation, "primary-hint-block")];
+      if (result.heighten) {
+        blocks.push(createHintBlock("THEN HEIGHTEN", result.heighten));
+      }
+      elements.hintDialogBody.replaceChildren(...blocks);
+    } else {
+      const stance = state.current && engine.findCard(cards, "stance", state.current.stanceId);
+      const drive = state.current && engine.findCard(cards, "drive", state.current.driveId);
+      result = hintEngine.getCombinationHint(stance, drive, activeHintContext.angle, policyId);
+      if (!result) {
+        closeHintDialog();
+        return;
+      }
+      elements.hintDialogPanel.dataset.cardType = "combination";
+      elements.hintDialogEyebrow.textContent = "TWO-CARD HINT";
+      elements.hintDialogTitle.textContent = "One possible way in";
+      elements.hintDialogIntro.textContent = "Let the Stance shape how you pursue the Drive. This is a doorway, not a script or a correct answer.";
+      elements.hintPatternPill.hidden = false;
+      elements.hintPatternLabel.textContent = result.patternLabel.toUpperCase();
+      elements.hintPatternPrinciple.textContent = result.principle;
+      const blocks = [];
+      if (result.stanceMove) {
+        blocks.push(createHintBlock("STANCE LENS", result.stanceMove, "stance-hint-block"));
+      }
+      if (result.driveMove) {
+        blocks.push(createHintBlock("DRIVE PRESSURE", result.driveMove, "drive-hint-block"));
+      }
+      blocks.push(createHintBlock("BLEND THEM", result.blend, "primary-hint-block"));
+      if (result.nextBeat) {
+        blocks.push(createHintBlock("NEXT BEAT", result.nextBeat));
+      }
+      elements.hintDialogBody.replaceChildren(...blocks);
+    }
+    elements.hintAngleCount.textContent = `${result.angle + 1} of ${result.angleCount}`;
+    elements.anotherHintAngleButton.hidden = result.angleCount <= 1;
+  }
+
+  function openSingleHint(type) {
+    if (!state.current || !revealed[type] || !hintsAvailableNow()) {
+      return;
+    }
+    activeHintContext = { kind: "single", type, angle: 0 };
+    renderHintDialog();
+    openDialog(elements.hintDialog);
+    announce(`${type === "stance" ? "Stance" : "Drive"} nudge opened. One possible interpretation, not a required performance.`);
+  }
+
+  function openCombinationHint() {
+    if (!state.current || !revealed.stance || !revealed.drive || !hintsAvailableNow()) {
+      return;
+    }
+    activeHintContext = { kind: "combination", angle: 0 };
+    renderHintDialog();
+    openDialog(elements.hintDialog);
+    announce("A private two-card combination hint opened.");
+  }
+
+  function showAnotherHintAngle() {
+    if (!activeHintContext) {
+      return;
+    }
+    activeHintContext.angle += 1;
+    renderHintDialog();
+    announce("Another possible angle shown.");
+  }
+
   function renderCompleteButton() {
     const canComplete = Boolean(state.current && state.current.stanceId !== null && state.current.driveId !== null);
     elements.completeButton.disabled = !canComplete;
@@ -542,6 +749,8 @@
       engine.startScene(state, cards);
       revealed.stance = false;
       revealed.drive = false;
+      activeHintContext = null;
+      closeDialog(elements.hintDialog);
       saveState();
     }
     setActiveView("play");
@@ -560,6 +769,8 @@
       engine.startScene(state, cards);
       revealed.stance = false;
       revealed.drive = false;
+      activeHintContext = null;
+      closeDialog(elements.hintDialog);
       saveState();
       selectedExercise = exercises.clone(exercise);
       setActiveView("play");
@@ -604,6 +815,7 @@
       saveState();
       renderPlayCard(type);
       renderCompleteButton();
+      renderHintControls();
       const card = engine.findCard(cards, type, state.current[config.currentKey]);
       announce(`${config.label} drawn from ${card.category} and revealed.`);
       if (navigator.vibrate) {
@@ -614,6 +826,7 @@
     if (!revealed[type]) {
       revealed[type] = true;
       renderPlayCard(type);
+      renderHintControls();
       announce(`${config.label} revealed.`);
       return;
     }
@@ -655,6 +868,7 @@
     saveState();
     closeCardOptions();
     renderPlayCard(type);
+    renderHintControls();
     announce(`${type === "stance" ? "Stance" : "Drive"} kept for this scene.`);
     cardConfig(type).button.focus({ preventScroll: true });
   }
@@ -666,9 +880,12 @@
     const type = selectedCardType;
     const result = engine.vetoCard(state, cards, type);
     revealed[type] = false;
+    activeHintContext = null;
+    closeDialog(elements.hintDialog);
     saveState();
     closeCardOptions();
     renderPlayCard(type);
+    renderHintControls();
     const modeText = result.filter === ALL_FILTER ? "Random All" : result.filter;
     announce(`A replacement ${type === "stance" ? "Stance" : "Drive"} was drawn using ${modeText}. Tap the panel to reveal it.`);
     if (navigator.vibrate) {
@@ -769,6 +986,7 @@
   }
 
   function completeScene() {
+    closeHintDialog();
     const entry = engine.completeScene(state, cards);
     if (!entry) {
       announce("Draw both cards before completing the scene.");
@@ -898,6 +1116,8 @@
     elements.exerciseLockNote.textContent = exercise.locked
       ? "Category choices are locked inside this exercise. Players may leave the session, but the coached draw pools remain fixed while they play it."
       : "These categories are starting suggestions. Players may change either selector during the session.";
+    populateHintPolicySelect(elements.exerciseHintPolicySelect, exercise.hintPolicy);
+    renderHintPolicyDescription(elements.exerciseHintPolicySelect, elements.exerciseHintPolicyDescription);
 
     const actions = document.createDocumentFragment();
     if (exercise.mode === "paired") {
@@ -948,6 +1168,8 @@
     populateBuilderSelect(elements.customRoleADrive, "drive");
     populateBuilderSelect(elements.customRoleBStance, "stance");
     populateBuilderSelect(elements.customRoleBDrive, "drive");
+    populateHintPolicySelect(elements.customHintPolicySelect, exercise && exercise.hintPolicy);
+    renderHintPolicyDescription(elements.customHintPolicySelect, elements.customHintPolicyDescription);
     editingExerciseId = exercise && exercise.source === "custom" ? exercise.id : null;
     elements.customExerciseHeading.textContent = editingExerciseId ? "Edit your guided exercise." : "Create a guided exercise.";
     elements.saveCustomExerciseButton.textContent = editingExerciseId ? "Save changes" : "Save and preview exercise";
@@ -959,6 +1181,8 @@
       elements.customExerciseFocus.value = normalized.focus;
       elements.customExerciseLocked.checked = normalized.locked;
       elements.customExerciseOpenRoles.checked = normalized.roleVisibility === "open";
+      elements.customHintPolicySelect.value = normalized.hintPolicy;
+      renderHintPolicyDescription(elements.customHintPolicySelect, elements.customHintPolicyDescription);
       elements.customRoleAName.value = normalized.roles[0].label;
       elements.customRoleAStance.value = normalized.roles[0].stanceFilter;
       elements.customRoleADrive.value = normalized.roles[0].driveFilter;
@@ -971,6 +1195,8 @@
       elements.customExerciseForm.reset();
       setCustomMode("mirror");
       elements.customExerciseLocked.checked = true;
+      elements.customHintPolicySelect.value = hintBible.DEFAULT_HINT_POLICY;
+      renderHintPolicyDescription(elements.customHintPolicySelect, elements.customHintPolicyDescription);
       elements.customRoleAStance.value = ALL_FILTER;
       elements.customRoleADrive.value = ALL_FILTER;
       elements.customRoleBStance.value = ALL_FILTER;
@@ -1027,6 +1253,7 @@
       focus: elements.customExerciseFocus.value.trim() || "Use the assigned categories as private foundations for the shared scene.",
       locked: elements.customExerciseLocked.checked,
       roleVisibility: paired && elements.customExerciseOpenRoles.checked ? "open" : "hidden",
+      hintPolicy: elements.customHintPolicySelect.value,
       roles
     }, { forceSource: "custom" });
     if (!exercise) {
@@ -1174,6 +1401,7 @@
       elements.shareRoleBButton.textContent = sharingExercise.roles[1].label;
     }
     renderShareAssignmentSummary();
+    renderHintPolicySummary(elements.shareHintPolicySummary, sharingExercise.hintPolicy, { eyebrow: "SHARED HINT POLICY" });
     currentExerciseShareUrl = exercises.buildShareUrl(GAME_URL, sharingExercise, shareRoleTarget);
     elements.exerciseShareUrl.href = currentExerciseShareUrl;
     elements.exerciseShareUrl.textContent = currentExerciseShareUrl.replace(/^https?:\/\//, "");
@@ -1244,6 +1472,7 @@
     elements.joinModePill.textContent = modeLabel(exercise.mode);
     elements.joinExerciseHeading.textContent = `Join ${exercise.name}.`;
     elements.joinExerciseSummary.textContent = exercise.summary;
+    renderHintPolicySummary(elements.joinHintPolicySummary, exercise.hintPolicy, { eyebrow: "HINT ACCESS" });
     elements.joinRoleChoices.replaceChildren();
     elements.joinAssignment.replaceChildren();
 
@@ -1777,6 +2006,8 @@
     state.savedExercises = savedExercises;
     revealed.stance = false;
     revealed.drive = false;
+    activeHintContext = null;
+    closeDialog(elements.hintDialog);
     selectedCardType = null;
     selectedFilterType = null;
     selectedExercise = null;
@@ -1816,6 +2047,9 @@
       renderPlayCard("stance");
       renderPlayCard("drive");
       renderPlayContext();
+      renderHintControls();
+    } else {
+      renderHintControls();
     }
     renderCompleteButton();
     renderHistory();
@@ -1841,6 +2075,17 @@
     elements.customExerciseBackButton.addEventListener("click", () => setActiveView(editingExerciseId ? "exercise-detail" : "exercises"));
     elements.customMirrorModeButton.addEventListener("click", () => setCustomMode("mirror"));
     elements.customPairedModeButton.addEventListener("click", () => setCustomMode("paired"));
+    elements.exerciseHintPolicySelect.addEventListener("change", () => {
+      if (!selectedExercise) {
+        return;
+      }
+      selectedExercise.hintPolicy = hintBible.normalizePolicy(elements.exerciseHintPolicySelect.value);
+      renderHintPolicyDescription(elements.exerciseHintPolicySelect, elements.exerciseHintPolicyDescription);
+      announce(`${hintBible.getPolicy(selectedExercise.hintPolicy).label} selected for this exercise session.`);
+    });
+    elements.customHintPolicySelect.addEventListener("change", () => {
+      renderHintPolicyDescription(elements.customHintPolicySelect, elements.customHintPolicyDescription);
+    });
     elements.customExerciseForm.addEventListener("submit", saveCustomExercise);
 
     elements.exerciseShareBackButton.addEventListener("click", () => setActiveView("exercise-detail"));
@@ -1861,6 +2106,10 @@
     elements.stanceFilterButton.addEventListener("click", () => openFilterDialog("stance"));
     elements.driveFilterButton.addEventListener("click", () => openFilterDialog("drive"));
     elements.driveHelpButton.addEventListener("click", () => openLearnSection("learn-two-drives", "play"));
+    elements.stanceNudgeButton.addEventListener("click", () => openSingleHint("stance"));
+    elements.driveNudgeButton.addEventListener("click", () => openSingleHint("drive"));
+    elements.combinationHintButton.addEventListener("click", openCombinationHint);
+    elements.unlockHintsButton.addEventListener("click", unlockSceneHints);
     elements.completeButton.addEventListener("click", completeScene);
 
     elements.historyBackButton.addEventListener("click", showMainMenu);
@@ -1902,6 +2151,12 @@
     elements.vetoCardButton.addEventListener("click", vetoSelectedCard);
     elements.cardDialog.addEventListener("click", (event) => closeOnBackdrop(event, elements.cardDialog, closeCardOptions));
     elements.cardDialog.addEventListener("close", () => { selectedCardType = null; });
+
+    elements.closeHintDialogButton.addEventListener("click", closeHintDialog);
+    elements.doneHintButton.addEventListener("click", closeHintDialog);
+    elements.anotherHintAngleButton.addEventListener("click", showAnotherHintAngle);
+    elements.hintDialog.addEventListener("click", (event) => closeOnBackdrop(event, elements.hintDialog, closeHintDialog));
+    elements.hintDialog.addEventListener("close", () => { activeHintContext = null; });
 
     elements.closeFilterDialogButton.addEventListener("click", closeFilterDialog);
     elements.filterDialog.addEventListener("click", (event) => closeOnBackdrop(event, elements.filterDialog, closeFilterDialog));

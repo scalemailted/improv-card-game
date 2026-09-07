@@ -1,8 +1,8 @@
 # The Imprompt Card Bible
 
 **Editorial and technical standard for the 480-card Imprompt library**  
-**Bible version:** 1.10.0  
-**Implemented foundation:** Imprompt v0.18.0  
+**Bible version:** 1.11.0  
+**Implemented foundation:** Imprompt v0.20.0  
 **Target release:** Imprompt v1.0  
 
 ---
@@ -29,6 +29,10 @@ The Bible governs five things:
 5. **Acceptance:** what a card must prove through automated checks, editorial review, and live playtesting before publication.
 
 The Bible is intentionally stricter than the web application. The application should remain easy and immediate. Most of this structure exists behind the scenes so the player can simply tap a card and begin.
+
+### Companion Hint Bible
+
+Optional coaching guidance is governed by `docs/IMPROMPT-HINT-BIBLE.md`. The Hint Bible is subordinate to this document: a hint may translate an approved card into one possible first move, but it may never change the card’s dramatic function, prescribe the partner’s response, or replace the shared discovery of the scene. Hint versions are tracked independently from card `contentVersion` values.
 
 ---
 

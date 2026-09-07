@@ -5,7 +5,7 @@
 - **1 Stance** — how the performer enters, interprets, or reacts within the scene.
 - **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The active library contains **240 Stances and 240 Drives** across the complete ten-pack roadmap. v0.19.0 adds a polished in-app Scene Craft Guide explaining how two private Drives converge into one shared pattern while preserving the fast player experience. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
+The active library contains **240 Stances and 240 Drives** across the complete ten-pack roadmap. v0.20.0 adds an optional, fully local **Nudge & Combination Hint System** that helps a performer turn one card—or a private Stance-and-Drive hand—into a clear first offer without scripting the scene. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, Scene Log, and hint state. There is no account, synchronized room, tracking service, model download, analytics, or backend.
 
 ## Open the live game
 
@@ -19,6 +19,61 @@ The active library contains **240 Stances and 240 Drives** across the complete t
   Scan the code or open<br>
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
+
+## What is new in v0.20.0
+
+v0.20.0 adds optional coaching assistance while preserving the hidden-information game, offline operation, and complete 480-card library.
+
+### Single-card nudges
+
+After revealing a card, a player may select **Need a nudge?** to see one possible behavioral manifestation. Every card resolves to:
+
+- two audited, card-specific manifestation angles;
+- a formal pack lens, subtheme, and focus motifs;
+- tone-aware heightening guidance;
+- holder-only language that leaves the partner free.
+
+The source stays maintainable by composing each card’s official pack lens with its formal subtheme guidance. This yields 960 distinct resolved seeds without maintaining 960 disconnected scripts.
+
+**Another angle** demonstrates that the same prompt can be played in more than one way.
+
+### Two-card combination hints
+
+After both cards are revealed, **How might these work together?** composes local guidance from six reusable structures:
+
+- Channel
+- Mask
+- Friction
+- Escalation
+- Reinterpretation
+- Counterweight
+
+The engine treats the Stance as a lens and the Drive as initial pressure. It offers a blend and, when the policy permits, a possible next beat. It never generates a setting, partner reaction, plot, punchline, or ending.
+
+### Coach hint policies
+
+Every built-in and custom exercise can use:
+
+- **Full coaching**
+- **Nudges only**
+- **After first attempt**
+- **Hints off**
+
+The policy is stored with the exercise session and travels in exercise share links and QR codes. It never shares cards, deck order, history, or identity.
+
+### Local and deterministic
+
+The coaching engine uses only bundled curated text, the existing Card Bible metadata, finite templates, and deterministic pattern ranking. It makes no cloud call and does not load an in-browser language model.
+
+Validation covers all **480 cards**, **960 distinct resolved manifestation seeds**, **57,600 personal hands**, and **345,600 structural combination angles**.
+
+Existing v0.19 deck state, sessions, prompts, custom exercises, and immutable Scene Log snapshots migrate in place. Old exercise links without a hint-policy parameter remain compatible and default to Full coaching.
+
+See:
+
+- `docs/IMPROMPT-HINT-BIBLE.md`
+- `reports/hint-library-audit.md`
+- `RELEASE-NOTES-v0.20.0.md`
 
 ## What is new in v0.19.0
 
@@ -98,6 +153,7 @@ Every playtest pack still requires independent blind reads, repeated live exposu
 ```bash
 npm run audit:cards
 npm run audit:editorial
+npm run audit:hints
 npm run audit:all
 ```
 

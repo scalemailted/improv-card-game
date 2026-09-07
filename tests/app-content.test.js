@@ -13,7 +13,8 @@ const app = read("app.js");
 const styles = read("styles.css");
 const serviceWorker = read("sw.js");
 const manifest = read("manifest.webmanifest");
-const releaseNotes = read("RELEASE-NOTES-v0.19.0.md");
+const releaseNotes = read("RELEASE-NOTES-v0.20.0.md");
+const sceneCraftReleaseNotes = read("RELEASE-NOTES-v0.19.0.md");
 const editorialReleaseNotes = read("RELEASE-NOTES-v0.18.0.md");
 const editorialDocs = [
   "docs/editorial/EDITORIAL-CONSOLIDATION-v0.18.0.md",
@@ -101,6 +102,24 @@ assert.match(app, /engine\.drawCard\(state, cards, type\)/);
 assert.match(app, /engine\.vetoCard\(state, cards, type\)/);
 assert.doesNotMatch(app, /engine\.drawPair\(state, cards\);/);
 
+// Local hint surfaces and coach policy controls.
+for (const id of [
+  "stanceNudgeButton", "driveNudgeButton", "combinationHintButton", "hintUnlockCard",
+  "hintDialog", "anotherHintAngleButton", "exerciseHintPolicySelect", "customHintPolicySelect",
+  "shareHintPolicySummary", "joinHintPolicySummary"
+]) {
+  assert.match(html, new RegExp(`id=["']${id}["']`));
+}
+assert.match(app, /function renderHintControls/);
+assert.match(app, /function openSingleHint/);
+assert.match(app, /function openCombinationHint/);
+assert.match(app, /function showAnotherHintAngle/);
+assert.match(app, /hintEngine\.getSingleHint/);
+assert.match(app, /hintEngine\.getCombinationHint/);
+assert.match(styles, /\.card-nudge-button/);
+assert.match(styles, /\.hint-modal/);
+assert.match(styles, /\.combination-hint-button/);
+
 // Category identity remains consistent and accessible by color, icon, and written label.
 const expectedCategories = [
   "Status & Authority",
@@ -123,17 +142,21 @@ assert.equal(exercises.getPresets("mirror").length, 4);
 assert.equal(exercises.getPresets("paired").length, 4);
 
 // Card Bible runtime files load before the compatibility aggregator.
-assert.ok(html.indexOf("./card-bible.js?v=0.19.0") < html.indexOf("./cards/core-foundations.js?v=0.19.0"));
-assert.ok(html.indexOf("./cards/core-foundations.js?v=0.19.0") < html.indexOf("./cards/everyday-friction.js?v=0.19.0"));
-assert.ok(html.indexOf("./cards/everyday-friction.js?v=0.19.0") < html.indexOf("./cards/power-games.js?v=0.19.0"));
-assert.ok(html.indexOf("./cards/power-games.js?v=0.19.0") < html.indexOf("./cards/relationship-knots.js?v=0.19.0"));
-assert.ok(html.indexOf("./cards/relationship-knots.js?v=0.19.0") < html.indexOf("./cards/emotional-pressure.js?v=0.19.0"));
-assert.ok(html.indexOf("./cards/emotional-pressure.js?v=0.19.0") < html.indexOf("./cards/secrets-schemes.js?v=0.19.0"));
-assert.ok(html.indexOf("./cards/secrets-schemes.js?v=0.19.0") < html.indexOf("./cards/absurd-commitment.js?v=0.19.0"));
-assert.ok(html.indexOf("./cards/absurd-commitment.js?v=0.19.0") < html.indexOf("./cards/rules-rituals-institutions.js?v=0.19.0"));
-assert.ok(html.indexOf("./cards/rules-rituals-institutions.js?v=0.19.0") < html.indexOf("./cards/competition-consequences.js?v=0.19.0"));
-assert.ok(html.indexOf("./cards/competition-consequences.js?v=0.19.0") < html.indexOf("./cards/advanced-scene-engines.js?v=0.19.0"));
-assert.ok(html.indexOf("./cards/advanced-scene-engines.js?v=0.19.0") < html.indexOf("./cards.js?v=0.19.0"));
+assert.ok(html.indexOf("./card-bible.js?v=0.20.0") < html.indexOf("./cards/core-foundations.js?v=0.20.0"));
+assert.ok(html.indexOf("./cards/core-foundations.js?v=0.20.0") < html.indexOf("./cards/everyday-friction.js?v=0.20.0"));
+assert.ok(html.indexOf("./cards/everyday-friction.js?v=0.20.0") < html.indexOf("./cards/power-games.js?v=0.20.0"));
+assert.ok(html.indexOf("./cards/power-games.js?v=0.20.0") < html.indexOf("./cards/relationship-knots.js?v=0.20.0"));
+assert.ok(html.indexOf("./cards/relationship-knots.js?v=0.20.0") < html.indexOf("./cards/emotional-pressure.js?v=0.20.0"));
+assert.ok(html.indexOf("./cards/emotional-pressure.js?v=0.20.0") < html.indexOf("./cards/secrets-schemes.js?v=0.20.0"));
+assert.ok(html.indexOf("./cards/secrets-schemes.js?v=0.20.0") < html.indexOf("./cards/absurd-commitment.js?v=0.20.0"));
+assert.ok(html.indexOf("./cards/absurd-commitment.js?v=0.20.0") < html.indexOf("./cards/rules-rituals-institutions.js?v=0.20.0"));
+assert.ok(html.indexOf("./cards/rules-rituals-institutions.js?v=0.20.0") < html.indexOf("./cards/competition-consequences.js?v=0.20.0"));
+assert.ok(html.indexOf("./cards/competition-consequences.js?v=0.20.0") < html.indexOf("./cards/advanced-scene-engines.js?v=0.20.0"));
+assert.ok(html.indexOf("./cards/advanced-scene-engines.js?v=0.20.0") < html.indexOf("./cards.js?v=0.20.0"));
+assert.ok(html.indexOf("./cards.js?v=0.20.0") < html.indexOf("./hint-bible.js?v=0.20.0"));
+assert.ok(html.indexOf("./hint-bible.js?v=0.20.0") < html.indexOf("./hints/card-hints.js?v=0.20.0"));
+assert.ok(html.indexOf("./hints/card-hints.js?v=0.20.0") < html.indexOf("./hint-engine.js?v=0.20.0"));
+assert.ok(html.indexOf("./hint-engine.js?v=0.20.0") < html.indexOf("./exercises.js?v=0.20.0"));
 assert.equal(cards.activePackCount, 10);
 assert.equal(cards.publishedPackCount, 1);
 assert.equal(cards.playtestPackCount, 9);
@@ -153,20 +176,21 @@ assert.equal(cards.targetStanceCount, 240);
 assert.equal(cards.targetDriveCount, 240);
 
 // Release and offline contract.
-for (const asset of ["styles.css", "card-bible.js", "cards/core-foundations.js", "cards/everyday-friction.js", "cards/power-games.js", "cards/relationship-knots.js", "cards/emotional-pressure.js", "cards/secrets-schemes.js", "cards/absurd-commitment.js", "cards/rules-rituals-institutions.js", "cards/competition-consequences.js", "cards/advanced-scene-engines.js", "cards.js", "exercises.js", "deck-engine.js", "vendor/qrcode-core.js", "app.js"]) {
-  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.19\\.0`));
-  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.19\\.0`));
+for (const asset of ["styles.css", "card-bible.js", "cards/core-foundations.js", "cards/everyday-friction.js", "cards/power-games.js", "cards/relationship-knots.js", "cards/emotional-pressure.js", "cards/secrets-schemes.js", "cards/absurd-commitment.js", "cards/rules-rituals-institutions.js", "cards/competition-consequences.js", "cards/advanced-scene-engines.js", "cards.js", "hint-bible.js", "hints/card-hints.js", "hint-engine.js", "exercises.js", "deck-engine.js", "vendor/qrcode-core.js", "app.js"]) {
+  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.20\\.0`));
+  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.20\\.0`));
 }
-assert.match(serviceWorker, /imprompt-v0\.19\.0/);
+assert.match(serviceWorker, /imprompt-v0\.20\.0/);
 assert.doesNotMatch(serviceWorker, /skipWaiting/);
 assert.match(app, /updateViaCache:\s*"none"/);
 assert.match(manifest, /"short_name": "Imprompt"/);
-assert.match(manifest, /coach-guided Mirror and Paired exercises/);
+assert.match(manifest, /local coaching nudges/i);
 
 
 // v0.18 editorial-readiness evidence is packaged with the application source.
 assert.match(editorialReleaseNotes, /24 semantic rewrites/i);
-assert.match(releaseNotes, /Scene Craft Guide/i);
+assert.match(sceneCraftReleaseNotes, /Scene Craft Guide/i);
+assert.match(releaseNotes, /Nudge & Combination Hint System/i);
 assert.match(editorialReleaseNotes, /1,200 opposite-deck pairings/i);
 for (const file of [...editorialDocs, ...editorialData]) {
   assert.ok(fs.existsSync(path.join(root, file)), `Missing editorial artifact: ${file}`);
@@ -178,4 +202,4 @@ for (const file of editorialData) {
 // QR SVG modules must not inherit the global rounded SVG stroke.
 assert.match(styles, /\.dynamic-qr-panel svg,\s*\.dynamic-qr-panel svg \*[\s\S]*?stroke:\s*none\s*!important/);
 
-console.log("✓ Imprompt v0.19 application, Scene Craft Guide, editorial readiness, guided-exercise, gallery, history, and cache contracts passed");
+console.log("✓ Imprompt v0.20 application, local hints, Scene Craft Guide, editorial readiness, guided-exercise, gallery, history, and cache contracts passed");

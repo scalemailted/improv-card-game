@@ -30,12 +30,12 @@ assert.match(html, /id="shareQrLink"/);
 assert.match(html, /id="exerciseShareScreen"/);
 assert.match(html, /id="exerciseQrCode"/);
 assert.ok(html.includes(`href="${publicUrl}"`));
-assert.match(serviceWorker, /\.\/assets\/improv-card-game-qr\.png\?v=0\.19\.0/);
+assert.match(serviceWorker, /\.\/assets\/improv-card-game-qr\.png\?v=0\.20\.0/);
 
 const statusUrl = exercises.buildShareUrl(publicUrl, exercises.getPreset("status-clash"));
-assert.equal(statusUrl, `${publicUrl}?xv=1&x=status-clash`);
+assert.equal(statusUrl, `${publicUrl}?xv=2&h=f&x=status-clash`);
 const roleUrl = exercises.buildShareUrl(publicUrl, exercises.getPreset("pursuer-avoider"), "a");
-assert.equal(roleUrl, `${publicUrl}?xv=1&x=pursuer-avoider&r=a`);
+assert.equal(roleUrl, `${publicUrl}?xv=2&h=f&x=pursuer-avoider&r=a`);
 for (const value of [statusUrl, roleUrl]) {
   assert.doesNotMatch(value, /stanceId|driveId|queue|history|sceneNumber|instanceId|deck=/i);
 }

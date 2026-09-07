@@ -1,17 +1,23 @@
 (function (root, factory) {
+  const isCommonJs = typeof module === "object" && module.exports;
   const api = factory(
-    typeof module === "object" && module.exports ? require("./cards.js") : root.IMPROMPT_CARDS
+    isCommonJs ? require("./cards.js") : root.IMPROMPT_CARDS,
+    isCommonJs ? require("./hint-bible.js") : root.IMPROMPT_HINT_BIBLE
   );
   if (typeof module === "object" && module.exports) {
     module.exports = api;
   } else {
     root.IMPROMPT_EXERCISES = api;
   }
-})(typeof globalThis !== "undefined" ? globalThis : this, function (cards) {
+})(typeof globalThis !== "undefined" ? globalThis : this, function (cards, hintBible) {
   "use strict";
 
+  if (!cards || !hintBible) {
+    throw new Error("exercises.js requires cards.js and hint-bible.js to load first.");
+  }
+
   const ALL = "all";
-  const EXERCISE_LINK_VERSION = 1;
+  const EXERCISE_LINK_VERSION = 2;
   const MAX_NAME_LENGTH = 48;
   const MAX_NOTE_LENGTH = 140;
 
@@ -39,6 +45,7 @@
     focus: "Let each performer discover the scene without a shared coaching constraint.",
     locked: false,
     roleVisibility: "open",
+    hintPolicy: "full",
     roles: Object.freeze([
       Object.freeze({
         id: "all",
@@ -62,6 +69,7 @@
       focus: "Explore how two different claims to authority collide without either player knowing the other prompt.",
       locked: true,
       roleVisibility: "open",
+      hintPolicy: "full",
       roles: Object.freeze([
         Object.freeze({
           id: "all",
@@ -83,6 +91,7 @@
       focus: "Practice letting an internal emotional assumption shape behavior without explaining it.",
       locked: true,
       roleVisibility: "open",
+      hintPolicy: "full",
       roles: Object.freeze([
         Object.freeze({
           id: "all",
@@ -104,6 +113,7 @@
       focus: "Commit sincerely to unusual logic, discover a pattern, and heighten instead of explaining the joke.",
       locked: true,
       roleVisibility: "open",
+      hintPolicy: "full",
       roles: Object.freeze([
         Object.freeze({
           id: "all",
@@ -125,6 +135,7 @@
       focus: "Build a scene around relationship subtext, avoidance, and incompatible memories.",
       locked: true,
       roleVisibility: "open",
+      hintPolicy: "full",
       roles: Object.freeze([
         Object.freeze({
           id: "all",
@@ -146,6 +157,7 @@
       focus: "Practice active pursuit and playable resistance without preplanning the scene outcome.",
       locked: true,
       roleVisibility: "hidden",
+      hintPolicy: "full",
       roles: Object.freeze([
         Object.freeze({
           id: "a",
@@ -175,6 +187,7 @@
       focus: "Let power and feeling coexist rather than turning the scene into a simple winner-and-loser contest.",
       locked: true,
       roleVisibility: "hidden",
+      hintPolicy: "full",
       roles: Object.freeze([
         Object.freeze({
           id: "a",
@@ -204,6 +217,7 @@
       focus: "Discover a relationship in which memory and immediate ambition pull in different directions.",
       locked: true,
       roleVisibility: "hidden",
+      hintPolicy: "full",
       roles: Object.freeze([
         Object.freeze({
           id: "a",
@@ -233,6 +247,7 @@
       focus: "Practice grounding absurdity through sincere consequences instead of denying the premise.",
       locked: true,
       roleVisibility: "hidden",
+      hintPolicy: "full",
       roles: Object.freeze([
         Object.freeze({
           id: "a",
@@ -276,6 +291,28 @@
 
   function slugToFilter(slug) {
     return categoryBySlug[slug] || null;
+  }
+
+  const hintCodeByPolicy = Object.freeze({
+    full: "f",
+    nudges: "n",
+    "after-attempt": "a",
+    off: "o"
+  });
+  const hintPolicyByCode = Object.freeze(Object.fromEntries(
+    Object.entries(hintCodeByPolicy).map(([policy, code]) => [code, policy])
+  ));
+
+  function normalizeHintPolicy(value) {
+    return hintBible.normalizePolicy(value);
+  }
+
+  function hintPolicyToCode(value) {
+    return hintCodeByPolicy[normalizeHintPolicy(value)];
+  }
+
+  function codeToHintPolicy(value) {
+    return normalizeHintPolicy(hintPolicyByCode[value] || value);
   }
 
   function getPreset(id) {
@@ -357,6 +394,7 @@
       focus: cleanText(raw.focus, MAX_NOTE_LENGTH) || "Use the assigned categories as private foundations for the shared scene.",
       locked: Boolean(raw.locked),
       roleVisibility: raw.roleVisibility === "open" ? "open" : "hidden",
+      hintPolicy: normalizeHintPolicy(raw.hintPolicy),
       roles
     };
   }
@@ -380,6 +418,7 @@
       focus: normalized.focus,
       locked: normalized.locked,
       roleVisibility: normalized.roleVisibility,
+      hintPolicy: normalized.hintPolicy,
       roleId: role.id,
       roleLabel: role.label,
       roleShortLabel: role.shortLabel,
@@ -399,6 +438,7 @@
     url.search = "";
     url.hash = "";
     url.searchParams.set("xv", String(EXERCISE_LINK_VERSION));
+    url.searchParams.set("h", hintPolicyToCode(normalized.hintPolicy));
 
     const preset = getPreset(normalized.id);
     const canUsePresetId = preset && normalized.source !== "custom";
@@ -449,6 +489,7 @@
       if (!preset) {
         return null;
       }
+      preset.hintPolicy = codeToHintPolicy(url.searchParams.get("h"));
       return {
         exercise: preset,
         roleId: preset.mode === "paired" && (roleId === "a" || roleId === "b") ? roleId : null
@@ -485,6 +526,7 @@
       focus: cleanText(url.searchParams.get("f"), MAX_NOTE_LENGTH) || "Use the assigned categories as private foundations for the shared scene.",
       locked: url.searchParams.get("l") !== "0",
       roleVisibility: url.searchParams.get("v") === "o" ? "open" : "hidden",
+      hintPolicy: codeToHintPolicy(url.searchParams.get("h")),
       roles
     });
 
@@ -511,6 +553,10 @@
     parseInviteUrl,
     filterToSlug,
     slugToFilter,
+    normalizeHintPolicy,
+    hintPolicyToCode,
+    codeToHintPolicy,
+    hintPolicies: hintBible.policies,
     clone
   });
 });

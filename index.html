@@ -9,10 +9,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Imprompt">
   <title>Imprompt — Prompts for Improv</title>
-  <link rel="manifest" href="./manifest.webmanifest?v=0.19.0">
-  <link rel="icon" href="./icons/icon.svg?v=0.19.0" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="./icons/icon-192.png?v=0.19.0">
-  <link rel="stylesheet" href="./styles.css?v=0.19.0">
+  <link rel="manifest" href="./manifest.webmanifest?v=0.20.0">
+  <link rel="icon" href="./icons/icon.svg?v=0.20.0" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png?v=0.20.0">
+  <link rel="stylesheet" href="./styles.css?v=0.20.0">
 </head>
 <body>
   <div class="ambient ambient-one" aria-hidden="true"></div>
@@ -56,6 +56,7 @@
           <p id="joinExerciseSummary"></p>
           <div class="join-role-choices" id="joinRoleChoices"></div>
           <div class="join-assignment" id="joinAssignment" hidden></div>
+          <aside class="hint-policy-summary join-hint-policy" id="joinHintPolicySummary"></aside>
           <aside class="privacy-callout">
             <span class="status-dot" aria-hidden="true"></span>
             <p><strong>Your deck stays independent.</strong> The link shares only the exercise rules—not cards, shuffle order, scene history, or deck progress.</p>
@@ -163,6 +164,10 @@
         <aside class="exercise-focus"><span>COACHING FOCUS</span><p id="exerciseDetailFocus"></p></aside>
         <div class="role-assignment-grid" id="exerciseRoleGrid"></div>
         <p class="exercise-lock-note" id="exerciseLockNote"></p>
+        <section class="exercise-hint-control" aria-labelledby="exerciseHintPolicyLabel">
+          <label class="field" for="exerciseHintPolicySelect"><span id="exerciseHintPolicyLabel">Hint access for this session</span><select id="exerciseHintPolicySelect"></select></label>
+          <p id="exerciseHintPolicyDescription">Choose how much optional coaching appears during play. This setting is included when the exercise is shared.</p>
+        </section>
         <div class="exercise-detail-actions" id="exerciseDetailActions"></div>
         <div class="custom-exercise-actions" id="customExerciseActions" hidden><button class="text-button" id="editCustomExerciseButton" type="button">Edit exercise</button><button class="text-button danger-text" id="deleteCustomExerciseButton" type="button">Delete from this phone</button></div>
       </section>
@@ -173,6 +178,7 @@
         <form class="exercise-form" id="customExerciseForm">
           <label class="field"><span>Exercise name</span><input id="customExerciseName" name="exercise-name" maxlength="48" placeholder="Calm Versus Chaos" required></label>
           <label class="field"><span>Coaching note <small>optional</small></span><textarea id="customExerciseFocus" name="exercise-focus" maxlength="140" rows="3" placeholder="What should players practice or notice?"></textarea></label>
+          <label class="field hint-policy-field" for="customHintPolicySelect"><span>Hint access</span><select id="customHintPolicySelect"></select><small id="customHintPolicyDescription">Choose how much optional card coaching players can open during the exercise.</small></label>
           <fieldset class="form-fieldset"><legend>Exercise structure</legend><div class="segmented-control" id="customModeControl"><button class="is-active" id="customMirrorModeButton" type="button" aria-pressed="true">Mirror</button><button id="customPairedModeButton" type="button" aria-pressed="false">Paired</button></div><p id="customModeHelp">Everyone receives the same category rules from independent decks.</p></fieldset>
           <div class="builder-role-card" id="customRoleAGroup">
             <div class="builder-role-heading"><span class="role-letter" id="customRoleALetter">M</span><div><strong id="customRoleAHeading">Mirror assignment</strong><small id="customRoleASubtitle">Used by every performer</small></div></div>
@@ -195,6 +201,7 @@
         <div class="invite-copy"><p class="eyebrow">SHARE EXERCISE</p><h1 id="exerciseShareHeading">Invite the room.</h1><p id="exerciseShareSummary"></p></div>
         <div class="share-role-tabs segmented-control three-way" id="shareRoleTabs" hidden><button id="shareRoleChooserButton" class="is-active" type="button">Choose role</button><button id="shareRoleAButton" type="button">Player A</button><button id="shareRoleBButton" type="button">Player B</button></div>
         <div class="share-assignment-summary" id="shareAssignmentSummary"></div>
+        <aside class="hint-policy-summary" id="shareHintPolicySummary"></aside>
         <div class="dynamic-qr-panel" id="exerciseQrCode" role="img" aria-label="QR code for this guided exercise"></div>
         <a class="share-url" id="exerciseShareUrl" href="#" target="_blank" rel="noopener"></a>
         <div class="invite-actions"><button class="primary-button" id="shareExerciseLinkButton" type="button"><span class="button-icon" aria-hidden="true">↗</span><span>Share exercise link</span></button><button class="secondary-button" id="copyExerciseLinkButton" type="button">Copy link</button></div>
@@ -212,6 +219,7 @@
               <span class="card-topline"><span class="category-chip card-category" id="stanceCategory" hidden><svg class="category-icon" viewBox="0 0 24 24" aria-hidden="true"><use id="stanceCategoryIcon" href="#category-icon-sparkles"></use></svg><span id="stanceCategoryLabel">General Prompt</span></span><span class="card-type">STANCE</span></span>
               <span class="card-role" id="stanceRole">YOUR PRIVATE POINT OF VIEW</span><strong class="card-title" id="stanceTitle">How you enter the scene</strong><span class="card-instruction" id="stanceInstruction">How you interpret yourself, the other person, or the situation. Let it shape how you react.</span><span class="card-action" id="stanceAction"><span aria-hidden="true">✦</span> Tap to draw</span>
             </button>
+            <button class="card-nudge-button" id="stanceNudgeButton" type="button" hidden><span aria-hidden="true">?</span><span>Need a nudge?</span></button>
             <button class="draw-filter-trigger" id="stanceFilterButton" type="button" data-category="general" aria-haspopup="dialog" aria-label="Choose the Stance draw category"><svg class="category-icon" viewBox="0 0 24 24" aria-hidden="true"><use id="stanceFilterIcon" href="#category-icon-shuffle"></use></svg><span id="stanceFilterLabel">Random All</span><svg class="filter-chevron" id="stanceFilterChevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 9 5 5 5-5"/></svg><span class="filter-lock" id="stanceFilterLock" aria-hidden="true" hidden>●</span></button>
           </div>
           <div class="prompt-card-wrap" id="driveCardWrap">
@@ -219,10 +227,15 @@
               <span class="card-topline"><span class="category-chip card-category" id="driveCategory" hidden><svg class="category-icon" viewBox="0 0 24 24" aria-hidden="true"><use id="driveCategoryIcon" href="#category-icon-sparkles"></use></svg><span id="driveCategoryLabel">General Prompt</span></span><span class="card-type">DRIVE</span></span>
               <span class="card-role" id="driveRole">YOUR INITIAL PRESSURE</span><strong class="card-title" id="driveTitle">What keeps you playing</strong><span class="card-instruction" id="driveInstruction">What you pursue, protect, avoid, discover, or repeat. Let it bend when the scene finds a shared pattern.</span><span class="card-action" id="driveAction"><span aria-hidden="true">✦</span> Tap to draw</span>
             </button>
+            <button class="card-nudge-button" id="driveNudgeButton" type="button" hidden><span aria-hidden="true">?</span><span>Need a nudge?</span></button>
             <button class="draw-filter-trigger" id="driveFilterButton" type="button" data-category="general" aria-haspopup="dialog" aria-label="Choose the Drive draw category"><svg class="category-icon" viewBox="0 0 24 24" aria-hidden="true"><use id="driveFilterIcon" href="#category-icon-shuffle"></use></svg><span id="driveFilterLabel">Random All</span><svg class="filter-chevron" id="driveFilterChevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 9 5 5 5-5"/></svg><span class="filter-lock" id="driveFilterLock" aria-hidden="true" hidden>●</span></button>
           </div>
         </section>
         <p class="play-note" id="playNote">Tap each panel to draw. Tap a revealed card again to keep or veto it.</p>
+        <div class="play-hint-actions" id="playHintActions" hidden>
+          <button class="combination-hint-button" id="combinationHintButton" type="button" hidden><span class="hint-spark" aria-hidden="true">✦</span><span>How might these work together?</span></button>
+          <div class="hint-unlock-card" id="hintUnlockCard" hidden><div><strong>Try the cards once before opening a hint.</strong><p>The coach selected “After first attempt.” Unlocking is private and stays on this phone.</p></div><button class="secondary-button" id="unlockHintsButton" type="button">I tried it · unlock hints</button></div>
+        </div>
         <button class="scene-craft-link" id="driveHelpButton" type="button"><span class="scene-craft-icon" aria-hidden="true">?</span><span>How two Drives become one scene</span></button>
         <button class="primary-button complete-button" id="completeButton" type="button"><span class="button-icon" aria-hidden="true">✓</span><span>Scene complete</span></button>
       </section>
@@ -374,6 +387,20 @@
               </ul>
             </div>
           </details>
+          <details class="learn-section" id="learn-hints">
+            <summary><span class="learn-section-number">9</span><span class="learn-summary-copy"><strong>Optional Hints Without Scripting</strong><small>One possible way in—not the correct answer.</small></span><span class="learn-section-chevron" aria-hidden="true">⌄</span></summary>
+            <div class="learn-section-body">
+              <p class="learn-lead">Hints translate a private prompt into an observable first move. They never invent the whole scene, prescribe your partner’s response, or replace listening.</p>
+              <div class="hint-principle-card"><strong>Ask for the least help you need.</strong><p>Start with a single-card nudge. Use the two-card hint only when the relationship between your Stance and Drive is unclear. “Another angle” offers a different structure, not a better answer.</p></div>
+              <div class="coach-mode-grid hint-policy-guide">
+                <article><span>FULL COACHING</span><strong>Nudge + heightening</strong><p>Shows a first move, a way to heighten, and a structured two-card blend.</p></article>
+                <article><span>NUDGES ONLY</span><strong>One concise prompt</strong><p>Offers a behavioral foothold without deeper next-beat guidance.</p></article>
+                <article><span>AFTER FIRST ATTEMPT</span><strong>Try before opening</strong><p>Players deliberately unlock hints only after making an initial attempt.</p></article>
+                <article><span>HINTS OFF</span><strong>Cards and partner only</strong><p>Removes hint controls while leaving the Scene Craft Guide available.</p></article>
+              </div>
+              <aside class="rule-callout secondary-callout"><strong>Private and offline.</strong><p>The hint engine uses curated local templates and card metadata. No prompt, card combination, or scene information leaves the phone.</p></aside>
+            </div>
+          </details>
         </div>
       </section>
 
@@ -395,7 +422,7 @@
       <section class="screen invite-screen" id="inviteScreen" data-screen="invite" aria-labelledby="inviteHeading" hidden>
         <header class="screen-header"><button class="header-button" id="inviteBackButton" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6M9 12h10"/></svg><span id="inviteBackLabel">Main menu</span></button><span class="section-wordmark"><span>im</span>prompt</span></header>
         <div class="invite-copy"><p class="eyebrow">INVITE PLAYERS</p><h1 id="inviteHeading">Scan to open an independent deck.</h1><p>This general QR code contains no exercise, prompt, shuffle, scene count, or deck progress.</p></div>
-        <a class="qr-panel" id="shareQrLink" href="https://scalemailted.github.io/improv-card-game/" target="_blank" rel="noopener"><img src="./assets/improv-card-game-qr.png?v=0.19.0" alt="QR code linking to the public Imprompt game"></a>
+        <a class="qr-panel" id="shareQrLink" href="https://scalemailted.github.io/improv-card-game/" target="_blank" rel="noopener"><img src="./assets/improv-card-game-qr.png?v=0.20.0" alt="QR code linking to the public Imprompt game"></a>
         <a class="share-url" id="shareUrlLink" href="https://scalemailted.github.io/improv-card-game/" target="_blank" rel="noopener">scalemailted.github.io/improv-card-game/</a>
         <div class="invite-actions"><button class="primary-button" id="shareLinkButton" type="button"><span class="button-icon" aria-hidden="true">↗</span><span>Share game link</span></button><button class="secondary-button" id="copyLinkButton" type="button">Copy link</button></div><p class="share-feedback" id="shareFeedback" aria-live="polite"></p>
       </section>
@@ -407,6 +434,8 @@
 
   <dialog class="choice-modal" id="cardDialog" aria-labelledby="cardDialogTitle"><div class="choice-card" id="cardDialogPanel"><div class="modal-header"><div><span class="eyebrow" id="cardDialogType">CARD OPTIONS</span><span class="category-chip dialog-category" id="cardDialogCategory" hidden><svg class="category-icon" viewBox="0 0 24 24" aria-hidden="true"><use id="cardDialogCategoryIcon" href="#category-icon-sparkles"></use></svg><span id="cardDialogCategoryLabel">General Prompt</span></span><h2 id="cardDialogTitle">Keep or veto?</h2></div><button class="icon-button modal-close" id="closeCardDialogButton" type="button" aria-label="Close card options"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><p class="choice-instruction" id="cardDialogInstruction"></p><p class="choice-explainer">Keep this prompt for the scene, or return only this card to its deck and draw a hidden replacement.</p><div class="choice-actions"><button class="primary-button" id="keepCardButton" type="button"><span class="button-icon" aria-hidden="true">✓</span><span>Keep this card</span></button><button class="danger-button" id="vetoCardButton" type="button">Veto &amp; draw another</button></div></div></dialog>
 
+  <dialog class="hint-modal" id="hintDialog" aria-labelledby="hintDialogTitle"><div class="hint-card" id="hintDialogPanel"><div class="modal-header"><div><span class="eyebrow" id="hintDialogEyebrow">PRIVATE NUDGE</span><h2 id="hintDialogTitle">One possible way in</h2></div><button class="icon-button modal-close" id="closeHintDialogButton" type="button" aria-label="Close hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><p class="hint-dialog-intro" id="hintDialogIntro">Use what helps, then return your attention to your partner.</p><div class="hint-pattern-pill" id="hintPatternPill" hidden><span id="hintPatternLabel">CHANNEL</span><small id="hintPatternPrinciple"></small></div><div class="hint-dialog-body" id="hintDialogBody"></div><p class="hint-local-note"><span aria-hidden="true">●</span> Curated locally. Nothing leaves this phone.</p><div class="hint-dialog-actions"><button class="secondary-button" id="anotherHintAngleButton" type="button">Another angle</button><span class="hint-angle-count" id="hintAngleCount">1 of 2</span><button class="primary-button" id="doneHintButton" type="button">Back to the scene</button></div></div></dialog>
+
   <dialog class="filter-modal" id="filterDialog" aria-labelledby="filterDialogTitle"><div class="filter-card" id="filterDialogPanel"><div class="modal-header"><div><span class="eyebrow" id="filterDialogType">STANCE DRAW</span><h2 id="filterDialogTitle">Choose a draw category.</h2></div><button class="icon-button modal-close" id="closeFilterDialogButton" type="button" aria-label="Close category choices"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><p class="filter-explainer" id="filterDialogDescription"></p><div class="filter-options" id="filterOptions" role="radiogroup" aria-label="Draw category choices"></div></div></dialog>
 
   <dialog class="confirm-modal" id="confirmDialog" aria-labelledby="confirmTitle"><div class="confirm-card"><span class="eyebrow">NEW INDEPENDENT DECK</span><h2 id="confirmTitle">Replace this phone’s deck?</h2><p>Your prompts, sessions, Scene Log, category choices, and unused-card order will be replaced only on this device. Saved custom exercises will remain available.</p><div class="confirm-actions"><button class="secondary-button" id="cancelNewDeckButton" type="button">Keep this deck</button><button class="danger-button solid" id="confirmNewDeckButton" type="button">Start new deck</button></div></div></dialog>
@@ -417,21 +446,24 @@
 
   <noscript><div class="noscript">Imprompt needs JavaScript enabled to shuffle and store your private deck.</div></noscript>
 
-  <script src="./card-bible.js?v=0.19.0"></script>
-  <script src="./cards/core-foundations.js?v=0.19.0"></script>
-  <script src="./cards/everyday-friction.js?v=0.19.0"></script>
-  <script src="./cards/power-games.js?v=0.19.0"></script>
-  <script src="./cards/relationship-knots.js?v=0.19.0"></script>
-  <script src="./cards/emotional-pressure.js?v=0.19.0"></script>
-  <script src="./cards/secrets-schemes.js?v=0.19.0"></script>
-  <script src="./cards/absurd-commitment.js?v=0.19.0"></script>
-  <script src="./cards/rules-rituals-institutions.js?v=0.19.0"></script>
-  <script src="./cards/competition-consequences.js?v=0.19.0"></script>
-  <script src="./cards/advanced-scene-engines.js?v=0.19.0"></script>
-  <script src="./cards.js?v=0.19.0"></script>
-  <script src="./exercises.js?v=0.19.0"></script>
-  <script src="./deck-engine.js?v=0.19.0"></script>
-  <script src="./vendor/qrcode-core.js?v=0.19.0"></script>
-  <script src="./app.js?v=0.19.0"></script>
+  <script src="./card-bible.js?v=0.20.0"></script>
+  <script src="./cards/core-foundations.js?v=0.20.0"></script>
+  <script src="./cards/everyday-friction.js?v=0.20.0"></script>
+  <script src="./cards/power-games.js?v=0.20.0"></script>
+  <script src="./cards/relationship-knots.js?v=0.20.0"></script>
+  <script src="./cards/emotional-pressure.js?v=0.20.0"></script>
+  <script src="./cards/secrets-schemes.js?v=0.20.0"></script>
+  <script src="./cards/absurd-commitment.js?v=0.20.0"></script>
+  <script src="./cards/rules-rituals-institutions.js?v=0.20.0"></script>
+  <script src="./cards/competition-consequences.js?v=0.20.0"></script>
+  <script src="./cards/advanced-scene-engines.js?v=0.20.0"></script>
+  <script src="./cards.js?v=0.20.0"></script>
+  <script src="./hint-bible.js?v=0.20.0"></script>
+  <script src="./hints/card-hints.js?v=0.20.0"></script>
+  <script src="./hint-engine.js?v=0.20.0"></script>
+  <script src="./exercises.js?v=0.20.0"></script>
+  <script src="./deck-engine.js?v=0.20.0"></script>
+  <script src="./vendor/qrcode-core.js?v=0.20.0"></script>
+  <script src="./app.js?v=0.20.0"></script>
 </body>
 </html>

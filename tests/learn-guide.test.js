@@ -21,7 +21,8 @@ const guideSections = [
   "learn-secret-not-cryptic",
   "learn-not-a-win-condition",
   "learn-postmortem",
-  "learn-coach-guidance"
+  "learn-coach-guidance",
+  "learn-hints"
 ];
 for (const id of guideSections) {
   assert.match(html, new RegExp(`<details[^>]+id=["']${id}["']`), `Missing guide section ${id}`);
@@ -37,6 +38,9 @@ assert.match(html, /Secret Does Not Mean Cryptic/i);
 assert.match(html, /A Drive Is Not a Win Condition/i);
 assert.match(html, /What shared pattern emerged\?/i);
 assert.match(html, /Coach Guidance/i);
+assert.match(html, /Optional Hints/i);
+assert.match(html, /Ask for the least help you need/i);
+assert.match(html, /No prompt, card combination, or scene information leaves the phone/i);
 assert.match(html, /MIRROR/i);
 assert.match(html, /PAIRED/i);
 

@@ -4,18 +4,18 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const bible = require("../card-bible.js");
-const pack = require("../cards/rules-rituals-institutions.js");
+const pack = require("../cards/competition-consequences.js");
 const cards = require("../cards.js");
 const validator = require("../tools/card-validator.js");
 
-assert.equal(pack.id, "rules-rituals-institutions");
+assert.equal(pack.id, "competition-consequences");
 assert.equal(pack.status, "playtest");
-assert.equal(pack.version, "0.15.0");
-assert.equal(pack.sequence, 8);
+assert.equal(pack.version, "0.16.0");
+assert.equal(pack.sequence, 9);
 assert.equal(pack.stances.length, 24);
 assert.equal(pack.drives.length, 24);
-assert.deepEqual(pack.stances.map((card) => card.id), Array.from({ length: 24 }, (_, index) => `S${index + 169}`));
-assert.deepEqual(pack.drives.map((card) => card.id), Array.from({ length: 24 }, (_, index) => `D${index + 169}`));
+assert.deepEqual(pack.stances.map((card) => card.id), Array.from({ length: 24 }, (_, index) => `S${index + 193}`));
+assert.deepEqual(pack.drives.map((card) => card.id), Array.from({ length: 24 }, (_, index) => `D${index + 193}`));
 
 const packAudit = validator.validatePack(pack);
 assert.deepEqual(packAudit.errors, []);
@@ -30,9 +30,9 @@ for (const category of bible.categories) {
   }
 }
 
-const poolPath = path.resolve(__dirname, "../cards/candidates/rules-rituals-institutions-candidate-pool.json");
+const poolPath = path.resolve(__dirname, "../cards/candidates/competition-consequences-candidate-pool.json");
 const pool = JSON.parse(fs.readFileSync(poolPath, "utf8"));
-assert.equal(pool.packId, "rules-rituals-institutions");
+assert.equal(pool.packId, "competition-consequences");
 assert.equal(pool.candidates.length, 64);
 assert.equal(pool.candidates.filter((item) => item.disposition === "selected").length, 48);
 assert.equal(pool.candidates.filter((item) => item.disposition === "held").length, 8);
@@ -44,11 +44,11 @@ for (const card of [...pack.stances, ...pack.drives]) {
   assert.ok(selectedIds.has(card.id), `Candidate pool must select ${card.id}`);
 }
 
-for (const role of ["administrator", "compliance-keeper", "interpreter", "archivist", "traditionalist", "exception-seeker"]) {
-  assert.ok(bible.getCoachRole(role), `Missing Rules, Rituals & Institutions coach role: ${role}`);
+for (const role of ["contender", "scorekeeper", "referee", "dealmaker", "accountability-keeper", "stakes-raiser"]) {
+  assert.ok(bible.getCoachRole(role), `Missing Competition & Consequences coach role: ${role}`);
 }
-for (const motif of ["administration", "bureaucracy", "ceremony", "custom", "documentation", "exceptions", "formalities", "institution", "loopholes", "oversight", "policy", "precedent", "procedure", "process", "protocol", "record", "standards", "tradition"]) {
-  assert.ok(bible.motifs.includes(motif), `Missing Rules, Rituals & Institutions motif: ${motif}`);
+for (const motif of ["accountability", "advantage", "ambition", "bargains", "commitment", "comparison", "concession", "cost", "defeat", "disadvantage", "losing", "nostalgia", "odds", "outcome", "penalty", "performance", "reward", "rivalry", "score", "stakes", "teamwork", "tradeoffs", "victory", "winning"]) {
+  assert.ok(bible.motifs.includes(motif), `Missing Competition & Consequences motif: ${motif}`);
 }
 
 assert.equal(cards.libraryPlanVersion, "1.8.0");
@@ -57,4 +57,4 @@ assert.equal(cards.drives.length, 216);
 assert.equal(cards.activePackCount, 9);
 assert.equal(cards.playtestPackCount, 8);
 
-console.log("✓ Rules, Rituals & Institutions pack, 64-card candidate pool, quota matrix, and institutional metadata passed");
+console.log("✓ Competition & Consequences pack, 64-card candidate pool, quota matrix, and stakes metadata passed");

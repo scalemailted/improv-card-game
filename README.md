@@ -5,7 +5,7 @@
 - **1 Stance** — how the performer enters, interprets, or reacts within the scene.
 - **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The active library now contains **192 Stances and 192 Drives** across Core Foundations plus the Everyday Friction, Power Games, Relationship Knots, Emotional Pressure, Secrets & Schemes, Absurd Commitment, and Rules, Rituals & Institutions playtest packs. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
+The active library now contains **216 Stances and 216 Drives** across Core Foundations plus the Everyday Friction, Power Games, Relationship Knots, Emotional Pressure, Secrets & Schemes, Absurd Commitment, Rules, Rituals & Institutions, and Competition & Consequences playtest packs. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
 
 ## Open the live game
 
@@ -19,6 +19,29 @@ The active library now contains **192 Stances and 192 Drives** across Core Found
   Scan the code or open<br>
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
+
+## What is new in v0.16.0
+
+v0.16.0 adds **Pack 9: Competition & Consequences** as an active playtest pack:
+
+- 24 new Stances: S193–S216
+- 24 new Drives: D193–D216
+- 432 active cards total
+- one new card in every formal Card Bible subtheme
+- a complete 64-card candidate pool with editorial dispositions
+
+Competition & Consequences makes winning, losing, comparison, bargaining, sacrifice, accountability, and the price of success playable without requiring a literal sport, tournament, wager, or game-show premise. The cards ask what counts as a fair result, who owns the outcome, what someone is willing to risk, and what the next consequence will be.
+
+The expansion most directly deepens **Status Clash**, **Crown & Heart**, **Past & Future**, **Pursuer & Avoider**, **Absurd Commitment**, and custom coach challenges centered on rivalry, negotiation, scorekeeping, teamwork, sacrifice, or accountability. Every phone still shuffles independently; exercise links never share cards or deck order.
+
+The pack is marked **playtest** pending independent blind reads and repeated live troupe testing. Its cards are available throughout Open Play, category-focused draws, Mirror and Paired exercises, custom exercises, gallery search, Practice Coverage, and immutable Scene Log snapshots.
+
+See:
+
+- `docs/packs/COMPETITION-CONSEQUENCES-PACK-BRIEF.md`
+- `docs/packs/COMPETITION-CONSEQUENCES-AUTHORING-MATRIX.md`
+- `docs/packs/COMPETITION-CONSEQUENCES-CANDIDATE-POOL.md`
+- `cards/candidates/competition-consequences-candidate-pool.json`
 
 ## What is new in v0.15.0
 
@@ -219,7 +242,7 @@ Every future 48-card pack must contribute one card to every subtheme. Across ten
 | 6 | Secrets & Schemes | S121–S144 | D121–D144 | **Playtest in v0.13.0** |
 | 7 | Absurd Commitment | S145–S168 | D145–D168 | **Playtest in v0.14.0** |
 | 8 | Rules, Rituals & Institutions | S169–S192 | D169–D192 | **Playtest in v0.15.0** |
-| 9 | Competition & Consequences | S193–S216 | D193–D216 | Planned |
+| 9 | Competition & Consequences | S193–S216 | D193–D216 | **Playtest in v0.16.0** |
 | 10 | Advanced Scene Engines | S217–S240 | D217–D240 | Planned |
 
 ### Structured card metadata
@@ -515,6 +538,7 @@ All application assets use relative paths and work under the GitHub Pages projec
 ├── RELEASE-NOTES-v0.13.0.md
 ├── RELEASE-NOTES-v0.14.0.md
 ├── RELEASE-NOTES-v0.15.0.md
+├── RELEASE-NOTES-v0.16.0.md
 ├── cards/
 │   ├── core-foundations.js
 │   ├── everyday-friction.js
@@ -524,6 +548,7 @@ All application assets use relative paths and work under the GitHub Pages projec
 │   ├── secrets-schemes.js
 │   ├── absurd-commitment.js
 │   ├── rules-rituals-institutions.js
+│   ├── competition-consequences.js
 │   ├── candidates/
 │   │   ├── everyday-friction-candidate-pool.json
 │   │   ├── power-games-candidate-pool.json
@@ -531,7 +556,8 @@ All application assets use relative paths and work under the GitHub Pages projec
 │   │   ├── emotional-pressure-candidate-pool.json
 │   │   ├── secrets-schemes-candidate-pool.json
 │   │   ├── absurd-commitment-candidate-pool.json
-│   │   └── rules-rituals-institutions-candidate-pool.json
+│   │   ├── rules-rituals-institutions-candidate-pool.json
+│   │   └── competition-consequences-candidate-pool.json
 │   ├── card.schema.json
 │   └── pack.schema.json
 ├── docs/
@@ -560,7 +586,10 @@ All application assets use relative paths and work under the GitHub Pages projec
 │       ├── ABSURD-COMMITMENT-CANDIDATE-POOL.md
 │       ├── RULES-RITUALS-INSTITUTIONS-PACK-BRIEF.md
 │       ├── RULES-RITUALS-INSTITUTIONS-AUTHORING-MATRIX.md
-│       └── RULES-RITUALS-INSTITUTIONS-CANDIDATE-POOL.md
+│       ├── RULES-RITUALS-INSTITUTIONS-CANDIDATE-POOL.md
+│       ├── COMPETITION-CONSEQUENCES-PACK-BRIEF.md
+│       ├── COMPETITION-CONSEQUENCES-AUTHORING-MATRIX.md
+│       └── COMPETITION-CONSEQUENCES-CANDIDATE-POOL.md
 ├── tools/
 │   ├── card-validator.js
 │   └── card-audit.js
@@ -585,6 +614,7 @@ All application assets use relative paths and work under the GitHub Pages projec
     ├── secrets-schemes.test.js
     ├── absurd-commitment.test.js
     ├── rules-rituals-institutions.test.js
+    ├── competition-consequences.test.js
     ├── browser-card-loading.test.js
     ├── app-content.test.js
     ├── deck-engine.test.js

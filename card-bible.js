@@ -9,7 +9,7 @@
   "use strict";
 
   const CARD_SCHEMA_VERSION = 1;
-  const LIBRARY_PLAN_VERSION = "1.7.0";
+  const LIBRARY_PLAN_VERSION = "1.8.0";
   const TARGET_STANCE_COUNT = 240;
   const TARGET_DRIVE_COUNT = 240;
 
@@ -364,7 +364,13 @@
     { id: "interpreter", label: "Interpreter", definition: "Translates systems, customs, rules, or official language into actionable meaning." },
     { id: "archivist", label: "Archivist", definition: "Preserves records, precedent, and institutional memory as usable evidence." },
     { id: "traditionalist", label: "Traditionalist", definition: "Protects inherited customs and continuity because their repetition carries meaning." },
-    { id: "exception-seeker", label: "Exception Seeker", definition: "Searches for waivers, loopholes, precedents, or special treatment within a system." }
+    { id: "exception-seeker", label: "Exception Seeker", definition: "Searches for waivers, loopholes, precedents, or special treatment within a system." },
+    { id: "contender", label: "Contender", definition: "Pursues improvement or victory through direct comparison, sustained effort, and visible stakes." },
+    { id: "scorekeeper", label: "Scorekeeper", definition: "Tracks points, fairness, contributions, margins, and who appears to be ahead." },
+    { id: "referee", label: "Referee", definition: "Defines standards, boundaries, legitimacy, and what counts as a valid result." },
+    { id: "dealmaker", label: "Dealmaker", definition: "Shapes choices through bargains, exchanges, incentives, and negotiated stakes." },
+    { id: "accountability-keeper", label: "Accountability Keeper", definition: "Makes ownership, consequences, follow-through, and the cost of choices visible." },
+    { id: "stakes-raiser", label: "Stakes Raiser", definition: "Increases the reward, risk, cost, or significance attached to the next decision." }
   ];
 
   const motifs = [
@@ -386,7 +392,8 @@
     "premise", "prophecy", "reality", "safety", "scale", "symbols", "transformation",
     "administration", "bureaucracy", "ceremony", "custom", "documentation", "exceptions", "formalities",
     "institution", "loopholes", "oversight", "policy", "precedent", "procedure", "process", "protocol",
-    "record", "standards", "tradition"
+    "record", "standards", "tradition",
+    "accountability", "advantage", "ambition", "bargains", "commitment", "comparison", "concession", "cost", "defeat", "disadvantage", "losing", "nostalgia", "odds", "outcome", "penalty", "performance", "reward", "rivalry", "score", "stakes", "teamwork", "tradeoffs", "victory", "winning"
   ];
 
   const packPlan = [
@@ -482,7 +489,7 @@
       id: "competition-consequences",
       sequence: 9,
       title: "Competition & Consequences",
-      status: "planned",
+      status: "playtest",
       stanceRange: [193, 216],
       driveRange: [193, 216],
       targetStances: 24,

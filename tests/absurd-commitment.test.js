@@ -53,10 +53,10 @@ for (const motif of ["cause-effect", "consequences", "impossibility", "literalis
   assert.ok(bible.motifs.includes(motif), `Missing Absurd Commitment motif: ${motif}`);
 }
 
-assert.equal(cards.libraryPlanVersion, "1.7.0");
-assert.equal(cards.stances.length, 192);
-assert.equal(cards.drives.length, 192);
-assert.equal(cards.activePackCount, 8);
-assert.equal(cards.playtestPackCount, 7);
+assert.equal(cards.libraryPlanVersion, "1.8.0");
+assert.equal(cards.stances.length, 216);
+assert.equal(cards.drives.length, 216);
+assert.equal(cards.activePackCount, 9);
+assert.equal(cards.playtestPackCount, 8);
 
 console.log("✓ Absurd Commitment pack, 64-card candidate pool, quota matrix, and commitment metadata passed");

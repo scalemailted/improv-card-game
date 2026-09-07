@@ -10,7 +10,8 @@
         require("./cards/emotional-pressure.js"),
         require("./cards/secrets-schemes.js"),
         require("./cards/absurd-commitment.js"),
-        require("./cards/rules-rituals-institutions.js")
+        require("./cards/rules-rituals-institutions.js"),
+        require("./cards/competition-consequences.js")
       ]
     : (root.IMPROMPT_CARD_PACKS || []);
   const cards = factory(bible, packs);

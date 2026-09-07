@@ -1,8 +1,8 @@
 # The Imprompt Card Bible
 
 **Editorial and technical standard for the 480-card Imprompt library**  
-**Bible version:** 1.7.0  
-**Implemented foundation:** Imprompt v0.15.0  
+**Bible version:** 1.8.0  
+**Implemented foundation:** Imprompt v0.16.0  
 **Target release:** Imprompt v1.0  
 
 ---
@@ -129,7 +129,7 @@ Each pack contributes **one card to every defined subtheme**. Across ten packs, 
 | 6 | **Secrets & Schemes** | S121–S144 | D121–D144 | **Active playtest pack:** concealment, investigation, recruitment, misdirection, confession, and plans under pressure. |
 | 7 | **Absurd Commitment** | S145–S168 | D145–D168 | **Active playtest pack:** impossible logic, literal commitment, grounded reaction, recurring nonsense, and heightened consequence. |
 | 8 | **Rules, Rituals & Institutions** | S169–S192 | D169–D192 | **Active playtest pack:** bureaucracy, process, standards, customs, systems, traditions, and institutional behavior. |
-| 9 | **Competition & Consequences** | S193–S216 | D193–D216 | Winning, comparison, bargains, accountability, sacrifice, and the cost of success. |
+| 9 | **Competition & Consequences** | S193–S216 | D193–D216 | **Active playtest pack:** winning, comparison, bargains, accountability, sacrifice, and the cost of success. |
 | 10 | **Advanced Scene Engines** | S217–S240 | D217–D240 | Layered contradictions, delayed reveals, reversals, callbacks, and veteran-level pressure. |
 
 ### Pack identity must remain secondary to playability
@@ -1555,3 +1555,16 @@ The pack provides one S169–S192 or D169–D192 card in every formal subtheme. 
 
 With Core Foundations and seven active expansion packs, the active library now contains 192 Stances and 192 Drives, or 384 total cards. Rules, Rituals & Institutions remains subject to independent blind reads and repeated live troupe playtesting before final publication.
 
+# Appendix J — Competition & Consequences implementation
+
+Competition & Consequences is the eighth expansion authored under this Bible. It is active in Imprompt v0.16.0 with internal status `playtest`.
+
+- Pack brief: `docs/packs/COMPETITION-CONSEQUENCES-PACK-BRIEF.md`
+- Authoring matrix: `docs/packs/COMPETITION-CONSEQUENCES-AUTHORING-MATRIX.md`
+- Candidate pool: `docs/packs/COMPETITION-CONSEQUENCES-CANDIDATE-POOL.md`
+- Machine-readable candidates: `cards/candidates/competition-consequences-candidate-pool.json`
+- Runtime module: `cards/competition-consequences.js`
+
+The pack provides one S193–S216 or D193–D216 card in every formal subtheme. It adds six coach roles—Contender, Scorekeeper, Referee, Dealmaker, Accountability Keeper, and Stakes Raiser—and twenty-four outcome-and-accountability motifs without changing the visible seven-category interface.
+
+With Core Foundations and eight active expansion packs, the active library now contains 216 Stances and 216 Drives, or 432 total cards. Competition & Consequences remains subject to independent blind reads and repeated live troupe playtesting before final publication.

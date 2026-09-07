@@ -5,6 +5,7 @@
   const hintBible = window.IMPROMPT_HINT_BIBLE;
   const cardHints = window.IMPROMPT_CARD_HINTS;
   const hintEngine = window.IMPROMPT_HINT_ENGINE;
+  const quickHints = window.IMPROMPT_QUICK_HINTS;
   const exercises = window.IMPROMPT_EXERCISES;
   const engine = window.ImpromptEngine;
   const qrCore = window.IMPROMPT_QR_CORE;
@@ -76,7 +77,10 @@
     "cardDialogPanel", "cardDialogType", "cardDialogCategory", "cardDialogCategoryLabel",
     "cardDialogCategoryIcon", "cardDialogTitle", "cardDialogInstruction", "closeCardDialogButton",
     "keepCardButton", "vetoCardButton", "hintDialog", "hintDialogPanel", "hintDialogEyebrow", "hintDialogTitle",
-    "closeHintDialogButton", "hintDialogIntro", "hintPatternPill", "hintPatternLabel", "hintPatternPrinciple",
+    "closeHintDialogButton", "hintFeedback", "hintSource", "generateLocalHintButton", "hintLocalSettingsButton",
+    "localHintsMenuButton", "localModelDialog", "closeLocalModelButton", "localModelSelect", "localModelDescription",
+    "localModelDownloadSize", "localModelStatus", "localModelProgress", "loadLocalModelButton", "loadSavedLocalModelButton",
+    "cancelLocalModelButton", "unloadLocalModelButton", "clearLocalModelsButton",
     "hintDialogBody", "anotherHintAngleButton", "hintAngleCount", "doneHintButton",
     "filterDialog", "filterDialogPanel", "filterDialogType",
     "filterDialogTitle", "filterDialogDescription", "filterOptions", "closeFilterDialogButton", "confirmDialog",
@@ -117,6 +121,14 @@
   let deferredInstallPrompt = null;
   let activeHintContext = null;
   const revealed = { stance: false, drive: false };
+  let hintRequestSerial = 0;
+  let localStorageForHints = null;
+  try { localStorageForHints = window.localStorage; } catch (_) {}
+  const localHints = window.IMPROMPT_LOCAL_HINTS.createController({
+    storage: localStorageForHints,
+    runtimeFactory: async () => (await import("./hints/wllama-adapter.mjs?v=0.22.0")).createRuntime(),
+    onStatus: renderLocalModelStatus
+  });
 
   function loadState() {
     try {
@@ -525,6 +537,7 @@
     config.button.classList.toggle("is-concealed", !isRevealed);
     config.button.classList.toggle("is-revealed", isRevealed);
     config.button.classList.toggle("is-kept", isRevealed && isKept);
+    config.action.hidden = isRevealed;
 
     if (!isRevealed) {
       const copy = hiddenCopy[type];
@@ -550,10 +563,10 @@
     config.title.textContent = card.title;
     config.instruction.textContent = card.instruction;
     config.vetoButton.hidden = false;
-    setCardAction(config.action, isKept ? "Kept for this scene" : "Tap card to keep", "✓");
+    config.action.replaceChildren();
     config.button.setAttribute(
       "aria-label",
-      `${config.label}, ${card.category}: ${card.title}. ${card.instruction}. ${isKept ? "Kept for this scene." : "Tap the card to keep it."}`
+      `${config.label}, ${card.category}: ${card.title}. ${card.instruction}. Use Veto to replace this card or Nudge for an example.`
     );
   }
 
@@ -572,7 +585,7 @@
     elements.playSessionBadge.dataset.mode = session.exercise.mode;
     elements.playNote.textContent = session.exercise.locked
       ? `${session.exercise.roleDescription || session.exercise.focus} Category choices are locked. Use Veto or Nudge inside each revealed card.`
-      : "Tap each panel to draw. Use Veto or Nudge inside each revealed card; tap the card itself to keep it.";
+      : "Tap each panel to draw. Use Veto to replace a card or Nudge for an example.";
   }
 
   function createHintBlock(label, text, className = "") {
@@ -614,93 +627,202 @@
     }
   }
 
+  function cancelHintRequest() {
+    hintRequestSerial += 1;
+    if (localHints.getPhase() === "generating") localHints.cancel();
+  }
+
   function closeHintDialog() {
+    cancelHintRequest();
     closeDialog(elements.hintDialog);
     activeHintContext = null;
   }
 
+  function hintRequestForContext() {
+    if (!activeHintContext || !state.current || !hintsAvailableNow()) return null;
+    const types = activeHintContext.kind === "single" ? [activeHintContext.type] : ["stance", "drive"];
+    const entries = types.map((type) => ({
+      revealed: revealed[type] === true,
+      card: engine.findCard(cards, type, state.current[cardConfig(type).currentKey])
+    }));
+    if (entries.some((entry) => !entry.revealed || !entry.card)) return null;
+    return { kind: activeHintContext.kind, cards: entries, policyId: currentHintPolicyId(),
+      unlocked: sceneHintsUnlocked(), angle: activeHintContext.angle, avoid: activeHintContext.seen || [] };
+  }
+
+  function addExtraCoaching(blocks) {
+    if (!blocks.length) return null;
+    const detail = document.createElement("details");
+    detail.className = "hint-extra-coaching";
+    const summary = document.createElement("summary");
+    summary.textContent = "Built-in coaching";
+    detail.append(summary, ...blocks);
+    return detail;
+  }
+
   function renderHintDialog() {
-    if (!activeHintContext) {
-      return;
-    }
-    const policyId = currentHintPolicyId();
-    let result = null;
-    if (activeHintContext.kind === "single") {
-      const config = cardConfig(activeHintContext.type);
-      const card = state.current && engine.findCard(cards, activeHintContext.type, state.current[config.currentKey]);
-      result = hintEngine.getSingleHint(card, activeHintContext.angle, policyId);
-      if (!result) {
-        closeHintDialog();
-        return;
-      }
-      elements.hintDialogPanel.dataset.cardType = activeHintContext.type;
-      elements.hintDialogEyebrow.textContent = `${config.label.toUpperCase()} NUDGE`;
-      elements.hintDialogTitle.textContent = result.cardTitle;
-      elements.hintDialogIntro.textContent = "One possible way in. Keep the wording private, try the behavior, then return your attention to your partner.";
-      elements.hintPatternPill.hidden = true;
-      const blocks = [createHintBlock(result.angleLabel.toUpperCase(), result.manifestation, "primary-hint-block")];
-      if (result.heighten) {
-        blocks.push(createHintBlock("THEN HEIGHTEN", result.heighten));
-      }
-      elements.hintDialogBody.replaceChildren(...blocks);
+    if (!activeHintContext) return;
+    const request = hintRequestForContext();
+    if (!request) { closeHintDialog(); return; }
+    const policyId = request.policyId;
+    let result, text;
+    const extra = [];
+    if (request.kind === "single") {
+      const card = request.cards[0].card;
+      result = hintEngine.getSingleHint(card, request.angle, policyId);
+      if (!result) { closeHintDialog(); return; }
+      text = quickHints.single(card, request.angle);
+      elements.hintDialogPanel.dataset.cardType = card.type;
+      elements.hintDialogEyebrow.textContent = `${card.type.toUpperCase()} NUDGE`;
+      elements.hintDialogTitle.textContent = card.title;
+      if (result.heighten) extra.push(createHintBlock("HEIGHTEN", result.heighten));
     } else {
-      const stance = state.current && engine.findCard(cards, "stance", state.current.stanceId);
-      const drive = state.current && engine.findCard(cards, "drive", state.current.driveId);
-      result = hintEngine.getCombinationHint(stance, drive, activeHintContext.angle, policyId);
-      if (!result) {
-        closeHintDialog();
-        return;
-      }
+      const [stance, drive] = request.cards.map((entry) => entry.card);
+      result = hintEngine.getCombinationHint(stance, drive, request.angle, policyId);
+      if (!result) { closeHintDialog(); return; }
+      text = quickHints.pair(stance, drive, result, request.angle);
       elements.hintDialogPanel.dataset.cardType = "combination";
       elements.hintDialogEyebrow.textContent = "TWO-CARD HINT";
-      elements.hintDialogTitle.textContent = "One way to play the pair";
-      elements.hintDialogIntro.textContent = "This demonstrates one concrete way to express both cards in the same behavior. Use what helps, then return your attention to your partner.";
-      elements.hintPatternPill.hidden = false;
-      elements.hintPatternLabel.textContent = result.patternLabel.toUpperCase();
-      elements.hintPatternPrinciple.textContent = result.principle;
-      const blocks = [
-        createHintBlock("ONE WAY TO PLAY THE PAIR", result.wayIn, "primary-hint-block"),
-        createHintBlock("YOUR FIRST MOVE", result.firstMove, "fusion-first-move")
-      ];
+      elements.hintDialogTitle.textContent = `${stance.title} + ${drive.title}`;
       if (result.repeatableLoop) {
-        blocks.push(createHintBlock("THE REPEATABLE LOOP", result.repeatableLoop, "fusion-loop"));
+        extra.push(createHintBlock("THE CONNECTION", result.wayIn));
+        extra.push(createHintBlock("THE REPEATABLE LOOP", result.repeatableLoop));
+        extra.push(createHintBlock("WHEN THE SCENE CHANGES", result.adaptation));
       }
-      if (result.adaptation) {
-        blocks.push(createHintBlock("WHEN THE SCENE CHANGES", result.adaptation, "fusion-adaptation"));
-      }
-      elements.hintDialogBody.replaceChildren(...blocks);
     }
-    elements.hintAngleCount.textContent = `${result.angle + 1} of ${result.angleCount}`;
-    elements.anotherHintAngleButton.hidden = result.angleCount <= 1;
+    const cached = localHints.cached(request);
+    if (cached) text = cached.text;
+    const primary = createHintBlock("", text, "primary-hint-block");
+    const detail = addExtraCoaching(extra);
+    elements.hintDialogBody.replaceChildren(primary, ...(detail ? [detail] : []));
+    activeHintContext.displayed = text;
+    activeHintContext.source = cached ? "cache" : "builtin";
+    elements.hintSource.textContent = cached ? "Saved generated example" : "Built-in example";
+    elements.hintFeedback.hidden = true;
+    const builtInAngles = request.kind === "combination"
+      ? (quickHints.pairs[request.cards.map((entry) => entry.card.id).join("+")]?.length || result.angleCount)
+      : result.angleCount;
+    elements.hintAngleCount.textContent = cached ? `Angle ${request.angle + 1}` : `${request.angle % builtInAngles + 1} of ${builtInAngles}`;
+    elements.anotherHintAngleButton.hidden = false;
+    syncLocalHintButtons();
   }
 
   function openSingleHint(type) {
-    if (!state.current || !revealed[type] || !hintsAvailableNow()) {
-      return;
-    }
-    activeHintContext = { kind: "single", type, angle: 0 };
+    if (!state.current || !revealed[type] || !hintsAvailableNow()) return;
+    cancelHintRequest();
+    activeHintContext = { kind: "single", type, angle: 0, seen: [] };
     renderHintDialog();
-    openDialog(elements.hintDialog);
-    announce(`${type === "stance" ? "Stance" : "Drive"} nudge opened. One possible interpretation, not a required performance.`);
+    if (activeHintContext) openDialog(elements.hintDialog);
+    announce(`${type === "stance" ? "Stance" : "Drive"} nudge opened.`);
   }
 
   function openCombinationHint() {
-    if (!state.current || !revealed.stance || !revealed.drive || !hintsAvailableNow()) {
-      return;
-    }
-    activeHintContext = { kind: "combination", angle: 0 };
+    if (!state.current || !revealed.stance || !revealed.drive || !hintsAvailableNow()) return;
+    cancelHintRequest();
+    activeHintContext = { kind: "combination", angle: 0, seen: [] };
     renderHintDialog();
-    openDialog(elements.hintDialog);
+    if (activeHintContext) openDialog(elements.hintDialog);
     announce("A private two-card combination hint opened.");
   }
 
-  function showAnotherHintAngle() {
-    if (!activeHintContext) {
-      return;
+  async function generateActiveHint(advance = false) {
+    const context = activeHintContext;
+    if (!context || !localHints.isReady() || localHints.getPhase() === "generating") return;
+    if (advance) context.angle += 1;
+    context.seen = [...(context.seen || []), context.displayed].filter(Boolean).slice(-3);
+    const request = hintRequestForContext();
+    if (!request) { closeHintDialog(); return; }
+    const serial = ++hintRequestSerial;
+    elements.hintFeedback.textContent = "Trying a new example…";
+    elements.hintFeedback.hidden = false;
+    let result;
+    try { result = await localHints.generate(request); }
+    catch (_) { result = { ok: false, reason: "unavailable" }; }
+    // Closing, vetoing, advancing a scene, or changing cards invalidates a result.
+    const latest = hintRequestForContext();
+    if (serial !== hintRequestSerial || activeHintContext !== context || !elements.hintDialog.open || !latest ||
+      latest.cards.some((entry, index) => entry.card.id !== request.cards[index].card.id)) return;
+    if (result.ok) {
+      elements.hintDialogBody.querySelector(".primary-hint-block p").textContent = result.text;
+      context.displayed = result.text;
+      context.source = result.source;
+      elements.hintSource.textContent = result.source === "cache" ? "Saved generated example" : "Generated on this device";
+      elements.hintAngleCount.textContent = `Angle ${context.angle + 1}`;
+      elements.hintFeedback.hidden = true;
+      announce("New local example ready.");
+    } else {
+      const messages = {
+        timeout: "Generation took too long; the model was unloaded. Your current example is unchanged.",
+        runtime: "The local model stopped. Your current example is unchanged.",
+        cancelled: "Generation cancelled. Your current example is unchanged.",
+        unavailable: "The local model is not ready. Your current example is unchanged."
+      };
+      elements.hintFeedback.textContent = messages[result.reason] || "That suggestion did not pass the basic checks. Your current example is unchanged; try another angle.";
+      elements.hintFeedback.hidden = false;
+      context.angle += 1; // A retry changes the generation seed instead of replaying a rejected answer.
     }
+    syncLocalHintButtons();
+  }
+
+  function showAnotherHintAngle() {
+    if (!activeHintContext || localHints.getPhase() === "generating") return;
+    if (localHints.isReady()) { void generateActiveHint(true); return; }
     activeHintContext.angle += 1;
+    activeHintContext.seen = [];
     renderHintDialog();
     announce("Another possible angle shown.");
+  }
+
+  function syncLocalHintButtons() {
+    const generating = localHints.getPhase() === "generating";
+    elements.generateLocalHintButton.hidden = !localHints.isReady() || (activeHintContext?.source && activeHintContext.source !== "builtin");
+    elements.generateLocalHintButton.disabled = generating;
+    elements.anotherHintAngleButton.disabled = generating;
+    elements.hintDialogBody.setAttribute("aria-busy", String(generating));
+  }
+
+  function renderLocalModelStatus(status) {
+    const busy = ["loading", "generating", "stopping", "clearing"].includes(status.phase);
+    elements.localModelStatus.textContent = status.message || (status.phase === "ready" ? "Ready." : "Off.");
+    elements.localModelSelect.disabled = busy;
+    elements.loadLocalModelButton.disabled = busy;
+    elements.loadSavedLocalModelButton.disabled = busy;
+    elements.clearLocalModelsButton.disabled = busy;
+    elements.cancelLocalModelButton.hidden = status.phase !== "loading";
+    elements.unloadLocalModelButton.hidden = !["ready", "generating"].includes(status.phase);
+    elements.localModelProgress.hidden = status.phase !== "loading";
+    if (status.phase === "loading" && status.total > 0) {
+      elements.localModelProgress.value = Math.min(100, 100 * status.loaded / status.total);
+      if (/Downloading/.test(status.message || "")) elements.localModelStatus.textContent = `${status.message} ${Math.round(status.loaded / 1000000)} / ${status.approximateTotal ? "~" : ""}${Math.round(status.total / 1000000)} MB`;
+    } else elements.localModelProgress.removeAttribute("value");
+    // Never re-render hint text when loading finishes; generation needs an explicit click.
+    syncLocalHintButtons();
+  }
+
+  function renderLocalModelChoice() {
+    const model = window.IMPROMPT_LOCAL_MODELS.find((item) => item.id === elements.localModelSelect.value);
+    if (!model) return;
+    elements.localModelDescription.textContent = model.note;
+    elements.localModelDownloadSize.textContent = `${model.sizeLabel} model download`;
+    try { localStorageForHints?.setItem("imprompt:local-model-preference:v1", model.id); } catch (_) {}
+  }
+
+  function openLocalModelSettings() {
+    renderLocalModelChoice();
+    openDialog(elements.localModelDialog);
+  }
+
+  function initializeLocalHintSettings() {
+    for (const model of window.IMPROMPT_LOCAL_MODELS) {
+      const option = document.createElement("option"); option.value = model.id;
+      option.textContent = model.label;
+      elements.localModelSelect.append(option);
+    }
+    try {
+      const selected = localStorageForHints?.getItem("imprompt:local-model-preference:v1");
+      if (window.IMPROMPT_LOCAL_MODELS.some((model) => model.id === selected)) elements.localModelSelect.value = selected;
+    } catch (_) {}
+    renderLocalModelChoice();
   }
 
   function renderCompleteButton() {
@@ -813,6 +935,7 @@
     const config = cardConfig(type);
     if (state.current[config.currentKey] === null) {
       engine.drawCard(state, cards, type);
+      engine.keepCard(state, type);
       revealed[type] = true;
       saveState();
       renderPlayCard(type);
@@ -827,23 +950,14 @@
     }
     if (!revealed[type]) {
       revealed[type] = true;
+      engine.keepCard(state, type);
+      saveState();
       renderPlayCard(type);
       renderHintControls();
       announce(`${config.label} revealed.`);
       return;
     }
-    if (!state.current[config.keptKey]) {
-      engine.keepCard(state, type);
-      saveState();
-      renderPlayCard(type);
-      renderHintControls();
-      announce(`${config.label} kept for this scene.`);
-      if (navigator.vibrate) {
-        navigator.vibrate(10);
-      }
-      return;
-    }
-    announce(`${config.label} is already kept. Use Veto to replace it or Nudge for another way in.`);
+    announce(`${config.label} is ready. Use Veto to replace it or Nudge for an example.`);
   }
 
   function vetoInlineCard(type) {
@@ -2192,7 +2306,23 @@
     elements.doneHintButton.addEventListener("click", closeHintDialog);
     elements.anotherHintAngleButton.addEventListener("click", showAnotherHintAngle);
     elements.hintDialog.addEventListener("click", (event) => closeOnBackdrop(event, elements.hintDialog, closeHintDialog));
-    elements.hintDialog.addEventListener("close", () => { activeHintContext = null; });
+    elements.hintDialog.addEventListener("close", () => { cancelHintRequest(); activeHintContext = null; });
+    elements.hintDialog.addEventListener("cancel", cancelHintRequest);
+    elements.generateLocalHintButton.addEventListener("click", () => { void generateActiveHint(); });
+    elements.localHintsMenuButton.addEventListener("click", openLocalModelSettings);
+    elements.hintLocalSettingsButton.addEventListener("click", openLocalModelSettings);
+    elements.closeLocalModelButton.addEventListener("click", () => closeDialog(elements.localModelDialog));
+    elements.localModelDialog.addEventListener("click", (event) => closeOnBackdrop(event, elements.localModelDialog, () => closeDialog(elements.localModelDialog)));
+    elements.localModelSelect.addEventListener("change", renderLocalModelChoice);
+    elements.loadLocalModelButton.addEventListener("click", () => { void localHints.loadModel(elements.localModelSelect.value, { allowDownload: true }).catch(() => {}); });
+    elements.loadSavedLocalModelButton.addEventListener("click", () => { void localHints.loadModel(elements.localModelSelect.value, { allowDownload: false }).catch(() => {}); });
+    elements.cancelLocalModelButton.addEventListener("click", () => localHints.cancel());
+    elements.unloadLocalModelButton.addEventListener("click", () => { void localHints.unload().catch(() => {}); });
+    elements.clearLocalModelsButton.addEventListener("click", () => {
+      if (window.confirm("Remove downloaded local models and generated examples? Your deck and Scene Log will not change.")) void localHints.clearDownloads();
+    });
+    document.addEventListener("visibilitychange", () => { if (document.hidden) cancelHintRequest(); });
+    window.addEventListener("pagehide", () => { localHints.cancel(); });
 
     elements.closeFilterDialogButton.addEventListener("click", closeFilterDialog);
     elements.filterDialog.addEventListener("click", (event) => closeOnBackdrop(event, elements.filterDialog, closeFilterDialog));
@@ -2242,6 +2372,7 @@
     });
   }
 
+  initializeLocalHintSettings();
   registerEvents();
   registerServiceWorker();
   render();

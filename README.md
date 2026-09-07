@@ -5,7 +5,39 @@
 - **1 Stance** — how the performer enters, interprets, or reacts within the scene.
 - **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The active library contains **240 Stances and 240 Drives** across the complete ten-pack roadmap. v0.21.2 repairs the pair-specific Concrete Fusion system while retaining the card-integrated **Veto** and **Need a nudge?** controls from v0.21.1. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, Scene Log, and hint state. There is no account, synchronized room, tracking service, model download, analytics, or backend.
+The active library contains **240 Stances and 240 Drives** across ten packs. **v0.22.0** adds optional browser-local language-model inference for single-card nudges and two-card combinations, while keeping instant built-in examples. Every browser still maintains its own independent shuffle, guided exercises, sessions and Scene Log. No account, paid inference API, analytics or backend is required.
+
+## Start with v0.22.0
+
+Extract the ZIP, open the folder in VS Code, and run:
+
+```bash
+npm start
+```
+
+Open `http://localhost:8080`. Node 18+ is needed for this development server; **no npm install or build step is required**. A normal static HTTPS host, including GitHub Pages, also works. Do not open `index.html` with `file://` for the model feature.
+
+### Updated hints
+
+**Need a nudge?** shows one short playable behavior. **How might these work together?** gives a combined first move. Longer built-in coaching is collapsed and respects the selected exercise policy. Another angle works immediately without a model. The redundant hint introduction and revealed-card “kept for this scene” line are gone; revealed cards are accepted unless vetoed.
+
+The 48 Core Foundations cards have **96 newly authored behavioral examples**. The other 432 cards use their existing action-focused hint seeds without the generic pack introduction. Three representative pairs have concise hand-authored examples; all other combinations retain the original Concrete Fusion fallback.
+
+### Enable fresh, on-device generation
+
+Open **Main menu → Local hint engine**, select a model, then choose **Download & enable**. The model is optional and is **not inside this ZIP**. The Compact configuration is approximately 386 MB; the Larger configuration approximately 1.06 GB, plus runtime assets and additional working memory. No model or external inference runtime is downloaded just by opening the game.
+
+After the model reports Ready, open a nudge or pair hint and choose **Generate a fresh hint**. **Another angle** then requests another generated tactic. Loading never silently replaces the hint being read. Use **Use saved model** on a subsequent visit; inference is not automatically enabled after reload.
+
+Requests use the exact instructions of the revealed card or the performer's revealed pair, a short coaching policy, and a few examples. They do not include the full deck, unrevealed cards, other players' cards, Scene Log or conversation history. Card text and generated output are not sent to a remote inference API. Download providers still receive ordinary file requests.
+
+### Reliability and limits
+
+A rejected answer, unavailable model or failed request leaves the current example intact. Canceling or timing out inference unloads the model to stop its worker; its downloaded files remain available. The generator is **experimental**: basic checks do not establish that a model combines both cards well.
+
+Automated unit tests, asset checks and offline browser DOM tests with a mock runtime are included. **Actual GGUF download, real inference quality/speed, device memory behavior and an installed PWA's offline model lifecycle have not been verified in the build environment.** See `BUILD-VERIFICATION-v0.22.0.md` for the precise scope, and `docs/LOCAL-HINT-ENGINE.md` for setup and testing.
+
+See `RELEASE-NOTES-v0.22.0.md` for the changes. Older release sections below describe historical behavior, not the v0.22.0 model feature.
 
 ## Open the live game
 
@@ -20,7 +52,7 @@ The active library contains **240 Stances and 240 Drives** across the complete t
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
 
-## What is new in v0.21.2
+## Release history: v0.21.2
 
 v0.21.2 repairs the two-card hint so that it actually demonstrates the selected Stance and Drive as one concrete behavior:
 
@@ -690,7 +722,9 @@ npm run audit:cards
 npm run audit:cards:write
 ```
 
-`npm test` validates the application, deck engine, exercises, share links, QR generation, Card Bible taxonomy, all eight active packs, hidden-information heuristics, pack quotas, migration behavior, and duplicate gates.
+`npm test` validates the application, deck engine, exercises, share links, QR generation, all ten active packs, hidden-information heuristics, pack quotas, migration behavior, hint policies, local-generation request boundaries, cancellation, storage and runtime contracts. No external model is required for tests.
+
+`npm run test:browser` runs optional offline DOM tests using Python Playwright and Chromium. These use a fake inference adapter, not real model execution. The exact dependency setup and real-device checklist are in `docs/LOCAL-HINT-ENGINE.md`.
 
 `npm run audit:cards:write` regenerates:
 
@@ -713,7 +747,9 @@ https://scalemailted.github.io/improv-card-game/
 5. Select `main` and `/ (root)`.
 6. Save and wait for deployment.
 
-All application assets use relative paths and work under the GitHub Pages project path.
+The app shell uses relative paths and works under the GitHub Pages project path. Optional inference lazily loads the version-pinned Wllama runtime from jsDelivr and the selected model from Hugging Face. Ordinary play never needs these downloads. GitHub Pages does not need a server API or an embedded API key.
+
+After replacing an installed older version, close all old game tabs/windows and reopen online so the waiting service worker can activate. Never clear all browser site data just to update; that would also erase the independent deck and Scene Log. This archive does not deploy itself to the live URL.
 
 ## Project structure
 

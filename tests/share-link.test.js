@@ -30,7 +30,7 @@ assert.match(html, /id="shareQrLink"/);
 assert.match(html, /id="exerciseShareScreen"/);
 assert.match(html, /id="exerciseQrCode"/);
 assert.ok(html.includes(`href="${publicUrl}"`));
-assert.match(serviceWorker, /\.\/assets\/improv-card-game-qr\.png\?v=0\.21\.2/);
+assert.match(serviceWorker, /\.\/assets\/improv-card-game-qr\.png\?v=0\.22\.0/);
 
 const statusUrl = exercises.buildShareUrl(publicUrl, exercises.getPreset("status-clash"));
 assert.equal(statusUrl, `${publicUrl}?xv=2&h=f&x=status-clash`);

@@ -40,7 +40,7 @@ assert.match(html, /What shared pattern emerged\?/i);
 assert.match(html, /Coach Guidance/i);
 assert.match(html, /Optional Hints/i);
 assert.match(html, /Ask for the least help you need/i);
-assert.match(html, /No prompt, card combination, or scene information leaves the phone/i);
+assert.match(html, /card prompts and generated text are not sent to a server/i);
 assert.match(html, /MIRROR/i);
 assert.match(html, /PAIRED/i);
 

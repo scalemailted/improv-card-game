@@ -5,6 +5,8 @@
 **Implemented in:** Imprompt v0.21.2  
 **Relationship to the Card Bible:** subordinate companion standard
 
+**v0.22.0 implementation note:** The authored Bible and fallback engine remain at version 2.1.0. An optional generated-example layer now implements the experimental extension anticipated by section 13. It is subordinate to these coaching rules, preserves all hint policies and uses only revealed-card requests. The detailed, collapsed presentation and runtime-specific requirements are specified in `LOCAL-HINT-ENGINE.md`. References below to “no model” describe the original built-in engine, which remains available unchanged.
+
 ---
 
 ## 1. Purpose

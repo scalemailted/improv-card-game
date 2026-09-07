@@ -24,7 +24,8 @@ for (const id of [
 assert.match(html, /Need a nudge\?/i);
 assert.match(html, /How might these work together\?/i);
 assert.match(html, /Another angle/i);
-assert.match(html, /Curated locally\. Nothing leaves this phone\./i);
+assert.match(html, /Built-in example/i);
+assert.doesNotMatch(html, /id="hintDialogIntro"/);
 assert.match(html, /Full coaching/i);
 assert.match(html, /After first attempt/i);
 assert.match(html, /Hints off/i);
@@ -41,7 +42,7 @@ assert.match(app, /renderHintPolicySummary/);
 for (const selector of [".card-inline-action", ".card-veto-button", ".card-nudge-button", ".combination-hint-button", ".hint-modal", ".hint-block", ".hint-policy-summary"]) {
   assert.ok(styles.includes(selector), `Missing CSS selector ${selector}`);
 }
-for (const asset of ["hint-bible.js?v=0.21.2", "hints/card-hints.js?v=0.21.2", "hints/fusion-profiles.js?v=0.21.2", "hints/concrete-fusion.js?v=0.21.2", "hint-engine.js?v=0.21.2"]) {
+for (const asset of ["hint-bible.js?v=0.22.0", "hints/card-hints.js?v=0.22.0", "hints/fusion-profiles.js?v=0.22.0", "hints/concrete-fusion.js?v=0.22.0", "hint-engine.js?v=0.22.0"]) {
   assert.ok(html.includes(asset), `HTML does not load ${asset}`);
   assert.ok(sw.includes(asset), `Service worker does not cache ${asset}`);
 }
@@ -61,5 +62,6 @@ assert.match(app, /elements\.stanceVetoButton\.addEventListener/);
 assert.match(app, /elements\.driveVetoButton\.addEventListener/);
 assert.match(styles, /\.card-veto-button\s*\{[\s\S]*?left:\s*16px/);
 assert.match(styles, /\.card-nudge-button\s*\{[\s\S]*?right:\s*16px/);
-assert.match(app, /Tap card to keep/);
+assert.doesNotMatch(app, /Tap card to keep/);
+assert.match(app, /config\.action\.hidden = isRevealed/);
 console.log("✓ v0.21.2 card-integrated actions, repaired pair-specific fusion hints, policies, offline assets, and Hint Bible documentation passed");

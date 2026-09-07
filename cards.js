@@ -11,7 +11,8 @@
         require("./cards/secrets-schemes.js"),
         require("./cards/absurd-commitment.js"),
         require("./cards/rules-rituals-institutions.js"),
-        require("./cards/competition-consequences.js")
+        require("./cards/competition-consequences.js"),
+        require("./cards/advanced-scene-engines.js")
       ]
     : (root.IMPROMPT_CARD_PACKS || []);
   const cards = factory(bible, packs);

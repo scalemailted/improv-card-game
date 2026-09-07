@@ -9,7 +9,7 @@
   "use strict";
 
   const CARD_SCHEMA_VERSION = 1;
-  const LIBRARY_PLAN_VERSION = "1.8.0";
+  const LIBRARY_PLAN_VERSION = "1.9.0";
   const TARGET_STANCE_COUNT = 240;
   const TARGET_DRIVE_COUNT = 240;
 
@@ -370,7 +370,13 @@
     { id: "referee", label: "Referee", definition: "Defines standards, boundaries, legitimacy, and what counts as a valid result." },
     { id: "dealmaker", label: "Dealmaker", definition: "Shapes choices through bargains, exchanges, incentives, and negotiated stakes." },
     { id: "accountability-keeper", label: "Accountability Keeper", definition: "Makes ownership, consequences, follow-through, and the cost of choices visible." },
-    { id: "stakes-raiser", label: "Stakes Raiser", definition: "Increases the reward, risk, cost, or significance attached to the next decision." }
+    { id: "stakes-raiser", label: "Stakes Raiser", definition: "Increases the reward, risk, cost, or significance attached to the next decision." },
+    { id: "scene-architect", label: "Scene Architect", definition: "Shapes an interaction through deliberate structure, pacing, recurring offers, and earned turns." },
+    { id: "callback-builder", label: "Callback Builder", definition: "Plants and returns details so their emotional or practical meaning grows." },
+    { id: "reversal-maker", label: "Reversal Maker", definition: "Turns apparent status, meaning, allegiance, or direction into its opposite without abandoning continuity." },
+    { id: "delayed-revealer", label: "Delayed Revealer", definition: "Withholds a defining motive, fact, or interpretation until it can reframe what came before." },
+    { id: "double-binder", label: "Double Binder", definition: "Keeps two incompatible pressures active so either choice creates further play." },
+    { id: "pattern-weaver", label: "Pattern Weaver", definition: "Connects repeated details into an accumulating scene structure rather than isolated jokes." },
   ];
 
   const motifs = [
@@ -393,7 +399,8 @@
     "administration", "bureaucracy", "ceremony", "custom", "documentation", "exceptions", "formalities",
     "institution", "loopholes", "oversight", "policy", "precedent", "procedure", "process", "protocol",
     "record", "standards", "tradition",
-    "accountability", "advantage", "ambition", "bargains", "commitment", "comparison", "concession", "cost", "defeat", "disadvantage", "losing", "nostalgia", "odds", "outcome", "penalty", "performance", "reward", "rivalry", "score", "stakes", "teamwork", "tradeoffs", "victory", "winning"
+    "accountability", "advantage", "ambition", "bargains", "commitment", "comparison", "concession", "cost", "defeat", "disadvantage", "losing", "nostalgia", "odds", "outcome", "penalty", "performance", "reward", "rivalry", "score", "stakes", "teamwork", "tradeoffs", "victory", "winning",
+    "ambiguity", "callback", "contradiction", "delay", "delayed-reveal", "double-bind", "echo", "escalation", "foreshadowing", "perspective", "recontextualization", "repetition", "reversal", "structure", "subtext", "symmetry", "turning-point"
   ];
 
   const packPlan = [
@@ -500,7 +507,7 @@
       id: "advanced-scene-engines",
       sequence: 10,
       title: "Advanced Scene Engines",
-      status: "planned",
+      status: "playtest",
       stanceRange: [217, 240],
       driveRange: [217, 240],
       targetStances: 24,

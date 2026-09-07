@@ -5,7 +5,7 @@
 - **1 Stance** — how the performer enters, interprets, or reacts within the scene.
 - **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The active library now contains **216 Stances and 216 Drives** across Core Foundations plus the Everyday Friction, Power Games, Relationship Knots, Emotional Pressure, Secrets & Schemes, Absurd Commitment, Rules, Rituals & Institutions, and Competition & Consequences playtest packs. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
+The active library now contains **240 Stances and 240 Drives** across Core Foundations plus all nine planned expansion packs, culminating in Advanced Scene Engines. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
 
 ## Open the live game
 
@@ -19,6 +19,30 @@ The active library now contains **216 Stances and 216 Drives** across Core Found
   Scan the code or open<br>
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
+
+## What is new in v0.17.0
+
+v0.17.0 adds **Pack 10: Advanced Scene Engines** and completes the planned 480-card library:
+
+- 24 new Stances: S217–S240
+- 24 new Drives: D217–D240
+- 240 Stances and 240 Drives
+- 480 active cards total
+- one new card in every formal Card Bible subtheme
+- a complete 64-card candidate pool with editorial dispositions
+
+Advanced Scene Engines is the veteran-level structural pack. Its prompts create callbacks, contradictions, delayed reveals, reversals, double binds, recontextualization, repeated details, and consequences that make earlier choices gain new meaning. The cards do not prescribe a plot twist. They give the holder an immediate playable behavior and a structural pressure that can emerge through listening.
+
+The expansion deepens every Guided Exercise and is especially useful for custom coach challenges focused on scene architecture, subtext, foreshadowing, earned reversals, recurring patterns, or callbacks. Each phone continues to shuffle independently, and exercise links never share cards or deck order.
+
+The pack is marked **playtest** pending blind reads and repeated live troupe use. Its cards are available throughout Open Play, category-focused draws, Mirror and Paired exercises, custom exercises, gallery search, Practice Coverage, and immutable Scene Log snapshots.
+
+See:
+
+- `docs/packs/ADVANCED-SCENE-ENGINES-PACK-BRIEF.md`
+- `docs/packs/ADVANCED-SCENE-ENGINES-AUTHORING-MATRIX.md`
+- `docs/packs/ADVANCED-SCENE-ENGINES-CANDIDATE-POOL.md`
+- `cards/candidates/advanced-scene-engines-candidate-pool.json`
 
 ## What is new in v0.16.0
 
@@ -243,7 +267,7 @@ Every future 48-card pack must contribute one card to every subtheme. Across ten
 | 7 | Absurd Commitment | S145–S168 | D145–D168 | **Playtest in v0.14.0** |
 | 8 | Rules, Rituals & Institutions | S169–S192 | D169–D192 | **Playtest in v0.15.0** |
 | 9 | Competition & Consequences | S193–S216 | D193–D216 | **Playtest in v0.16.0** |
-| 10 | Advanced Scene Engines | S217–S240 | D217–D240 | Planned |
+| 10 | Advanced Scene Engines | S217–S240 | D217–D240 | **Playtest in v0.17.0** |
 
 ### Structured card metadata
 
@@ -539,6 +563,7 @@ All application assets use relative paths and work under the GitHub Pages projec
 ├── RELEASE-NOTES-v0.14.0.md
 ├── RELEASE-NOTES-v0.15.0.md
 ├── RELEASE-NOTES-v0.16.0.md
+├── RELEASE-NOTES-v0.17.0.md
 ├── cards/
 │   ├── core-foundations.js
 │   ├── everyday-friction.js
@@ -549,6 +574,7 @@ All application assets use relative paths and work under the GitHub Pages projec
 │   ├── absurd-commitment.js
 │   ├── rules-rituals-institutions.js
 │   ├── competition-consequences.js
+│   ├── advanced-scene-engines.js
 │   ├── candidates/
 │   │   ├── everyday-friction-candidate-pool.json
 │   │   ├── power-games-candidate-pool.json
@@ -557,7 +583,8 @@ All application assets use relative paths and work under the GitHub Pages projec
 │   │   ├── secrets-schemes-candidate-pool.json
 │   │   ├── absurd-commitment-candidate-pool.json
 │   │   ├── rules-rituals-institutions-candidate-pool.json
-│   │   └── competition-consequences-candidate-pool.json
+│   │   ├── competition-consequences-candidate-pool.json
+│   │   └── advanced-scene-engines-candidate-pool.json
 │   ├── card.schema.json
 │   └── pack.schema.json
 ├── docs/
@@ -589,7 +616,10 @@ All application assets use relative paths and work under the GitHub Pages projec
 │       ├── RULES-RITUALS-INSTITUTIONS-CANDIDATE-POOL.md
 │       ├── COMPETITION-CONSEQUENCES-PACK-BRIEF.md
 │       ├── COMPETITION-CONSEQUENCES-AUTHORING-MATRIX.md
-│       └── COMPETITION-CONSEQUENCES-CANDIDATE-POOL.md
+│       ├── COMPETITION-CONSEQUENCES-CANDIDATE-POOL.md
+│       ├── ADVANCED-SCENE-ENGINES-PACK-BRIEF.md
+│       ├── ADVANCED-SCENE-ENGINES-AUTHORING-MATRIX.md
+│       └── ADVANCED-SCENE-ENGINES-CANDIDATE-POOL.md
 ├── tools/
 │   ├── card-validator.js
 │   └── card-audit.js
@@ -615,6 +645,7 @@ All application assets use relative paths and work under the GitHub Pages projec
     ├── absurd-commitment.test.js
     ├── rules-rituals-institutions.test.js
     ├── competition-consequences.test.js
+    ├── advanced-scene-engines.test.js
     ├── browser-card-loading.test.js
     ├── app-content.test.js
     ├── deck-engine.test.js

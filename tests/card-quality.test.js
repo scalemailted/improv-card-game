@@ -6,9 +6,9 @@ const bible = require("../card-bible.js");
 const validator = require("../tools/card-validator.js");
 
 const allCards = [...cards.stances, ...cards.drives];
-assert.equal(new Set(allCards.map((card) => card.id)).size, 432);
-assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.title))).size, 432);
-assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.instruction))).size, 432);
+assert.equal(new Set(allCards.map((card) => card.id)).size, 480);
+assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.title))).size, 480);
+assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.instruction))).size, 480);
 
 for (const card of allCards) {
   const result = validator.validateCard(card);
@@ -41,14 +41,17 @@ for (const card of allCards) {
   } else if (card.packId === "rules-rituals-institutions") {
     assert.equal(card.status, "playtest");
     assert.equal(card.contentVersion, "0.15.0");
-  } else {
-    assert.equal(card.packId, "competition-consequences");
+  } else if (card.packId === "competition-consequences") {
     assert.equal(card.status, "playtest");
     assert.equal(card.contentVersion, "0.16.0");
+  } else {
+    assert.equal(card.packId, "advanced-scene-engines");
+    assert.equal(card.status, "playtest");
+    assert.equal(card.contentVersion, "0.17.0");
   }
 }
 
-for (const packId of ["core-foundations", "everyday-friction", "power-games", "relationship-knots", "emotional-pressure", "secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences"]) {
+for (const packId of ["core-foundations", "everyday-friction", "power-games", "relationship-knots", "emotional-pressure", "secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences", "advanced-scene-engines"]) {
   for (const category of bible.categories) {
     const categoryCards = allCards.filter((card) => card.packId === packId && card.categoryId === category.id);
     const expected = category.deck === "stance" ? 6 : category.id === "direct-objectives" ? 12 : 6;

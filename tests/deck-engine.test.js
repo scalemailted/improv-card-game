@@ -13,10 +13,10 @@ function seededRandom(seed = 123456789) {
   };
 }
 
-assert.equal(cards.stances.length, 216, "Expected 216 active Stance cards");
-assert.equal(cards.drives.length, 216, "Expected 216 active Drive cards");
-assert.equal(new Set(cards.stances.map((card) => card.id)).size, 216, "Stance IDs must be unique");
-assert.equal(new Set(cards.drives.map((card) => card.id)).size, 216, "Drive IDs must be unique");
+assert.equal(cards.stances.length, 240, "Expected 240 active Stance cards");
+assert.equal(cards.drives.length, 240, "Expected 240 active Drive cards");
+assert.equal(new Set(cards.stances.map((card) => card.id)).size, 240, "Stance IDs must be unique");
+assert.equal(new Set(cards.drives.map((card) => card.id)).size, 240, "Drive IDs must be unique");
 
 const random = seededRandom(1001);
 const state = engine.createState(cards, "ABCDEFGH", random);
@@ -27,29 +27,22 @@ assert.deepEqual(state.drawFilters, { stance: "all", drive: "all" });
 assert.deepEqual(state.history, []);
 assert.deepEqual(state.sessions, []);
 assert.equal(state.activeSessionId, null);
-assert.deepEqual(engine.remaining(state), { stances: 216, drives: 216 });
+assert.deepEqual(engine.remaining(state), { stances: 240, drives: 240 });
 assert.deepEqual(state.library.stanceIds, cards.stances.map((card) => card.id));
 assert.deepEqual(state.library.driveIds, cards.drives.map((card) => card.id));
 
-// Future pack releases are inserted into an existing independent deck without resetting history or current state.
+// Library reconciliation remains stable when the complete ten-pack library is already known.
 const upgradeState = engine.createState(cards, "UPGRADE1", seededRandom(77));
-const expandedCards = {
-  ...cards,
-  stances: [...cards.stances, { ...cards.stances[0], id: "S217", packId: "advanced-scene-engines", contentVersion: "0.1.0", status: "draft" }],
-  drives: [...cards.drives, { ...cards.drives[0], id: "D217", packId: "advanced-scene-engines", contentVersion: "0.1.0", status: "draft" }]
-};
-const upgradeResult = engine.reconcileStateWithLibrary(upgradeState, expandedCards, seededRandom(78));
-assert.equal(upgradeResult.changed, true);
-assert.deepEqual(upgradeResult.added.stance, ["S217"]);
-assert.deepEqual(upgradeResult.added.drive, ["D217"]);
-assert.ok(upgradeState.stanceQueue.includes("S217"));
-assert.ok(upgradeState.driveQueue.includes("D217"));
+const upgradeResult = engine.reconcileStateWithLibrary(upgradeState, cards, seededRandom(78));
+assert.equal(upgradeResult.changed, false);
+assert.deepEqual(upgradeResult.added.stance, []);
+assert.deepEqual(upgradeResult.added.drive, []);
 assert.equal(upgradeState.instanceId, "UPGRADE1");
 assert.deepEqual(upgradeState.history, []);
-assert.equal(engine.isStateUsable(upgradeState, expandedCards, "UPGRADE1"), true);
+assert.equal(engine.isStateUsable(upgradeState, cards, "UPGRADE1"), true);
 
 
-// A complete v0.8 Core-only snapshot must gain all 192 Pack 2 through Pack 9 IDs per deck.
+// A complete v0.8 Core-only snapshot must gain all 216 Pack 2 through Pack 10 IDs per deck.
 const coreOnlyCards = {
   ...cards,
   stances: cards.stances.filter((card) => card.packId === "core-foundations"),
@@ -57,18 +50,18 @@ const coreOnlyCards = {
 };
 const expansionState = engine.createState(coreOnlyCards, "EXPAND90", () => 0.42);
 const expansionResult = engine.reconcileStateWithLibrary(expansionState, cards, () => 0.42);
-assert.equal(expansionResult.added.stance.length, 192);
-assert.equal(expansionResult.added.drive.length, 192);
-assert.ok(expansionResult.added.stance.every((id) => Number(id.slice(1)) >= 25 && Number(id.slice(1)) <= 216));
-assert.ok(expansionResult.added.drive.every((id) => Number(id.slice(1)) >= 25 && Number(id.slice(1)) <= 216));
-assert.equal(expansionState.stanceQueue.length, 216);
-assert.equal(expansionState.driveQueue.length, 216);
+assert.equal(expansionResult.added.stance.length, 216);
+assert.equal(expansionResult.added.drive.length, 216);
+assert.ok(expansionResult.added.stance.every((id) => Number(id.slice(1)) >= 25 && Number(id.slice(1)) <= 240));
+assert.ok(expansionResult.added.drive.every((id) => Number(id.slice(1)) >= 25 && Number(id.slice(1)) <= 240));
+assert.equal(expansionState.stanceQueue.length, 240);
+assert.equal(expansionState.driveQueue.length, 240);
 
 // A complete v0.9 snapshot gains exactly the 24 Power Games IDs per deck without resetting local history.
 const powerLibrary = {
   ...cards,
-  stances: cards.stances.filter((card) => !["relationship-knots", "emotional-pressure", "secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences"].includes(card.packId)),
-  drives: cards.drives.filter((card) => !["relationship-knots", "emotional-pressure", "secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences"].includes(card.packId))
+  stances: cards.stances.filter((card) => !["relationship-knots", "emotional-pressure", "secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences", "advanced-scene-engines"].includes(card.packId)),
+  drives: cards.drives.filter((card) => !["relationship-knots", "emotional-pressure", "secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences", "advanced-scene-engines"].includes(card.packId))
 };
 const prePowerCards = {
   ...powerLibrary,
@@ -98,8 +91,8 @@ assert.equal(engine.isStateUsable(powerExpansionState, powerLibrary, "EXPAND10")
 const preRelationshipCards = powerLibrary;
 const relationshipLibrary = {
   ...cards,
-  stances: cards.stances.filter((card) => !["emotional-pressure", "secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences"].includes(card.packId)),
-  drives: cards.drives.filter((card) => !["emotional-pressure", "secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences"].includes(card.packId))
+  stances: cards.stances.filter((card) => !["emotional-pressure", "secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences", "advanced-scene-engines"].includes(card.packId)),
+  drives: cards.drives.filter((card) => !["emotional-pressure", "secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences", "advanced-scene-engines"].includes(card.packId))
 };
 const relationshipExpansionState = engine.createState(preRelationshipCards, "EXPAND11", seededRandom(510));
 const relationshipOpenSelection = exercises.createSessionSelection(exercises.OPEN_PLAY, "all");
@@ -124,8 +117,8 @@ assert.equal(engine.isStateUsable(relationshipExpansionState, relationshipLibrar
 const preEmotionalCards = relationshipLibrary;
 const emotionalLibrary = {
   ...cards,
-  stances: cards.stances.filter((card) => !["secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences"].includes(card.packId)),
-  drives: cards.drives.filter((card) => !["secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences"].includes(card.packId))
+  stances: cards.stances.filter((card) => !["secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences", "advanced-scene-engines"].includes(card.packId)),
+  drives: cards.drives.filter((card) => !["secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences", "advanced-scene-engines"].includes(card.packId))
 };
 const emotionalExpansionState = engine.createState(preEmotionalCards, "EXPAND12", seededRandom(610));
 const emotionalOpenSelection = exercises.createSessionSelection(exercises.OPEN_PLAY, "all");
@@ -150,8 +143,8 @@ assert.equal(engine.isStateUsable(emotionalExpansionState, emotionalLibrary, "EX
 const preSecretsCards = emotionalLibrary;
 const secretsLibrary = {
   ...cards,
-  stances: cards.stances.filter((card) => !["absurd-commitment", "rules-rituals-institutions", "competition-consequences"].includes(card.packId)),
-  drives: cards.drives.filter((card) => !["absurd-commitment", "rules-rituals-institutions", "competition-consequences"].includes(card.packId))
+  stances: cards.stances.filter((card) => !["absurd-commitment", "rules-rituals-institutions", "competition-consequences", "advanced-scene-engines"].includes(card.packId)),
+  drives: cards.drives.filter((card) => !["absurd-commitment", "rules-rituals-institutions", "competition-consequences", "advanced-scene-engines"].includes(card.packId))
 };
 const secretsExpansionState = engine.createState(preSecretsCards, "EXPAND13", seededRandom(710));
 const secretsOpenSelection = exercises.createSessionSelection(exercises.OPEN_PLAY, "all");
@@ -176,8 +169,8 @@ assert.equal(engine.isStateUsable(secretsExpansionState, secretsLibrary, "EXPAND
 const preAbsurdCards = secretsLibrary;
 const absurdLibrary = {
   ...cards,
-  stances: cards.stances.filter((card) => !["rules-rituals-institutions", "competition-consequences"].includes(card.packId)),
-  drives: cards.drives.filter((card) => !["rules-rituals-institutions", "competition-consequences"].includes(card.packId))
+  stances: cards.stances.filter((card) => !["rules-rituals-institutions", "competition-consequences", "advanced-scene-engines"].includes(card.packId)),
+  drives: cards.drives.filter((card) => !["rules-rituals-institutions", "competition-consequences", "advanced-scene-engines"].includes(card.packId))
 };
 const absurdExpansionState = engine.createState(preAbsurdCards, "EXPAND14", seededRandom(810));
 const absurdOpenSelection = exercises.createSessionSelection(exercises.OPEN_PLAY, "all");
@@ -203,8 +196,8 @@ assert.equal(engine.isStateUsable(absurdExpansionState, absurdLibrary, "EXPAND14
 const preInstitutionsCards = absurdLibrary;
 const institutionsLibrary = {
   ...cards,
-  stances: cards.stances.filter((card) => card.packId !== "competition-consequences"),
-  drives: cards.drives.filter((card) => card.packId !== "competition-consequences")
+  stances: cards.stances.filter((card) => !["competition-consequences", "advanced-scene-engines"].includes(card.packId)),
+  drives: cards.drives.filter((card) => !["competition-consequences", "advanced-scene-engines"].includes(card.packId))
 };
 const institutionsExpansionState = engine.createState(preInstitutionsCards, "EXPAND15", seededRandom(910));
 const institutionsOpenSelection = exercises.createSessionSelection(exercises.OPEN_PLAY, "all");
@@ -234,30 +227,61 @@ engine.startScene(competitionExpansionState, preCompetitionCards, seededRandom(1
 const oldCompetitionPair = engine.drawPair(competitionExpansionState, preCompetitionCards, seededRandom(1013));
 engine.completeScene(competitionExpansionState, preCompetitionCards);
 const savedCompetitionHistory = JSON.stringify(competitionExpansionState.history);
-const competitionExpansionResult = engine.reconcileStateWithLibrary(competitionExpansionState, cards, seededRandom(1014));
+const competitionLibrary = {
+  ...cards,
+  stances: cards.stances.filter((card) => card.packId !== "advanced-scene-engines"),
+  drives: cards.drives.filter((card) => card.packId !== "advanced-scene-engines")
+};
+const competitionExpansionResult = engine.reconcileStateWithLibrary(competitionExpansionState, competitionLibrary, seededRandom(1014));
 assert.equal(competitionExpansionResult.added.stance.length, 24);
 assert.equal(competitionExpansionResult.added.drive.length, 24);
-assert.ok(competitionExpansionResult.added.stance.every((id) => Number(id.slice(1)) >= 193 && Number(id.slice(1)) <= 216));
-assert.ok(competitionExpansionResult.added.drive.every((id) => Number(id.slice(1)) >= 193 && Number(id.slice(1)) <= 216));
+assert.ok(competitionExpansionResult.added.stance.every((id) => Number(id.slice(1)) >= 193 && Number(id.slice(1)) <= 240));
+assert.ok(competitionExpansionResult.added.drive.every((id) => Number(id.slice(1)) >= 193 && Number(id.slice(1)) <= 240));
 assert.equal(competitionExpansionState.stanceQueue.length, 215, "One old Stance was already consumed before expansion");
 assert.equal(competitionExpansionState.driveQueue.length, 215, "One old Drive was already consumed before expansion");
 assert.equal(JSON.stringify(competitionExpansionState.history), savedCompetitionHistory, "Pack expansion must preserve Scene Log history");
 assert.equal(competitionExpansionState.history[0].stanceId, oldCompetitionPair.stanceId);
 assert.equal(competitionExpansionState.history[0].driveId, oldCompetitionPair.driveId);
-assert.equal(engine.isStateUsable(competitionExpansionState, cards, "EXPAND16"), true);
+assert.equal(engine.isStateUsable(competitionExpansionState, competitionLibrary, "EXPAND16"), true);
 
-// A v0.7-era state without a library snapshot treats S01-S24/D01-D24 as known and inserts only new pack IDs.
-const preBibleState = engine.createState(cards, "UPGRADE2", seededRandom(79));
+
+// A complete v0.16 snapshot gains exactly the 24 Advanced Scene Engines IDs per deck without resetting local history.
+const preAdvancedCards = competitionLibrary;
+const advancedExpansionState = engine.createState(preAdvancedCards, "EXPAND17", seededRandom(1110));
+const advancedOpenSelection = exercises.createSessionSelection(exercises.OPEN_PLAY, "all");
+engine.startSession(advancedExpansionState, preAdvancedCards, advancedOpenSelection, seededRandom(1111));
+engine.startScene(advancedExpansionState, preAdvancedCards, seededRandom(1112));
+const oldAdvancedPair = engine.drawPair(advancedExpansionState, preAdvancedCards, seededRandom(1113));
+engine.completeScene(advancedExpansionState, preAdvancedCards);
+const savedAdvancedHistory = JSON.stringify(advancedExpansionState.history);
+const advancedExpansionResult = engine.reconcileStateWithLibrary(advancedExpansionState, cards, seededRandom(1114));
+assert.equal(advancedExpansionResult.added.stance.length, 24);
+assert.equal(advancedExpansionResult.added.drive.length, 24);
+assert.ok(advancedExpansionResult.added.stance.every((id) => Number(id.slice(1)) >= 217 && Number(id.slice(1)) <= 240));
+assert.ok(advancedExpansionResult.added.drive.every((id) => Number(id.slice(1)) >= 217 && Number(id.slice(1)) <= 240));
+assert.equal(advancedExpansionState.stanceQueue.length, 239, "One old Stance was already consumed before expansion");
+assert.equal(advancedExpansionState.driveQueue.length, 239, "One old Drive was already consumed before expansion");
+assert.equal(JSON.stringify(advancedExpansionState.history), savedAdvancedHistory, "Pack expansion must preserve Scene Log history");
+assert.equal(advancedExpansionState.history[0].stanceId, oldAdvancedPair.stanceId);
+assert.equal(advancedExpansionState.history[0].driveId, oldAdvancedPair.driveId);
+assert.equal(engine.isStateUsable(advancedExpansionState, cards, "EXPAND17"), true);
+
+// A v0.7-era state without a library snapshot treats S01-S24/D01-D24 as known, preserves consumed Core cards, and inserts absent expansion IDs.
+const preBibleState = engine.createState(competitionLibrary, "UPGRADE2", seededRandom(79));
 delete preBibleState.library;
 preBibleState.stanceQueue = preBibleState.stanceQueue.filter((id) => id !== "S01");
 preBibleState.driveQueue = preBibleState.driveQueue.filter((id) => id !== "D01");
 const preBibleStanceLength = preBibleState.stanceQueue.length;
 const preBibleDriveLength = preBibleState.driveQueue.length;
-const preBibleResult = engine.reconcileStateWithLibrary(preBibleState, expandedCards, seededRandom(80));
-assert.deepEqual(preBibleResult.added.stance, ["S217"]);
-assert.deepEqual(preBibleResult.added.drive, ["D217"]);
-assert.equal(preBibleState.stanceQueue.length, preBibleStanceLength + 1, "Consumed Core cards must not be reinserted during upgrade");
-assert.equal(preBibleState.driveQueue.length, preBibleDriveLength + 1, "Consumed Core cards must not be reinserted during upgrade");
+const preBibleResult = engine.reconcileStateWithLibrary(preBibleState, cards, seededRandom(80));
+assert.equal(preBibleResult.added.stance.length, 24);
+assert.equal(preBibleResult.added.drive.length, 24);
+assert.ok(preBibleResult.added.stance.every((id) => Number(id.slice(1)) >= 217 && Number(id.slice(1)) <= 240));
+assert.ok(preBibleResult.added.drive.every((id) => Number(id.slice(1)) >= 217 && Number(id.slice(1)) <= 240));
+assert.equal(preBibleState.stanceQueue.length, preBibleStanceLength + 24, "Consumed Core cards must not be reinserted during upgrade");
+assert.equal(preBibleState.driveQueue.length, preBibleDriveLength + 24, "Consumed Core cards must not be reinserted during upgrade");
+assert.equal(preBibleState.stanceQueue.includes("S01"), false);
+assert.equal(preBibleState.driveQueue.includes("D01"), false);
 
 // Retired IDs are removed during reconciliation before the state is accepted by the application.
 const retirementState = engine.createState(cards, "RETIRE01", seededRandom(81));
@@ -350,13 +374,13 @@ assert.equal(engine.findCard(cards, "stance", heartPair.stanceId).category, "Emo
 assert.equal(engine.findCard(cards, "drive", heartPair.driveId).category, "Secrets & Avoidance");
 engine.completeScene(state, cards);
 
-// Random All must avoid repeats until each complete 216-card active deck is exhausted.
+// Random All must avoid repeats until each complete 240-card active deck is exhausted.
 const cycleRandom = seededRandom(2222);
 const cycleState = engine.createState(cards, "CYCLE123", cycleRandom);
 engine.startSession(cycleState, cards, openSelection, cycleRandom);
 const seenStances = new Set();
 const seenDrives = new Set();
-for (let index = 0; index < 216; index += 1) {
+for (let index = 0; index < 240; index += 1) {
   const pair = engine.drawPair(cycleState, cards, cycleRandom);
   assert.equal(seenStances.has(pair.stanceId), false, `Repeated Stance during Random All cycle: ${pair.stanceId}`);
   assert.equal(seenDrives.has(pair.driveId), false, `Repeated Drive during Random All cycle: ${pair.driveId}`);
@@ -364,15 +388,15 @@ for (let index = 0; index < 216; index += 1) {
   seenDrives.add(pair.driveId);
   assert.ok(engine.completeScene(cycleState, cards));
 }
-assert.equal(seenStances.size, 216);
-assert.equal(seenDrives.size, 216);
+assert.equal(seenStances.size, 240);
+assert.equal(seenDrives.size, 240);
 assert.deepEqual(engine.remaining(cycleState), { stances: 0, drives: 0 });
-assert.equal(cycleState.history.length, 216);
+assert.equal(cycleState.history.length, 240);
 const nextCyclePair = engine.drawPair(cycleState, cards, cycleRandom);
 assert.ok(nextCyclePair.stanceId);
 assert.ok(nextCyclePair.driveId);
 assert.deepEqual(cycleState.cycles, { stance: 2, drive: 2 });
-assert.deepEqual(engine.remaining(cycleState), { stances: 215, drives: 215 });
+assert.deepEqual(engine.remaining(cycleState), { stances: 239, drives: 239 });
 
 // Unlocked Open Play filters can focus a category and cycle that category independently.
 const focusedRandom = seededRandom(3333);
@@ -388,7 +412,7 @@ assert.deepEqual(focusedState.drawFilters, {
 
 const focusedStances = [];
 const focusedDrives = [];
-for (let index = 0; index < 54; index += 1) {
+for (let index = 0; index < 60; index += 1) {
   if (!focusedState.current) {
     engine.startScene(focusedState, cards, focusedRandom);
   }
@@ -401,8 +425,8 @@ for (let index = 0; index < 54; index += 1) {
   focusedDrives.push(pair.driveId);
   engine.completeScene(focusedState, cards);
 }
-assert.equal(new Set(focusedStances).size, 54);
-assert.equal(new Set(focusedDrives).size, 54);
+assert.equal(new Set(focusedStances).size, 60);
+assert.equal(new Set(focusedDrives).size, 60);
 engine.startScene(focusedState, cards, focusedRandom);
 const nextCycleFocusedStance = engine.drawCard(focusedState, cards, "stance", focusedRandom);
 assert.equal(engine.findCard(cards, "stance", nextCycleFocusedStance).category, "Emotional Assumptions");

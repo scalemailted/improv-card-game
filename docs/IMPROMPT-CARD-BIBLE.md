@@ -1,8 +1,8 @@
 # The Imprompt Card Bible
 
 **Editorial and technical standard for the 480-card Imprompt library**  
-**Bible version:** 1.8.0  
-**Implemented foundation:** Imprompt v0.16.0  
+**Bible version:** 1.9.0  
+**Implemented foundation:** Imprompt v0.17.0  
 **Target release:** Imprompt v1.0  
 
 ---
@@ -130,7 +130,7 @@ Each pack contributes **one card to every defined subtheme**. Across ten packs, 
 | 7 | **Absurd Commitment** | S145–S168 | D145–D168 | **Active playtest pack:** impossible logic, literal commitment, grounded reaction, recurring nonsense, and heightened consequence. |
 | 8 | **Rules, Rituals & Institutions** | S169–S192 | D169–D192 | **Active playtest pack:** bureaucracy, process, standards, customs, systems, traditions, and institutional behavior. |
 | 9 | **Competition & Consequences** | S193–S216 | D193–D216 | **Active playtest pack:** winning, comparison, bargains, accountability, sacrifice, and the cost of success. |
-| 10 | **Advanced Scene Engines** | S217–S240 | D217–D240 | Layered contradictions, delayed reveals, reversals, callbacks, and veteran-level pressure. |
+| 10 | **Advanced Scene Engines** | S217–S240 | D217–D240 | **Active playtest pack:** contradictions, delayed reveals, reversals, callbacks, and veteran-level pressure. |
 
 ### Pack identity must remain secondary to playability
 
@@ -1435,6 +1435,8 @@ Core Foundations establishes one published example in every subtheme.
 | `cards/secrets-schemes.js` | Pack 6's 48 active playtest cards. |
 | `cards/absurd-commitment.js` | Pack 7's 48 active playtest cards. |
 | `cards/rules-rituals-institutions.js` | Pack 8's 48 active playtest cards. |
+| `cards/competition-consequences.js` | Pack 9's 48 active playtest cards. |
+| `cards/advanced-scene-engines.js` | Pack 10's 48 active playtest cards. |
 | `cards/candidates/everyday-friction-candidate-pool.json` | The complete Pack 2 drafting pool and editorial dispositions. |
 | `cards/candidates/power-games-candidate-pool.json` | The complete Pack 3 drafting pool and editorial dispositions. |
 | `cards/candidates/relationship-knots-candidate-pool.json` | The complete Pack 4 drafting pool and editorial dispositions. |
@@ -1442,6 +1444,8 @@ Core Foundations establishes one published example in every subtheme.
 | `cards/candidates/secrets-schemes-candidate-pool.json` | The complete Pack 6 drafting pool and editorial dispositions. |
 | `cards/candidates/absurd-commitment-candidate-pool.json` | The complete Pack 7 drafting pool and editorial dispositions. |
 | `cards/candidates/rules-rituals-institutions-candidate-pool.json` | The complete Pack 8 drafting pool and editorial dispositions. |
+| `cards/candidates/competition-consequences-candidate-pool.json` | The complete Pack 9 drafting pool and editorial dispositions. |
+| `cards/candidates/advanced-scene-engines-candidate-pool.json` | The complete Pack 10 drafting pool and editorial dispositions. |
 | `cards.js` | Runtime aggregator that preserves the application's existing `IMPROMPT_CARDS` interface. |
 | `cards/card.schema.json` | JSON Schema for an individual card. |
 | `cards/pack.schema.json` | JSON Schema for a pack. |
@@ -1568,3 +1572,14 @@ Competition & Consequences is the eighth expansion authored under this Bible. It
 The pack provides one S193–S216 or D193–D216 card in every formal subtheme. It adds six coach roles—Contender, Scorekeeper, Referee, Dealmaker, Accountability Keeper, and Stakes Raiser—and twenty-four outcome-and-accountability motifs without changing the visible seven-category interface.
 
 With Core Foundations and eight active expansion packs, the active library now contains 216 Stances and 216 Drives, or 432 total cards. Competition & Consequences remains subject to independent blind reads and repeated live troupe playtesting before final publication.
+
+# Appendix K — Advanced Scene Engines implementation
+
+Advanced Scene Engines is the ninth expansion authored under this Bible and the tenth pack in the complete library. It is active in Imprompt v0.17.0 with internal status `playtest`.
+
+The pack makes structural listening playable through callbacks, contradictions, delayed reveals, reversals, double binds, recontextualization, recurring details, and consequences that make earlier choices matter later. Its prompts are intentionally advanced, but each still supplies an immediate observable behavior rather than asking the performer to wait for a twist.
+
+The pack provides one S217–S240 or D217–D240 card in every formal subtheme. It adds six coach roles—Scene Architect, Callback Builder, Reversal Maker, Delayed Revealer, Double Binder, and Pattern Weaver—and seventeen structural motifs without changing the visible seven-category interface.
+
+With Core Foundations and all nine planned expansion packs active, the library now contains the full target of 240 Stances and 240 Drives, or 480 total cards. Advanced Scene Engines and the earlier playtest packs remain subject to independent blind reads and repeated live troupe testing before final publication.
+

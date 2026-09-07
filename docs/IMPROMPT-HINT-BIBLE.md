@@ -1,8 +1,8 @@
 # The Imprompt Hint Bible
 
 **Editorial and technical standard for optional local coaching guidance**  
-**Hint Bible version:** 1.0.0  
-**Implemented in:** Imprompt v0.20.0  
+**Hint Bible version:** 2.0.0  
+**Implemented in:** Imprompt v0.21.1  
 **Relationship to the Card Bible:** subordinate companion standard
 
 ---
@@ -20,9 +20,34 @@ It does not invent the scene. It does not explain the partner. It does not provi
 
 > **A hint translates a prompt into an offer. It does not translate an offer into a script.**
 
-The entire v0.20 system runs locally in the browser. No prompt, card combination, scene history, or player identity is sent to a server. No language model is loaded or contacted.
+The entire v0.21 system runs locally in the browser. No prompt, card combination, scene history, or player identity is sent to a server. No language model is loaded or contacted.
 
 ---
+
+
+## 1.1 Concrete Fusion standard
+
+Beginning with v0.21, the two-card hint must demonstrate the combination rather than merely describe the Stance and Drive separately.
+
+Every full combination hint contains:
+
+1. **One way to play the pair** — a causal relationship in which both selected cards are necessary.
+2. **Your first move** — an observable action the holder can perform immediately.
+3. **The repeatable loop** — a changed response that can recur and heighten.
+4. **When the scene changes** — permission to adapt or release the tactic when a stronger shared pattern emerges.
+
+A useful fusion hint passes four tests:
+
+- **Pair dependence:** replacing either card would materially change the advice.
+- **Immediate actability:** the player can try the first move within a few seconds.
+- **Dual contribution:** the Stance supplies a lens or method and the Drive supplies pressure or pursuit.
+- **Convergence:** the hint leaves room for the partner’s behavior to transform the proposed pattern.
+
+`Another angle` must change the tactic, not merely paraphrase the same abstract principle.
+
+## 1.2 Card-integrated action standard
+
+Beginning with v0.21.1, revealed cards contain their own optional assistance and replacement controls. Veto sits at the bottom left and Nudge at the bottom right. The controls are separate accessible buttons layered within the card boundary; they are never nested inside the main card button.
 
 ## 2. Holder-only contract
 

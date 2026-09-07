@@ -1,36 +1,37 @@
 "use strict";
 
-const CACHE_NAME = "imprompt-v0.20.0";
+const CACHE_NAME = "imprompt-v0.21.1";
 const OWNED_CACHE_PREFIXES = ["imprompt-", "two-secrets-"];
 const BASE_URL = new URL("./", self.location.href);
 const PRECACHE_PATHS = [
   "./",
   "./index.html",
-  "./styles.css?v=0.20.0",
-  "./card-bible.js?v=0.20.0",
-  "./cards/core-foundations.js?v=0.20.0",
-  "./cards/everyday-friction.js?v=0.20.0",
-  "./cards/power-games.js?v=0.20.0",
-  "./cards/relationship-knots.js?v=0.20.0",
-  "./cards/emotional-pressure.js?v=0.20.0",
-  "./cards/secrets-schemes.js?v=0.20.0",
-  "./cards/absurd-commitment.js?v=0.20.0",
-  "./cards/rules-rituals-institutions.js?v=0.20.0",
-  "./cards/competition-consequences.js?v=0.20.0",
-  "./cards/advanced-scene-engines.js?v=0.20.0",
-  "./cards.js?v=0.20.0",
-  "./hint-bible.js?v=0.20.0",
-  "./hints/card-hints.js?v=0.20.0",
-  "./hint-engine.js?v=0.20.0",
-  "./exercises.js?v=0.20.0",
-  "./deck-engine.js?v=0.20.0",
-  "./vendor/qrcode-core.js?v=0.20.0",
-  "./app.js?v=0.20.0",
-  "./manifest.webmanifest?v=0.20.0",
-  "./assets/improv-card-game-qr.png?v=0.20.0",
-  "./icons/icon.svg?v=0.20.0",
-  "./icons/icon-192.png?v=0.20.0",
-  "./icons/icon-512.png?v=0.20.0"
+  "./styles.css?v=0.21.1",
+  "./card-bible.js?v=0.21.1",
+  "./cards/core-foundations.js?v=0.21.1",
+  "./cards/everyday-friction.js?v=0.21.1",
+  "./cards/power-games.js?v=0.21.1",
+  "./cards/relationship-knots.js?v=0.21.1",
+  "./cards/emotional-pressure.js?v=0.21.1",
+  "./cards/secrets-schemes.js?v=0.21.1",
+  "./cards/absurd-commitment.js?v=0.21.1",
+  "./cards/rules-rituals-institutions.js?v=0.21.1",
+  "./cards/competition-consequences.js?v=0.21.1",
+  "./cards/advanced-scene-engines.js?v=0.21.1",
+  "./cards.js?v=0.21.1",
+  "./hint-bible.js?v=0.21.1",
+  "./hints/card-hints.js?v=0.21.1",
+  "./hints/concrete-fusion.js?v=0.21.1",
+  "./hint-engine.js?v=0.21.1",
+  "./exercises.js?v=0.21.1",
+  "./deck-engine.js?v=0.21.1",
+  "./vendor/qrcode-core.js?v=0.21.1",
+  "./app.js?v=0.21.1",
+  "./manifest.webmanifest?v=0.21.1",
+  "./assets/improv-card-game-qr.png?v=0.21.1",
+  "./icons/icon.svg?v=0.21.1",
+  "./icons/icon-192.png?v=0.21.1",
+  "./icons/icon-512.png?v=0.21.1"
 ];
 const PRECACHE_URLS = PRECACHE_PATHS.map((path) => new URL(path, BASE_URL).href);
 

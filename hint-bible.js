@@ -15,8 +15,8 @@
     throw new Error("hint-bible.js requires card-bible.js to load first.");
   }
 
-  const HINT_SCHEMA_VERSION = 1;
-  const HINT_LIBRARY_VERSION = "1.0.0";
+  const HINT_SCHEMA_VERSION = 2;
+  const HINT_LIBRARY_VERSION = "2.0.0";
   const DEFAULT_HINT_POLICY = "full";
 
   function deepFreeze(value) {

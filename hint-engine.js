@@ -2,17 +2,18 @@
   const isCommonJs = typeof module === "object" && module.exports;
   const hintBible = isCommonJs ? require("./hint-bible.js") : root.IMPROMPT_HINT_BIBLE;
   const cardHints = isCommonJs ? require("./hints/card-hints.js") : root.IMPROMPT_CARD_HINTS;
-  const api = factory(hintBible, cardHints);
+  const concreteFusion = isCommonJs ? require("./hints/concrete-fusion.js") : root.IMPROMPT_CONCRETE_FUSION;
+  const api = factory(hintBible, cardHints, concreteFusion);
   if (isCommonJs) {
     module.exports = api;
   } else {
     root.IMPROMPT_HINT_ENGINE = api;
   }
-})(typeof globalThis !== "undefined" ? globalThis : this, function (hintBible, cardHints) {
+})(typeof globalThis !== "undefined" ? globalThis : this, function (hintBible, cardHints, concreteFusion) {
   "use strict";
 
-  if (!hintBible || !cardHints) {
-    throw new Error("hint-engine.js requires hint-bible.js and hints/card-hints.js to load first.");
+  if (!hintBible || !cardHints || !concreteFusion) {
+    throw new Error("hint-engine.js requires hint-bible.js, hints/card-hints.js, and hints/concrete-fusion.js to load first.");
   }
 
   function hashText(value) {
@@ -155,10 +156,8 @@
     const patterns = orderedPatterns(stance, drive);
     const normalizedAngle = ((Number(angle) || 0) % patterns.length + patterns.length) % patterns.length;
     const pattern = patterns[normalizedAngle];
-    const stanceHint = cardHints.get(stance);
-    const driveHint = cardHints.get(drive);
-    const seedIndex = normalizedAngle % 2;
-    const result = {
+    const fusion = concreteFusion.build(stance, drive, pattern, normalizedAngle, policy.allowsDepth);
+    return {
       kind: "combination",
       policyId: policy.id,
       stanceId: stance.id,
@@ -170,17 +169,11 @@
       patternId: pattern.id,
       patternLabel: pattern.label,
       principle: pattern.principle,
-      blend: replaceTokens(pattern.blendTemplate, stance, drive),
-      stanceMove: null,
-      driveMove: null,
-      nextBeat: null
+      wayIn: fusion.wayIn,
+      firstMove: fusion.firstMove,
+      repeatableLoop: fusion.repeatableLoop,
+      adaptation: fusion.adaptation
     };
-    if (policy.allowsDepth) {
-      result.stanceMove = stanceHint.manifestationSeeds[seedIndex].text;
-      result.driveMove = driveHint.manifestationSeeds[(seedIndex + 1) % 2].text;
-      result.nextBeat = replaceTokens(pattern.nextBeatTemplate, stance, drive);
-    }
-    return result;
   }
 
   function isAvailable(policyId, unlocked = false) {

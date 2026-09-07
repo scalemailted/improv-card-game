@@ -5,7 +5,7 @@
 - **1 Stance** — how the performer enters, interprets, or reacts within the scene.
 - **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The active library contains **240 Stances and 240 Drives** across the complete ten-pack roadmap. v0.20.0 adds an optional, fully local **Nudge & Combination Hint System** that helps a performer turn one card—or a private Stance-and-Drive hand—into a clear first offer without scripting the scene. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, Scene Log, and hint state. There is no account, synchronized room, tracking service, model download, analytics, or backend.
+The active library contains **240 Stances and 240 Drives** across the complete ten-pack roadmap. v0.21.1 combines the concrete two-card fusion guidance introduced in v0.21.0 with card-integrated **Veto** and **Need a nudge?** controls designed for phone play. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, Scene Log, and hint state. There is no account, synchronized room, tracking service, model download, analytics, or backend.
 
 ## Open the live game
 
@@ -19,6 +19,24 @@ The active library contains **240 Stances and 240 Drives** across the complete t
   Scan the code or open<br>
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
+
+## What is new in v0.21.1
+
+v0.21.1 moves the per-card actions into the card itself:
+
+- **Veto** is anchored at the bottom left of each revealed card.
+- **Need a nudge?** is anchored at the bottom right when hints are available.
+- The external full-width Nudge rows are gone.
+- Tapping the revealed card body keeps it; Veto draws a concealed replacement from the same selected pool.
+- The implementation uses separate sibling buttons rather than invalid nested buttons.
+
+See `RELEASE-NOTES-v0.21.1.md`.
+
+## What is new in v0.21.0
+
+The two-card hint now demonstrates an integrated behavior rather than presenting the Stance and Drive as separate summaries. It provides one way to play the pair, a first move, a repeatable loop, and an adaptation rule. `Another angle` changes the concrete tactic while the system remains entirely local and deterministic.
+
+See `RELEASE-NOTES-v0.21.0.md` and `docs/IMPROMPT-HINT-BIBLE.md`.
 
 ## What is new in v0.20.0
 

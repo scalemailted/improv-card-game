@@ -62,7 +62,7 @@
     "driveTitle", "stanceInstruction", "driveInstruction", "stanceAction", "driveAction",
     "stanceFilterButton", "driveFilterButton", "stanceFilterLabel", "driveFilterLabel", "stanceFilterIcon",
     "driveFilterIcon", "stanceFilterChevron", "driveFilterChevron", "stanceFilterLock", "driveFilterLock",
-    "stanceNudgeButton", "driveNudgeButton", "playHintActions", "combinationHintButton", "hintUnlockCard", "unlockHintsButton",
+    "stanceNudgeButton", "driveNudgeButton", "stanceVetoButton", "driveVetoButton", "playHintActions", "combinationHintButton", "hintUnlockCard", "unlockHintsButton",
     "playNote", "driveHelpButton", "completeButton", "historyBackButton", "historyStartButton", "historyScenesTab",
     "historyCoverageTab", "historyScenesPanel", "historyCoveragePanel", "historyCount", "historyList",
     "historyEmpty", "historyEmptyCopy", "historyPostmortemGuide", "historyGuideButton", "coverageCurrentButton", "coverageAllButton", "coverageSummary",
@@ -388,6 +388,7 @@
       instruction: isStance ? elements.stanceInstruction : elements.driveInstruction,
       action: isStance ? elements.stanceAction : elements.driveAction,
       nudgeButton: isStance ? elements.stanceNudgeButton : elements.driveNudgeButton,
+      vetoButton: isStance ? elements.stanceVetoButton : elements.driveVetoButton,
       filterButton: isStance ? elements.stanceFilterButton : elements.driveFilterButton,
       filterLabel: isStance ? elements.stanceFilterLabel : elements.driveFilterLabel,
       filterIcon: isStance ? elements.stanceFilterIcon : elements.driveFilterIcon,
@@ -532,6 +533,7 @@
       config.role.textContent = copy.role;
       config.title.textContent = copy.title;
       config.instruction.textContent = copy.instruction;
+      config.vetoButton.hidden = true;
       setCardAction(config.action, hasCard ? "Tap to reveal" : "Tap to draw", "✦");
       const filterName = currentFilter(type) === ALL_FILTER ? "Random All" : currentFilter(type);
       config.button.setAttribute(
@@ -547,10 +549,11 @@
     applyCategoryStyle(config.button, config.category, config.categoryLabel, config.categoryIcon, card.category);
     config.title.textContent = card.title;
     config.instruction.textContent = card.instruction;
-    setCardAction(config.action, isKept ? "Kept · tap for options" : "Tap again to keep or veto", isKept ? "✓" : "⋯");
+    config.vetoButton.hidden = false;
+    setCardAction(config.action, isKept ? "Kept for this scene" : "Tap card to keep", "✓");
     config.button.setAttribute(
       "aria-label",
-      `${config.label}, ${card.category}: ${card.title}. ${card.instruction}. ${isKept ? "Kept. " : ""}Tap again for card options.`
+      `${config.label}, ${card.category}: ${card.title}. ${card.instruction}. ${isKept ? "Kept for this scene." : "Tap the card to keep it."}`
     );
   }
 
@@ -568,8 +571,8 @@
     elements.playExerciseRole.textContent = roleText;
     elements.playSessionBadge.dataset.mode = session.exercise.mode;
     elements.playNote.textContent = session.exercise.locked
-      ? `${session.exercise.roleDescription || session.exercise.focus} Category choices are locked for this exercise.`
-      : "Tap each panel to draw. Category choices remain open for this session; tap a revealed card again to keep or veto it.";
+      ? `${session.exercise.roleDescription || session.exercise.focus} Category choices are locked. Use Veto or Nudge inside each revealed card.`
+      : "Tap each panel to draw. Use Veto or Nudge inside each revealed card; tap the card itself to keep it.";
   }
 
   function createHintBlock(label, text, className = "") {
@@ -650,21 +653,20 @@
       }
       elements.hintDialogPanel.dataset.cardType = "combination";
       elements.hintDialogEyebrow.textContent = "TWO-CARD HINT";
-      elements.hintDialogTitle.textContent = "One possible way in";
-      elements.hintDialogIntro.textContent = "Let the Stance shape how you pursue the Drive. This is a doorway, not a script or a correct answer.";
+      elements.hintDialogTitle.textContent = "One way to play the pair";
+      elements.hintDialogIntro.textContent = "This demonstrates one concrete way to express both cards in the same behavior. Use what helps, then return your attention to your partner.";
       elements.hintPatternPill.hidden = false;
       elements.hintPatternLabel.textContent = result.patternLabel.toUpperCase();
       elements.hintPatternPrinciple.textContent = result.principle;
-      const blocks = [];
-      if (result.stanceMove) {
-        blocks.push(createHintBlock("STANCE LENS", result.stanceMove, "stance-hint-block"));
+      const blocks = [
+        createHintBlock("ONE WAY TO PLAY THE PAIR", result.wayIn, "primary-hint-block"),
+        createHintBlock("YOUR FIRST MOVE", result.firstMove, "fusion-first-move")
+      ];
+      if (result.repeatableLoop) {
+        blocks.push(createHintBlock("THE REPEATABLE LOOP", result.repeatableLoop, "fusion-loop"));
       }
-      if (result.driveMove) {
-        blocks.push(createHintBlock("DRIVE PRESSURE", result.driveMove, "drive-hint-block"));
-      }
-      blocks.push(createHintBlock("BLEND THEM", result.blend, "primary-hint-block"));
-      if (result.nextBeat) {
-        blocks.push(createHintBlock("NEXT BEAT", result.nextBeat));
+      if (result.adaptation) {
+        blocks.push(createHintBlock("WHEN THE SCENE CHANGES", result.adaptation, "fusion-adaptation"));
       }
       elements.hintDialogBody.replaceChildren(...blocks);
     }
@@ -830,7 +832,39 @@
       announce(`${config.label} revealed.`);
       return;
     }
-    openCardOptions(type);
+    if (!state.current[config.keptKey]) {
+      engine.keepCard(state, type);
+      saveState();
+      renderPlayCard(type);
+      renderHintControls();
+      announce(`${config.label} kept for this scene.`);
+      if (navigator.vibrate) {
+        navigator.vibrate(10);
+      }
+      return;
+    }
+    announce(`${config.label} is already kept. Use Veto to replace it or Nudge for another way in.`);
+  }
+
+  function vetoInlineCard(type) {
+    if (!state.current || !revealed[type]) {
+      return;
+    }
+    const config = cardConfig(type);
+    const result = engine.vetoCard(state, cards, type);
+    revealed[type] = false;
+    activeHintContext = null;
+    closeDialog(elements.hintDialog);
+    saveState();
+    renderPlayCard(type);
+    renderCompleteButton();
+    renderHintControls();
+    const modeText = result.filter === ALL_FILTER ? "Random All" : result.filter;
+    announce(`A replacement ${config.label} was drawn using ${modeText}. Tap the card to reveal it.`);
+    if (navigator.vibrate) {
+      navigator.vibrate([10, 30, 10]);
+    }
+    config.button.focus({ preventScroll: true });
   }
 
   function openCardOptions(type) {
@@ -2108,6 +2142,8 @@
     elements.driveHelpButton.addEventListener("click", () => openLearnSection("learn-two-drives", "play"));
     elements.stanceNudgeButton.addEventListener("click", () => openSingleHint("stance"));
     elements.driveNudgeButton.addEventListener("click", () => openSingleHint("drive"));
+    elements.stanceVetoButton.addEventListener("click", () => vetoInlineCard("stance"));
+    elements.driveVetoButton.addEventListener("click", () => vetoInlineCard("drive"));
     elements.combinationHintButton.addEventListener("click", openCombinationHint);
     elements.unlockHintsButton.addEventListener("click", unlockSceneHints);
     elements.completeButton.addEventListener("click", completeScene);

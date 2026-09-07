@@ -25,8 +25,8 @@ function validate(options = {}) {
   const guidanceIds = Object.keys(hintBible.subthemeGuidance);
   const packLensIds = Object.keys(hintBible.packLenses || {});
 
-  if (hintBible.HINT_SCHEMA_VERSION !== 1) errors.push("Hint schema version must be 1 for v0.20.0.");
-  if (hintBible.HINT_LIBRARY_VERSION !== "1.0.0") errors.push("Hint library version must be 1.0.0 for v0.20.0.");
+  if (hintBible.HINT_SCHEMA_VERSION !== 2) errors.push("Hint schema version must be 2 for v0.21.x.");
+  if (hintBible.HINT_LIBRARY_VERSION !== "2.0.0") errors.push("Hint library version must be 2.0.0 for v0.21.x.");
   if (hintBible.policies.length !== 4) errors.push(`Expected 4 hint policies; found ${hintBible.policies.length}.`);
   if (hintBible.combinationPatterns.length !== 6) errors.push(`Expected 6 combination patterns; found ${hintBible.combinationPatterns.length}.`);
   if (guidanceIds.length !== expectedSubthemes.length) errors.push(`Expected guidance for ${expectedSubthemes.length} subthemes; found ${guidanceIds.length}.`);
@@ -132,14 +132,14 @@ function validate(options = {}) {
             break;
           }
           seenPatterns.add(hint.patternId);
-          if (!hint.blend.includes(stance.title) || !hint.blend.includes(drive.title)) {
+          if (!hint.wayIn.includes(stance.title) || !hint.wayIn.includes(drive.title)) {
             errors.push(`${stance.id}+${drive.id} angle ${angle} does not reference both card titles.`);
           }
-          if (!hint.stanceMove || !hint.driveMove || !hint.nextBeat) {
-            errors.push(`${stance.id}+${drive.id} angle ${angle} lacks full coaching depth.`);
+          if (!hint.firstMove || !hint.repeatableLoop || !hint.adaptation) {
+            errors.push(`${stance.id}+${drive.id} angle ${angle} lacks full concrete coaching depth.`);
           }
           for (const pattern of FORBIDDEN_PARTNER_CONTROL) {
-            if (pattern.test(`${hint.principle} ${hint.blend} ${hint.nextBeat}`)) {
+            if (pattern.test(`${hint.principle} ${hint.wayIn} ${hint.firstMove} ${hint.repeatableLoop} ${hint.adaptation}`)) {
               errors.push(`${stance.id}+${drive.id} angle ${angle} may prescribe another performer.`);
             }
           }
@@ -148,7 +148,7 @@ function validate(options = {}) {
           errors.push(`${stance.id}+${drive.id} produced ${seenPatterns.size} distinct patterns instead of ${hintBible.combinationPatterns.length}.`);
         }
         const concise = hintEngine.getCombinationHint(stance, drive, 0, "nudges");
-        if (!concise || !concise.blend || concise.stanceMove || concise.driveMove || concise.nextBeat) {
+        if (!concise || !concise.wayIn || !concise.firstMove || concise.repeatableLoop || concise.adaptation) {
           errors.push(`${stance.id}+${drive.id} does not respect the Nudges Only depth policy.`);
         }
       }

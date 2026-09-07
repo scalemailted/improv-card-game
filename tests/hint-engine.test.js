@@ -23,18 +23,18 @@ const patterns = new Set();
 for (let angle = 0; angle < hintBible.combinationPatterns.length; angle += 1) {
   const hint = hintEngine.getCombinationHint(stance, drive, angle, "full");
   patterns.add(hint.patternId);
-  assert.match(hint.blend, /Top of the Ladder/);
-  assert.match(hint.blend, /Admit You Need Me/);
-  assert.ok(hint.stanceMove);
-  assert.ok(hint.driveMove);
-  assert.ok(hint.nextBeat);
+  assert.match(hint.wayIn, /Top of the Ladder/);
+  assert.match(hint.wayIn, /Admit You Need Me/);
+  assert.ok(hint.firstMove);
+  assert.ok(hint.repeatableLoop);
+  assert.ok(hint.adaptation);
 }
 assert.equal(patterns.size, 6);
 const concise = hintEngine.getCombinationHint(stance, drive, 0, "nudges");
-assert.ok(concise.blend);
-assert.equal(concise.stanceMove, null);
-assert.equal(concise.driveMove, null);
-assert.equal(concise.nextBeat, null);
+assert.ok(concise.wayIn);
+assert.ok(concise.firstMove);
+assert.equal(concise.repeatableLoop, null);
+assert.equal(concise.adaptation, null);
 
 assert.equal(hintEngine.isAvailable("after-attempt", false), false);
 assert.equal(hintEngine.isAvailable("after-attempt", true), true);
@@ -55,4 +55,4 @@ assert.equal(audit.result, "PASS", audit.errors.slice(0, 10).join("\n"));
 assert.equal(audit.metrics.personalHands, 57600);
 assert.equal(audit.metrics.generatedStructuralAngles, 345600);
 
-console.log("✓ Local single-card nudges, all 57,600 two-card hands, six structural angles, and coach policy gating passed");
+console.log("✓ Local single-card nudges, all 57,600 two-card hands, six concrete fusion angles, and coach policy gating passed");

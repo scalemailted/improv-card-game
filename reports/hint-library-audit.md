@@ -1,7 +1,7 @@
 # Imprompt Hint Library Audit
 
-**Release:** Imprompt v0.20.0  
-**Hint Bible:** 1.0.0  
+**Release:** Imprompt v0.21.1  
+**Hint Bible:** 2.0.0  
 **Result:** PASS
 
 ## Coverage
@@ -27,7 +27,8 @@
 - Full versus concise policy depth: checked
 - After-first-attempt gating: checked
 - Hints-off suppression: checked
-- Six distinct compositional angles per hand: checked
+- Six distinct concrete fusion angles per hand: checked
+- Integrated way-in, first move, repeatable loop, and adaptation: checked
 
 ## Errors
 

@@ -11,10 +11,10 @@ const app = read("app.js");
 const styles = read("styles.css");
 const sw = read("sw.js");
 const guide = read("docs/IMPROMPT-HINT-BIBLE.md");
-const notes = read("RELEASE-NOTES-v0.20.0.md");
+const notes = read("RELEASE-NOTES-v0.21.1.md");
 
 for (const id of [
-  "stanceNudgeButton", "driveNudgeButton", "combinationHintButton", "hintUnlockCard", "unlockHintsButton",
+  "stanceNudgeButton", "driveNudgeButton", "stanceVetoButton", "driveVetoButton", "combinationHintButton", "hintUnlockCard", "unlockHintsButton",
   "hintDialog", "hintDialogBody", "anotherHintAngleButton", "hintAngleCount", "doneHintButton",
   "exerciseHintPolicySelect", "customHintPolicySelect", "shareHintPolicySummary", "joinHintPolicySummary",
   "learn-hints"
@@ -38,16 +38,28 @@ assert.match(app, /hintEngine\.getSingleHint/);
 assert.match(app, /hintEngine\.getCombinationHint/);
 assert.match(app, /renderHintPolicySummary/);
 
-for (const selector of [".card-nudge-button", ".combination-hint-button", ".hint-modal", ".hint-block", ".hint-policy-summary"]) {
+for (const selector of [".card-inline-action", ".card-veto-button", ".card-nudge-button", ".combination-hint-button", ".hint-modal", ".hint-block", ".hint-policy-summary"]) {
   assert.ok(styles.includes(selector), `Missing CSS selector ${selector}`);
 }
-for (const asset of ["hint-bible.js?v=0.20.0", "hints/card-hints.js?v=0.20.0", "hint-engine.js?v=0.20.0"]) {
+for (const asset of ["hint-bible.js?v=0.21.1", "hints/card-hints.js?v=0.21.1", "hints/concrete-fusion.js?v=0.21.1", "hint-engine.js?v=0.21.1"]) {
   assert.ok(html.includes(asset), `HTML does not load ${asset}`);
   assert.ok(sw.includes(asset), `Service worker does not cache ${asset}`);
 }
 assert.match(guide, /one possible way in/i);
 assert.match(guide, /Holder-only contract/i);
 assert.match(guide, /57,600/i);
-assert.match(notes, /Nudge & Combination Hint System/i);
+assert.match(notes, /Card-Integrated Actions/i);
 
-console.log("✓ v0.20 hint controls, modal, policies, offline assets, and Hint Bible documentation passed");
+
+const stanceWrap = html.match(/<div class="prompt-card-wrap" id="stanceCardWrap">([\s\S]*?)<\/div>\s*<div class="prompt-card-wrap" id="driveCardWrap">/i);
+assert.ok(stanceWrap, "Could not locate the Stance card wrapper");
+assert.match(stanceWrap[1], /id="stanceVetoButton"/);
+assert.match(stanceWrap[1], /id="stanceNudgeButton"/);
+assert.ok(stanceWrap[1].indexOf('id="stanceVetoButton"') < stanceWrap[1].indexOf('id="stanceNudgeButton"'));
+assert.match(app, /function vetoInlineCard/);
+assert.match(app, /elements\.stanceVetoButton\.addEventListener/);
+assert.match(app, /elements\.driveVetoButton\.addEventListener/);
+assert.match(styles, /\.card-veto-button\s*\{[\s\S]*?left:\s*16px/);
+assert.match(styles, /\.card-nudge-button\s*\{[\s\S]*?right:\s*16px/);
+assert.match(app, /Tap card to keep/);
+console.log("✓ v0.21.1 card-integrated actions, concrete fusion hints, policies, offline assets, and Hint Bible documentation passed");

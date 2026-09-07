@@ -120,6 +120,11 @@
             <span class="menu-option-copy"><strong>Invite players</strong><small>Share the general game without any exercise or deck state.</small></span>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
           </button>
+          <button class="menu-option" id="nudgeSettingsButton" type="button">
+            <span class="menu-option-icon" aria-hidden="true">✦</span>
+            <span class="menu-option-copy"><strong>Nudge settings</strong><small>Instant examples or optional on-device AI.</small></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+          </button>
         </nav>
         <section class="active-session-summary" id="activeSessionSummary" hidden>
           <span class="mode-pill" id="activeSessionMode">OPEN PLAY</span>
@@ -128,7 +133,6 @@
         <section class="deck-summary" aria-label="Local deck status">
           <span id="sceneSummary">Ready for scene 1</span><span aria-hidden="true">•</span><span><strong id="stancesRemaining">240</strong> Stances</span><span aria-hidden="true">•</span><span><strong id="drivesRemaining">240</strong> Drives</span>
         </section>
-        <button class="text-button local-hints-menu" id="localHintsMenuButton" type="button">Local hint engine <span>optional</span></button>
         <button class="text-button install-button" id="installButton" type="button" hidden>Install Imprompt on this phone</button>
       </section>
 
@@ -234,7 +238,7 @@
             <button class="draw-filter-trigger" id="driveFilterButton" type="button" data-category="general" aria-haspopup="dialog" aria-label="Choose the Drive draw category"><svg class="category-icon" viewBox="0 0 24 24" aria-hidden="true"><use id="driveFilterIcon" href="#category-icon-shuffle"></use></svg><span id="driveFilterLabel">Random All</span><svg class="filter-chevron" id="driveFilterChevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 9 5 5 5-5"/></svg><span class="filter-lock" id="driveFilterLock" aria-hidden="true" hidden>●</span></button>
           </div>
         </section>
-        <p class="play-note" id="playNote">Tap each panel to draw. Keep the cards, or use Veto and Nudge below them.</p>
+        <p class="play-note" id="playNote"></p>
         <div class="play-hint-actions" id="playHintActions" hidden>
           <button class="combination-hint-button" id="combinationHintButton" type="button" hidden><span class="hint-spark" aria-hidden="true">✦</span><span>How might these work together?</span></button>
           <div class="hint-unlock-card" id="hintUnlockCard" hidden><div><strong>Try the cards once before opening a hint.</strong><p>The coach selected “After first attempt.” Unlocking is private and stays on this phone.</p></div><button class="secondary-button" id="unlockHintsButton" type="button">I tried it · unlock hints</button></div>
@@ -282,7 +286,7 @@
               <ol class="rules-list learn-rules-list">
                 <li><span>1</span><div><strong>Choose Open Play or an exercise.</strong><p>Open Play uses the full library. Mirror gives everyone the same themed pools. Paired gives Player A and Player B complementary assignments.</p></div></li>
                 <li><span>2</span><div><strong>Use your own phone.</strong><p>Every device keeps an independent shuffle, current scene, and Scene Log. QR codes share rules—not cards.</p></div></li>
-                <li><span>3</span><div><strong>Draw and reveal privately.</strong><p>Tap each generic panel to draw and reveal. Tap a revealed card again to Keep or Veto it.</p></div></li>
+                <li><span>3</span><div><strong>Draw and reveal privately.</strong><p>Tap each generic panel to draw and reveal. A drawn card is yours unless you use Veto. Nudge shows a short example.</p></div></li>
                 <li><span>4</span><div><strong>Make the cards playable.</strong><p>Keep the wording private, but make its influence visible through what you do, pursue, avoid, and repeat.</p></div></li>
                 <li><span>5</span><div><strong>Follow the interaction.</strong><p>Notice what your offer causes your partner to do. Repeat and heighten the cause-and-effect pattern you discover together.</p></div></li>
                 <li><span>6</span><div><strong>Complete and review.</strong><p>Save the final cards to your local Scene Log, compare phones, and discuss what shared pattern emerged.</p></div></li>
@@ -394,14 +398,14 @@
             <summary><span class="learn-section-number">9</span><span class="learn-summary-copy"><strong>Optional Hints Without Scripting</strong><small>One possible way in—not the correct answer.</small></span><span class="learn-section-chevron" aria-hidden="true">⌄</span></summary>
             <div class="learn-section-body">
               <p class="learn-lead">Hints translate a private prompt into an observable first move. They never invent the whole scene, prescribe your partner’s response, or replace listening.</p>
-              <div class="hint-principle-card"><strong>Ask for the least help you need.</strong><p>Start with a single-card nudge. Use the two-card hint only when the relationship between your Stance and Drive is unclear. “Another angle” offers a different tactic, not a better answer.</p></div>
+              <div class="hint-principle-card"><strong>Ask for the least help you need.</strong><p>Start with a single-card nudge. Use the two-card hint only when the relationship between your Stance and Drive is unclear. “Another angle” tries another example, not a correct answer. Local AI is optional in Nudge settings.</p></div>
               <div class="coach-mode-grid hint-policy-guide">
                 <article><span>FULL COACHING</span><strong>Nudge + heightening</strong><p>Shows a first move, a way to heighten, and a structured two-card blend.</p></article>
                 <article><span>NUDGES ONLY</span><strong>One concise prompt</strong><p>Offers a behavioral foothold without deeper next-beat guidance.</p></article>
                 <article><span>AFTER FIRST ATTEMPT</span><strong>Try before opening</strong><p>Players deliberately unlock hints only after making an initial attempt.</p></article>
                 <article><span>HINTS OFF</span><strong>Cards and partner only</strong><p>Removes hint controls while leaving the Scene Craft Guide available.</p></article>
               </div>
-              <aside class="rule-callout secondary-callout"><strong>Private and offline.</strong><p>Built-in examples are available offline after the app is cached. An optional local model can generate fresh examples from revealed cards. Setup downloads model and runtime files; card prompts and generated text are not sent to a server.</p></aside>
+              <aside class="rule-callout secondary-callout"><strong>Private and offline.</strong><p>The hint engine uses curated local templates and card metadata. No prompt, card combination, or scene information leaves the phone.</p></aside>
             </div>
           </details>
         </div>
@@ -438,34 +442,46 @@
   <dialog class="choice-modal" id="cardDialog" aria-labelledby="cardDialogTitle"><div class="choice-card" id="cardDialogPanel"><div class="modal-header"><div><span class="eyebrow" id="cardDialogType">CARD OPTIONS</span><span class="category-chip dialog-category" id="cardDialogCategory" hidden><svg class="category-icon" viewBox="0 0 24 24" aria-hidden="true"><use id="cardDialogCategoryIcon" href="#category-icon-sparkles"></use></svg><span id="cardDialogCategoryLabel">General Prompt</span></span><h2 id="cardDialogTitle">Keep or veto?</h2></div><button class="icon-button modal-close" id="closeCardDialogButton" type="button" aria-label="Close card options"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><p class="choice-instruction" id="cardDialogInstruction"></p><p class="choice-explainer">Keep this prompt for the scene, or return only this card to its deck and draw a hidden replacement.</p><div class="choice-actions"><button class="primary-button" id="keepCardButton" type="button"><span class="button-icon" aria-hidden="true">✓</span><span>Keep this card</span></button><button class="danger-button" id="vetoCardButton" type="button">Veto &amp; draw another</button></div></div></dialog>
 
   <dialog class="hint-modal" id="hintDialog" aria-labelledby="hintDialogTitle">
-    <div class="hint-card" id="hintDialogPanel">
-      <div class="modal-header"><div><span class="eyebrow" id="hintDialogEyebrow">PRIVATE NUDGE</span><h2 id="hintDialogTitle">One possible way in</h2></div><button class="icon-button modal-close" id="closeHintDialogButton" type="button" aria-label="Close hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
-      <div class="hint-dialog-body" id="hintDialogBody"></div>
-      <p class="hint-feedback" id="hintFeedback" role="status" aria-live="polite" hidden></p>
-      <button class="secondary-button generate-hint-button" id="generateLocalHintButton" type="button" hidden>Generate a fresh hint</button>
-      <div class="hint-source-row"><span id="hintSource">Built-in example</span><button class="text-button" id="hintLocalSettingsButton" type="button">Local hints</button></div>
-      <div class="hint-dialog-actions"><button class="secondary-button" id="anotherHintAngleButton" type="button">Another angle</button><span class="hint-angle-count" id="hintAngleCount">1 of 2</span><button class="primary-button" id="doneHintButton" type="button">Back to the scene</button></div>
+    <div class="hint-card concise-hint-card" id="hintDialogPanel">
+      <div class="modal-header"><div><span class="eyebrow" id="hintDialogEyebrow">NUDGE</span><h2 id="hintDialogTitle">Try this</h2></div>
+        <button class="icon-button modal-close" id="closeHintDialogButton" type="button" aria-label="Close nudge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      </div>
+      <div class="hint-dialog-body" id="hintDialogBody" aria-live="polite" aria-busy="false"></div>
+      <p class="hint-source" id="hintSource">Quick example</p>
+      <button class="secondary-button quick-now-button" id="quickHintNowButton" type="button" hidden>Use an instant example instead</button>
+      <div class="hint-dialog-actions compact-hint-actions">
+        <button class="secondary-button" id="anotherHintAngleButton" type="button">Another angle</button>
+        <button class="primary-button" id="doneHintButton" type="button">Done</button>
+      </div>
+      <button class="text-button hint-settings-link" id="hintSettingsButton" type="button">Nudge settings</button>
     </div>
   </dialog>
 
-  <dialog class="hint-modal local-model-modal" id="localModelDialog" aria-labelledby="localModelTitle">
-    <div class="hint-card local-model-card">
-      <div class="modal-header"><div><span class="eyebrow">OPTIONAL · EXPERIMENTAL</span><h2 id="localModelTitle">Local hint engine</h2></div><button class="icon-button modal-close" id="closeLocalModelButton" type="button" aria-label="Close local hint settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
-      <p class="local-model-intro">Generate a fresh acting example from your revealed card or pair. The game and built-in hints work without this.</p>
-      <label class="field" for="localModelSelect"><span>Model for this device</span><select id="localModelSelect"></select></label>
-      <p class="local-model-note" id="localModelDescription"></p>
-      <aside class="local-download-notice"><strong id="localModelDownloadSize"></strong><p>The first download also loads the inference runtime. Use Wi-Fi. Generation uses this device’s memory and CPU.</p><p>Model files come from Hugging Face and the runtime from jsDelivr. These hosts receive ordinary download requests, not your card prompts. Inference stays in the browser.</p></aside>
-      <p id="localModelStatus" class="local-model-status" role="status" aria-live="polite">Off. No model downloads start automatically.</p>
-      <progress id="localModelProgress" max="100" value="0" aria-label="Local model download progress" hidden></progress>
-      <div class="local-model-actions">
-        <button class="primary-button" id="loadLocalModelButton" type="button">Download &amp; enable</button>
-        <button class="secondary-button" id="loadSavedLocalModelButton" type="button">Use saved model</button>
-        <button class="secondary-button" id="cancelLocalModelButton" type="button" hidden>Cancel download</button>
-        <button class="secondary-button" id="unloadLocalModelButton" type="button" hidden>Turn off &amp; free memory</button>
-        <button class="text-button local-remove-button" id="clearLocalModelsButton" type="button">Remove model downloads &amp; generated examples</button>
+  <dialog class="hint-modal ai-settings-modal" id="aiSettingsDialog" aria-labelledby="aiSettingsTitle">
+    <div class="hint-card ai-settings-card">
+      <div class="modal-header"><div><span class="eyebrow">NUDGE SETTINGS</span><h2 id="aiSettingsTitle">A little help. Your choice.</h2></div>
+        <button class="icon-button modal-close" id="closeAISettingsButton" type="button" aria-label="Close nudge settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
       </div>
-      <p class="local-model-note">After enabling, open a nudge and choose “Generate a fresh hint.” “Another angle” requests a different example. Generated text can still miss the point; use only what helps.</p>
-      <p class="local-model-note">A saved model must be loaded again after a page reload. Offline generation also needs a cached runtime. Browser storage may be cleared or evicted. Recent Chrome or Edge is the safest starting point.</p>
+      <div class="ai-mode-options" role="group" aria-label="Choose nudge source">
+        <button class="ai-mode-option is-active" id="useQuickHintsButton" type="button" aria-pressed="true"><strong>Quick examples</strong><span>Instant, offline, and varied from a finite set.</span></button>
+        <button class="ai-mode-option" id="useAIHintsButton" type="button" aria-pressed="false"><strong>Local AI <small>Experimental</small></strong><span>A fresh sampled attempt using the exact card wording.</span></button>
+      </div>
+      <section class="ai-install-panel" id="aiInstallPanel" hidden>
+        <p><strong>FLAN-T5-small · 8-bit</strong><br>About 120 MB including the runtime. No account or API key. Model files download from Hugging Face and jsDelivr; your cards are processed on this device.</p>
+        <p>This is the ready-made baseline, not a trained 31M Imprompt model. It may be slow or miss the point. Short output checks use a quick example when a draft fails.</p>
+        <p class="ai-device-warning" id="aiDeviceWarning" hidden></p>
+        <button class="primary-button" id="installAIButton" type="button">Enable &amp; download (~120 MB)</button>
+        <progress id="aiDownloadProgress" max="100" hidden aria-label="Optional AI download progress"></progress>
+        <p class="ai-status" id="aiStatus" role="status" aria-live="polite"></p>
+        <button class="secondary-button" id="cancelAIButton" type="button" hidden>Cancel download</button>
+        <div class="ai-management" id="aiManagement" hidden>
+          <button class="secondary-button" id="enableCachedAIButton" type="button">Use downloaded model</button>
+          <button class="text-button" id="removeAIButton" type="button">Remove AI download</button>
+        </div>
+        <div class="ai-remove-confirm" id="aiRemoveConfirm" hidden><p>Delete only the optional AI files? Your deck, exercises, and scene log will stay.</p><button class="danger-button" id="confirmRemoveAIButton" type="button">Remove AI files</button><button class="secondary-button" id="cancelRemoveAIButton" type="button">Cancel</button></div>
+        <p class="ai-footnote">Coach hint limits still apply. Installed files can be evicted by the browser. Memory use is higher than the download size.</p>
+      </section>
+      <button class="primary-button ai-settings-done" id="doneAISettingsButton" type="button">Done</button>
     </div>
   </dialog>
 
@@ -496,13 +512,13 @@
   <script src="./hints/fusion-profiles.js?v=0.22.0"></script>
   <script src="./hints/concrete-fusion.js?v=0.22.0"></script>
   <script src="./hint-engine.js?v=0.22.0"></script>
-  <script src="./hints/quick-hints.js?v=0.22.0"></script>
-  <script src="./hints/local-models.js?v=0.22.0"></script>
-  <script src="./hints/local-hint-core.js?v=0.22.0"></script>
-  <script src="./hints/local-hints.js?v=0.22.0"></script>
   <script src="./exercises.js?v=0.22.0"></script>
   <script src="./deck-engine.js?v=0.22.0"></script>
   <script src="./vendor/qrcode-core.js?v=0.22.0"></script>
+  <script src="./hints/quick-examples.js?v=0.22.0"></script>
+  <script src="./ai/config.js?v=0.22.0"></script>
+  <script src="./ai/hint-request.js?v=0.22.0"></script>
+  <script src="./ai/local-coach.js?v=0.22.0"></script>
   <script src="./app.js?v=0.22.0"></script>
 </body>
 </html>

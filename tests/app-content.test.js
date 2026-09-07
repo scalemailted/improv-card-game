@@ -13,7 +13,7 @@ const app = read("app.js");
 const styles = read("styles.css");
 const serviceWorker = read("sw.js");
 const manifest = read("manifest.webmanifest");
-const releaseNotes = read("RELEASE-NOTES-v0.21.2.md");
+const releaseNotes = read("RELEASE-NOTES-v0.22.0.md");
 const sceneCraftReleaseNotes = read("RELEASE-NOTES-v0.19.0.md");
 const editorialReleaseNotes = read("RELEASE-NOTES-v0.18.0.md");
 const editorialDocs = [
@@ -114,7 +114,7 @@ assert.match(app, /function renderHintControls/);
 assert.match(app, /function openSingleHint/);
 assert.match(app, /function openCombinationHint/);
 assert.match(app, /function showAnotherHintAngle/);
-assert.match(app, /hintEngine\.getSingleHint/);
+assert.match(app, /quickExamples\.next/);
 assert.match(app, /hintEngine\.getCombinationHint/);
 assert.match(styles, /\.card-nudge-button/);
 assert.match(styles, /\.hint-modal/);
@@ -122,8 +122,7 @@ assert.match(styles, /\.combination-hint-button/);
 assert.match(styles, /\.card-inline-action/);
 assert.match(styles, /\.card-veto-button/);
 assert.match(app, /function vetoInlineCard/);
-assert.doesNotMatch(app, /Tap card to keep/);
-assert.match(app, /config\.action\.hidden = isRevealed/);
+assert.match(app, /Drawn prompts are accepted by default/);
 
 // Category identity remains consistent and accessible by color, icon, and written label.
 const expectedCategories = [
@@ -197,7 +196,7 @@ assert.match(manifest, /concrete local coaching hints/i);
 // v0.18 editorial-readiness evidence is packaged with the application source.
 assert.match(editorialReleaseNotes, /24 semantic rewrites/i);
 assert.match(sceneCraftReleaseNotes, /Scene Craft Guide/i);
-assert.match(releaseNotes, /Concrete Fusion Repair/i);
+assert.match(releaseNotes, /Optional Local AI/i);
 assert.match(editorialReleaseNotes, /1,200 opposite-deck pairings/i);
 for (const file of [...editorialDocs, ...editorialData]) {
   assert.ok(fs.existsSync(path.join(root, file)), `Missing editorial artifact: ${file}`);
@@ -209,4 +208,4 @@ for (const file of editorialData) {
 // QR SVG modules must not inherit the global rounded SVG stroke.
 assert.match(styles, /\.dynamic-qr-panel svg,\s*\.dynamic-qr-panel svg \*[\s\S]*?stroke:\s*none\s*!important/);
 
-console.log("✓ Imprompt v0.21.2 application, pair-specific concrete fusion, card-integrated actions, Scene Craft Guide, editorial readiness, guided-exercise, gallery, history, and cache contracts passed");
+console.log("✓ Imprompt v0.22.0 application, pair-specific concrete fusion, card-integrated actions, Scene Craft Guide, editorial readiness, guided-exercise, gallery, history, and cache contracts passed");

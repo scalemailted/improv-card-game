@@ -1,11 +1,43 @@
+# Hint Bible — v0.22.0 concise-hint / experimental inference addendum
+
+This addendum governs the new visible hint experience. The v2.1 foundation below
+still describes the deterministic engine, which remains available as a plan and
+fallback. It is not a claim that the optional neural generator has been audited
+across all hands.
+
+## Immediate-use rule
+
+One short example, not a restatement or theory lesson. No repeated introduction,
+mandatory reflection paragraph, Kept status, or separate Stance/Drive analysis.
+Examples direct the holder only and should not require a partner response. Examples
+are possibilities, never win conditions or scripts that outrank the shared scene.
+
+## Source identity
+
+Quick example: a finite authored/compositional action. Local AI · experimental: an
+accepted sampled draft from exact revealed card text. A failed AI draft must fall
+back with its source labeled, never masquerade as a model success. Source labels
+are compact; full privacy and limits belong in settings/docs, not each nudge.
+
+## Acceptance is not proof
+
+Automatic checks screen length, copying, obvious role prescription, repetitions,
+and lexical anchors. They cannot prove specificity, coherence, safety, convergence,
+or that both cards are meaningfully merged. No human blind-read or actual model
+quality result is claimed by the mock tests. See LOCAL-AI-COACH.md and the device
+benchmark for the remaining gates. Neural model/prompts have separate versions;
+the 480 playable card instructions/contentVersion values remain unchanged.
+
+---
+
+## Preserved deterministic foundation (v2.1)
+
 # The Imprompt Hint Bible
 
 **Editorial and technical standard for optional local coaching guidance**  
 **Hint Bible version:** 2.1.0  
 **Implemented in:** Imprompt v0.21.2  
 **Relationship to the Card Bible:** subordinate companion standard
-
-**v0.22.0 implementation note:** The authored Bible and fallback engine remain at version 2.1.0. An optional generated-example layer now implements the experimental extension anticipated by section 13. It is subordinate to these coaching rules, preserves all hint policies and uses only revealed-card requests. The detailed, collapsed presentation and runtime-specific requirements are specified in `LOCAL-HINT-ENGINE.md`. References below to “no model” describe the original built-in engine, which remains available unchanged.
 
 ---
 

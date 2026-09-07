@@ -1,27 +1,62 @@
-# Imprompt v0.22.0 — Optional local hint engine
+# Imprompt v0.22.0 — Optional Local AI Nudges (experimental)
 
-## Player-facing changes
+This build uses the supplied v0.21.2 application as its base. It preserves the
+480 playable cards, independent queues, exercise policies, sessions, and historical
+Scene Log snapshots. No trained Imprompt-specific 31M model is included or claimed.
 
-Nudges now start with one concrete example, without the repeated introduction. Full-policy coaching is available in a collapsed “Built-in coaching” section; Nudges-only still suppresses depth. Veto and Need a nudge? remain at the bottom of revealed cards. Cards are treated as kept when revealed, so no redundant keep action or kept-status line is shown.
+## Changed
 
-The core deck gains 96 authored examples across 48 cards. Other single-card fallbacks use existing action seeds directly, without their generic pack preface. Existing pair synthesis remains the instant fallback, with concise examples for three regression pairs. Counts displayed for hand-authored pair angles match their available variants.
+- Revealed cards are accepted implicitly. The redundant Kept line is removed.
+- Veto and Nudge remain inside the bottom-left and bottom-right of each card.
+- A nudge shows one short example, Another angle, and Done. Repeated introductions,
+  instruction blocks, privacy boilerplate, and angle counters are removed.
+- Quick examples rotate without immediately repeating a finite option. They include
+  48 subtheme example pairs plus exact-card and exact-pair examples for key fixtures.
+  Family-level fallback examples are not bespoke interpretations of every card.
+- Optional Local AI reads the exact title and full instruction of only the revealed
+  card(s) requested. A deterministic behavior plan accompanies the request.
+- A classic Web Worker runs Transformers.js 3.8.1 with FLAN-T5-small q8 using single-
+  threaded WASM. No prompt or generated text is submitted to a remote inference API.
+- Enable & download is explicit consent to approximately 120 MB of public model and
+  runtime assets. Nothing large is in the ZIP or the ordinary app precache.
+- Model revision and runtime version are pinned. A dedicated cache survives normal
+  app-cache replacement; removal touches only optional AI assets.
+- Requests use stochastic sampling, six varying prompt cues, and recent-output
+  rejection. Sampling is not a guarantee of endless novelty or good coaching.
+- Obvious long, copied, repetitive, non-actionable, or partner-prescribing drafts
+  are rejected. Two failed drafts or an error show a labeled quick fallback.
+- Cancellation, bounded generation time, idle memory release, and stale-result
+  guards prevent late results replacing a different scene or a closed dialog.
+- All four coach policies still gate hint access. Full and Nudges Only now both
+  use the same concise presentation; the previous multi-block depth distinction
+  is intentionally no longer exposed. After First Attempt and Hints Off remain.
 
-A Main menu → Local hint engine dialog offers two optional SmolLM2 GGUF configurations. Setup is explicit. Once loaded, Generate a fresh hint and Another angle use Wllama in the browser. Loading alone never changes the hint being read. There is no chat UI, cloud inference endpoint, API key, or inference subscription.
+## Model-size boundary
 
-## Request and failure boundaries
+The ready-made baseline has approximately 95 MB of quantized ONNX weights; the
+runtime and tokenizer bring the optional download to roughly 120 MB. This is not
+16M/31M fine-tuning. Runtime RAM is greater than downloaded size. Google explicitly
+labels T5 Efficient Mini as pretrained-only and requiring task-specific fine-tuning.
+See docs/LOCAL-AI-COACH.md for the path to a smaller trained replacement.
 
-Only revealed card instructions are projected into a request: one card for a nudge, one Stance plus one Drive for a pair. Hidden cards, session history and other players' cards are excluded. Full/Nudges/After-first-attempt/Off policies are enforced before consulting either the model or generated cache. Existing draw queues, sessions, exercise sharing and Scene Log formats are preserved.
+## Validation boundary
 
-Generated answers undergo basic length, duplication, format, truncation and partner-control checks. These checks are not proof of good improv or successful two-card synthesis. Invalid answers never replace the current example. Late results cannot overwrite a newly opened hint. Closing a generation, leaving the page, timeout or runtime failure stops inference and preserves the built-in path.
+Local tests cover application logic, prompt construction, output-screening
+heuristics, cache ownership, failure/cancellation handling, and browser DOM layout.
+Worker/model fixtures in tests are explicitly mocks, not real model outputs.
+This environment blocks model/runtime downloads and browser navigation. Real ONNX
+initialization, on-device generation quality, download behavior on the published
+site, and physical Pixel/iPhone performance remain to be verified. Run the bundled
+`tools/local-ai-benchmark.html` on the deployed origin to collect actual results.
 
-A bounded generated-text cache uses separate storage. App-owned OPFS model files are streamed to disk and receive a completion marker only after size/header validation. Removing model data does not clear the deck or Scene Log. Model files are not duplicated into the PWA cache. Model storage is not a cryptographic integrity guarantee and can be evicted by the browser.
+## Deploy
 
-## Files and operation
+Replace the repository-root files with this ZIP's contents. No build command or
+API key is required. Close old tabs after deployment. Test optional model download
+on Wi-Fi using Main menu → Nudge settings → Local AI → Enable & download.
 
-New hint modules: `quick-hints.js`, `local-hint-core.js`, `local-hints.js`, `local-models.js`, `model-store.mjs`, `wllama-adapter.mjs`, `runtime-config.mjs`. The original Card Bible, hint-generation fallback modules, deck engine and 480 card definitions remain intact. App assets and service-worker version advance to 0.22.0.
+## Evidence files
 
-Run `npm start`, then open localhost:8080, or publish the folder to a static HTTPS host. No npm installation is required for the app. Wllama 3.6.1 and GGUF weights download only on explicit setup; they are not bundled in the ZIP. CPU single-thread operation is the conservative default on ordinary static hosting. Cross-origin-isolated hosts may use up to four CPU threads.
-
-## Verification boundary
-
-The existing Node suite, new controller/storage/adapter/asset tests, and offline browser DOM smoke tests pass. The browser tests use an injected fake inference adapter. Real GGUF execution, mobile model performance and offline installed-PWA behavior need target-device testing. See `BUILD-VERIFICATION-v0.22.0.md` and `docs/LOCAL-HINT-ENGINE.md`.
+See reports/local-ai-verification.md, reports/tests-v0.22.0.txt,
+reports/browser-dom-v0.22.0.json, and reports/structural-v0.22.0.json.
+The finite-engine audit does not measure the optional neural model.

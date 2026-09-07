@@ -5,7 +5,9 @@
   const hintBible = window.IMPROMPT_HINT_BIBLE;
   const cardHints = window.IMPROMPT_CARD_HINTS;
   const hintEngine = window.IMPROMPT_HINT_ENGINE;
-  const quickHints = window.IMPROMPT_QUICK_HINTS;
+  const quickExamples = window.IMPROMPT_QUICK_EXAMPLES;
+  const aiRequest = window.IMPROMPT_AI_REQUEST;
+  const localCoach = new window.IMPROMPT_LOCAL_COACH.LocalCoach({ onChange: updateAIStatus });
   const exercises = window.IMPROMPT_EXERCISES;
   const engine = window.ImpromptEngine;
   const qrCore = window.IMPROMPT_QR_CORE;
@@ -77,11 +79,11 @@
     "cardDialogPanel", "cardDialogType", "cardDialogCategory", "cardDialogCategoryLabel",
     "cardDialogCategoryIcon", "cardDialogTitle", "cardDialogInstruction", "closeCardDialogButton",
     "keepCardButton", "vetoCardButton", "hintDialog", "hintDialogPanel", "hintDialogEyebrow", "hintDialogTitle",
-    "closeHintDialogButton", "hintFeedback", "hintSource", "generateLocalHintButton", "hintLocalSettingsButton",
-    "localHintsMenuButton", "localModelDialog", "closeLocalModelButton", "localModelSelect", "localModelDescription",
-    "localModelDownloadSize", "localModelStatus", "localModelProgress", "loadLocalModelButton", "loadSavedLocalModelButton",
-    "cancelLocalModelButton", "unloadLocalModelButton", "clearLocalModelsButton",
-    "hintDialogBody", "anotherHintAngleButton", "hintAngleCount", "doneHintButton",
+    "closeHintDialogButton", "hintDialogBody", "anotherHintAngleButton", "doneHintButton",
+    "hintSource", "quickHintNowButton", "hintSettingsButton", "nudgeSettingsButton", "aiSettingsDialog",
+    "closeAISettingsButton", "doneAISettingsButton", "useQuickHintsButton", "useAIHintsButton", "aiInstallPanel",
+    "installAIButton", "aiDownloadProgress", "aiStatus", "cancelAIButton", "aiManagement", "enableCachedAIButton",
+    "removeAIButton", "aiRemoveConfirm", "confirmRemoveAIButton", "cancelRemoveAIButton", "aiDeviceWarning",
     "filterDialog", "filterDialogPanel", "filterDialogType",
     "filterDialogTitle", "filterDialogDescription", "filterOptions", "closeFilterDialogButton", "confirmDialog",
     "cancelNewDeckButton", "confirmNewDeckButton", "sessionConflictDialog", "sessionConflictCopy",
@@ -120,15 +122,12 @@
   let galleryIndex = 0;
   let deferredInstallPrompt = null;
   let activeHintContext = null;
+  let hintRequestSequence = 0;
+  let hintVariationSequence = Math.floor(Math.random() * 6);
+  const recentHints = new Map();
+  let aiInstallInProgress = false;
+  let lastAIError = "";
   const revealed = { stance: false, drive: false };
-  let hintRequestSerial = 0;
-  let localStorageForHints = null;
-  try { localStorageForHints = window.localStorage; } catch (_) {}
-  const localHints = window.IMPROMPT_LOCAL_HINTS.createController({
-    storage: localStorageForHints,
-    runtimeFactory: async () => (await import("./hints/wllama-adapter.mjs?v=0.22.0")).createRuntime(),
-    onStatus: renderLocalModelStatus
-  });
 
   function loadState() {
     try {
@@ -531,12 +530,11 @@
     const card = engine.findCard(cards, type, cardId);
     const hasCard = Boolean(card);
     const isRevealed = hasCard && revealed[type];
-    const isKept = hasCard && state.current[config.keptKey];
 
     renderFilterTrigger(type);
     config.button.classList.toggle("is-concealed", !isRevealed);
     config.button.classList.toggle("is-revealed", isRevealed);
-    config.button.classList.toggle("is-kept", isRevealed && isKept);
+    config.button.classList.remove("is-kept");
     config.action.hidden = isRevealed;
 
     if (!isRevealed) {
@@ -566,7 +564,7 @@
     config.action.replaceChildren();
     config.button.setAttribute(
       "aria-label",
-      `${config.label}, ${card.category}: ${card.title}. ${card.instruction}. Use Veto to replace this card or Nudge for an example.`
+      `${config.label}, ${card.category}: ${card.title}. ${card.instruction}.`
     );
   }
 
@@ -585,7 +583,8 @@
     elements.playSessionBadge.dataset.mode = session.exercise.mode;
     elements.playNote.textContent = session.exercise.locked
       ? `${session.exercise.roleDescription || session.exercise.focus} Category choices are locked. Use Veto or Nudge inside each revealed card.`
-      : "Tap each panel to draw. Use Veto to replace a card or Nudge for an example.";
+      : "";
+    elements.playNote.hidden = !session.exercise.locked;
   }
 
   function createHintBlock(label, text, className = "") {
@@ -627,202 +626,182 @@
     }
   }
 
-  function cancelHintRequest() {
-    hintRequestSerial += 1;
-    if (localHints.getPhase() === "generating") localHints.cancel();
-  }
-
-  function closeHintDialog() {
-    cancelHintRequest();
-    closeDialog(elements.hintDialog);
+  function clearActiveHint() {
+    hintRequestSequence++;
+    if (localCoach.busy && !aiInstallInProgress) localCoach.cancel();
     activeHintContext = null;
   }
 
-  function hintRequestForContext() {
+  function closeHintDialog() {
+    clearActiveHint();
+    closeDialog(elements.hintDialog);
+  }
+
+  function hintCardsForContext() {
     if (!activeHintContext || !state.current || !hintsAvailableNow()) return null;
-    const types = activeHintContext.kind === "single" ? [activeHintContext.type] : ["stance", "drive"];
-    const entries = types.map((type) => ({
-      revealed: revealed[type] === true,
-      card: engine.findCard(cards, type, state.current[cardConfig(type).currentKey])
-    }));
-    if (entries.some((entry) => !entry.revealed || !entry.card)) return null;
-    return { kind: activeHintContext.kind, cards: entries, policyId: currentHintPolicyId(),
-      unlocked: sceneHintsUnlocked(), angle: activeHintContext.angle, avoid: activeHintContext.seen || [] };
-  }
-
-  function addExtraCoaching(blocks) {
-    if (!blocks.length) return null;
-    const detail = document.createElement("details");
-    detail.className = "hint-extra-coaching";
-    const summary = document.createElement("summary");
-    summary.textContent = "Built-in coaching";
-    detail.append(summary, ...blocks);
-    return detail;
-  }
-
-  function renderHintDialog() {
-    if (!activeHintContext) return;
-    const request = hintRequestForContext();
-    if (!request) { closeHintDialog(); return; }
-    const policyId = request.policyId;
-    let result, text;
-    const extra = [];
-    if (request.kind === "single") {
-      const card = request.cards[0].card;
-      result = hintEngine.getSingleHint(card, request.angle, policyId);
-      if (!result) { closeHintDialog(); return; }
-      text = quickHints.single(card, request.angle);
-      elements.hintDialogPanel.dataset.cardType = card.type;
-      elements.hintDialogEyebrow.textContent = `${card.type.toUpperCase()} NUDGE`;
-      elements.hintDialogTitle.textContent = card.title;
-      if (result.heighten) extra.push(createHintBlock("HEIGHTEN", result.heighten));
-    } else {
-      const [stance, drive] = request.cards.map((entry) => entry.card);
-      result = hintEngine.getCombinationHint(stance, drive, request.angle, policyId);
-      if (!result) { closeHintDialog(); return; }
-      text = quickHints.pair(stance, drive, result, request.angle);
-      elements.hintDialogPanel.dataset.cardType = "combination";
-      elements.hintDialogEyebrow.textContent = "TWO-CARD HINT";
-      elements.hintDialogTitle.textContent = `${stance.title} + ${drive.title}`;
-      if (result.repeatableLoop) {
-        extra.push(createHintBlock("THE CONNECTION", result.wayIn));
-        extra.push(createHintBlock("THE REPEATABLE LOOP", result.repeatableLoop));
-        extra.push(createHintBlock("WHEN THE SCENE CHANGES", result.adaptation));
-      }
+    const policy = currentHintPolicy();
+    if (activeHintContext.kind === 'single') {
+      const type = activeHintContext.type;
+      if (!revealed[type] || !policy.allowsSingle) return null;
+      const c = engine.findCard(cards, type, state.current[cardConfig(type).currentKey]);
+      return c ? [c] : null;
     }
-    const cached = localHints.cached(request);
-    if (cached) text = cached.text;
-    const primary = createHintBlock("", text, "primary-hint-block");
-    const detail = addExtraCoaching(extra);
-    elements.hintDialogBody.replaceChildren(primary, ...(detail ? [detail] : []));
-    activeHintContext.displayed = text;
-    activeHintContext.source = cached ? "cache" : "builtin";
-    elements.hintSource.textContent = cached ? "Saved generated example" : "Built-in example";
-    elements.hintFeedback.hidden = true;
-    const builtInAngles = request.kind === "combination"
-      ? (quickHints.pairs[request.cards.map((entry) => entry.card.id).join("+")]?.length || result.angleCount)
-      : result.angleCount;
-    elements.hintAngleCount.textContent = cached ? `Angle ${request.angle + 1}` : `${request.angle % builtInAngles + 1} of ${builtInAngles}`;
-    elements.anotherHintAngleButton.hidden = false;
-    syncLocalHintButtons();
+    if (!revealed.stance || !revealed.drive || !policy.allowsCombination) return null;
+    const s = engine.findCard(cards, 'stance', state.current.stanceId);
+    const d = engine.findCard(cards, 'drive', state.current.driveId);
+    return s && d ? [s, d] : null;
+  }
+
+  function paintNudge(text, source, busy = false) {
+    const paragraph = document.createElement('p');
+    paragraph.className = 'nudge-example' + (busy ? ' is-generating' : '');
+    paragraph.textContent = text;
+    elements.hintDialogBody.replaceChildren(paragraph);
+    elements.hintDialogBody.setAttribute('aria-busy', String(busy));
+    elements.hintSource.textContent = source;
+    elements.anotherHintAngleButton.disabled = busy;
+    elements.quickHintNowButton.hidden = !busy;
+  }
+
+  function rememberHint(key, text) {
+    if (!recentHints.has(key) && recentHints.size >= 100) recentHints.delete(recentHints.keys().next().value);
+    recentHints.set(key, [...(recentHints.get(key) || []), text].slice(-6));
+  }
+
+  async function renderHintDialog({ forceQuick = false } = {}) {
+    const selected = hintCardsForContext();
+    if (!selected) { closeHintDialog(); return; }
+    const context = activeHintContext;
+    const sequence = ++hintRequestSequence;
+    if (localCoach.busy && !aiInstallInProgress) localCoach.cancel();
+    const kind = context.kind;
+    const key = quickExamples.keyFor(kind, selected);
+    const quick = context.quick && forceQuick ? context.quick : quickExamples.next(kind, selected, currentHintPolicyId());
+    context.quick = quick;
+    const angle = hintVariationSequence++;
+    elements.hintDialogPanel.dataset.cardType = kind === 'single' ? selected[0].type : 'combination';
+    elements.hintDialogEyebrow.textContent = kind === 'single' ? `${selected[0].type.toUpperCase()} NUDGE` : 'TWO-CARD NUDGE';
+    elements.hintDialogTitle.textContent = selected.map(c => c.title).join(' + ');
+    const showQuick = (reason = '') => {
+      if (sequence !== hintRequestSequence || context !== activeHintContext) return;
+      paintNudge(quick.text, reason ? `Quick example · ${reason}` : 'Quick example');
+      rememberHint(key, quick.text);
+    };
+    if (forceQuick || !localCoach.enabled || aiInstallInProgress) { showQuick(); return; }
+    const plan = kind === 'single'
+      ? cardHints.get(selected[0]).manifestationSeeds[angle % 2].action
+      : hintEngine.getCombinationHint(selected[0], selected[1], angle, currentHintPolicyId()).firstMove;
+    const payload = aiRequest.createPayload({ kind, cards: selected, plan, angle,
+      previous: recentHints.get(key) || [], revealed: selected.map(c => c.id), allowed: hintsAvailableNow() });
+    paintNudge(localCoach.ready ? 'Trying a new example…' : 'Loading your on-device model…', 'Local AI · experimental', true);
+    try {
+      const result = await localCoach.generate(payload);
+      if (sequence !== hintRequestSequence || context !== activeHintContext || !hintCardsForContext()) return;
+      if (result.text) {
+        lastAIError = '';
+        paintNudge(result.text, 'Local AI · experimental'); rememberHint(key, result.text);
+      } else showQuick('AI draft did not pass the checks');
+    } catch (error) {
+      if (sequence !== hintRequestSequence || context !== activeHintContext) return;
+      if (error.name !== 'AbortError') lastAIError = String(error.message || 'Model error').slice(0, 220);
+      showQuick(error.name === 'AbortError' ? 'generation cancelled' : 'AI unavailable');
+    }
   }
 
   function openSingleHint(type) {
-    if (!state.current || !revealed[type] || !hintsAvailableNow()) return;
-    cancelHintRequest();
-    activeHintContext = { kind: "single", type, angle: 0, seen: [] };
-    renderHintDialog();
-    if (activeHintContext) openDialog(elements.hintDialog);
-    announce(`${type === "stance" ? "Stance" : "Drive"} nudge opened.`);
+    if (!state.current || !revealed[type] || !hintsAvailableNow() || !currentHintPolicy().allowsSingle) return;
+    activeHintContext = { kind: 'single', type };
+    openDialog(elements.hintDialog);
+    void renderHintDialog();
   }
 
   function openCombinationHint() {
-    if (!state.current || !revealed.stance || !revealed.drive || !hintsAvailableNow()) return;
-    cancelHintRequest();
-    activeHintContext = { kind: "combination", angle: 0, seen: [] };
-    renderHintDialog();
-    if (activeHintContext) openDialog(elements.hintDialog);
-    announce("A private two-card combination hint opened.");
-  }
-
-  async function generateActiveHint(advance = false) {
-    const context = activeHintContext;
-    if (!context || !localHints.isReady() || localHints.getPhase() === "generating") return;
-    if (advance) context.angle += 1;
-    context.seen = [...(context.seen || []), context.displayed].filter(Boolean).slice(-3);
-    const request = hintRequestForContext();
-    if (!request) { closeHintDialog(); return; }
-    const serial = ++hintRequestSerial;
-    elements.hintFeedback.textContent = "Trying a new example…";
-    elements.hintFeedback.hidden = false;
-    let result;
-    try { result = await localHints.generate(request); }
-    catch (_) { result = { ok: false, reason: "unavailable" }; }
-    // Closing, vetoing, advancing a scene, or changing cards invalidates a result.
-    const latest = hintRequestForContext();
-    if (serial !== hintRequestSerial || activeHintContext !== context || !elements.hintDialog.open || !latest ||
-      latest.cards.some((entry, index) => entry.card.id !== request.cards[index].card.id)) return;
-    if (result.ok) {
-      elements.hintDialogBody.querySelector(".primary-hint-block p").textContent = result.text;
-      context.displayed = result.text;
-      context.source = result.source;
-      elements.hintSource.textContent = result.source === "cache" ? "Saved generated example" : "Generated on this device";
-      elements.hintAngleCount.textContent = `Angle ${context.angle + 1}`;
-      elements.hintFeedback.hidden = true;
-      announce("New local example ready.");
-    } else {
-      const messages = {
-        timeout: "Generation took too long; the model was unloaded. Your current example is unchanged.",
-        runtime: "The local model stopped. Your current example is unchanged.",
-        cancelled: "Generation cancelled. Your current example is unchanged.",
-        unavailable: "The local model is not ready. Your current example is unchanged."
-      };
-      elements.hintFeedback.textContent = messages[result.reason] || "That suggestion did not pass the basic checks. Your current example is unchanged; try another angle.";
-      elements.hintFeedback.hidden = false;
-      context.angle += 1; // A retry changes the generation seed instead of replaying a rejected answer.
-    }
-    syncLocalHintButtons();
+    if (!state.current || !revealed.stance || !revealed.drive || !hintsAvailableNow() || !currentHintPolicy().allowsCombination) return;
+    activeHintContext = { kind: 'combination' };
+    openDialog(elements.hintDialog);
+    void renderHintDialog();
   }
 
   function showAnotherHintAngle() {
-    if (!activeHintContext || localHints.getPhase() === "generating") return;
-    if (localHints.isReady()) { void generateActiveHint(true); return; }
-    activeHintContext.angle += 1;
-    activeHintContext.seen = [];
-    renderHintDialog();
-    announce("Another possible angle shown.");
+    if (!activeHintContext) return;
+    activeHintContext.quick = null;
+    void renderHintDialog();
   }
 
-  function syncLocalHintButtons() {
-    const generating = localHints.getPhase() === "generating";
-    elements.generateLocalHintButton.hidden = !localHints.isReady() || (activeHintContext?.source && activeHintContext.source !== "builtin");
-    elements.generateLocalHintButton.disabled = generating;
-    elements.anotherHintAngleButton.disabled = generating;
-    elements.hintDialogBody.setAttribute("aria-busy", String(generating));
-  }
-
-  function renderLocalModelStatus(status) {
-    const busy = ["loading", "generating", "stopping", "clearing"].includes(status.phase);
-    elements.localModelStatus.textContent = status.message || (status.phase === "ready" ? "Ready." : "Off.");
-    elements.localModelSelect.disabled = busy;
-    elements.loadLocalModelButton.disabled = busy;
-    elements.loadSavedLocalModelButton.disabled = busy;
-    elements.clearLocalModelsButton.disabled = busy;
-    elements.cancelLocalModelButton.hidden = status.phase !== "loading";
-    elements.unloadLocalModelButton.hidden = !["ready", "generating"].includes(status.phase);
-    elements.localModelProgress.hidden = status.phase !== "loading";
-    if (status.phase === "loading" && status.total > 0) {
-      elements.localModelProgress.value = Math.min(100, 100 * status.loaded / status.total);
-      if (/Downloading/.test(status.message || "")) elements.localModelStatus.textContent = `${status.message} ${Math.round(status.loaded / 1000000)} / ${status.approximateTotal ? "~" : ""}${Math.round(status.total / 1000000)} MB`;
-    } else elements.localModelProgress.removeAttribute("value");
-    // Never re-render hint text when loading finishes; generation needs an explicit click.
-    syncLocalHintButtons();
-  }
-
-  function renderLocalModelChoice() {
-    const model = window.IMPROMPT_LOCAL_MODELS.find((item) => item.id === elements.localModelSelect.value);
-    if (!model) return;
-    elements.localModelDescription.textContent = model.note;
-    elements.localModelDownloadSize.textContent = `${model.sizeLabel} model download`;
-    try { localStorageForHints?.setItem("imprompt:local-model-preference:v1", model.id); } catch (_) {}
-  }
-
-  function openLocalModelSettings() {
-    renderLocalModelChoice();
-    openDialog(elements.localModelDialog);
-  }
-
-  function initializeLocalHintSettings() {
-    for (const model of window.IMPROMPT_LOCAL_MODELS) {
-      const option = document.createElement("option"); option.value = model.id;
-      option.textContent = model.label;
-      elements.localModelSelect.append(option);
+  function updateAIStatus(update = {}) {
+    // This callback cannot read the deck and never handles prompt text.
+    if (!elements.aiStatus) return;
+    elements.useQuickHintsButton.setAttribute('aria-pressed', String(!localCoach.enabled));
+    elements.useAIHintsButton.setAttribute('aria-pressed', String(localCoach.enabled));
+    elements.useQuickHintsButton.classList.toggle('is-active', !localCoach.enabled);
+    elements.useAIHintsButton.classList.toggle('is-active', localCoach.enabled);
+    if (update.message) elements.aiStatus.textContent = update.message;
+    if (update.phase === 'download') {
+      const mb = Number(update.loaded || 0) / 1e6;
+      elements.aiStatus.textContent = `File ${update.fileIndex} of ${update.totalFiles}${update.cached ? ' · cached' : mb ? ` · ${mb.toFixed(1)} MB` : ''}`;
+      elements.aiDownloadProgress.hidden = false;
+      if (typeof update.progress === 'number') elements.aiDownloadProgress.value = (update.fileIndex - 1 + update.progress / 100) / update.totalFiles * 100;
+      else elements.aiDownloadProgress.removeAttribute('value');
     }
+  }
+
+  async function refreshAISettings() {
+    const supported = window.IMPROMPT_LOCAL_COACH.LocalCoach.supported();
+    elements.aiDeviceWarning.hidden = supported;
+    elements.aiDeviceWarning.textContent = supported ? '' : 'Local AI needs HTTPS, WebAssembly, workers, and browser storage. Quick examples still work.';
+    elements.installAIButton.disabled = !supported || aiInstallInProgress;
     try {
-      const selected = localStorageForHints?.getItem("imprompt:local-model-preference:v1");
-      if (window.IMPROMPT_LOCAL_MODELS.some((model) => model.id === selected)) elements.localModelSelect.value = selected;
-    } catch (_) {}
-    renderLocalModelChoice();
+      const info = await localCoach.inspect();
+      elements.aiManagement.hidden = !info.installed;
+      elements.installAIButton.hidden = info.installed || aiInstallInProgress;
+      elements.enableCachedAIButton.disabled = localCoach.enabled;
+      if (!aiInstallInProgress) elements.aiStatus.textContent = info.installed
+        ? `Downloaded${info.bytes ? ` · about ${(info.bytes / 1e6).toFixed(0)} MB` : ''}. ${localCoach.enabled ? 'Local AI selected.' : 'Quick examples selected.'}`
+        : info.cachedFiles ? 'Download incomplete. Retry resumes completed files.' : 'Nothing downloads until you enable it.';
+    } catch {
+      elements.aiDeviceWarning.hidden = false;
+      elements.aiDeviceWarning.textContent = 'Browser storage is unavailable. Use quick examples.';
+      elements.installAIButton.disabled = true;
+    }
+    if (lastAIError && !aiInstallInProgress) elements.aiStatus.textContent += ` Last attempt: ${lastAIError}`;
+    updateAIStatus();
+  }
+
+  function openAISettings() {
+    closeHintDialog();
+    elements.aiInstallPanel.hidden = !localCoach.enabled;
+    elements.aiRemoveConfirm.hidden = true;
+    openDialog(elements.aiSettingsDialog);
+    void refreshAISettings();
+  }
+
+  function closeAISettings() {
+    if (aiInstallInProgress) localCoach.cancel();
+    closeDialog(elements.aiSettingsDialog);
+  }
+
+  async function installLocalAI() {
+    if (aiInstallInProgress) return;
+    aiInstallInProgress = true;
+    elements.installAIButton.hidden = true;
+    elements.cancelAIButton.hidden = false;
+    elements.aiDownloadProgress.hidden = false;
+    elements.aiDownloadProgress.removeAttribute('value');
+    elements.useAIHintsButton.disabled = true;
+    elements.useQuickHintsButton.disabled = true;
+    elements.aiStatus.textContent = 'Downloading optional model files…';
+    let failure = '';
+    try { await localCoach.install(); }
+    catch (error) { failure = error.name === 'AbortError' ? 'Download cancelled. Quick examples remain available.' : `Download unavailable: ${error.message}`; }
+    finally {
+      aiInstallInProgress = false;
+      elements.cancelAIButton.hidden = true;
+      elements.aiDownloadProgress.hidden = true;
+      elements.useAIHintsButton.disabled = false;
+      elements.useQuickHintsButton.disabled = false;
+      await refreshAISettings();
+      if (failure) elements.aiStatus.textContent = failure;
+    }
   }
 
   function renderCompleteButton() {
@@ -949,15 +928,15 @@
       return;
     }
     if (!revealed[type]) {
-      revealed[type] = true;
       engine.keepCard(state, type);
       saveState();
+      revealed[type] = true;
       renderPlayCard(type);
       renderHintControls();
       announce(`${config.label} revealed.`);
       return;
     }
-    announce(`${config.label} is ready. Use Veto to replace it or Nudge for an example.`);
+    // Drawn prompts are accepted by default. Only Veto changes this card.
   }
 
   function vetoInlineCard(type) {
@@ -2306,23 +2285,33 @@
     elements.doneHintButton.addEventListener("click", closeHintDialog);
     elements.anotherHintAngleButton.addEventListener("click", showAnotherHintAngle);
     elements.hintDialog.addEventListener("click", (event) => closeOnBackdrop(event, elements.hintDialog, closeHintDialog));
-    elements.hintDialog.addEventListener("close", () => { cancelHintRequest(); activeHintContext = null; });
-    elements.hintDialog.addEventListener("cancel", cancelHintRequest);
-    elements.generateLocalHintButton.addEventListener("click", () => { void generateActiveHint(); });
-    elements.localHintsMenuButton.addEventListener("click", openLocalModelSettings);
-    elements.hintLocalSettingsButton.addEventListener("click", openLocalModelSettings);
-    elements.closeLocalModelButton.addEventListener("click", () => closeDialog(elements.localModelDialog));
-    elements.localModelDialog.addEventListener("click", (event) => closeOnBackdrop(event, elements.localModelDialog, () => closeDialog(elements.localModelDialog)));
-    elements.localModelSelect.addEventListener("change", renderLocalModelChoice);
-    elements.loadLocalModelButton.addEventListener("click", () => { void localHints.loadModel(elements.localModelSelect.value, { allowDownload: true }).catch(() => {}); });
-    elements.loadSavedLocalModelButton.addEventListener("click", () => { void localHints.loadModel(elements.localModelSelect.value, { allowDownload: false }).catch(() => {}); });
-    elements.cancelLocalModelButton.addEventListener("click", () => localHints.cancel());
-    elements.unloadLocalModelButton.addEventListener("click", () => { void localHints.unload().catch(() => {}); });
-    elements.clearLocalModelsButton.addEventListener("click", () => {
-      if (window.confirm("Remove downloaded local models and generated examples? Your deck and Scene Log will not change.")) void localHints.clearDownloads();
+    elements.hintDialog.addEventListener("close", () => { if (!elements.hintDialog.open) clearActiveHint(); });
+    elements.hintDialog.addEventListener('cancel', event => { event.preventDefault(); closeHintDialog(); });
+    elements.quickHintNowButton.addEventListener('click', () => void renderHintDialog({ forceQuick: true }));
+    elements.nudgeSettingsButton.addEventListener('click', openAISettings);
+    elements.hintSettingsButton.addEventListener('click', openAISettings);
+    elements.closeAISettingsButton.addEventListener('click', closeAISettings);
+    elements.doneAISettingsButton.addEventListener('click', closeAISettings);
+    elements.aiSettingsDialog.addEventListener('cancel', event => { event.preventDefault(); closeAISettings(); });
+    elements.aiSettingsDialog.addEventListener('click', event => closeOnBackdrop(event, elements.aiSettingsDialog, closeAISettings));
+    elements.useQuickHintsButton.addEventListener('click', () => { localCoach.disable(); elements.aiInstallPanel.hidden = true; updateAIStatus(); });
+    elements.useAIHintsButton.addEventListener('click', async () => {
+      elements.aiInstallPanel.hidden = false;
+      // Opening the choice is not consent to download.
+      if (localCoach.installed) localCoach.preference(true);
+      await refreshAISettings();
     });
-    document.addEventListener("visibilitychange", () => { if (document.hidden) cancelHintRequest(); });
-    window.addEventListener("pagehide", () => { localHints.cancel(); });
+    elements.installAIButton.addEventListener('click', installLocalAI);
+    elements.cancelAIButton.addEventListener('click', () => localCoach.cancel());
+    elements.enableCachedAIButton.addEventListener('click', () => { localCoach.preference(true); void refreshAISettings(); });
+    elements.removeAIButton.addEventListener('click', () => { elements.aiRemoveConfirm.hidden = false; });
+    elements.cancelRemoveAIButton.addEventListener('click', () => { elements.aiRemoveConfirm.hidden = true; });
+    elements.confirmRemoveAIButton.addEventListener('click', async () => {
+      await localCoach.remove(); elements.aiRemoveConfirm.hidden = true; await refreshAISettings();
+      elements.aiStatus.textContent = 'AI files removed. Your deck and history are untouched.';
+    });
+    window.addEventListener('pagehide', () => localCoach.cancel());
+    document.addEventListener('visibilitychange', () => { if (document.hidden && localCoach.busy && !aiInstallInProgress) localCoach.cancel(); });
 
     elements.closeFilterDialogButton.addEventListener("click", closeFilterDialog);
     elements.filterDialog.addEventListener("click", (event) => closeOnBackdrop(event, elements.filterDialog, closeFilterDialog));
@@ -2372,7 +2361,6 @@
     });
   }
 
-  initializeLocalHintSettings();
   registerEvents();
   registerServiceWorker();
   render();

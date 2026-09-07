@@ -11,11 +11,11 @@ const app = read("app.js");
 const styles = read("styles.css");
 const sw = read("sw.js");
 const guide = read("docs/IMPROMPT-HINT-BIBLE.md");
-const notes = read("RELEASE-NOTES-v0.21.2.md");
+const notes = read("RELEASE-NOTES-v0.22.0.md");
 
 for (const id of [
   "stanceNudgeButton", "driveNudgeButton", "stanceVetoButton", "driveVetoButton", "combinationHintButton", "hintUnlockCard", "unlockHintsButton",
-  "hintDialog", "hintDialogBody", "anotherHintAngleButton", "hintAngleCount", "doneHintButton",
+  "hintDialog", "hintDialogBody", "anotherHintAngleButton", "hintSource", "doneHintButton",
   "exerciseHintPolicySelect", "customHintPolicySelect", "shareHintPolicySummary", "joinHintPolicySummary",
   "learn-hints"
 ]) {
@@ -24,7 +24,6 @@ for (const id of [
 assert.match(html, /Need a nudge\?/i);
 assert.match(html, /How might these work together\?/i);
 assert.match(html, /Another angle/i);
-assert.match(html, /Built-in example/i);
 assert.doesNotMatch(html, /id="hintDialogIntro"/);
 assert.match(html, /Full coaching/i);
 assert.match(html, /After first attempt/i);
@@ -35,7 +34,7 @@ assert.match(app, /function openSingleHint/);
 assert.match(app, /function openCombinationHint/);
 assert.match(app, /function showAnotherHintAngle/);
 assert.match(app, /engine\.unlockHints/);
-assert.match(app, /hintEngine\.getSingleHint/);
+assert.match(app, /quickExamples\.next/);
 assert.match(app, /hintEngine\.getCombinationHint/);
 assert.match(app, /renderHintPolicySummary/);
 
@@ -49,7 +48,7 @@ for (const asset of ["hint-bible.js?v=0.22.0", "hints/card-hints.js?v=0.22.0", "
 assert.match(guide, /one possible way in/i);
 assert.match(guide, /Holder-only contract/i);
 assert.match(guide, /57,600/i);
-assert.match(notes, /Concrete Fusion Repair/i);
+assert.match(notes, /Optional Local AI/i);
 
 
 const stanceWrap = html.match(/<div class="prompt-card-wrap" id="stanceCardWrap">([\s\S]*?)<\/div>\s*<div class="prompt-card-wrap" id="driveCardWrap">/i);
@@ -62,6 +61,5 @@ assert.match(app, /elements\.stanceVetoButton\.addEventListener/);
 assert.match(app, /elements\.driveVetoButton\.addEventListener/);
 assert.match(styles, /\.card-veto-button\s*\{[\s\S]*?left:\s*16px/);
 assert.match(styles, /\.card-nudge-button\s*\{[\s\S]*?right:\s*16px/);
-assert.doesNotMatch(app, /Tap card to keep/);
-assert.match(app, /config\.action\.hidden = isRevealed/);
-console.log("✓ v0.21.2 card-integrated actions, repaired pair-specific fusion hints, policies, offline assets, and Hint Bible documentation passed");
+assert.match(app, /Drawn prompts are accepted by default/);
+console.log("✓ v0.22.0 card-integrated actions, repaired pair-specific fusion hints, policies, offline assets, and Hint Bible documentation passed");

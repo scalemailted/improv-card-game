@@ -15,14 +15,14 @@
 
   const hiddenCopy = Object.freeze({
     stance: Object.freeze({
-      role: "YOUR POINT OF VIEW",
+      role: "YOUR PRIVATE POINT OF VIEW",
       title: "How you enter the scene",
-      instruction: "Your attitude, relationship lens, status, or way of interpreting what happens."
+      instruction: "How you interpret yourself, the other person, or the situation. Let it shape how you react."
     }),
     drive: Object.freeze({
-      role: "YOUR SCENE ENGINE",
+      role: "YOUR INITIAL PRESSURE",
       title: "What keeps you playing",
-      instruction: "Your objective, secret, avoidance, or repeatable behavior as the scene develops."
+      instruction: "What you pursue, protect, avoid, discover, or repeat. Let it bend when the scene finds a shared pattern."
     })
   });
 
@@ -57,10 +57,10 @@
     "driveTitle", "stanceInstruction", "driveInstruction", "stanceAction", "driveAction",
     "stanceFilterButton", "driveFilterButton", "stanceFilterLabel", "driveFilterLabel", "stanceFilterIcon",
     "driveFilterIcon", "stanceFilterChevron", "driveFilterChevron", "stanceFilterLock", "driveFilterLock",
-    "playNote", "completeButton", "historyBackButton", "historyStartButton", "historyScenesTab",
+    "playNote", "driveHelpButton", "completeButton", "historyBackButton", "historyStartButton", "historyScenesTab",
     "historyCoverageTab", "historyScenesPanel", "historyCoveragePanel", "historyCount", "historyList",
-    "historyEmpty", "historyEmptyCopy", "coverageCurrentButton", "coverageAllButton", "coverageSummary",
-    "stanceCoverageList", "driveCoverageList", "learnBackButton", "galleryBackButton", "showStancesButton",
+    "historyEmpty", "historyEmptyCopy", "historyPostmortemGuide", "historyGuideButton", "coverageCurrentButton", "coverageAllButton", "coverageSummary",
+    "stanceCoverageList", "driveCoverageList", "learnBackButton", "learnBackLabel", "learnTwoDrivesJumpButton", "galleryBackButton", "showStancesButton",
     "showDrivesButton", "gallerySearchInput", "gallerySearchClear", "galleryCategoryFilters",
     "galleryResultsCount", "galleryCardViewButton", "galleryListViewButton", "galleryCardPanel",
     "galleryListPanel", "galleryEmpty", "galleryCard", "galleryType", "galleryCount", "galleryCategory",
@@ -86,6 +86,7 @@
   let pendingJoinRole = pendingInvite ? pendingInvite.roleId : null;
   let activeView = pendingInvite ? "join" : "title";
   let inviteReturnView = "menu";
+  let learnReturnView = "menu";
   let selectedCardType = null;
   let selectedFilterType = null;
   let selectedExercise = null;
@@ -208,6 +209,51 @@
   function showMainMenu() {
     setActiveView("menu");
     announce("Main menu opened. Your prompts, sessions, and Scene Log remain saved on this phone.");
+  }
+
+  function learnReturnLabel(view) {
+    if (view === "play") {
+      return "Back to scene";
+    }
+    if (view === "history") {
+      return "Scene log";
+    }
+    return "Main menu";
+  }
+
+  function revealLearnSection(sectionId, shouldScroll = true) {
+    const section = document.getElementById(sectionId);
+    if (!section) {
+      return;
+    }
+    if (section.tagName === "DETAILS") {
+      section.open = true;
+    }
+    if (!shouldScroll) {
+      return;
+    }
+    window.setTimeout(() => {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      const summary = section.querySelector("summary");
+      if (summary) {
+        summary.focus({ preventScroll: true });
+      }
+    }, 20);
+  }
+
+  function openLearnSection(sectionId = "learn-quick-start", returnView = activeView, shouldScroll = sectionId !== "learn-quick-start") {
+    const allowedReturnViews = new Set(["menu", "play", "history"]);
+    learnReturnView = allowedReturnViews.has(returnView) ? returnView : "menu";
+    elements.learnBackLabel.textContent = learnReturnLabel(learnReturnView);
+    setActiveView("learn");
+    revealLearnSection(sectionId, shouldScroll);
+    announce("Scene Craft Guide opened.");
+  }
+
+  function closeLearnGuide() {
+    const destination = learnReturnView === "play" && !state.current ? "menu" : learnReturnView;
+    setActiveView(destination || "menu");
+    announce(destination === "play" ? "Returned to your private prompts." : destination === "history" ? "Returned to the Scene Log." : "Main menu opened.");
   }
 
   function openDialog(dialog) {
@@ -1431,6 +1477,7 @@
     elements.historyMenuCount.textContent = String(count);
     elements.historyMenuCount.hidden = count === 0;
     elements.historyEmpty.hidden = count > 0;
+    elements.historyPostmortemGuide.hidden = count === 0;
     elements.historyList.hidden = count === 0;
     if (count === 0) {
       elements.historyList.replaceChildren();
@@ -1781,7 +1828,7 @@
     elements.startSessionButton.addEventListener("click", startOrResumeSession);
     elements.exercisesButton.addEventListener("click", () => setActiveView("exercises"));
     elements.historyButton.addEventListener("click", () => setActiveView("history"));
-    elements.learnButton.addEventListener("click", () => setActiveView("learn"));
+    elements.learnButton.addEventListener("click", () => openLearnSection("learn-quick-start", "menu"));
     elements.galleryButton.addEventListener("click", () => setActiveView("gallery"));
     elements.inviteButton.addEventListener("click", () => openInvitePanel("menu"));
 
@@ -1813,6 +1860,7 @@
     elements.driveCard.addEventListener("click", () => handleCardTap("drive"));
     elements.stanceFilterButton.addEventListener("click", () => openFilterDialog("stance"));
     elements.driveFilterButton.addEventListener("click", () => openFilterDialog("drive"));
+    elements.driveHelpButton.addEventListener("click", () => openLearnSection("learn-two-drives", "play"));
     elements.completeButton.addEventListener("click", completeScene);
 
     elements.historyBackButton.addEventListener("click", showMainMenu);
@@ -1821,7 +1869,9 @@
     elements.historyCoverageTab.addEventListener("click", () => setHistoryView("coverage"));
     elements.coverageCurrentButton.addEventListener("click", () => { coverageScope = "current"; renderCoverage(); });
     elements.coverageAllButton.addEventListener("click", () => { coverageScope = "all"; renderCoverage(); });
-    elements.learnBackButton.addEventListener("click", showMainMenu);
+    elements.historyGuideButton.addEventListener("click", () => openLearnSection("learn-postmortem", "history"));
+    elements.learnBackButton.addEventListener("click", closeLearnGuide);
+    elements.learnTwoDrivesJumpButton.addEventListener("click", () => revealLearnSection("learn-two-drives"));
 
     elements.galleryBackButton.addEventListener("click", showMainMenu);
     elements.showStancesButton.addEventListener("click", () => setGalleryDeck("stance"));

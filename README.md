@@ -5,7 +5,7 @@
 - **1 Stance** — how the performer enters, interprets, or reacts within the scene.
 - **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The active library contains **240 Stances and 240 Drives** across the complete ten-pack roadmap. v0.18.0 editorially consolidates that 480-card library for staged live playtesting while preserving the fast player experience. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
+The active library contains **240 Stances and 240 Drives** across the complete ten-pack roadmap. v0.19.0 adds a polished in-app Scene Craft Guide explaining how two private Drives converge into one shared pattern while preserving the fast player experience. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
 
 ## Open the live game
 
@@ -19,6 +19,43 @@ The active library contains **240 Stances and 240 Drives** across the complete t
   Scan the code or open<br>
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
+
+## What is new in v0.19.0
+
+v0.19.0 turns Imprompt’s central collaboration principle into an in-app **Scene Craft Guide**. The card library, stable IDs, prompt wording, independent-deck behavior, sessions, and immutable Scene Log snapshots remain unchanged.
+
+### Scene Craft Guide
+
+The expanded **Learn to play** screen uses mobile-friendly, accessible sections covering:
+
+- Quick Start
+- Stance, Drive, and shared-pattern distinctions
+- How two Drives align, oppose, or become unequal
+- The Convergence Rule
+- A five-step method for finding the shared pattern
+- “Secret does not mean cryptic”
+- Why a Drive is not a win condition
+- Postmortem questions
+- Coach guidance for Mirror and Paired exercises
+
+The guide’s core framing is:
+
+> **Use the card to enter the scene. Use your partner to discover the scene.**
+
+### Contextual guidance
+
+- The concealed Drive card now calls itself **your initial pressure** and reminds players to let it bend when the scene finds a shared pattern.
+- A compact **How two Drives become one scene** button opens the relevant guide section directly from active play, then returns to the same scene.
+- Completed-scene history includes a postmortem prompt and a direct link to the reflection guide.
+- The Learn screen remembers whether it was opened from the main menu, active play, or Scene Log and returns the player to that context.
+
+### Stability
+
+- No card IDs, titles, instructions, categories, subthemes, pack statuses, or `contentVersion` values changed.
+- All 480 cards and v0.18 editorial-readiness evidence remain intact.
+- Release assets use `?v=0.19.0`, and the service-worker cache is `imprompt-v0.19.0`.
+
+See `docs/SCENE-CRAFT-GUIDE.md` for the standalone guide copy.
 
 ## What is new in v0.18.0
 

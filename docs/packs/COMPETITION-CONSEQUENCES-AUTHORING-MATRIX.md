@@ -1,5 +1,8 @@
 # Imprompt Pack 9 — Competition & Consequences Authoring Matrix
 
+> **v0.18.0 editorial consolidation:** Stable card IDs are preserved. The selected-card copy below reflects the current v0.18.0 wording; the original release wording remains recorded in `editorial/v0.18.0/revision-ledger.json`.
+
+
 **Release:** Imprompt v0.16.0  
 **Reserved IDs:** S193–S216 and D193–D216  
 **Status:** Editorial selection complete; live playtest pending
@@ -17,14 +20,14 @@ Each formal Card Bible subtheme receives exactly one selected Competition & Cons
 | S199 | Stance | History & Relationship | Shared Origins | **We Learned to Win Together** | Treat your memories of competing side by side as proof that you still understand one another better than anyone else. |
 | S200 | Stance | History & Relationship | Debts & Favors | **You Owe Me the Chance** | Treat a past sacrifice, concession, or missed opportunity as a debt that should now be repaid with a real advantage. |
 | S201 | Stance | History & Relationship | Familiar Roles | **The One Who Lets You Win** | Return to the familiar role of making victory easier for others, then let the cost of that generosity become impossible to ignore. |
-| S202 | Stance | History & Relationship | Rivalry & Comparison | **Permanent Scoreboard** | Treat every offer, memory, and achievement as another point in a rivalry that has never truly ended. |
-| S203 | Stance | History & Relationship | Trust & Dependence | **The Rival I Need** | Treat one person as essential to sharpening your effort, while resisting every sign that your ambition depends on their presence. |
+| S202 | Stance | History & Relationship | Rivalry & Comparison | **Debts on the Scoreboard** | Treat past wins and losses as debts. Let each new result change who owes the next favor, risk, or concession. |
+| S203 | Stance | History & Relationship | Trust & Dependence | **Victory Without You** | Treat the possibility of winning without this rival as strangely hollow. Keep raising the challenge so the relationship survives the result. |
 | S204 | Stance | History & Relationship | Rupture & Unfinished Business | **The Unfinished Rematch** | Treat the present as another round of a contest, bargain, or failure that never reached a satisfying conclusion. |
 | S205 | Stance | Emotional Assumptions | Admiration & Envy | **Winning Looks Natural on You** | Treat the ease and confidence success seems to give others as both inspiring and threatening, then sharpen your need to outperform them. |
 | S206 | Stance | Emotional Assumptions | Identity & Nostalgia | **Back When I Was Ahead** | Interpret the present through a time when you felt more successful, admired, or certain of your place. |
 | S207 | Stance | Emotional Assumptions | Fear & Insecurity | **Second Place Feels Like Disappearing** | Treat every comparison as a threat to your worth. Respond by proving that you still matter before the moment can move on. |
-| S208 | Stance | Emotional Assumptions | Care & Control | **I Decide What You Can Risk** | Frame control over someone else’s choices as protection from consequences you believe they may underestimate. |
-| S209 | Stance | Emotional Assumptions | Approval & Belonging | **Worth Keeping on the Team** | Seek signs that your contribution still earns a place. Increase your effort whenever belonging feels uncertain. |
+| S208 | Stance | Emotional Assumptions | Care & Control | **Your Risk, My Cost** | Treat every choice around you as a risk whose consequences may land on you. Press for a voice in decisions you cannot control. |
+| S209 | Stance | Emotional Assumptions | Approval & Belonging | **Worth Keeping Around** | Seek signs that your contribution still earns a place. Increase your effort whenever belonging feels uncertain. |
 | S210 | Stance | Emotional Assumptions | Pride & Validation | **Make the Win Count** | Treat success as meaningless unless its difficulty, sacrifice, and personal cost are fully recognized. |
 | S211 | Stance | Worldview & Absurdity | Ritual & Tradition | **The Winner’s Ceremony** | Treat every contest, bargain, or decision as incomplete until the proper recognition, ritual, and consequence have occurred. |
 | S212 | Stance | Worldview & Absurdity | Crisis & Catastrophe | **Everything Is Sudden Death** | Approach minor choices as elimination rounds where one wrong move ends the entire future. |
@@ -50,7 +53,7 @@ Each formal Card Bible subtheme receives exactly one selected Competition & Cons
 | D208 | Drive | Secrets & Avoidance | Induce a Confession | **Admit What You Wanted** | Maneuver them into revealing which outcome they truly wanted before you explain your own stake. |
 | D209 | Drive | Secrets & Avoidance | Reframe Failure | **Investment in the Next Round** | Describe defeat, penalty, or a bad bargain as a deliberate investment in a larger future win. |
 | D210 | Drive | Secrets & Avoidance | Feign Competence | **I Know How to Win This** | Perform mastery of the rules, odds, and consequences while improvising every decision. |
-| D211 | Drive | Repeatable Behaviors | Competition Loop | **Turn It into a Tiebreaker** | Turn every disagreement into another round designed to settle who is better, right, or more committed. |
+| D211 | Drive | Repeatable Behaviors | Competition Loop | **No Tie Stands** | Turn every even outcome into a formal rematch with a new rule and a consequence for losing. |
 | D212 | Drive | Repeatable Behaviors | Positive Reframing | **Every Loss Builds the Comeback** | Treat each setback as proof that the eventual victory will be more impressive. |
 | D213 | Drive | Repeatable Behaviors | Emotional Contradiction | **Congratulate Through Your Teeth** | Perform warm praise while allowing competitive resentment to intensify beneath every compliment. |
 | D214 | Drive | Repeatable Behaviors | Transactional Framing | **Nothing Without Stakes** | Price every request and decision with a reward, penalty, bargain, or trade. |

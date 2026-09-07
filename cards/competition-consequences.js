@@ -18,7 +18,8 @@
   }
 
   const PACK_ID = "competition-consequences";
-  const CONTENT_VERSION = "0.16.0";
+  const DEFAULT_CONTENT_VERSION = "0.16.0";
+  const PACK_VERSION = "0.18.0";
   const ALL_MODES = ["open", "mirror", "paired"];
 
   function createCard(definition) {
@@ -33,7 +34,7 @@
       id: definition.id,
       type: definition.type,
       packId: PACK_ID,
-      contentVersion: CONTENT_VERSION,
+      contentVersion: definition.contentVersion || DEFAULT_CONTENT_VERSION,
       status: "playtest",
       title: definition.title,
       instruction: definition.instruction,
@@ -264,8 +265,8 @@
   {
     "id": "S202",
     "type": "stance",
-    "title": "Permanent Scoreboard",
-    "instruction": "Treat every offer, memory, and achievement as another point in a rivalry that has never truly ended.",
+    "title": "Debts on the Scoreboard",
+    "instruction": "Treat past wins and losses as debts. Let each new result change who owes the next favor, risk, or concession.",
     "categoryId": "history-relationship",
     "subthemeId": "rivalry-comparison",
     "difficulty": "beginner",
@@ -275,20 +276,21 @@
     "coachRoles": [
       "rival",
       "scorekeeper",
-      "competitor"
+      "dealmaker"
     ],
     "motifs": [
-      "rivalry",
-      "comparison",
       "score",
-      "history"
-    ]
+      "obligation",
+      "consequences",
+      "bargains"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "S203",
     "type": "stance",
-    "title": "The Rival I Need",
-    "instruction": "Treat one person as essential to sharpening your effort, while resisting every sign that your ambition depends on their presence.",
+    "title": "Victory Without You",
+    "instruction": "Treat the possibility of winning without this rival as strangely hollow. Keep raising the challenge so the relationship survives the result.",
     "categoryId": "history-relationship",
     "subthemeId": "trust-dependence",
     "difficulty": "intermediate",
@@ -296,16 +298,17 @@
     "tone": "grounded",
     "orientation": "toward-partner",
     "coachRoles": [
-      "dependent",
       "rival",
+      "dependent",
       "contender"
     ],
     "motifs": [
-      "dependence",
       "competition",
-      "ambition",
-      "trust"
-    ]
+      "connection",
+      "winning",
+      "loss"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "S204",
@@ -403,8 +406,8 @@
   {
     "id": "S208",
     "type": "stance",
-    "title": "I Decide What You Can Risk",
-    "instruction": "Frame control over someone else’s choices as protection from consequences you believe they may underestimate.",
+    "title": "Your Risk, My Cost",
+    "instruction": "Treat every choice around you as a risk whose consequences may land on you. Press for a voice in decisions you cannot control.",
     "categoryId": "emotional-assumptions",
     "subthemeId": "care-control",
     "difficulty": "intermediate",
@@ -412,21 +415,22 @@
     "tone": "grounded",
     "orientation": "toward-partner",
     "coachRoles": [
-      "protector",
+      "accountability-keeper",
       "controller",
-      "accountability-keeper"
+      "protector"
     ],
     "motifs": [
-      "care",
-      "control",
       "risk",
-      "consequences"
-    ]
+      "consequences",
+      "control",
+      "fairness"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "S209",
     "type": "stance",
-    "title": "Worth Keeping on the Team",
+    "title": "Worth Keeping Around",
     "instruction": "Seek signs that your contribution still earns a place. Increase your effort whenever belonging feels uncertain.",
     "categoryId": "emotional-assumptions",
     "subthemeId": "approval-belonging",
@@ -444,7 +448,8 @@
       "validation",
       "teamwork",
       "worth"
-    ]
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "S210",
@@ -1024,8 +1029,8 @@
   {
     "id": "D211",
     "type": "drive",
-    "title": "Turn It into a Tiebreaker",
-    "instruction": "Turn every disagreement into another round designed to settle who is better, right, or more committed.",
+    "title": "No Tie Stands",
+    "instruction": "Turn every even outcome into a formal rematch with a new rule and a consequence for losing.",
     "categoryId": "repeatable-behaviors",
     "subthemeId": "competition-loop",
     "difficulty": "beginner",
@@ -1035,14 +1040,15 @@
     "coachRoles": [
       "competitor",
       "scorekeeper",
-      "challenger"
+      "referee"
     ],
     "motifs": [
       "competition",
       "score",
-      "comparison",
-      "commitment"
-    ]
+      "rules",
+      "outcome"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "D212",
@@ -1169,9 +1175,13 @@
     schemaVersion: bible.CARD_SCHEMA_VERSION,
     id: PACK_ID,
     title: "Competition & Consequences",
-    version: CONTENT_VERSION,
+    version: PACK_VERSION,
     status: "playtest",
     sequence: 9,
+    publicationStage: bible.getPack(PACK_ID).publicationStage,
+    publicationWave: bible.getPack(PACK_ID).publicationWave,
+    editorialReviewVersion: bible.getPack(PACK_ID).editorialReviewVersion,
+    remainingPublicationGates: [...bible.getPack(PACK_ID).remainingPublicationGates],
     description: "Winning, comparison, bargains, accountability, sacrifice, escalation, and what success costs.",
     stances,
     drives

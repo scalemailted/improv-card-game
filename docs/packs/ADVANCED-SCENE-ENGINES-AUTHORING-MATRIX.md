@@ -1,5 +1,8 @@
 # Imprompt Pack 10 — Advanced Scene Engines Authoring Matrix
 
+> **v0.18.0 editorial consolidation:** Stable card IDs are preserved. The selected-card copy below reflects the current v0.18.0 wording; the original release wording remains recorded in `editorial/v0.18.0/revision-ledger.json`.
+
+
 **Release:** Imprompt v0.17.0  
 **Reserved IDs:** S217–S240 and D217–D240  
 **Status:** Editorial selection complete; live playtest pending
@@ -9,10 +12,10 @@ Each formal Card Bible subtheme receives exactly one selected Advanced Scene Eng
 | ID | Deck | Category | Subtheme | Selected title | Instruction |
 |---|---|---|---|---|---|
 | S217 | Stance | Status & Authority | Command Presence | **Command with an Escape Hatch** | Carry yourself as though every decision settles the matter, while preserving one ambiguity that lets you later reverse what the decision meant. |
-| S218 | Stance | Status & Authority | Precarious Authority | **One Detail Could Undo Me** | Project total control while treating one recurring detail as the thing that could expose how little authority you truly possess. |
+| S218 | Stance | Status & Authority | Precarious Authority | **Authority Changes Hands** | Project control while guarding one detail that could transfer authority elsewhere. Let each return of that detail shift whom you defer to or overrule. |
 | S219 | Stance | Status & Authority | Professional Expertise | **The Expert Blind Spot** | Perform mastery everywhere except one specific subject. Deflect it at first, reinterpret it later, and let each return increase the pressure. |
 | S220 | Stance | Status & Authority | Belonging & Legitimacy | **Insider with the Wrong Memories** | Act like an unquestioned insider while offering details that almost fit. Treat each contradiction as proof the group, system, or relationship changed. |
-| S221 | Stance | Status & Authority | Mentorship & Rank | **The Student Rewrites the Lesson** | Treat any correction, surprise, or improvement as evidence your teaching succeeded. Claim each reversal as the lesson you intended all along. |
+| S221 | Stance | Status & Authority | Mentorship & Rank | **I Meant to Teach That** | Treat any correction, surprise, or improvement as evidence your teaching succeeded. Claim each reversal as the lesson you intended all along. |
 | S222 | Stance | Status & Authority | Hidden Leverage | **The Favor Not Yet Named** | Behave as though you hold decisive leverage, but delay naming it until another explanation has taken root. |
 | S223 | Stance | History & Relationship | Shared Origins | **Same Memory, Different Meaning** | Return to one shared memory as comfort, then evidence, then accusation, changing its meaning without abandoning the facts. |
 | S224 | Stance | History & Relationship | Debts & Favors | **The Debt Changes Hands** | Treat every favor as shifting who owes whom. Recalculate the balance whenever help is accepted, refused, or remembered. |
@@ -31,9 +34,9 @@ Each formal Card Bible subtheme receives exactly one selected Advanced Scene Eng
 | S237 | Stance | Worldview & Absurdity | Celebration & Optimism | **Exactly the Victory I Meant** | Celebrate every reversal as though it secretly delivers the outcome you wanted, while preserving enthusiasm for all earlier outcomes. |
 | S238 | Stance | Worldview & Absurdity | Practical Grounding | **Track the Cost That Returns** | Accept every twist, but keep returning to one practical consequence whose importance grows as the scene becomes more complicated. |
 | S239 | Stance | Worldview & Absurdity | Fixation & Significance | **The Object Changes Meaning** | Choose one ordinary detail and reinterpret it as gift, threat, evidence, or symbol as the scene evolves. |
-| S240 | Stance | Worldview & Absurdity | Pattern & Grand Meaning | **Everything Rhymes Eventually** | Treat repeated words, actions, and reversals as echoes of one larger pattern whose meaning you keep revising. |
+| S240 | Stance | Worldview & Absurdity | Pattern & Grand Meaning | **The Callback Changes Meaning** | Treat every returning phrase or action as evidence the relationship has changed. Repeat it with a new emotional meaning each time. |
 | D217 | Drive | Direct Objectives | Secure Help | **Make Help Define Us** | Get their help, then use how it is offered to redefine what the relationship means. |
-| D218 | Drive | Direct Objectives | Prevent Departure | **One More Unresolved Reason** | Keep them present by introducing a new unresolved reason whenever the previous reason is answered. |
+| D218 | Drive | Direct Objectives | Prevent Departure | **Reopen the First Reason** | Keep them present by returning to the first reason for staying and revealing that it now means something different. |
 | D219 | Drive | Direct Objectives | Obtain an Apology | **Change What the Apology Is For** | Get an apology, then reveal that the original offense was only the first layer of what needs repair. |
 | D220 | Drive | Direct Objectives | Gain Approval | **Approve the Harmless Version** | Get approval for a harmless version of your plan, then gradually reveal what that approval now commits them to. |
 | D221 | Drive | Direct Objectives | Transfer the Task | **The Handoff Already Happened** | Get them to accept responsibility by returning to earlier offers until the task seems to have been assigned all along. |

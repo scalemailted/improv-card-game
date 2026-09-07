@@ -1,5 +1,8 @@
 # Imprompt Pack 8 — Rules, Rituals & Institutions Candidate Pool
 
+> **v0.18.0 editorial consolidation:** Stable card IDs are preserved. The selected-card copy below reflects the current v0.18.0 wording; the original release wording remains recorded in `editorial/v0.18.0/revision-ledger.json`.
+
+
 **Release target:** Imprompt v0.15.0  
 **Machine-readable source:** `cards/candidates/rules-rituals-institutions-candidate-pool.json`  
 **Candidates:** 64 total — 48 selected, 8 held, 8 rejected
@@ -13,14 +16,14 @@ The candidate pool records every drafted concept considered for Pack 8. Selected
 | RRI-S-C01 | S169 | Status & Authority / Command Presence | **Order of Business** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
 | RRI-S-C02 | S170 | Status & Authority / Precarious Authority | **Authority on Paper** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
 | RRI-S-C03 | S171 | Status & Authority / Professional Expertise | **Certified Correct** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
-| RRI-S-C04 | S172 | Status & Authority / Belonging & Legitimacy | **Knows the Customs** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
+| RRI-S-C04 | S172 | Status & Authority / Belonging & Legitimacy | **Customs Interpreter** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
 | RRI-S-C05 | S173 | Status & Authority / Mentorship & Rank | **I Learned It the Hard Way** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
 | RRI-S-C06 | S174 | Status & Authority / Hidden Leverage | **The Necessary Signature** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
 | RRI-S-C07 | S175 | History & Relationship / Shared Origins | **We Know the Old Rules** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
 | RRI-S-C08 | S176 | History & Relationship / Debts & Favors | **I Made the Exception** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
 | RRI-S-C09 | S177 | History & Relationship / Familiar Roles | **The Designated Translator** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
 | RRI-S-C10 | S178 | History & Relationship / Rivalry & Comparison | **Better at the System** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
-| RRI-S-C11 | S179 | History & Relationship / Trust & Dependence | **I Need Your Access** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
+| RRI-S-C11 | S179 | History & Relationship / Trust & Dependence | **My Sponsor Inside** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
 | RRI-S-C12 | S180 | History & Relationship / Rupture & Unfinished Business | **The Rule You Broke** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
 | RRI-S-C13 | S181 | Emotional Assumptions / Admiration & Envy | **Effortless Insider** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
 | RRI-S-C14 | S182 | Emotional Assumptions / Identity & Nostalgia | **When I Believed in the Rules** | Selected | Selected as the clearest portable, holder-specific Rules, Rituals & Institutions stance for this required subtheme slot. |
@@ -48,16 +51,16 @@ The candidate pool records every drafted concept considered for Pack 8. Selected
 | Candidate | Reserved ID | Category / subtheme | Title | Disposition | Rationale |
 |---|---|---|---|---|---|
 | RRI-D-C01 | D169 | Direct Objectives / Secure Help | **Co-Sign This** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
-| RRI-D-C02 | D170 | Direct Objectives / Prevent Departure | **You Haven’t Been Dismissed** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
+| RRI-D-C02 | D170 | Direct Objectives / Prevent Departure | **Close It Properly** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
 | RRI-D-C03 | D171 | Direct Objectives / Obtain an Apology | **Apologize Properly** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
 | RRI-D-C04 | D172 | Direct Objectives / Gain Approval | **Get It on the Record** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
 | RRI-D-C05 | D173 | Direct Objectives / Transfer the Task | **Assigned by Procedure** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
 | RRI-D-C06 | D174 | Direct Objectives / Extract Information | **Complete the Record** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
 | RRI-D-C07 | D175 | Direct Objectives / Recruit an Ally | **Make It Official** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
 | RRI-D-C08 | D176 | Direct Objectives / Induce Risk | **Request an Exception** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
-| RRI-D-C09 | D177 | Direct Objectives / Gain Recognition | **Credit in the Minutes** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
+| RRI-D-C09 | D177 | Direct Objectives / Gain Recognition | **Record My Contribution** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
 | RRI-D-C10 | D178 | Direct Objectives / Force a Choice | **Choose the Precedent** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
-| RRI-D-C11 | D179 | Direct Objectives / Test Loyalty | **Follow the Custom** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
+| RRI-D-C11 | D179 | Direct Objectives / Test Loyalty | **Interpret the Custom** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
 | RRI-D-C12 | D180 | Direct Objectives / Obtain Surrender | **Withdraw the Objection** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
 | RRI-D-C13 | D181 | Secrets & Avoidance / Conceal Culpability | **Lost in the Process** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
 | RRI-D-C14 | D182 | Secrets & Avoidance / Avoid the Subject | **Outside the Scope** | Selected | Selected as the clearest playable Rules, Rituals & Institutions engine for this required Drive subtheme slot. |
@@ -94,9 +97,9 @@ Project firm control through titles and procedure, then tighten the formalities 
 
 Treat forms, standards, and exact wording as a technical craft. Correct shortcuts before discussing whether the result actually works.
 
-### S172 — Knows the Customs
+### S172 — Customs Interpreter
 
-Behave as though effortless knowledge of the unwritten rules proves you belong. Follow them conspicuously and conceal every moment of uncertainty.
+Act as the translator of unwritten customs. Correct breaches, explain exceptions, and make your usefulness proof that you belong.
 
 ### S173 — I Learned It the Hard Way
 
@@ -122,9 +125,9 @@ Return automatically to explaining rules, smoothing procedures, and answering qu
 
 Treat every rule, shortcut, and correction as a chance to prove you understand the system better than anyone else.
 
-### S179 — I Need Your Access
+### S179 — My Sponsor Inside
 
-Use someone’s guidance to navigate the system while resisting every sign that their help gives them influence over you.
+Treat one person as your sponsor inside the system. Seek their introductions and approval while resisting the identity their support assigns you.
 
 ### S180 — The Rule You Broke
 
@@ -182,9 +185,9 @@ Treat every personal choice as evidence of a larger system. Connect exceptions, 
 
 Get someone to help by making them an official participant who shares responsibility for the outcome.
 
-### D170 — You Haven’t Been Dismissed
+### D170 — Close It Properly
 
-Keep someone present by insisting that one final step, acknowledgment, or ceremony must happen before anyone may leave.
+Keep them present until both of you complete the ritual that formally ends this role, meeting, or relationship.
 
 ### D171 — Apologize Properly
 
@@ -210,7 +213,7 @@ Recruit someone by giving them a title, role, or ceremonial duty that makes part
 
 Get someone to bend one rule first so you can treat the decision as a precedent.
 
-### D177 — Credit in the Minutes
+### D177 — Record My Contribution
 
 Get your contribution formally recognized, recorded, or repeated where it cannot be quietly forgotten.
 
@@ -218,9 +221,9 @@ Get your contribution formally recognized, recorded, or repeated where it cannot
 
 Make someone choose which rule, custom, or prior decision will govern what happens now.
 
-### D179 — Follow the Custom
+### D179 — Interpret the Custom
 
-Create increasingly inconvenient formalities to test whether someone respects the group, relationship, or institution.
+Ask them to apply an ambiguous custom where the wording is unclear. Treat their interpretation as the real test of loyalty.
 
 ### D180 — Withdraw the Objection
 

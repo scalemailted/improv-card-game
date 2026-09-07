@@ -18,7 +18,8 @@
   }
 
   const PACK_ID = "power-games";
-  const CONTENT_VERSION = "0.10.0";
+  const DEFAULT_CONTENT_VERSION = "0.10.0";
+  const PACK_VERSION = "0.18.0";
   const ALL_MODES = ["open", "mirror", "paired"];
 
   function createCard(definition) {
@@ -33,7 +34,7 @@
       id: definition.id,
       type: definition.type,
       packId: PACK_ID,
-      contentVersion: CONTENT_VERSION,
+      contentVersion: definition.contentVersion || DEFAULT_CONTENT_VERSION,
       status: "playtest",
       title: definition.title,
       instruction: definition.instruction,
@@ -143,8 +144,8 @@
   {
     "type": "stance",
     "id": "S53",
-    "title": "I Made You Ready",
-    "instruction": "Treat another person’s competence as evidence of your teaching, influence, and continuing seniority.",
+    "title": "The Crown Must Pass",
+    "instruction": "Treat another person as your likely successor. Prepare them to lead, then reclaim authority whenever their independence makes your influence feel temporary.",
     "categoryId": "status-authority",
     "subthemeId": "mentorship-rank",
     "difficulty": "intermediate",
@@ -153,14 +154,16 @@
     "orientation": "toward-partner",
     "coachRoles": [
       "mentor",
-      "authority"
+      "insecure-authority",
+      "successor"
     ],
     "motifs": [
-      "hierarchy",
       "succession",
-      "recognition",
-      "authority"
-    ]
+      "hierarchy",
+      "autonomy",
+      "loss"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "type": "stance",
@@ -829,8 +832,8 @@
   {
     "type": "drive",
     "id": "D60",
-    "title": "Yield Control",
-    "instruction": "Make someone surrender control of a decision, resource, or symbol of authority.",
+    "title": "Pass Me the Authority",
+    "instruction": "Get someone to transfer authority publicly by naming you as the person who decides what happens next.",
     "categoryId": "direct-objectives",
     "subthemeId": "obtain-surrender",
     "difficulty": "beginner",
@@ -839,14 +842,16 @@
     "orientation": "against-partner",
     "coachRoles": [
       "acquirer",
-      "challenger"
+      "successor",
+      "claimant"
     ],
     "motifs": [
-      "control",
-      "resources",
-      "status",
-      "autonomy"
-    ]
+      "authority",
+      "succession",
+      "legitimacy",
+      "recognition"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "type": "drive",
@@ -1122,9 +1127,13 @@
     schemaVersion: bible.CARD_SCHEMA_VERSION,
     id: PACK_ID,
     title: "Power Games",
-    version: CONTENT_VERSION,
+    version: PACK_VERSION,
     status: "playtest",
     sequence: 3,
+    publicationStage: bible.getPack(PACK_ID).publicationStage,
+    publicationWave: bible.getPack(PACK_ID).publicationWave,
+    editorialReviewVersion: bible.getPack(PACK_ID).editorialReviewVersion,
+    remainingPublicationGates: [...bible.getPack(PACK_ID).remainingPublicationGates],
     description: "Authority, legitimacy, leverage, dependency, hierarchy, and the struggle over who gets to decide.",
     stances,
     drives

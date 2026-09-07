@@ -13,6 +13,20 @@ const app = read("app.js");
 const styles = read("styles.css");
 const serviceWorker = read("sw.js");
 const manifest = read("manifest.webmanifest");
+const releaseNotes = read("RELEASE-NOTES-v0.18.0.md");
+const editorialDocs = [
+  "docs/editorial/EDITORIAL-CONSOLIDATION-v0.18.0.md",
+  "docs/editorial/AMBER-SUBTHEME-REVIEW-v0.18.0.md",
+  "docs/editorial/STAGED-PUBLICATION-PLAN-v0.18.0.md",
+  "docs/editorial/LIVE-VALIDATION-WORKSHEET-v0.18.0.md"
+];
+const editorialData = [
+  "editorial/v0.18.0/revision-ledger.json",
+  "editorial/v0.18.0/overlap-resolution.json",
+  "editorial/v0.18.0/amber-subtheme-review.json",
+  "editorial/v0.18.0/subtheme-readiness.json",
+  "editorial/v0.18.0/publication-waves.json"
+];
 
 // Brand, top-level navigation, and private-deck language.
 assert.match(html, /<span>im<\/span>prompt/i);
@@ -108,20 +122,29 @@ assert.equal(exercises.getPresets("mirror").length, 4);
 assert.equal(exercises.getPresets("paired").length, 4);
 
 // Card Bible runtime files load before the compatibility aggregator.
-assert.ok(html.indexOf("./card-bible.js?v=0.17.0") < html.indexOf("./cards/core-foundations.js?v=0.17.0"));
-assert.ok(html.indexOf("./cards/core-foundations.js?v=0.17.0") < html.indexOf("./cards/everyday-friction.js?v=0.17.0"));
-assert.ok(html.indexOf("./cards/everyday-friction.js?v=0.17.0") < html.indexOf("./cards/power-games.js?v=0.17.0"));
-assert.ok(html.indexOf("./cards/power-games.js?v=0.17.0") < html.indexOf("./cards/relationship-knots.js?v=0.17.0"));
-assert.ok(html.indexOf("./cards/relationship-knots.js?v=0.17.0") < html.indexOf("./cards/emotional-pressure.js?v=0.17.0"));
-assert.ok(html.indexOf("./cards/emotional-pressure.js?v=0.17.0") < html.indexOf("./cards/secrets-schemes.js?v=0.17.0"));
-assert.ok(html.indexOf("./cards/secrets-schemes.js?v=0.17.0") < html.indexOf("./cards/absurd-commitment.js?v=0.17.0"));
-assert.ok(html.indexOf("./cards/absurd-commitment.js?v=0.17.0") < html.indexOf("./cards/rules-rituals-institutions.js?v=0.17.0"));
-assert.ok(html.indexOf("./cards/rules-rituals-institutions.js?v=0.17.0") < html.indexOf("./cards/competition-consequences.js?v=0.17.0"));
-assert.ok(html.indexOf("./cards/competition-consequences.js?v=0.17.0") < html.indexOf("./cards/advanced-scene-engines.js?v=0.17.0"));
-assert.ok(html.indexOf("./cards/advanced-scene-engines.js?v=0.17.0") < html.indexOf("./cards.js?v=0.17.0"));
+assert.ok(html.indexOf("./card-bible.js?v=0.18.0") < html.indexOf("./cards/core-foundations.js?v=0.18.0"));
+assert.ok(html.indexOf("./cards/core-foundations.js?v=0.18.0") < html.indexOf("./cards/everyday-friction.js?v=0.18.0"));
+assert.ok(html.indexOf("./cards/everyday-friction.js?v=0.18.0") < html.indexOf("./cards/power-games.js?v=0.18.0"));
+assert.ok(html.indexOf("./cards/power-games.js?v=0.18.0") < html.indexOf("./cards/relationship-knots.js?v=0.18.0"));
+assert.ok(html.indexOf("./cards/relationship-knots.js?v=0.18.0") < html.indexOf("./cards/emotional-pressure.js?v=0.18.0"));
+assert.ok(html.indexOf("./cards/emotional-pressure.js?v=0.18.0") < html.indexOf("./cards/secrets-schemes.js?v=0.18.0"));
+assert.ok(html.indexOf("./cards/secrets-schemes.js?v=0.18.0") < html.indexOf("./cards/absurd-commitment.js?v=0.18.0"));
+assert.ok(html.indexOf("./cards/absurd-commitment.js?v=0.18.0") < html.indexOf("./cards/rules-rituals-institutions.js?v=0.18.0"));
+assert.ok(html.indexOf("./cards/rules-rituals-institutions.js?v=0.18.0") < html.indexOf("./cards/competition-consequences.js?v=0.18.0"));
+assert.ok(html.indexOf("./cards/competition-consequences.js?v=0.18.0") < html.indexOf("./cards/advanced-scene-engines.js?v=0.18.0"));
+assert.ok(html.indexOf("./cards/advanced-scene-engines.js?v=0.18.0") < html.indexOf("./cards.js?v=0.18.0"));
 assert.equal(cards.activePackCount, 10);
 assert.equal(cards.publishedPackCount, 1);
 assert.equal(cards.playtestPackCount, 9);
+assert.equal(cards.liveValidationPackCount, 9);
+assert.equal(cards.publicationCandidatePackCount, 0);
+
+assert.equal(cards.libraryPlanVersion, "1.10.0");
+assert.equal(cards.packs.filter((pack) => pack.publicationStage === "live-validation").length, 9);
+assert.deepEqual([...new Set(cards.packs.filter((pack) => pack.status === "playtest").map((pack) => pack.publicationWave))], [1, 2, 3]);
+for (const pack of cards.packs) {
+  assert.equal(pack.editorialReviewVersion, "0.18.0");
+}
 assert.equal(cards.stances.length, 240);
 assert.equal(cards.drives.length, 240);
 assert.equal(cards.targetPackCount, 10);
@@ -130,16 +153,27 @@ assert.equal(cards.targetDriveCount, 240);
 
 // Release and offline contract.
 for (const asset of ["styles.css", "card-bible.js", "cards/core-foundations.js", "cards/everyday-friction.js", "cards/power-games.js", "cards/relationship-knots.js", "cards/emotional-pressure.js", "cards/secrets-schemes.js", "cards/absurd-commitment.js", "cards/rules-rituals-institutions.js", "cards/competition-consequences.js", "cards/advanced-scene-engines.js", "cards.js", "exercises.js", "deck-engine.js", "vendor/qrcode-core.js", "app.js"]) {
-  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.17\\.0`));
-  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.17\\.0`));
+  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.18\\.0`));
+  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.18\\.0`));
 }
-assert.match(serviceWorker, /imprompt-v0\.17\.0/);
+assert.match(serviceWorker, /imprompt-v0\.18\.0/);
 assert.doesNotMatch(serviceWorker, /skipWaiting/);
 assert.match(app, /updateViaCache:\s*"none"/);
 assert.match(manifest, /"short_name": "Imprompt"/);
 assert.match(manifest, /coach-guided Mirror and Paired exercises/);
 
+
+// v0.18 editorial-readiness evidence is packaged with the application source.
+assert.match(releaseNotes, /24 semantic rewrites/i);
+assert.match(releaseNotes, /1,200 opposite-deck pairings/i);
+for (const file of [...editorialDocs, ...editorialData]) {
+  assert.ok(fs.existsSync(path.join(root, file)), `Missing editorial artifact: ${file}`);
+}
+for (const file of editorialData) {
+  assert.doesNotThrow(() => JSON.parse(read(file)), `Invalid editorial JSON: ${file}`);
+}
+
 // QR SVG modules must not inherit the global rounded SVG stroke.
 assert.match(styles, /\.dynamic-qr-panel svg,\s*\.dynamic-qr-panel svg \*[\s\S]*?stroke:\s*none\s*!important/);
 
-console.log("✓ Imprompt v0.17 application, Card Bible, guided-exercise, gallery, history, and cache contracts passed");
+console.log("✓ Imprompt v0.18 application, editorial readiness, Card Bible, guided-exercise, gallery, history, and cache contracts passed");

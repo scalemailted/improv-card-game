@@ -10,6 +10,21 @@ assert.equal(new Set(allCards.map((card) => card.id)).size, 480);
 assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.title))).size, 480);
 assert.equal(new Set(allCards.map((card) => validator.normalizeText(card.instruction))).size, 480);
 
+const ledger = require("../editorial/v0.18.0/revision-ledger.json");
+const revisedIds = new Set(ledger.entries.map((entry) => entry.id));
+const originalContentVersions = {
+  "core-foundations": "1.0.0",
+  "everyday-friction": "0.9.0",
+  "power-games": "0.10.0",
+  "relationship-knots": "0.11.0",
+  "emotional-pressure": "0.12.0",
+  "secrets-schemes": "0.13.0",
+  "absurd-commitment": "0.14.0",
+  "rules-rituals-institutions": "0.15.0",
+  "competition-consequences": "0.16.0",
+  "advanced-scene-engines": "0.17.0"
+};
+
 for (const card of allCards) {
   const result = validator.validateCard(card);
   assert.deepEqual(result.errors, [], `${card.id} structural errors: ${JSON.stringify(result.errors)}`);
@@ -17,39 +32,21 @@ for (const card of allCards) {
   assert.ok(card.coachRoles.length >= 1 && card.coachRoles.length <= 4);
   assert.ok(card.motifs.length >= 1 && card.motifs.length <= 5);
   assert.ok(card.recommendedModes.includes("open"));
+
   if (card.packId === "core-foundations") {
     assert.equal(card.status, "published");
-    assert.equal(card.contentVersion, "1.0.0");
-  } else if (card.packId === "everyday-friction") {
-    assert.equal(card.status, "playtest");
-    assert.equal(card.contentVersion, "0.9.0");
-  } else if (card.packId === "power-games") {
-    assert.equal(card.status, "playtest");
-    assert.equal(card.contentVersion, "0.10.0");
-  } else if (card.packId === "relationship-knots") {
-    assert.equal(card.status, "playtest");
-    assert.equal(card.contentVersion, "0.11.0");
-  } else if (card.packId === "emotional-pressure") {
-    assert.equal(card.status, "playtest");
-    assert.equal(card.contentVersion, "0.12.0");
-  } else if (card.packId === "secrets-schemes") {
-    assert.equal(card.status, "playtest");
-    assert.equal(card.contentVersion, "0.13.0");
-  } else if (card.packId === "absurd-commitment") {
-    assert.equal(card.status, "playtest");
-    assert.equal(card.contentVersion, "0.14.0");
-  } else if (card.packId === "rules-rituals-institutions") {
-    assert.equal(card.status, "playtest");
-    assert.equal(card.contentVersion, "0.15.0");
-  } else if (card.packId === "competition-consequences") {
-    assert.equal(card.status, "playtest");
-    assert.equal(card.contentVersion, "0.16.0");
   } else {
-    assert.equal(card.packId, "advanced-scene-engines");
     assert.equal(card.status, "playtest");
-    assert.equal(card.contentVersion, "0.17.0");
   }
+
+  const expectedVersion = revisedIds.has(card.id)
+    ? "0.18.0"
+    : originalContentVersions[card.packId];
+  assert.equal(card.contentVersion, expectedVersion, `${card.id} content version`);
 }
+
+assert.equal(revisedIds.size, 28);
+assert.equal(allCards.filter((card) => card.contentVersion === "0.18.0").length, 28);
 
 for (const packId of ["core-foundations", "everyday-friction", "power-games", "relationship-knots", "emotional-pressure", "secrets-schemes", "absurd-commitment", "rules-rituals-institutions", "competition-consequences", "advanced-scene-engines"]) {
   for (const category of bible.categories) {

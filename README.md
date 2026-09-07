@@ -5,7 +5,7 @@
 - **1 Stance** — how the performer enters, interprets, or reacts within the scene.
 - **1 Drive** — the objective, secret, avoidance, or repeatable behavior that keeps the performer playing.
 
-The active library now contains **240 Stances and 240 Drives** across Core Foundations plus all nine planned expansion packs, culminating in Advanced Scene Engines. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
+The active library contains **240 Stances and 240 Drives** across the complete ten-pack roadmap. v0.18.0 editorially consolidates that 480-card library for staged live playtesting while preserving the fast player experience. Every browser maintains its own independent shuffle, current prompts, guided exercise, sessions, and Scene Log. There is no account, synchronized room, tracking service, or backend.
 
 ## Open the live game
 
@@ -19,6 +19,60 @@ The active library now contains **240 Stances and 240 Drives** across Core Found
   Scan the code or open<br>
   <a href="https://scalemailted.github.io/improv-card-game/">https://scalemailted.github.io/improv-card-game/</a>
 </p>
+
+## What is new in v0.18.0
+
+v0.18.0 is the first library-wide **editorial consolidation and playtest-readiness** release. It adds no new cards; it improves the distinctiveness, portability, traceability, and publication workflow of the complete 480-card library.
+
+### Editorial consolidation
+
+- Rewrites **24 cards** from the strongest semantic-overlap clusters.
+- Broadens **4 narrow titles** while retaining their instructions.
+- Preserves all 480 stable card IDs.
+- Assigns `contentVersion: "0.18.0"` only to the 28 cards whose visible copy changed.
+- Retains original wording in completed Scene Log snapshots.
+- Resolves all **23 high-priority overlap clusters** for internal live-playtest readiness.
+
+The revision ledger records the before-and-after copy and rationale for every changed card. Pack authoring matrices and candidate-pool documents now reflect the current selected wording while retaining a link to the historical ledger.
+
+### Amber-subtheme review
+
+All **20 subthemes** rated Amber in the v0.17 final-library audit received an internal metadata-blind review and structured opposite-deck pairing gauntlet:
+
+- 200 cards reviewed
+- 1,200 structured pairings assessed
+- 0 premise conflicts identified in the internal pass
+- residual similarities explicitly documented
+
+This is a reproducible internal editorial check, not a substitute for independent human readers or live troupe evidence.
+
+### Staged publication readiness
+
+Core Foundations remains the published baseline. The nine expansion packs remain `playtest`, but are now marked `live-validation` and grouped into three publication waves:
+
+1. **Grounded Foundations:** Everyday Friction, Power Games, Relationship Knots
+2. **Pressure and Premise:** Emotional Pressure, Secrets & Schemes, Absurd Commitment
+3. **Systems, Stakes, and Structure:** Rules, Rituals & Institutions, Competition & Consequences, Advanced Scene Engines
+
+Every playtest pack still requires independent blind reads, repeated live exposures, veto/abandonment review, and final copy sign-off before publication.
+
+### New editorial tooling
+
+```bash
+npm run audit:cards
+npm run audit:editorial
+npm run audit:all
+```
+
+See:
+
+- `docs/editorial/EDITORIAL-CONSOLIDATION-v0.18.0.md`
+- `docs/editorial/AMBER-SUBTHEME-REVIEW-v0.18.0.md`
+- `docs/editorial/STAGED-PUBLICATION-PLAN-v0.18.0.md`
+- `docs/editorial/LIVE-VALIDATION-WORKSHEET-v0.18.0.md`
+- `docs/editorial/SUBTHEME-READINESS-v0.18.0.csv`
+- `editorial/v0.18.0/`
+- `reports/editorial-readiness-audit.md`
 
 ## What is new in v0.17.0
 
@@ -259,15 +313,15 @@ Every future 48-card pack must contribute one card to every subtheme. Across ten
 | # | Pack | Stance IDs | Drive IDs | Status |
 |---:|---|---|---|---|
 | 1 | Core Foundations | S01–S24 | D01–D24 | Published |
-| 2 | Everyday Friction | S25–S48 | D25–D48 | **Playtest in v0.9.0** |
-| 3 | Power Games | S49–S72 | D49–D72 | **Playtest in v0.10.0** |
-| 4 | Relationship Knots | S73–S96 | D73–D96 | **Playtest in v0.11.0** |
-| 5 | Emotional Pressure | S97–S120 | D97–D120 | **Playtest in v0.12.0** |
-| 6 | Secrets & Schemes | S121–S144 | D121–D144 | **Playtest in v0.13.0** |
-| 7 | Absurd Commitment | S145–S168 | D145–D168 | **Playtest in v0.14.0** |
-| 8 | Rules, Rituals & Institutions | S169–S192 | D169–D192 | **Playtest in v0.15.0** |
-| 9 | Competition & Consequences | S193–S216 | D193–D216 | **Playtest in v0.16.0** |
-| 10 | Advanced Scene Engines | S217–S240 | D217–D240 | **Playtest in v0.17.0** |
+| 2 | Everyday Friction | S25–S48 | D25–D48 | **Live validation · Wave 1** |
+| 3 | Power Games | S49–S72 | D49–D72 | **Live validation · Wave 1** |
+| 4 | Relationship Knots | S73–S96 | D73–D96 | **Live validation · Wave 1** |
+| 5 | Emotional Pressure | S97–S120 | D97–D120 | **Live validation · Wave 2** |
+| 6 | Secrets & Schemes | S121–S144 | D121–D144 | **Live validation · Wave 2** |
+| 7 | Absurd Commitment | S145–S168 | D145–D168 | **Live validation · Wave 2** |
+| 8 | Rules, Rituals & Institutions | S169–S192 | D169–D192 | **Live validation · Wave 3** |
+| 9 | Competition & Consequences | S193–S216 | D193–D216 | **Live validation · Wave 3** |
+| 10 | Advanced Scene Engines | S217–S240 | D217–D240 | **Live validation · Wave 3** |
 
 ### Structured card metadata
 
@@ -564,6 +618,7 @@ All application assets use relative paths and work under the GitHub Pages projec
 ├── RELEASE-NOTES-v0.15.0.md
 ├── RELEASE-NOTES-v0.16.0.md
 ├── RELEASE-NOTES-v0.17.0.md
+├── RELEASE-NOTES-v0.18.0.md
 ├── cards/
 │   ├── core-foundations.js
 │   ├── everyday-friction.js
@@ -592,6 +647,14 @@ All application assets use relative paths and work under the GitHub Pages projec
 │   ├── CARD-AUTHORING-WORKSHEET.md
 │   ├── CARD-REVIEW-SCORECARD.md
 │   ├── PACK-BRIEF-TEMPLATE.md
+│   ├── editorial/
+│   │   ├── EDITORIAL-CONSOLIDATION-v0.18.0.md
+│   │   ├── AMBER-SUBTHEME-REVIEW-v0.18.0.md
+│   │   ├── STAGED-PUBLICATION-PLAN-v0.18.0.md
+│   │   ├── LIVE-VALIDATION-WORKSHEET-v0.18.0.md
+│   │   ├── REVISION-LEDGER-v0.18.0.csv
+│   │   ├── OVERLAP-RESOLUTION-v0.18.0.csv
+│   │   └── SUBTHEME-READINESS-v0.18.0.csv
 │   └── packs/
 │       ├── EVERYDAY-FRICTION-PACK-BRIEF.md
 │       ├── EVERYDAY-FRICTION-AUTHORING-MATRIX.md
@@ -620,11 +683,20 @@ All application assets use relative paths and work under the GitHub Pages projec
 │       ├── ADVANCED-SCENE-ENGINES-PACK-BRIEF.md
 │       ├── ADVANCED-SCENE-ENGINES-AUTHORING-MATRIX.md
 │       └── ADVANCED-SCENE-ENGINES-CANDIDATE-POOL.md
+├── editorial/
+│   └── v0.18.0/
+│       ├── revision-ledger.json
+│       ├── overlap-resolution.json
+│       ├── amber-subtheme-review.json
+│       ├── subtheme-readiness.json
+│       └── publication-waves.json
 ├── tools/
 │   ├── card-validator.js
-│   └── card-audit.js
+│   ├── card-audit.js
+│   └── editorial-audit.js
 ├── reports/
-│   └── card-library-audit.md
+│   ├── card-library-audit.md
+│   └── editorial-readiness-audit.md
 ├── assets/
 │   └── improv-card-game-qr.png
 ├── icons/
@@ -637,6 +709,7 @@ All application assets use relative paths and work under the GitHub Pages projec
 └── tests/
     ├── card-bible.test.js
     ├── card-quality.test.js
+    ├── editorial-consolidation.test.js
     ├── everyday-friction.test.js
     ├── power-games.test.js
     ├── relationship-knots.test.js

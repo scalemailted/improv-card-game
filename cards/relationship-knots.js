@@ -18,7 +18,8 @@
   }
 
   const PACK_ID = "relationship-knots";
-  const CONTENT_VERSION = "0.11.0";
+  const DEFAULT_CONTENT_VERSION = "0.11.0";
+  const PACK_VERSION = "0.18.0";
   const ALL_MODES = ["open", "mirror", "paired"];
 
   function createCard(definition) {
@@ -33,7 +34,7 @@
       id: definition.id,
       type: definition.type,
       packId: PACK_ID,
-      contentVersion: CONTENT_VERSION,
+      contentVersion: definition.contentVersion || DEFAULT_CONTENT_VERSION,
       status: "playtest",
       title: definition.title,
       instruction: definition.instruction,
@@ -147,8 +148,8 @@
   {
     "type": "stance",
     "id": "S77",
-    "title": "Older in This Relationship",
-    "instruction": "Treat your longer memory of the relationship as seniority, correcting how its history should be understood.",
+    "title": "Keeper of Precedent",
+    "instruction": "Treat your longer memory as an archive, not a throne. Cite specific promises and precedents whenever the relationship faces a new choice.",
     "categoryId": "status-authority",
     "subthemeId": "mentorship-rank",
     "difficulty": "intermediate",
@@ -156,16 +157,17 @@
     "tone": "grounded",
     "orientation": "against-partner",
     "coachRoles": [
-      "mentor",
       "memory-keeper",
-      "authority"
+      "mentor",
+      "archivist"
     ],
     "motifs": [
-      "history",
       "memory",
-      "hierarchy",
-      "identity"
-    ]
+      "precedent",
+      "promise",
+      "history"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "type": "stance",
@@ -285,8 +287,8 @@
   {
     "type": "stance",
     "id": "S83",
-    "title": "My First Call",
-    "instruction": "Turn to this connection first whenever uncertainty appears, then minimize how much that instinct reveals about your dependence.",
+    "title": "Old Reflex",
+    "instruction": "Turn to this person first whenever uncertainty appears, as an old reflex. Notice the habit only after you have already involved them.",
     "categoryId": "history-relationship",
     "subthemeId": "trust-dependence",
     "difficulty": "intermediate",
@@ -295,15 +297,16 @@
     "orientation": "toward-partner",
     "coachRoles": [
       "dependent",
-      "confidant",
-      "attachment-seeker"
+      "memory-keeper",
+      "confidant"
     ],
     "motifs": [
       "dependence",
-      "trust",
-      "attachment",
-      "intimacy"
-    ]
+      "familiarity",
+      "routine",
+      "uncertainty"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "type": "stance",
@@ -1165,9 +1168,13 @@
     schemaVersion: bible.CARD_SCHEMA_VERSION,
     id: PACK_ID,
     title: "Relationship Knots",
-    version: CONTENT_VERSION,
+    version: PACK_VERSION,
     status: "playtest",
     sequence: 4,
+    publicationStage: bible.getPack(PACK_ID).publicationStage,
+    publicationWave: bible.getPack(PACK_ID).publicationWave,
+    editorialReviewVersion: bible.getPack(PACK_ID).editorialReviewVersion,
+    remainingPublicationGates: [...bible.getPack(PACK_ID).remainingPublicationGates],
     description: "Affection, rivalry, obligation, dependence, and unfinished connection.",
     stances,
     drives

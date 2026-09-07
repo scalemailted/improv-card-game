@@ -267,6 +267,36 @@ function validatePack(pack) {
   if (!bible.enums.packStatuses.includes(pack.status)) {
     errors.push(issue("error", "pack-status", `Unknown pack status: ${pack.status}.`, { packId: pack.id }));
   }
+  if (!bible.enums.publicationStages.includes(pack.publicationStage)) {
+    errors.push(issue("error", "pack-publication-stage", `Unknown publicationStage: ${pack.publicationStage}.`, { packId: pack.id }));
+  }
+  if (!Number.isInteger(pack.publicationWave) || pack.publicationWave < 0 || pack.publicationWave > 3) {
+    errors.push(issue("error", "pack-publication-wave", "publicationWave must be an integer from 0 through 3.", { packId: pack.id }));
+  }
+  if (!/^\d+\.\d+\.\d+$/.test(pack.editorialReviewVersion || "")) {
+    errors.push(issue("error", "pack-editorial-review-version", "editorialReviewVersion must use semantic versioning.", { packId: pack.id }));
+  }
+  if (!Array.isArray(pack.remainingPublicationGates)
+      || pack.remainingPublicationGates.some((gate) => typeof gate !== "string" || !gate.trim())
+      || new Set(pack.remainingPublicationGates).size !== pack.remainingPublicationGates.length) {
+    errors.push(issue("error", "pack-publication-gates", "remainingPublicationGates must be a unique array of nonempty strings.", { packId: pack.id }));
+  }
+  if (plan) {
+    for (const field of ["publicationStage", "publicationWave", "editorialReviewVersion"]) {
+      if (pack[field] !== plan[field]) {
+        errors.push(issue("error", `pack-${field}-plan`, `${field} must match the Card Bible pack plan.`, { packId: pack.id }));
+      }
+    }
+    if (JSON.stringify(pack.remainingPublicationGates || []) !== JSON.stringify(plan.remainingPublicationGates || [])) {
+      errors.push(issue("error", "pack-publication-gates-plan", "remainingPublicationGates must match the Card Bible pack plan.", { packId: pack.id }));
+    }
+  }
+  if (pack.status === "published" && (pack.publicationStage !== "published" || pack.publicationWave !== 0 || pack.remainingPublicationGates.length !== 0)) {
+    errors.push(issue("error", "pack-published-readiness", "A published pack must be publicationStage published, wave 0, with no remaining gates.", { packId: pack.id }));
+  }
+  if (pack.status === "playtest" && pack.publicationStage === "published") {
+    errors.push(issue("error", "pack-playtest-readiness", "A playtest pack may not claim publicationStage published.", { packId: pack.id }));
+  }
   if (!Array.isArray(pack.stances) || !Array.isArray(pack.drives)) {
     errors.push(issue("error", "pack-card-arrays", "Pack must contain stances and drives arrays.", { packId: pack.id }));
     return { errors, warnings };
@@ -399,6 +429,7 @@ function auditLibrary(cardPacks) {
 
   const publishedPackCount = packs.filter((pack) => pack.status === "published").length;
   const playtestPackCount = packs.filter((pack) => pack.status === "playtest").length;
+  const liveValidationPackCount = packs.filter((pack) => pack.publicationStage === "live-validation").length;
 
   return {
     passed: errors.length === 0,
@@ -408,6 +439,7 @@ function auditLibrary(cardPacks) {
       activePacks: packs.length,
       publishedPacks: publishedPackCount,
       playtestPacks: playtestPackCount,
+      liveValidationPacks: liveValidationPackCount,
       plannedPacks: bible.packPlan.length,
       stances: stances.length,
       drives: drives.length,

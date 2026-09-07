@@ -18,7 +18,8 @@
   }
 
   const PACK_ID = "secrets-schemes";
-  const CONTENT_VERSION = "0.13.0";
+  const DEFAULT_CONTENT_VERSION = "0.13.0";
+  const PACK_VERSION = "0.18.0";
   const ALL_MODES = ["open", "mirror", "paired"];
 
   function createCard(definition) {
@@ -33,7 +34,7 @@
       id: definition.id,
       type: definition.type,
       packId: PACK_ID,
-      contentVersion: CONTENT_VERSION,
+      contentVersion: definition.contentVersion || DEFAULT_CONTENT_VERSION,
       status: "playtest",
       title: definition.title,
       instruction: definition.instruction,
@@ -262,7 +263,7 @@
   {
     "type": "stance",
     "id": "S130",
-    "title": "Competing Detectives",
+    "title": "First to Solve It",
     "instruction": "Treat each clue and inconsistency as a contest over who can understand the situation first and most completely.",
     "categoryId": "history-relationship",
     "subthemeId": "rivalry-comparison",
@@ -280,7 +281,8 @@
       "investigation",
       "evidence",
       "recognition"
-    ]
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "type": "stance",
@@ -584,8 +586,8 @@
   {
     "type": "stance",
     "id": "S144",
-    "title": "Everything Connects",
-    "instruction": "Treat every interruption, coincidence, and denial as part of one expanding hidden design, and doubt as further evidence.",
+    "title": "Competing Theories",
+    "instruction": "Create several explanations for what is happening. Test each new clue against them, and switch allegiance whenever one theory gains strength.",
     "categoryId": "worldview-absurdity",
     "subthemeId": "pattern-grand-meaning",
     "difficulty": "advanced",
@@ -593,16 +595,17 @@
     "tone": "absurd",
     "orientation": "world-focused",
     "coachRoles": [
-      "meaning-maker",
-      "alarmist",
-      "investigator"
+      "investigator",
+      "skeptic",
+      "meaning-maker"
     ],
     "motifs": [
-      "conspiracy",
+      "investigation",
+      "evidence",
       "patterns",
-      "suspicion",
-      "evidence"
-    ]
+      "uncertainty"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "type": "drive",
@@ -745,8 +748,8 @@
   {
     "type": "drive",
     "id": "D127",
-    "title": "Join the Inner Circle",
-    "instruction": "Recruit someone into a hidden plan by offering trust, purpose, and just enough privileged information.",
+    "title": "Back My Version",
+    "instruction": "Recruit someone to remember, repeat, and defend one shared version of events when questions begin.",
     "categoryId": "direct-objectives",
     "subthemeId": "recruit-ally",
     "difficulty": "beginner",
@@ -755,15 +758,16 @@
     "orientation": "toward-partner",
     "coachRoles": [
       "recruiter",
-      "conspirator",
-      "informant"
+      "witness",
+      "conspirator"
     ],
     "motifs": [
       "recruitment",
       "secrecy",
-      "trust",
-      "strategy"
-    ]
+      "witness",
+      "trust"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "type": "drive",
@@ -883,8 +887,8 @@
   {
     "type": "drive",
     "id": "D133",
-    "title": "The Helpful Suspect",
-    "instruction": "Hide your role in creating the problem while eagerly organizing the investigation.",
+    "title": "Steer the Suspicion",
+    "instruction": "Hide your responsibility by redirecting every new clue toward a safer explanation before anyone can connect it back to you.",
     "categoryId": "secrets-avoidance",
     "subthemeId": "conceal-culpability",
     "difficulty": "intermediate",
@@ -894,14 +898,15 @@
     "coachRoles": [
       "culprit",
       "decoy",
-      "investigator"
+      "strategist"
     ],
     "motifs": [
       "guilt",
-      "investigation",
-      "deception",
-      "misdirection"
-    ]
+      "misdirection",
+      "evidence",
+      "suspicion"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "type": "drive",
@@ -952,8 +957,8 @@
   {
     "type": "drive",
     "id": "D136",
-    "title": "Confess Before I Do",
-    "instruction": "Maneuver someone into admitting their secret, motive, or mistake before you reveal your own.",
+    "title": "Tell Me Why",
+    "instruction": "Get someone to reveal the motive behind a choice by offering small pieces of your own truth as bait.",
     "categoryId": "secrets-avoidance",
     "subthemeId": "induce-confession",
     "difficulty": "intermediate",
@@ -967,10 +972,11 @@
     ],
     "motifs": [
       "confession",
-      "secrecy",
+      "motive",
       "truth",
-      "motive"
-    ]
+      "vulnerability"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "type": "drive",
@@ -1165,9 +1171,13 @@
     schemaVersion: bible.CARD_SCHEMA_VERSION,
     id: PACK_ID,
     title: "Secrets & Schemes",
-    version: CONTENT_VERSION,
+    version: PACK_VERSION,
     status: "playtest",
     sequence: 6,
+    publicationStage: bible.getPack(PACK_ID).publicationStage,
+    publicationWave: bible.getPack(PACK_ID).publicationWave,
+    editorialReviewVersion: bible.getPack(PACK_ID).editorialReviewVersion,
+    remainingPublicationGates: [...bible.getPack(PACK_ID).remainingPublicationGates],
     description: "Concealment, investigation, recruitment, misdirection, confession, conspiracy, and plans under pressure.",
     stances,
     drives

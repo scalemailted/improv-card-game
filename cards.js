@@ -46,6 +46,8 @@
     .sort((left, right) => left.sequence - right.sequence);
   const publishedPacks = activePacks.filter((pack) => pack.status === "published");
   const playtestPacks = activePacks.filter((pack) => pack.status === "playtest");
+  const liveValidationPacks = activePacks.filter((pack) => pack.publicationStage === "live-validation");
+  const publicationCandidatePacks = activePacks.filter((pack) => pack.publicationStage === "publication-candidate");
 
   const stances = activePacks.flatMap((pack) => pack.stances || []);
   const drives = activePacks.flatMap((pack) => pack.drives || []);
@@ -56,6 +58,8 @@
     activePackCount: activePacks.length,
     publishedPackCount: publishedPacks.length,
     playtestPackCount: playtestPacks.length,
+    liveValidationPackCount: liveValidationPacks.length,
+    publicationCandidatePackCount: publicationCandidatePacks.length,
     targetPackCount: bible.packPlan.length,
     activeStanceCount: stances.length,
     activeDriveCount: drives.length,
@@ -72,6 +76,10 @@
       version: pack.version,
       sequence: pack.sequence,
       status: pack.status,
+      publicationStage: pack.publicationStage,
+      publicationWave: pack.publicationWave,
+      editorialReviewVersion: pack.editorialReviewVersion,
+      remainingPublicationGates: [...pack.remainingPublicationGates],
       description: pack.description,
       stanceCount: pack.stances.length,
       driveCount: pack.drives.length

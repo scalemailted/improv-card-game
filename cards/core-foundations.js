@@ -792,6 +792,10 @@
     version: CONTENT_VERSION,
     status: "published",
     sequence: 1,
+    publicationStage: bible.getPack(PACK_ID).publicationStage,
+    publicationWave: bible.getPack(PACK_ID).publicationWave,
+    editorialReviewVersion: bible.getPack(PACK_ID).editorialReviewVersion,
+    remainingPublicationGates: [...bible.getPack(PACK_ID).remainingPublicationGates],
     description: "The original 24 Stances and 24 Drives that establish Imprompt's hidden-information design and broad scene-playability standard.",
     stances,
     drives

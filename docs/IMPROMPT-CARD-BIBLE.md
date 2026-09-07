@@ -1,8 +1,8 @@
 # The Imprompt Card Bible
 
 **Editorial and technical standard for the 480-card Imprompt library**  
-**Bible version:** 1.9.0  
-**Implemented foundation:** Imprompt v0.17.0  
+**Bible version:** 1.10.0  
+**Implemented foundation:** Imprompt v0.18.0  
 **Target release:** Imprompt v1.0  
 
 ---
@@ -122,15 +122,15 @@ Each pack contributes **one card to every defined subtheme**. Across ten packs, 
 | # | Pack | Stance IDs | Drive IDs | Editorial focus |
 |---:|---|---|---|---|
 | 1 | **Core Foundations** | S01–S24 | D01–D24 | Broad, portable fundamentals that establish the Imprompt voice. |
-| 2 | **Everyday Friction** | S25–S48 | D25–D48 | **Active playtest pack:** ordinary inconvenience, domestic strain, work tension, and small stakes treated seriously. |
-| 3 | **Power Games** | S49–S72 | D49–D72 | **Active playtest pack:** authority, legitimacy, leverage, dependency, hierarchy, and the struggle over who gets to decide. |
-| 4 | **Relationship Knots** | S73–S96 | D73–D96 | **Active playtest pack:** affection, rivalry, obligation, dependence, boundaries, and unfinished connection. |
-| 5 | **Emotional Pressure** | S97–S120 | D97–D120 | **Active playtest pack:** longing, insecurity, validation, resentment, grief, hope, shame, and emotional contradiction. |
-| 6 | **Secrets & Schemes** | S121–S144 | D121–D144 | **Active playtest pack:** concealment, investigation, recruitment, misdirection, confession, and plans under pressure. |
-| 7 | **Absurd Commitment** | S145–S168 | D145–D168 | **Active playtest pack:** impossible logic, literal commitment, grounded reaction, recurring nonsense, and heightened consequence. |
-| 8 | **Rules, Rituals & Institutions** | S169–S192 | D169–D192 | **Active playtest pack:** bureaucracy, process, standards, customs, systems, traditions, and institutional behavior. |
-| 9 | **Competition & Consequences** | S193–S216 | D193–D216 | **Active playtest pack:** winning, comparison, bargains, accountability, sacrifice, and the cost of success. |
-| 10 | **Advanced Scene Engines** | S217–S240 | D217–D240 | **Active playtest pack:** contradictions, delayed reveals, reversals, callbacks, and veteran-level pressure. |
+| 2 | **Everyday Friction** | S25–S48 | D25–D48 | **Live-validation pack · Wave 1:** ordinary inconvenience, domestic strain, work tension, and small stakes treated seriously. |
+| 3 | **Power Games** | S49–S72 | D49–D72 | **Live-validation pack · Wave 1:** authority, legitimacy, leverage, dependency, hierarchy, and the struggle over who gets to decide. |
+| 4 | **Relationship Knots** | S73–S96 | D73–D96 | **Live-validation pack · Wave 1:** affection, rivalry, obligation, dependence, boundaries, and unfinished connection. |
+| 5 | **Emotional Pressure** | S97–S120 | D97–D120 | **Live-validation pack · Wave 2:** longing, insecurity, validation, resentment, grief, hope, shame, and emotional contradiction. |
+| 6 | **Secrets & Schemes** | S121–S144 | D121–D144 | **Live-validation pack · Wave 2:** concealment, investigation, recruitment, misdirection, confession, and plans under pressure. |
+| 7 | **Absurd Commitment** | S145–S168 | D145–D168 | **Live-validation pack · Wave 2:** impossible logic, literal commitment, grounded reaction, recurring nonsense, and heightened consequence. |
+| 8 | **Rules, Rituals & Institutions** | S169–S192 | D169–D192 | **Live-validation pack · Wave 3:** bureaucracy, process, standards, customs, systems, traditions, and institutional behavior. |
+| 9 | **Competition & Consequences** | S193–S216 | D193–D216 | **Live-validation pack · Wave 3:** winning, comparison, bargains, accountability, sacrifice, and the cost of success. |
+| 10 | **Advanced Scene Engines** | S217–S240 | D217–D240 | **Live-validation pack · Wave 3:** contradictions, delayed reveals, reversals, callbacks, and veteran-level pressure. |
 
 ### Pack identity must remain secondary to playability
 
@@ -1358,6 +1358,94 @@ The taxonomy exists to create variety. The metadata exists to help coaches. The 
 
 ---
 
+# Part IX — Editorial consolidation and staged publication
+
+## 49. Library-wide semantic consolidation
+
+Completing the 480-card quota is not the same as completing publication. Once all ten packs existed, Imprompt v0.18.0 subjected the full library to a cross-pack distinctiveness audit.
+
+The v0.17 audit identified 23 high-priority semantic-overlap clusters involving 47 cards. v0.18.0 preserves the stronger anchor card in each cluster and rewrites the minimum viable set of 24 cards. The three-card Test Loyalty cluster required two revisions. Four additional cards received broader, setting-independent titles.
+
+A semantic revision is accepted internally only when it changes at least one of the following:
+
+- the holder's first observable move
+- the repeatable escalation path
+- the interaction pattern created with a partner
+- the practical or emotional consequence
+- the information flow or decision structure
+
+Changing only thematic nouns is not sufficient.
+
+The authoritative evidence is stored in:
+
+- `editorial/v0.18.0/revision-ledger.json`
+- `editorial/v0.18.0/overlap-resolution.json`
+- `docs/editorial/EDITORIAL-CONSOLIDATION-v0.18.0.md`
+
+## 50. Stable IDs and per-card content versions
+
+Editorial consolidation must never rewrite history.
+
+- Every revised card retains its stable ID.
+- Only the 28 cards whose visible copy changed receive `contentVersion: "0.18.0"`.
+- Unchanged cards retain the version in which their current wording was introduced.
+- Pack-level versions may advance when the pack participates in a formal review pass even if not every card changes.
+- Historical Scene Log entries retain immutable snapshots of title, instruction, category, and content version.
+
+This permits an old scene to display exactly what the performer saw even after the current library wording changes.
+
+## 51. Amber metadata-blind review
+
+The twenty subthemes rated Amber in the v0.17 distinctiveness audit receive a metadata-blind internal review before live validation.
+
+For each subtheme:
+
+1. Read its ten cards without relying on pack or category labels to justify similarity.
+2. State the first observable move and recurring/pursuable engine for each card.
+3. Reject any card that requires another performer's private state.
+4. Pair every card with six varied opposite-deck prompts.
+5. Record immediately playable pairings, pairings requiring deliberate integration, and premise conflicts.
+6. Document residual similarities rather than treating an internal pass as publication.
+
+The v0.18 review covered 200 cards and 1,200 structured pairings. It is internal editorial evidence only. Independent readers and live scenes remain mandatory publication gates.
+
+Combined with the 19 Green families carried forward from the v0.17 audit and the 9 Red families addressed through targeted rewrites, the post-consolidation matrix accounts for all 48 subthemes as internally ready to enter live validation.
+
+## 52. Publication stages and waves
+
+The runtime distinguishes a pack's availability from its publication readiness.
+
+| Stage | Meaning |
+|---|---|
+| `published` | All editorial and live-evidence gates are complete. |
+| `editorial-consolidated` | Cross-library semantic and copy review is complete. |
+| `live-validation` | The pack is available for structured troupe testing; publication is not claimed. |
+| `publication-candidate` | Live evidence is complete and final sign-off is pending. |
+| `retired` | The pack is no longer active for new draws. |
+
+Core Foundations remains published. The nine expansion packs are staged for `live-validation`:
+
+| Wave | Packs | Purpose |
+|---:|---|---|
+| 1 | Everyday Friction; Power Games; Relationship Knots | Establish grounded baseline comprehension, pairability, veto, and completion rates. |
+| 2 | Emotional Pressure; Secrets & Schemes; Absurd Commitment | Validate higher emotional, informational, and premise-management demands. |
+| 3 | Rules, Rituals & Institutions; Competition & Consequences; Advanced Scene Engines | Validate systems, consequence loops, and veteran-level structure after the baseline. |
+
+A pack may publish independently of the other packs in its wave.
+
+## 53. Remaining publication gates
+
+Every playtest pack retains four explicit gates:
+
+1. **Independent human blind read:** readers uninvolved in authoring can identify a playable first move without inventing required partner behavior.
+2. **Live exposure threshold:** cards receive repeated scenes across multiple performers and experience levels.
+3. **Veto and abandonment review:** outlying veto, redraw, confusion, and abandoned-scene patterns are examined.
+4. **Final copy sign-off:** wording, title, metadata, safety, and residual distinctiveness receive final approval.
+
+Automated tests can verify IDs, quotas, controlled vocabulary, snapshots, and manifests. They cannot certify that a scene prompt feels distinct in live performance.
+
+---
+
 # Appendix A — Core Foundations mapping
 
 Core Foundations establishes one published example in every subtheme.
@@ -1450,8 +1538,12 @@ Core Foundations establishes one published example in every subtheme.
 | `cards/card.schema.json` | JSON Schema for an individual card. |
 | `cards/pack.schema.json` | JSON Schema for a pack. |
 | `tools/card-validator.js` | Structural, taxonomy, language, quota, and duplication checks. |
-| `tools/card-audit.js` | Command-line audit and Markdown report generator. |
+| `tools/card-audit.js` | Command-line library audit and Markdown report generator. |
+| `tools/editorial-audit.js` | Validates v0.18 revision, Amber-review, history, and publication-staging evidence. |
+| `editorial/v0.18.0/` | Machine-readable revision ledger, overlap resolution, Amber review, 48-subtheme readiness matrix, and publication-wave manifests. |
+| `docs/editorial/` | Human-readable consolidation, review, staging, and live-validation materials. |
 | `reports/card-library-audit.md` | Generated snapshot of current library progress and validation. |
+| `reports/editorial-readiness-audit.md` | Generated v0.18 editorial-consolidation and staged-publication audit. |
 | `docs/CARD-AUTHORING-WORKSHEET.md` | Reusable drafting worksheet. |
 | `docs/CARD-REVIEW-SCORECARD.md` | Human editorial review rubric. |
 | `docs/PACK-BRIEF-TEMPLATE.md` | Planning template for each expansion pack. |

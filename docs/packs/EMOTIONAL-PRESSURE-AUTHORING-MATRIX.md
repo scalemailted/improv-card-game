@@ -1,5 +1,8 @@
 # Emotional Pressure — 48-Slot Authoring Matrix
 
+> **v0.18.0 editorial consolidation:** Stable card IDs are preserved. The selected-card copy below reflects the current v0.18.0 wording; the original release wording remains recorded in `editorial/v0.18.0/revision-ledger.json`.
+
+
 **Pack:** Emotional Pressure  
 **Reserved IDs:** S97–S120 and D97–D120  
 **Target release:** Imprompt v0.12.0  
@@ -22,7 +25,7 @@ Each row fills one required Card Bible subtheme. The pack contributes exactly on
 | S105 | History & Relationship | Familiar Roles | **The Strong One** | Be the strong one: steady everyone else, minimize your own needs, and resist any attempt to care for you. | Beginner | High | Grounded |
 | S106 | History & Relationship | Rivalry & Comparison | **Whose Pain Counts?** | Treat every disappointment as something to measure against what you have endured, competing for whose feelings deserve greater weight. | Intermediate | High | Grounded |
 | S107 | History & Relationship | Trust & Dependence | **My Safe Person** | Use one person’s reactions as your measure of safety, then downplay how much their reassurance changes you. | Beginner | High | Grounded |
-| S108 | History & Relationship | Rupture & Unfinished Business | **The Feeling Never Left** | Treat an old hurt as emotionally current, responding to new offers as though part of that moment is happening again. | Intermediate | High | Grounded |
+| S108 | History & Relationship | Rupture & Unfinished Business | **Careful Around the Scar** | Treat one harmless detail as the trigger for an old hurt. Become overly careful, helpful, or controlled whenever it returns. | Intermediate | High | Grounded |
 | S109 | Emotional Assumptions | Admiration & Envy | **Braver Than Me** | Treat another person’s emotional courage as both inspiring and unfair, resenting how exposed or hesitant it makes you feel. | Intermediate | High | Grounded |
 | S110 | Emotional Assumptions | Identity & Nostalgia | **Before I Knew Better** | Perform the more hopeful version of yourself from before disappointment taught you caution, and defend that version when reality intrudes. | Intermediate | Medium | Grounded |
 | S111 | Emotional Assumptions | Fear & Insecurity | **Waiting for the Bad News** | Treat pauses, changes, and uncertainty as signs that rejection or loss is approaching, then prepare yourself before it arrives. | Beginner | High | Grounded |

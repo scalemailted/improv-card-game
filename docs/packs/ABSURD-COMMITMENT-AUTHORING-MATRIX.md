@@ -1,5 +1,8 @@
 # Imprompt Pack 7 — Absurd Commitment Authoring Matrix
 
+> **v0.18.0 editorial consolidation:** Stable card IDs are preserved. The selected-card copy below reflects the current v0.18.0 wording; the original release wording remains recorded in `editorial/v0.18.0/revision-ledger.json`.
+
+
 **Release:** Imprompt v0.14.0  
 **Reserved IDs:** S145–S168 and D145–D168  
 **Status:** Editorial selection complete; live playtest pending
@@ -24,7 +27,7 @@ Each formal Card Bible subtheme receives exactly one selected Absurd Commitment 
 | S158 | Stance | Emotional Assumptions | Identity & Nostalgia | **When Things Made Sense** | Perform the person you were before reality became complicated, using outdated certainty to explain each new impossibility. |
 | S159 | Stance | Emotional Assumptions | Fear & Insecurity | **Don’t Let Reality Notice** | Behave as though openly questioning the impossible premise could attract dangerous attention, and respond to doubt with urgent normality. |
 | S160 | Stance | Emotional Assumptions | Care & Control | **Safety Through Nonsense** | Take control through elaborate impossible precautions, treating every objection as another reason the people present need protection. |
-| S161 | Stance | Emotional Assumptions | Approval & Belonging | **I Get the Joke** | Act as though immediate acceptance of every strange development is the price of belonging, even when you are visibly struggling. |
+| S161 | Stance | Emotional Assumptions | Approval & Belonging | **Half a Beat Late** | Use the group’s reactions as your cue, joining each one a moment late and escalating your enthusiasm to stay included. |
 | S162 | Stance | Emotional Assumptions | Pride & Validation | **I Predicted This** | Create opportunities to show that each impossible event confirms a theory you understood long before anyone asked. |
 | S163 | Stance | Worldview & Absurdity | Ritual & Tradition | **The Ceremony Requires More** | Treat every ordinary step as only the beginning of an elaborate ceremony, adding necessary details whenever anyone tries to finish. |
 | S164 | Stance | Worldview & Absurdity | Crisis & Catastrophe | **Reality Is Coming Apart** | Treat each contradiction, coincidence, and ordinary mistake as evidence that reality is losing structural integrity. |
@@ -42,13 +45,13 @@ Each formal Card Bible subtheme receives exactly one selected Absurd Commitment 
 | D152 | Drive | Direct Objectives | Induce Risk | **Test the Impossible Claim** | Get someone else to take the first practical step that could prove the bizarre claim true. |
 | D153 | Drive | Direct Objectives | Gain Recognition | **Credit for the Impossible** | Make someone acknowledge that you understood, predicted, or accepted the impossible truth before anyone else. |
 | D154 | Drive | Direct Objectives | Force a Choice | **Choose the Real Impossibility** | Make someone choose which of two incompatible explanations will govern what everyone does next. |
-| D155 | Drive | Direct Objectives | Test Loyalty | **Prove You Accept the Premise** | Create an increasingly inconvenient test of whether someone will act as though the impossible premise is true. |
+| D155 | Drive | Direct Objectives | Test Loyalty | **Act as If It’s True** | Ask for one concrete choice that would only make sense if the impossible premise were true. |
 | D156 | Drive | Direct Objectives | Obtain Surrender | **Abandon the Normal Explanation** | Persuade someone to surrender the last ordinary explanation and proceed entirely within the stranger one. |
 | D157 | Drive | Secrets & Avoidance | Conceal Culpability | **I Started the Weirdness** | Hide that one casual choice caused the impossible situation while eagerly helping manage each new consequence. |
 | D158 | Drive | Secrets & Avoidance | Avoid the Subject | **Don’t Question the Premise** | Redirect every attempt to ask why the strange situation exists toward what must happen next. |
-| D159 | Drive | Secrets & Avoidance | Protective Deception | **A Kinder Impossible Truth** | Protect someone from a harsher explanation by maintaining a more hopeful and impossible version of events. |
+| D159 | Drive | Secrets & Avoidance | Protective Deception | **Keep Hope Operational** | Protect their hope with practical evidence and next steps while quietly withholding what makes the impossible outcome unlikely. |
 | D160 | Drive | Secrets & Avoidance | Induce a Confession | **Say You Saw It Too** | Get someone to admit noticing the impossible detail before you reveal how much you believe it. |
-| D161 | Drive | Secrets & Avoidance | Reframe Failure | **That Was Phase One** | Treat every failed attempt as a necessary stage that proves the impossible plan is advancing. |
+| D161 | Drive | Secrets & Avoidance | Reframe Failure | **Failure Reveals the Mission** | Use each failed step to reveal a different goal the plan was secretly pursuing, then act immediately on that new mission. |
 | D162 | Drive | Secrets & Avoidance | Feign Competence | **Fluent in Nonsense** | Perform complete mastery of the strange logic while inventing each rule only when it becomes necessary. |
 | D163 | Drive | Repeatable Behaviors | Competition Loop | **Raise the Impossibility** | Answer every strange offer with a more committed version that you can still justify. |
 | D164 | Drive | Repeatable Behaviors | Positive Reframing | **Every Glitch Is a Gift** | Turn every contradiction or failure into a surprising benefit of the impossible system. |

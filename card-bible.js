@@ -9,7 +9,7 @@
   "use strict";
 
   const CARD_SCHEMA_VERSION = 1;
-  const LIBRARY_PLAN_VERSION = "1.9.0";
+  const LIBRARY_PLAN_VERSION = "1.10.0";
   const TARGET_STANCE_COUNT = 240;
   const TARGET_DRIVE_COUNT = 240;
 
@@ -28,6 +28,7 @@
     cardTypes: ["stance", "drive"],
     cardStatuses: ["draft", "review", "playtest", "published", "retired"],
     packStatuses: ["planned", "drafting", "playtest", "published", "retired"],
+    publicationStages: ["published", "editorial-consolidated", "live-validation", "publication-candidate", "retired"],
     difficulties: ["beginner", "intermediate", "advanced"],
     intensities: ["low", "medium", "high"],
     tones: ["grounded", "heightened", "absurd", "flexible"],
@@ -403,12 +404,23 @@
     "ambiguity", "callback", "contradiction", "delay", "delayed-reveal", "double-bind", "echo", "escalation", "foreshadowing", "perspective", "recontextualization", "repetition", "reversal", "structure", "subtext", "symmetry", "turning-point"
   ];
 
+  const LIVE_VALIDATION_GATES = Object.freeze([
+    "independent-human-blind-read",
+    "live-exposure-threshold",
+    "veto-and-abandonment-review",
+    "final-copy-signoff"
+  ]);
+
   const packPlan = [
     {
       id: "core-foundations",
       sequence: 1,
       title: "Core Foundations",
       status: "published",
+      publicationStage: "published",
+      publicationWave: 0,
+      editorialReviewVersion: "0.18.0",
+      remainingPublicationGates: [],
       stanceRange: [1, 24],
       driveRange: [1, 24],
       targetStances: 24,
@@ -420,6 +432,10 @@
       sequence: 2,
       title: "Everyday Friction",
       status: "playtest",
+      publicationStage: "live-validation",
+      publicationWave: 1,
+      editorialReviewVersion: "0.18.0",
+      remainingPublicationGates: LIVE_VALIDATION_GATES,
       stanceRange: [25, 48],
       driveRange: [25, 48],
       targetStances: 24,
@@ -431,6 +447,10 @@
       sequence: 3,
       title: "Power Games",
       status: "playtest",
+      publicationStage: "live-validation",
+      publicationWave: 1,
+      editorialReviewVersion: "0.18.0",
+      remainingPublicationGates: LIVE_VALIDATION_GATES,
       stanceRange: [49, 72],
       driveRange: [49, 72],
       targetStances: 24,
@@ -442,6 +462,10 @@
       sequence: 4,
       title: "Relationship Knots",
       status: "playtest",
+      publicationStage: "live-validation",
+      publicationWave: 1,
+      editorialReviewVersion: "0.18.0",
+      remainingPublicationGates: LIVE_VALIDATION_GATES,
       stanceRange: [73, 96],
       driveRange: [73, 96],
       targetStances: 24,
@@ -453,6 +477,10 @@
       sequence: 5,
       title: "Emotional Pressure",
       status: "playtest",
+      publicationStage: "live-validation",
+      publicationWave: 2,
+      editorialReviewVersion: "0.18.0",
+      remainingPublicationGates: LIVE_VALIDATION_GATES,
       stanceRange: [97, 120],
       driveRange: [97, 120],
       targetStances: 24,
@@ -464,6 +492,10 @@
       sequence: 6,
       title: "Secrets & Schemes",
       status: "playtest",
+      publicationStage: "live-validation",
+      publicationWave: 2,
+      editorialReviewVersion: "0.18.0",
+      remainingPublicationGates: LIVE_VALIDATION_GATES,
       stanceRange: [121, 144],
       driveRange: [121, 144],
       targetStances: 24,
@@ -475,6 +507,10 @@
       sequence: 7,
       title: "Absurd Commitment",
       status: "playtest",
+      publicationStage: "live-validation",
+      publicationWave: 2,
+      editorialReviewVersion: "0.18.0",
+      remainingPublicationGates: LIVE_VALIDATION_GATES,
       stanceRange: [145, 168],
       driveRange: [145, 168],
       targetStances: 24,
@@ -486,6 +522,10 @@
       sequence: 8,
       title: "Rules, Rituals & Institutions",
       status: "playtest",
+      publicationStage: "live-validation",
+      publicationWave: 3,
+      editorialReviewVersion: "0.18.0",
+      remainingPublicationGates: LIVE_VALIDATION_GATES,
       stanceRange: [169, 192],
       driveRange: [169, 192],
       targetStances: 24,
@@ -497,6 +537,10 @@
       sequence: 9,
       title: "Competition & Consequences",
       status: "playtest",
+      publicationStage: "live-validation",
+      publicationWave: 3,
+      editorialReviewVersion: "0.18.0",
+      remainingPublicationGates: LIVE_VALIDATION_GATES,
       stanceRange: [193, 216],
       driveRange: [193, 216],
       targetStances: 24,
@@ -508,6 +552,10 @@
       sequence: 10,
       title: "Advanced Scene Engines",
       status: "playtest",
+      publicationStage: "live-validation",
+      publicationWave: 3,
+      editorialReviewVersion: "0.18.0",
+      remainingPublicationGates: LIVE_VALIDATION_GATES,
       stanceRange: [217, 240],
       driveRange: [217, 240],
       targetStances: 24,

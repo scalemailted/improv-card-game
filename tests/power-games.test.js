@@ -10,7 +10,7 @@ const validator = require("../tools/card-validator.js");
 
 assert.equal(pack.id, "power-games");
 assert.equal(pack.status, "playtest");
-assert.equal(pack.version, "0.10.0");
+assert.equal(pack.version, "0.18.0");
 assert.equal(pack.stances.length, 24);
 assert.equal(pack.drives.length, 24);
 assert.deepEqual(pack.stances.map((card) => card.id), Array.from({ length: 24 }, (_, index) => `S${index + 49}`));
@@ -53,7 +53,7 @@ for (const motif of ["access", "allegiance", "autonomy", "compliance", "hierarch
   assert.ok(bible.motifs.includes(motif), `Missing Power Games motif: ${motif}`);
 }
 
-assert.equal(cards.libraryPlanVersion, "1.9.0");
+assert.equal(cards.libraryPlanVersion, "1.10.0");
 assert.equal(cards.stances.length, 240);
 assert.equal(cards.drives.length, 240);
 assert.equal(cards.activePackCount, 10);

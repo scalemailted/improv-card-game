@@ -1,5 +1,8 @@
 # Power Games — 64-Card Candidate Pool
 
+> **v0.18.0 editorial consolidation:** Stable card IDs are preserved. The selected-card copy below reflects the current v0.18.0 wording; the original release wording remains recorded in `editorial/v0.18.0/revision-ledger.json`.
+
+
 This pool records the larger drafting set used to choose S49–S72 and D49–D72. It contains **64 candidates: 48 selected, 8 held, and 8 rejected**. The machine-readable source is `cards/candidates/power-games-candidate-pool.json`.
 
 ## Selected Stance candidates
@@ -10,7 +13,7 @@ This pool records the larger drafting set used to choose S49–S72 and D49–D72
 | PG-S-C02 | S50 | Status & Authority / Precarious Authority | **Conditional Command** | Project firm authority, then soften whenever the source of that authority might be questioned. |
 | PG-S-C03 | S51 | Status & Authority / Professional Expertise | **The Gatekeeper** | Use expertise and standards to decide who is qualified to judge, participate, or proceed. |
 | PG-S-C04 | S52 | Status & Authority / Belonging & Legitimacy | **Rightful Place** | Carry yourself as the rightful holder of your role and treat any demand for proof as an insult. |
-| PG-S-C05 | S53 | Status & Authority / Mentorship & Rank | **I Made You Ready** | Treat another person’s competence as evidence of your teaching, influence, and continuing seniority. |
+| PG-S-C05 | S53 | Status & Authority / Mentorship & Rank | **The Crown Must Pass** | Treat another person as your likely successor. Prepare them to lead, then reclaim authority whenever their independence makes your influence feel temporary. |
 | PG-S-C06 | S54 | Status & Authority / Hidden Leverage | **The Quiet Veto** | Remain pleasant and cooperative while behaving as though nothing can proceed without your private consent. |
 | PG-S-C07 | S55 | History & Relationship / Shared Origins | **We Started Equal** | Use shared beginnings to erase present rank, titles, and attempts to place distance between you. |
 | PG-S-C08 | S56 | History & Relationship / Debts & Favors | **My Support, My Say** | Treat every past favor as a continuing investment in your right to influence present decisions. |
@@ -46,7 +49,7 @@ This pool records the larger drafting set used to choose S49–S72 and D49–D72
 | PG-D-C09 | D57 | Direct Objectives / Gain Recognition | **Use the Proper Title** | Make someone acknowledge your standing through a title, privilege, courtesy, or public sign of respect. |
 | PG-D-C10 | D58 | Direct Objectives / Force a Choice | **Declare Allegiance** | Make someone choose which person, side, or claim to authority they will support. |
 | PG-D-C11 | D59 | Direct Objectives / Test Loyalty | **Obey Without Explanation** | Create increasingly inconvenient requests that test whether someone accepts your authority. |
-| PG-D-C12 | D60 | Direct Objectives / Obtain Surrender | **Yield Control** | Make someone surrender control of a decision, resource, or symbol of authority. |
+| PG-D-C12 | D60 | Direct Objectives / Obtain Surrender | **Pass Me the Authority** | Get someone to transfer authority publicly by naming you as the person who decides what happens next. |
 | PG-D-C13 | D61 | Secrets & Avoidance / Conceal Culpability | **Orders from the Shadows** | Hide that you set the problem in motion while quietly directing how everyone responds. |
 | PG-D-C14 | D62 | Secrets & Avoidance / Avoid the Subject | **Not Up for Debate** | Keep the conversation from examining where your authority comes from or whether it is legitimate. |
 | PG-D-C15 | D63 | Secrets & Avoidance / Protective Deception | **For Stability’s Sake** | Hide a destabilizing truth because you believe the current balance of power must be protected. |
@@ -76,9 +79,9 @@ This pool records the larger drafting set used to choose S49–S72 and D49–D72
 | PG-D-C26 | Drive | Direct Objectives / Extract Information | **Find the Weak Link** | Held | Strong leverage engine, but it is more adversarial and less broadly usable than Find the Real Authority. |
 | PG-D-C27 | Drive | Direct Objectives / Test Loyalty | **Reward the Loyal** | Held | A compelling patronage pattern that may become a distinct advanced card after live testing. |
 | PG-D-C28 | Drive | Secrets & Avoidance / Reframe Failure | **Let Them Think They Won** | Held | Excellent veteran material, but it approaches the delayed-reveal territory reserved for Advanced Scene Engines. |
-| PG-D-C29 | Drive | Direct Objectives / Obtain Surrender | **Make Them Kneel** | Rejected | Too literal, coercive, and setting-limiting compared with Yield Control. |
+| PG-D-C29 | Drive | Direct Objectives / Obtain Surrender | **Make Them Kneel** | Rejected | Too literal, coercive, and setting-limiting compared with Pass Me the Authority. |
 | PG-D-C30 | Drive | Direct Objectives / Gain Recognition | **Take the Credit** | Rejected | Too generic and too close to existing recognition objectives without a specifically power-centered method. |
-| PG-D-C31 | Drive | Direct Objectives / Obtain Surrender | **Overrule It** | Rejected | Clear but narrow; it offers fewer playable routes and escalation beats than Yield Control. |
+| PG-D-C31 | Drive | Direct Objectives / Obtain Surrender | **Overrule It** | Rejected | Clear but narrow; it offers fewer playable routes and escalation beats than Pass Me the Authority. |
 | PG-D-C32 | Drive | Direct Objectives / Prevent Departure | **Keep the Throne Warm** | Rejected | The throne language is unnecessarily setting-specific and the objective overlaps recognition more than retention. |
 
 ## Selection principles

@@ -18,7 +18,8 @@
   }
 
   const PACK_ID = "everyday-friction";
-  const CONTENT_VERSION = "0.9.0";
+  const DEFAULT_CONTENT_VERSION = "0.9.0";
+  const PACK_VERSION = "0.18.0";
   const ALL_MODES = ["open", "mirror", "paired"];
 
   function createCard(definition) {
@@ -33,7 +34,7 @@
       id: definition.id,
       type: definition.type,
       packId: PACK_ID,
-      contentVersion: CONTENT_VERSION,
+      contentVersion: definition.contentVersion || DEFAULT_CONTENT_VERSION,
       status: "playtest",
       title: definition.title,
       instruction: definition.instruction,
@@ -1117,9 +1118,13 @@
     schemaVersion: bible.CARD_SCHEMA_VERSION,
     id: PACK_ID,
     title: "Everyday Friction",
-    version: CONTENT_VERSION,
+    version: PACK_VERSION,
     status: "playtest",
     sequence: 2,
+    publicationStage: bible.getPack(PACK_ID).publicationStage,
+    publicationWave: bible.getPack(PACK_ID).publicationWave,
+    editorialReviewVersion: bible.getPack(PACK_ID).editorialReviewVersion,
+    remainingPublicationGates: [...bible.getPack(PACK_ID).remainingPublicationGates],
     description: "Ordinary inconvenience, shared responsibilities, routine strain, practical etiquette, and small stakes treated with serious character commitment.",
     stances,
     drives

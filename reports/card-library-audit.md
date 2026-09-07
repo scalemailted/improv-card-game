@@ -1,6 +1,6 @@
 # Imprompt Card Library Audit
 
-Generated: 2026-09-07T00:45:34.094Z
+Generated: 2026-09-07T02:17:43.382Z
 
 **Result:** PASS
 
@@ -11,6 +11,7 @@ Generated: 2026-09-07T00:45:34.094Z
 | Active packs | 10 | 10 | 100.0% |
 | Published packs | 1 | 10 | 10.0% |
 | Playtest packs | 9 | — | — |
+| Packs in live validation | 9 | 9 | — |
 | Stance cards | 240 | 240 | 100.0% |
 | Drive cards | 240 | 240 | 100.0% |
 | Total cards | 480 | 480 | 100.0% |
@@ -26,6 +27,21 @@ Generated: 2026-09-07T00:45:34.094Z
 | Drive | Direct Objectives | 120 | 120 |
 | Drive | Secrets & Avoidance | 60 | 60 |
 | Drive | Repeatable Behaviors | 60 | 60 |
+
+## Publication readiness by pack
+
+| Wave | Pack | Runtime status | Editorial stage | Remaining gates |
+|---:|---|---|---|---|
+| 0 | Core Foundations | published | published | None |
+| 1 | Everyday Friction | playtest | live-validation | independent-human-blind-read, live-exposure-threshold, veto-and-abandonment-review, final-copy-signoff |
+| 1 | Power Games | playtest | live-validation | independent-human-blind-read, live-exposure-threshold, veto-and-abandonment-review, final-copy-signoff |
+| 1 | Relationship Knots | playtest | live-validation | independent-human-blind-read, live-exposure-threshold, veto-and-abandonment-review, final-copy-signoff |
+| 2 | Emotional Pressure | playtest | live-validation | independent-human-blind-read, live-exposure-threshold, veto-and-abandonment-review, final-copy-signoff |
+| 2 | Secrets & Schemes | playtest | live-validation | independent-human-blind-read, live-exposure-threshold, veto-and-abandonment-review, final-copy-signoff |
+| 2 | Absurd Commitment | playtest | live-validation | independent-human-blind-read, live-exposure-threshold, veto-and-abandonment-review, final-copy-signoff |
+| 3 | Rules, Rituals & Institutions | playtest | live-validation | independent-human-blind-read, live-exposure-threshold, veto-and-abandonment-review, final-copy-signoff |
+| 3 | Competition & Consequences | playtest | live-validation | independent-human-blind-read, live-exposure-threshold, veto-and-abandonment-review, final-copy-signoff |
+| 3 | Advanced Scene Engines | playtest | live-validation | independent-human-blind-read, live-exposure-threshold, veto-and-abandonment-review, final-copy-signoff |
 
 ## Editorial metadata distribution
 
@@ -56,8 +72,8 @@ Generated: 2026-09-07T00:45:34.094Z
 
 ## Copy profile
 
-- Average Stance instruction: **17.9 words**
-- Average Drive instruction: **14.4 words**
+- Average Stance instruction: **18.0 words**
+- Average Drive instruction: **14.6 words**
 
 ## Automated acceptance results
 

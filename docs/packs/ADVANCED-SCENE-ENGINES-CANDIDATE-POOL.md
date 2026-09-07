@@ -1,5 +1,8 @@
 # Imprompt Pack 10 — Advanced Scene Engines Candidate Pool
 
+> **v0.18.0 editorial consolidation:** Stable card IDs are preserved. The selected-card copy below reflects the current v0.18.0 wording; the original release wording remains recorded in `editorial/v0.18.0/revision-ledger.json`.
+
+
 **Release target:** Imprompt v0.17.0  
 **Pool:** 64 candidates — 48 selected, 8 held, 8 rejected
 
@@ -8,10 +11,10 @@
 | Candidate | Reserved ID | Category / Subtheme | Title | Disposition | Rationale |
 |---|---|---|---|---|---|
 | ASE-S-C01 | S217 | Status & Authority / Command Presence | **Command with an Escape Hatch** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
-| ASE-S-C02 | S218 | Status & Authority / Precarious Authority | **One Detail Could Undo Me** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
+| ASE-S-C02 | S218 | Status & Authority / Precarious Authority | **Authority Changes Hands** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
 | ASE-S-C03 | S219 | Status & Authority / Professional Expertise | **The Expert Blind Spot** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
 | ASE-S-C04 | S220 | Status & Authority / Belonging & Legitimacy | **Insider with the Wrong Memories** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
-| ASE-S-C05 | S221 | Status & Authority / Mentorship & Rank | **The Student Rewrites the Lesson** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
+| ASE-S-C05 | S221 | Status & Authority / Mentorship & Rank | **I Meant to Teach That** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
 | ASE-S-C06 | S222 | Status & Authority / Hidden Leverage | **The Favor Not Yet Named** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
 | ASE-S-C07 | S223 | History & Relationship / Shared Origins | **Same Memory, Different Meaning** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
 | ASE-S-C08 | S224 | History & Relationship / Debts & Favors | **The Debt Changes Hands** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
@@ -30,7 +33,7 @@
 | ASE-S-C21 | S237 | Worldview & Absurdity / Celebration & Optimism | **Exactly the Victory I Meant** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
 | ASE-S-C22 | S238 | Worldview & Absurdity / Practical Grounding | **Track the Cost That Returns** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
 | ASE-S-C23 | S239 | Worldview & Absurdity / Fixation & Significance | **The Object Changes Meaning** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
-| ASE-S-C24 | S240 | Worldview & Absurdity / Pattern & Grand Meaning | **Everything Rhymes Eventually** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
+| ASE-S-C24 | S240 | Worldview & Absurdity / Pattern & Grand Meaning | **The Callback Changes Meaning** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
 | ASE-S-C25 | — | History & Relationship / Shared Origins | **The Scene We Keep Replaying** | Held | Strong structural premise, but it overlaps Same Memory, Different Meaning and risks making every offer serve one remembered scene. |
 | ASE-S-C26 | — | Worldview & Absurdity / Pattern & Grand Meaning | **Save Everything for Later** | Held | Promising for veterans, but it can encourage stockpiling details instead of responding fully in the present. |
 | ASE-S-C27 | — | History & Relationship / Familiar Roles | **The Reversible Relationship** | Held | Useful exercise material, but the reversal trigger is too arbitrary and may weaken continuity rather than deepen it. |
@@ -45,7 +48,7 @@
 | Candidate | Reserved ID | Category / Subtheme | Title | Disposition | Rationale |
 |---|---|---|---|---|---|
 | ASE-D-C01 | D217 | Direct Objectives / Secure Help | **Make Help Define Us** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
-| ASE-D-C02 | D218 | Direct Objectives / Prevent Departure | **One More Unresolved Reason** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
+| ASE-D-C02 | D218 | Direct Objectives / Prevent Departure | **Reopen the First Reason** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
 | ASE-D-C03 | D219 | Direct Objectives / Obtain an Apology | **Change What the Apology Is For** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
 | ASE-D-C04 | D220 | Direct Objectives / Gain Approval | **Approve the Harmless Version** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |
 | ASE-D-C05 | D221 | Direct Objectives / Transfer the Task | **The Handoff Already Happened** | Selected | Selected as the clearest portable, holder-specific Advanced Scene Engines prompt for this required subtheme slot. |

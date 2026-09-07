@@ -1,5 +1,8 @@
 # Imprompt Pack 7 — Absurd Commitment Candidate Pool
 
+> **v0.18.0 editorial consolidation:** Stable card IDs are preserved. The selected-card copy below reflects the current v0.18.0 wording; the original release wording remains recorded in `editorial/v0.18.0/revision-ledger.json`.
+
+
 **Release target:** Imprompt v0.14.0  
 **Candidate pool:** 64 cards  
 **Selected:** 48  
@@ -28,7 +31,7 @@ This document records the full editorial pool, including ideas not selected for 
 | AC-S-C14 | S158 | Emotional Assumptions / Identity & Nostalgia | **When Things Made Sense** | Selected | Selected as the clearest portable, holder-specific Absurd Commitment stance for this required subtheme slot. |
 | AC-S-C15 | S159 | Emotional Assumptions / Fear & Insecurity | **Don’t Let Reality Notice** | Selected | Selected as the clearest portable, holder-specific Absurd Commitment stance for this required subtheme slot. |
 | AC-S-C16 | S160 | Emotional Assumptions / Care & Control | **Safety Through Nonsense** | Selected | Selected as the clearest portable, holder-specific Absurd Commitment stance for this required subtheme slot. |
-| AC-S-C17 | S161 | Emotional Assumptions / Approval & Belonging | **I Get the Joke** | Selected | Selected as the clearest portable, holder-specific Absurd Commitment stance for this required subtheme slot. |
+| AC-S-C17 | S161 | Emotional Assumptions / Approval & Belonging | **Half a Beat Late** | Selected | Selected as the clearest portable, holder-specific Absurd Commitment stance for this required subtheme slot. |
 | AC-S-C18 | S162 | Emotional Assumptions / Pride & Validation | **I Predicted This** | Selected | Selected as the clearest portable, holder-specific Absurd Commitment stance for this required subtheme slot. |
 | AC-S-C19 | S163 | Worldview & Absurdity / Ritual & Tradition | **The Ceremony Requires More** | Selected | Selected as the clearest portable, holder-specific Absurd Commitment stance for this required subtheme slot. |
 | AC-S-C20 | S164 | Worldview & Absurdity / Crisis & Catastrophe | **Reality Is Coming Apart** | Selected | Selected as the clearest portable, holder-specific Absurd Commitment stance for this required subtheme slot. |
@@ -59,13 +62,13 @@ This document records the full editorial pool, including ideas not selected for 
 | AC-D-C08 | D152 | Direct Objectives / Induce Risk | **Test the Impossible Claim** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
 | AC-D-C09 | D153 | Direct Objectives / Gain Recognition | **Credit for the Impossible** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
 | AC-D-C10 | D154 | Direct Objectives / Force a Choice | **Choose the Real Impossibility** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
-| AC-D-C11 | D155 | Direct Objectives / Test Loyalty | **Prove You Accept the Premise** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
+| AC-D-C11 | D155 | Direct Objectives / Test Loyalty | **Act as If It’s True** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
 | AC-D-C12 | D156 | Direct Objectives / Obtain Surrender | **Abandon the Normal Explanation** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
 | AC-D-C13 | D157 | Secrets & Avoidance / Conceal Culpability | **I Started the Weirdness** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
 | AC-D-C14 | D158 | Secrets & Avoidance / Avoid the Subject | **Don’t Question the Premise** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
-| AC-D-C15 | D159 | Secrets & Avoidance / Protective Deception | **A Kinder Impossible Truth** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
+| AC-D-C15 | D159 | Secrets & Avoidance / Protective Deception | **Keep Hope Operational** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
 | AC-D-C16 | D160 | Secrets & Avoidance / Induce a Confession | **Say You Saw It Too** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
-| AC-D-C17 | D161 | Secrets & Avoidance / Reframe Failure | **That Was Phase One** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
+| AC-D-C17 | D161 | Secrets & Avoidance / Reframe Failure | **Failure Reveals the Mission** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
 | AC-D-C18 | D162 | Secrets & Avoidance / Feign Competence | **Fluent in Nonsense** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
 | AC-D-C19 | D163 | Repeatable Behaviors / Competition Loop | **Raise the Impossibility** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
 | AC-D-C20 | D164 | Repeatable Behaviors / Positive Reframing | **Every Glitch Is a Gift** | Selected | Selected as the clearest playable Absurd Commitment engine for this required Drive subtheme slot. |
@@ -148,9 +151,9 @@ Behave as though openly questioning the impossible premise could attract dangero
 
 Take control through elaborate impossible precautions, treating every objection as another reason the people present need protection.
 
-### S161 — I Get the Joke
+### S161 — Half a Beat Late
 
-Act as though immediate acceptance of every strange development is the price of belonging, even when you are visibly struggling.
+Use the group’s reactions as your cue, joining each one a moment late and escalating your enthusiasm to stay included.
 
 ### S162 — I Predicted This
 
@@ -220,9 +223,9 @@ Make someone acknowledge that you understood, predicted, or accepted the impossi
 
 Make someone choose which of two incompatible explanations will govern what everyone does next.
 
-### D155 — Prove You Accept the Premise
+### D155 — Act as If It’s True
 
-Create an increasingly inconvenient test of whether someone will act as though the impossible premise is true.
+Ask for one concrete choice that would only make sense if the impossible premise were true.
 
 ### D156 — Abandon the Normal Explanation
 
@@ -236,17 +239,17 @@ Hide that one casual choice caused the impossible situation while eagerly helpin
 
 Redirect every attempt to ask why the strange situation exists toward what must happen next.
 
-### D159 — A Kinder Impossible Truth
+### D159 — Keep Hope Operational
 
-Protect someone from a harsher explanation by maintaining a more hopeful and impossible version of events.
+Protect their hope with practical evidence and next steps while quietly withholding what makes the impossible outcome unlikely.
 
 ### D160 — Say You Saw It Too
 
 Get someone to admit noticing the impossible detail before you reveal how much you believe it.
 
-### D161 — That Was Phase One
+### D161 — Failure Reveals the Mission
 
-Treat every failed attempt as a necessary stage that proves the impossible plan is advancing.
+Use each failed step to reveal a different goal the plan was secretly pursuing, then act immediately on that new mission.
 
 ### D162 — Fluent in Nonsense
 

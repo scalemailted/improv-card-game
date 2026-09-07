@@ -1,5 +1,8 @@
 # Relationship Knots — 48-Slot Authoring Matrix
 
+> **v0.18.0 editorial consolidation:** Stable card IDs are preserved. The selected-card copy below reflects the current v0.18.0 wording; the original release wording remains recorded in `editorial/v0.18.0/revision-ledger.json`.
+
+
 **Status:** Editorial selection complete; live playtest pending  
 **Reserved IDs:** S73–S96 / D73–D96  
 **Rule:** One selected card occupies every formal Imprompt subtheme.
@@ -12,13 +15,13 @@
 | S74 | Status & Authority | Precarious Authority | **Keeper of the Peace** | Project calm authority over the relationship while carefully avoiding anything that might expose how fragile the peace really is. |
 | S75 | Status & Authority | Professional Expertise | **I Know Your Tells** | Use intimate knowledge of habits, moods, and patterns as expertise that lets you diagnose every choice. |
 | S76 | Status & Authority | Belonging & Legitimacy | **Still Part of This** | Act as though shared history permanently guarantees your place, even when present boundaries suggest otherwise. |
-| S77 | Status & Authority | Mentorship & Rank | **Older in This Relationship** | Treat your longer memory of the relationship as seniority, correcting how its history should be understood. |
+| S77 | Status & Authority | Mentorship & Rank | **Keeper of Precedent** | Treat your longer memory as an archive, not a throne. Cite specific promises and precedents whenever the relationship faces a new choice. |
 | S78 | Status & Authority | Hidden Leverage | **Private Access** | Use shared confidences and private knowledge as quiet leverage, never stating how much influence that closeness gives you. |
 | S79 | History & Relationship | Shared Origins | **Our Private Language** | Use old references, shorthand, and familiar rhythms as proof that this connection exists beneath whatever has changed. |
 | S80 | History & Relationship | Debts & Favors | **I Was There** | Treat your presence during a difficult time as an enduring claim on loyalty, honesty, and consideration. |
 | S81 | History & Relationship | Familiar Roles | **Back in Our Roles** | Return immediately to the role you usually play in this relationship, even when the present situation calls for something different. |
 | S82 | History & Relationship | Rivalry & Comparison | **The Other Favorite** | Treat every sign of attention, trust, and affection as something to compare with what another connection appears to receive. |
-| S83 | History & Relationship | Trust & Dependence | **My First Call** | Turn to this connection first whenever uncertainty appears, then minimize how much that instinct reveals about your dependence. |
+| S83 | History & Relationship | Trust & Dependence | **Old Reflex** | Turn to this person first whenever uncertainty appears, as an old reflex. Notice the habit only after you have already involved them. |
 | S84 | History & Relationship | Rupture & Unfinished Business | **Almost Forgiven** | Behave as though the past is nearly resolved, but let each small disappointment reopen one precise part of the hurt. |
 | S85 | Emotional Assumptions | Admiration & Envy | **Easy to Love** | Interpret another person’s ease with affection as both admirable and unfair, then compete to seem equally worth choosing. |
 | S86 | Emotional Assumptions | Identity & Nostalgia | **Who We Used to Be** | Perform the version of yourself that belonged to this relationship before it changed, and treat old chemistry as still recoverable. |

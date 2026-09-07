@@ -18,7 +18,8 @@
   }
 
   const PACK_ID = "advanced-scene-engines";
-  const CONTENT_VERSION = "0.17.0";
+  const DEFAULT_CONTENT_VERSION = "0.17.0";
+  const PACK_VERSION = "0.18.0";
   const ALL_MODES = ["open", "mirror", "paired"];
 
   function createCard(definition) {
@@ -33,7 +34,7 @@
       id: definition.id,
       type: definition.type,
       packId: PACK_ID,
-      contentVersion: CONTENT_VERSION,
+      contentVersion: definition.contentVersion || DEFAULT_CONTENT_VERSION,
       status: "playtest",
       title: definition.title,
       instruction: definition.instruction,
@@ -78,8 +79,8 @@
   {
     "id": "S218",
     "type": "stance",
-    "title": "One Detail Could Undo Me",
-    "instruction": "Project total control while treating one recurring detail as the thing that could expose how little authority you truly possess.",
+    "title": "Authority Changes Hands",
+    "instruction": "Project control while guarding one detail that could transfer authority elsewhere. Let each return of that detail shift whom you defer to or overrule.",
     "categoryId": "status-authority",
     "subthemeId": "precarious-authority",
     "difficulty": "advanced",
@@ -88,15 +89,16 @@
     "orientation": "self-focused",
     "coachRoles": [
       "insecure-authority",
-      "delayed-revealer",
-      "fixator"
+      "reversal-maker",
+      "callback-builder"
     ],
     "motifs": [
       "status",
-      "fear",
+      "reversal",
       "callback",
-      "subtext"
-    ]
+      "ambiguity"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "S219",
@@ -147,7 +149,7 @@
   {
     "id": "S221",
     "type": "stance",
-    "title": "The Student Rewrites the Lesson",
+    "title": "I Meant to Teach That",
     "instruction": "Treat any correction, surprise, or improvement as evidence your teaching succeeded. Claim each reversal as the lesson you intended all along.",
     "categoryId": "status-authority",
     "subthemeId": "mentorship-rank",
@@ -165,7 +167,8 @@
       "hierarchy",
       "reversal",
       "recontextualization"
-    ]
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "S222",
@@ -584,8 +587,8 @@
   {
     "id": "S240",
     "type": "stance",
-    "title": "Everything Rhymes Eventually",
-    "instruction": "Treat repeated words, actions, and reversals as echoes of one larger pattern whose meaning you keep revising.",
+    "title": "The Callback Changes Meaning",
+    "instruction": "Treat every returning phrase or action as evidence the relationship has changed. Repeat it with a new emotional meaning each time.",
     "categoryId": "worldview-absurdity",
     "subthemeId": "pattern-grand-meaning",
     "difficulty": "advanced",
@@ -593,17 +596,17 @@
     "tone": "heightened",
     "orientation": "world-focused",
     "coachRoles": [
-      "meaning-maker",
+      "callback-builder",
       "pattern-weaver",
-      "scene-architect"
+      "memory-keeper"
     ],
     "motifs": [
-      "patterns",
-      "echo",
+      "callback",
       "repetition",
-      "structure",
-      "recontextualization"
-    ]
+      "recontextualization",
+      "connection"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "D217",
@@ -631,8 +634,8 @@
   {
     "id": "D218",
     "type": "drive",
-    "title": "One More Unresolved Reason",
-    "instruction": "Keep them present by introducing a new unresolved reason whenever the previous reason is answered.",
+    "title": "Reopen the First Reason",
+    "instruction": "Keep them present by returning to the first reason for staying and revealing that it now means something different.",
     "categoryId": "direct-objectives",
     "subthemeId": "prevent-departure",
     "difficulty": "intermediate",
@@ -641,15 +644,16 @@
     "orientation": "toward-partner",
     "coachRoles": [
       "retainer",
-      "pattern-weaver",
-      "escalator"
+      "callback-builder",
+      "reversal-maker"
     ],
     "motifs": [
-      "abandonment",
       "delay",
-      "repetition",
-      "structure"
-    ]
+      "callback",
+      "recontextualization",
+      "connection"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "D219",
@@ -1167,9 +1171,13 @@
     schemaVersion: bible.CARD_SCHEMA_VERSION,
     id: PACK_ID,
     title: "Advanced Scene Engines",
-    version: CONTENT_VERSION,
+    version: PACK_VERSION,
     status: "playtest",
     sequence: 10,
+    publicationStage: bible.getPack(PACK_ID).publicationStage,
+    publicationWave: bible.getPack(PACK_ID).publicationWave,
+    editorialReviewVersion: bible.getPack(PACK_ID).editorialReviewVersion,
+    remainingPublicationGates: [...bible.getPack(PACK_ID).remainingPublicationGates],
     description: "Layered contradictions, delayed reveals, reversals, callbacks, recontextualization, and veteran-level scene pressure.",
     stances,
     drives

@@ -18,7 +18,8 @@
   }
 
   const PACK_ID = "absurd-commitment";
-  const CONTENT_VERSION = "0.14.0";
+  const DEFAULT_CONTENT_VERSION = "0.14.0";
+  const PACK_VERSION = "0.18.0";
   const ALL_MODES = ["open", "mirror", "paired"];
 
   function createCard(definition) {
@@ -33,7 +34,7 @@
       id: definition.id,
       type: definition.type,
       packId: PACK_ID,
-      contentVersion: CONTENT_VERSION,
+      contentVersion: definition.contentVersion || DEFAULT_CONTENT_VERSION,
       status: "playtest",
       title: definition.title,
       instruction: definition.instruction,
@@ -423,8 +424,8 @@
   {
     "id": "S161",
     "type": "stance",
-    "title": "I Get the Joke",
-    "instruction": "Act as though immediate acceptance of every strange development is the price of belonging, even when you are visibly struggling.",
+    "title": "Half a Beat Late",
+    "instruction": "Use the group’s reactions as your cue, joining each one a moment late and escalating your enthusiasm to stay included.",
     "categoryId": "emotional-assumptions",
     "subthemeId": "approval-belonging",
     "difficulty": "beginner",
@@ -439,9 +440,10 @@
     "motifs": [
       "approval",
       "belonging",
-      "absurdity",
-      "uncertainty"
-    ]
+      "performance",
+      "repetition"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "S162",
@@ -837,8 +839,8 @@
   {
     "id": "D155",
     "type": "drive",
-    "title": "Prove You Accept the Premise",
-    "instruction": "Create an increasingly inconvenient test of whether someone will act as though the impossible premise is true.",
+    "title": "Act as If It’s True",
+    "instruction": "Ask for one concrete choice that would only make sense if the impossible premise were true.",
     "categoryId": "direct-objectives",
     "subthemeId": "test-loyalty",
     "difficulty": "intermediate",
@@ -848,14 +850,15 @@
     "coachRoles": [
       "tester",
       "believer",
-      "instigator"
+      "consequence-keeper"
     ],
     "motifs": [
       "loyalty",
       "premise",
-      "risk",
+      "commitment",
       "impossibility"
-    ]
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "D156",
@@ -929,8 +932,8 @@
   {
     "id": "D159",
     "type": "drive",
-    "title": "A Kinder Impossible Truth",
-    "instruction": "Protect someone from a harsher explanation by maintaining a more hopeful and impossible version of events.",
+    "title": "Keep Hope Operational",
+    "instruction": "Protect their hope with practical evidence and next steps while quietly withholding what makes the impossible outcome unlikely.",
     "categoryId": "secrets-avoidance",
     "subthemeId": "protective-deception",
     "difficulty": "intermediate",
@@ -939,15 +942,16 @@
     "orientation": "toward-partner",
     "coachRoles": [
       "protector",
-      "secret-keeper",
-      "hope-keeper"
+      "hope-keeper",
+      "strategist"
     ],
     "motifs": [
-      "care",
-      "deception",
       "hope",
-      "impossibility"
-    ]
+      "evidence",
+      "care",
+      "deception"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "D160",
@@ -975,8 +979,8 @@
   {
     "id": "D161",
     "type": "drive",
-    "title": "That Was Phase One",
-    "instruction": "Treat every failed attempt as a necessary stage that proves the impossible plan is advancing.",
+    "title": "Failure Reveals the Mission",
+    "instruction": "Use each failed step to reveal a different goal the plan was secretly pursuing, then act immediately on that new mission.",
     "categoryId": "secrets-avoidance",
     "subthemeId": "reframe-failure",
     "difficulty": "beginner",
@@ -985,15 +989,16 @@
     "orientation": "self-focused",
     "coachRoles": [
       "spin-doctor",
-      "strategist",
-      "reframer"
+      "reversal-maker",
+      "strategist"
     ],
     "motifs": [
       "strategy",
-      "impossibility",
-      "optimism",
-      "patterns"
-    ]
+      "reversal",
+      "turning-point",
+      "impossibility"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "D162",
@@ -1166,9 +1171,13 @@
     schemaVersion: bible.CARD_SCHEMA_VERSION,
     id: PACK_ID,
     title: "Absurd Commitment",
-    version: CONTENT_VERSION,
+    version: PACK_VERSION,
     status: "playtest",
     sequence: 7,
+    publicationStage: bible.getPack(PACK_ID).publicationStage,
+    publicationWave: bible.getPack(PACK_ID).publicationWave,
+    editorialReviewVersion: bible.getPack(PACK_ID).editorialReviewVersion,
+    remainingPublicationGates: [...bible.getPack(PACK_ID).remainingPublicationGates],
     description: "Impossible logic, literal commitment, grounded reaction, recurring nonsense, and heightened consequence.",
     stances,
     drives

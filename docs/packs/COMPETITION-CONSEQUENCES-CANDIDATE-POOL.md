@@ -1,5 +1,8 @@
 # Imprompt Pack 9 — Competition & Consequences Candidate Pool
 
+> **v0.18.0 editorial consolidation:** Stable card IDs are preserved. The selected-card copy below reflects the current v0.18.0 wording; the original release wording remains recorded in `editorial/v0.18.0/revision-ledger.json`.
+
+
 **Release target:** Imprompt v0.16.0  
 **Candidate pool:** 64 concepts  
 **Selection:** 48 selected, 8 held, 8 rejected
@@ -17,14 +20,14 @@ The pool intentionally exceeds the 48 playable slots so selection can reject rep
 | CC-S-C07 | S199 | History & Relationship / Shared Origins | **We Learned to Win Together** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
 | CC-S-C08 | S200 | History & Relationship / Debts & Favors | **You Owe Me the Chance** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
 | CC-S-C09 | S201 | History & Relationship / Familiar Roles | **The One Who Lets You Win** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
-| CC-S-C10 | S202 | History & Relationship / Rivalry & Comparison | **Permanent Scoreboard** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
-| CC-S-C11 | S203 | History & Relationship / Trust & Dependence | **The Rival I Need** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
+| CC-S-C10 | S202 | History & Relationship / Rivalry & Comparison | **Debts on the Scoreboard** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
+| CC-S-C11 | S203 | History & Relationship / Trust & Dependence | **Victory Without You** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
 | CC-S-C12 | S204 | History & Relationship / Rupture & Unfinished Business | **The Unfinished Rematch** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
 | CC-S-C13 | S205 | Emotional Assumptions / Admiration & Envy | **Winning Looks Natural on You** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
 | CC-S-C14 | S206 | Emotional Assumptions / Identity & Nostalgia | **Back When I Was Ahead** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
 | CC-S-C15 | S207 | Emotional Assumptions / Fear & Insecurity | **Second Place Feels Like Disappearing** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
-| CC-S-C16 | S208 | Emotional Assumptions / Care & Control | **I Decide What You Can Risk** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
-| CC-S-C17 | S209 | Emotional Assumptions / Approval & Belonging | **Worth Keeping on the Team** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
+| CC-S-C16 | S208 | Emotional Assumptions / Care & Control | **Your Risk, My Cost** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
+| CC-S-C17 | S209 | Emotional Assumptions / Approval & Belonging | **Worth Keeping Around** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
 | CC-S-C18 | S210 | Emotional Assumptions / Pride & Validation | **Make the Win Count** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
 | CC-S-C19 | S211 | Worldview & Absurdity / Ritual & Tradition | **The Winner’s Ceremony** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
 | CC-S-C20 | S212 | Worldview & Absurdity / Crisis & Catastrophe | **Everything Is Sudden Death** | Selected | Selected as the clearest portable, holder-specific Competition & Consequences stance for this required subtheme slot. |
@@ -50,7 +53,7 @@ The pool intentionally exceeds the 48 playable slots so selection can reject rep
 | CC-D-C16 | D208 | Secrets & Avoidance / Induce a Confession | **Admit What You Wanted** | Selected | Selected as the clearest playable Competition & Consequences engine for this required Drive subtheme slot. |
 | CC-D-C17 | D209 | Secrets & Avoidance / Reframe Failure | **Investment in the Next Round** | Selected | Selected as the clearest playable Competition & Consequences engine for this required Drive subtheme slot. |
 | CC-D-C18 | D210 | Secrets & Avoidance / Feign Competence | **I Know How to Win This** | Selected | Selected as the clearest playable Competition & Consequences engine for this required Drive subtheme slot. |
-| CC-D-C19 | D211 | Repeatable Behaviors / Competition Loop | **Turn It into a Tiebreaker** | Selected | Selected as the clearest playable Competition & Consequences engine for this required Drive subtheme slot. |
+| CC-D-C19 | D211 | Repeatable Behaviors / Competition Loop | **No Tie Stands** | Selected | Selected as the clearest playable Competition & Consequences engine for this required Drive subtheme slot. |
 | CC-D-C20 | D212 | Repeatable Behaviors / Positive Reframing | **Every Loss Builds the Comeback** | Selected | Selected as the clearest playable Competition & Consequences engine for this required Drive subtheme slot. |
 | CC-D-C21 | D213 | Repeatable Behaviors / Emotional Contradiction | **Congratulate Through Your Teeth** | Selected | Selected as the clearest playable Competition & Consequences engine for this required Drive subtheme slot. |
 | CC-D-C22 | D214 | Repeatable Behaviors / Transactional Framing | **Nothing Without Stakes** | Selected | Selected as the clearest playable Competition & Consequences engine for this required Drive subtheme slot. |
@@ -111,13 +114,13 @@ Treat a past sacrifice, concession, or missed opportunity as a debt that should 
 
 Return to the familiar role of making victory easier for others, then let the cost of that generosity become impossible to ignore.
 
-### S202 — Permanent Scoreboard
+### S202 — Debts on the Scoreboard
 
-Treat every offer, memory, and achievement as another point in a rivalry that has never truly ended.
+Treat past wins and losses as debts. Let each new result change who owes the next favor, risk, or concession.
 
-### S203 — The Rival I Need
+### S203 — Victory Without You
 
-Treat one person as essential to sharpening your effort, while resisting every sign that your ambition depends on their presence.
+Treat the possibility of winning without this rival as strangely hollow. Keep raising the challenge so the relationship survives the result.
 
 ### S204 — The Unfinished Rematch
 
@@ -135,11 +138,11 @@ Interpret the present through a time when you felt more successful, admired, or 
 
 Treat every comparison as a threat to your worth. Respond by proving that you still matter before the moment can move on.
 
-### S208 — I Decide What You Can Risk
+### S208 — Your Risk, My Cost
 
-Frame control over someone else’s choices as protection from consequences you believe they may underestimate.
+Treat every choice around you as a risk whose consequences may land on you. Press for a voice in decisions you cannot control.
 
-### S209 — Worth Keeping on the Team
+### S209 — Worth Keeping Around
 
 Seek signs that your contribution still earns a place. Increase your effort whenever belonging feels uncertain.
 
@@ -243,9 +246,9 @@ Describe defeat, penalty, or a bad bargain as a deliberate investment in a large
 
 Perform mastery of the rules, odds, and consequences while improvising every decision.
 
-### D211 — Turn It into a Tiebreaker
+### D211 — No Tie Stands
 
-Turn every disagreement into another round designed to settle who is better, right, or more committed.
+Turn every even outcome into a formal rematch with a new rule and a consequence for losing.
 
 ### D212 — Every Loss Builds the Comeback
 

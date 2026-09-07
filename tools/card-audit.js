@@ -28,6 +28,7 @@ function markdownReport(result) {
     `| Active packs | ${summary.activePacks} | ${summary.plannedPacks} | ${percentage(summary.activePacks, summary.plannedPacks)} |`,
     `| Published packs | ${summary.publishedPacks} | ${summary.plannedPacks} | ${percentage(summary.publishedPacks, summary.plannedPacks)} |`,
     `| Playtest packs | ${summary.playtestPacks} | — | — |`,
+    `| Packs in live validation | ${summary.liveValidationPacks} | ${Math.max(0, summary.plannedPacks - summary.publishedPacks)} | — |`,
     `| Stance cards | ${summary.stances} | ${summary.targetStances} | ${percentage(summary.stances, summary.targetStances)} |`,
     `| Drive cards | ${summary.drives} | ${summary.targetDrives} | ${percentage(summary.drives, summary.targetDrives)} |`,
     `| Total cards | ${totalCards} | ${summary.targetStances + summary.targetDrives} | ${percentage(totalCards, summary.targetStances + summary.targetDrives)} |`,
@@ -40,6 +41,18 @@ function markdownReport(result) {
 
   for (const category of bible.categories) {
     lines.push(`| ${category.deck === "stance" ? "Stance" : "Drive"} | ${category.label} | ${summary.categoryCounts[category.id]} | ${category.targetCount} |`);
+  }
+
+  lines.push(
+    "",
+    "## Publication readiness by pack",
+    "",
+    "| Wave | Pack | Runtime status | Editorial stage | Remaining gates |",
+    "|---:|---|---|---|---|"
+  );
+  for (const pack of cards.cardPacks) {
+    const gates = pack.remainingPublicationGates.length ? pack.remainingPublicationGates.join(", ") : "None";
+    lines.push(`| ${pack.publicationWave} | ${pack.title} | ${pack.status} | ${pack.publicationStage} | ${gates} |`);
   }
 
   lines.push(
@@ -109,7 +122,7 @@ function printConsole(result) {
   console.log("===========================");
   console.log(`Result: ${result.passed ? "PASS" : "FAIL"}`);
   console.log(`Available: ${summary.stances} Stances + ${summary.drives} Drives across ${summary.activePacks} active pack(s)`);
-  console.log(`Pack status: ${summary.publishedPacks} published + ${summary.playtestPacks} playtest`);
+  console.log(`Pack status: ${summary.publishedPacks} published + ${summary.playtestPacks} playtest (${summary.liveValidationPacks} staged for live validation)`);
   console.log(`Target: ${summary.targetStances} Stances + ${summary.targetDrives} Drives across ${summary.plannedPacks} packs`);
   console.log(`Errors: ${result.errors.length}`);
   console.log(`Warnings: ${result.warnings.length}`);

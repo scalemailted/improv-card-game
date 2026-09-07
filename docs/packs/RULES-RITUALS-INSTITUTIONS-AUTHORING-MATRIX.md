@@ -1,5 +1,8 @@
 # Imprompt Pack 8 — Rules, Rituals & Institutions Authoring Matrix
 
+> **v0.18.0 editorial consolidation:** Stable card IDs are preserved. The selected-card copy below reflects the current v0.18.0 wording; the original release wording remains recorded in `editorial/v0.18.0/revision-ledger.json`.
+
+
 **Release:** Imprompt v0.15.0  
 **Reserved IDs:** S169–S192 and D169–D192  
 **Status:** Editorial selection complete; live playtest pending
@@ -11,14 +14,14 @@ Each formal Card Bible subtheme receives exactly one selected Rules, Rituals & I
 | S169 | Stance | Status & Authority | Command Presence | **Order of Business** | Carry yourself as the person who decides what happens in what order. Redirect every interruption into the approved sequence. |
 | S170 | Stance | Status & Authority | Precarious Authority | **Authority on Paper** | Project firm control through titles and procedure, then tighten the formalities whenever anyone tests whether your position has real support. |
 | S171 | Stance | Status & Authority | Professional Expertise | **Certified Correct** | Treat forms, standards, and exact wording as a technical craft. Correct shortcuts before discussing whether the result actually works. |
-| S172 | Stance | Status & Authority | Belonging & Legitimacy | **Knows the Customs** | Behave as though effortless knowledge of the unwritten rules proves you belong. Follow them conspicuously and conceal every moment of uncertainty. |
+| S172 | Stance | Status & Authority | Belonging & Legitimacy | **Customs Interpreter** | Act as the translator of unwritten customs. Correct breaches, explain exceptions, and make your usefulness proof that you belong. |
 | S173 | Stance | Status & Authority | Mentorship & Rank | **I Learned It the Hard Way** | Treat experience with the system as seniority. Teach its shortcuts, warn against its traps, and remind everyone that your mistakes came first. |
 | S174 | Stance | Status & Authority | Hidden Leverage | **The Necessary Signature** | Remain helpful while controlling the one approval, record, key, or ceremonial step that allows anything to move forward. |
 | S175 | Stance | History & Relationship | Shared Origins | **We Know the Old Rules** | Use an old custom you learned together as the deepest proof of connection, even when the present situation has changed. |
 | S176 | Stance | History & Relationship | Debts & Favors | **I Made the Exception** | Treat every exception you once arranged as an unpaid obligation. Casually expect cooperation whenever the old favor becomes relevant. |
 | S177 | Stance | History & Relationship | Familiar Roles | **The Designated Translator** | Return automatically to explaining rules, smoothing procedures, and answering questions before anyone asks. |
 | S178 | Stance | History & Relationship | Rivalry & Comparison | **Better at the System** | Treat every rule, shortcut, and correction as a chance to prove you understand the system better than anyone else. |
-| S179 | Stance | History & Relationship | Trust & Dependence | **I Need Your Access** | Use someone’s guidance to navigate the system while resisting every sign that their help gives them influence over you. |
+| S179 | Stance | History & Relationship | Trust & Dependence | **My Sponsor Inside** | Treat one person as your sponsor inside the system. Seek their introductions and approval while resisting the identity their support assigns you. |
 | S180 | Stance | History & Relationship | Rupture & Unfinished Business | **The Rule You Broke** | Treat a past breach of rule or custom as unfinished business. Let every present exception reopen the question of what was damaged. |
 | S181 | Stance | Emotional Assumptions | Admiration & Envy | **Effortless Insider** | Treat someone’s effortless movement through systems and customs as both impressive and threatening, then prove you can master every rule without help. |
 | S182 | Stance | Emotional Assumptions | Identity & Nostalgia | **When I Believed in the Rules** | Perform the version of yourself who once trusted the institution, tradition, or process. Use its old language even as your confidence slips. |
@@ -33,16 +36,16 @@ Each formal Card Bible subtheme receives exactly one selected Rules, Rituals & I
 | S191 | Stance | Worldview & Absurdity | Fixation & Significance | **The Detail That Makes It Official** | Choose one tiny procedural detail—wording, order, timing, seating, or a mark—and treat it as the only source of legitimacy. |
 | S192 | Stance | Worldview & Absurdity | Pattern & Grand Meaning | **Everything Is Policy** | Treat every personal choice as evidence of a larger system. Connect exceptions, habits, and coincidences until they become institutional doctrine. |
 | D169 | Drive | Direct Objectives | Secure Help | **Co-Sign This** | Get someone to help by making them an official participant who shares responsibility for the outcome. |
-| D170 | Drive | Direct Objectives | Prevent Departure | **You Haven’t Been Dismissed** | Keep someone present by insisting that one final step, acknowledgment, or ceremony must happen before anyone may leave. |
+| D170 | Drive | Direct Objectives | Prevent Departure | **Close It Properly** | Keep them present until both of you complete the ritual that formally ends this role, meeting, or relationship. |
 | D171 | Drive | Direct Objectives | Obtain an Apology | **Apologize Properly** | Get someone to deliver the apology in the form, order, and setting you consider valid. |
 | D172 | Drive | Direct Objectives | Gain Approval | **Get It on the Record** | Get formal approval, endorsement, or acknowledgment before anyone can quietly revise their position. |
 | D173 | Drive | Direct Objectives | Transfer the Task | **Assigned by Procedure** | Get someone to accept an unwanted responsibility by proving that the rules, rotation, or tradition make it theirs. |
 | D174 | Drive | Direct Objectives | Extract Information | **Complete the Record** | Get someone to fill the missing gaps in an account without revealing which answer matters most to you. |
 | D175 | Drive | Direct Objectives | Recruit an Ally | **Make It Official** | Recruit someone by giving them a title, role, or ceremonial duty that makes participation feel binding. |
 | D176 | Drive | Direct Objectives | Induce Risk | **Request an Exception** | Get someone to bend one rule first so you can treat the decision as a precedent. |
-| D177 | Drive | Direct Objectives | Gain Recognition | **Credit in the Minutes** | Get your contribution formally recognized, recorded, or repeated where it cannot be quietly forgotten. |
+| D177 | Drive | Direct Objectives | Gain Recognition | **Record My Contribution** | Get your contribution formally recognized, recorded, or repeated where it cannot be quietly forgotten. |
 | D178 | Drive | Direct Objectives | Force a Choice | **Choose the Precedent** | Make someone choose which rule, custom, or prior decision will govern what happens now. |
-| D179 | Drive | Direct Objectives | Test Loyalty | **Follow the Custom** | Create increasingly inconvenient formalities to test whether someone respects the group, relationship, or institution. |
+| D179 | Drive | Direct Objectives | Test Loyalty | **Interpret the Custom** | Ask them to apply an ambiguous custom where the wording is unclear. Treat their interpretation as the real test of loyalty. |
 | D180 | Drive | Direct Objectives | Obtain Surrender | **Withdraw the Objection** | Persuade someone to drop a complaint, challenge, or special request and accept the official process. |
 | D181 | Drive | Secrets & Avoidance | Conceal Culpability | **Lost in the Process** | Hide your role in the problem by distributing blame across steps, policies, and unnamed procedures. |
 | D182 | Drive | Secrets & Avoidance | Avoid the Subject | **Outside the Scope** | Redirect personal or dangerous questions by declaring them irrelevant, premature, or assigned to another process. |

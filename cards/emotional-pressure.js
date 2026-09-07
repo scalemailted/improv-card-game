@@ -18,7 +18,8 @@
   }
 
   const PACK_ID = "emotional-pressure";
-  const CONTENT_VERSION = "0.12.0";
+  const DEFAULT_CONTENT_VERSION = "0.12.0";
+  const PACK_VERSION = "0.18.0";
   const ALL_MODES = ["open", "mirror", "paired"];
 
   function createCard(definition) {
@@ -33,7 +34,7 @@
       id: definition.id,
       type: definition.type,
       packId: PACK_ID,
-      contentVersion: CONTENT_VERSION,
+      contentVersion: definition.contentVersion || DEFAULT_CONTENT_VERSION,
       status: "playtest",
       title: definition.title,
       instruction: definition.instruction,
@@ -308,8 +309,8 @@
   {
     "type": "stance",
     "id": "S108",
-    "title": "The Feeling Never Left",
-    "instruction": "Treat an old hurt as emotionally current, responding to new offers as though part of that moment is happening again.",
+    "title": "Careful Around the Scar",
+    "instruction": "Treat one harmless detail as the trigger for an old hurt. Become overly careful, helpful, or controlled whenever it returns.",
     "categoryId": "history-relationship",
     "subthemeId": "rupture-unfinished-business",
     "difficulty": "intermediate",
@@ -318,15 +319,16 @@
     "orientation": "against-partner",
     "coachRoles": [
       "wounded",
-      "griever",
+      "emotional-buffer",
       "memory-keeper"
     ],
     "motifs": [
       "history",
-      "grief",
       "resentment",
-      "memory"
-    ]
+      "memory",
+      "fear"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "type": "stance",
@@ -1165,9 +1167,13 @@
     schemaVersion: bible.CARD_SCHEMA_VERSION,
     id: PACK_ID,
     title: "Emotional Pressure",
-    version: CONTENT_VERSION,
+    version: PACK_VERSION,
     status: "playtest",
     sequence: 5,
+    publicationStage: bible.getPack(PACK_ID).publicationStage,
+    publicationWave: bible.getPack(PACK_ID).publicationWave,
+    editorialReviewVersion: bible.getPack(PACK_ID).editorialReviewVersion,
+    remainingPublicationGates: [...bible.getPack(PACK_ID).remainingPublicationGates],
     description: "Insecurity, validation, resentment, hope, grief, shame, and emotional contradiction.",
     stances,
     drives

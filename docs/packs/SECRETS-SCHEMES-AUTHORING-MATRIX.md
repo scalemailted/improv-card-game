@@ -1,5 +1,8 @@
 # Secrets & Schemes — 48-Slot Authoring Matrix
 
+> **v0.18.0 editorial consolidation:** Stable card IDs are preserved. The selected-card copy below reflects the current v0.18.0 wording; the original release wording remains recorded in `editorial/v0.18.0/revision-ledger.json`.
+
+
 **Pack ID:** `secrets-schemes`  
 **Reserved IDs:** S121–S144 and D121–D144  
 **Target release:** Imprompt v0.13.0  
@@ -20,7 +23,7 @@ Every formal Card Bible subtheme receives exactly one selected Pack 6 card. This
 | S127 | History & Relationship | Shared Origins | **Our First Secret** | Treat a shared secret from the beginning of the relationship as the truest proof of what still connects you. | Beginner | Medium | Grounded |
 | S128 | History & Relationship | Debts & Favors | **I Covered for You** | Carry past concealment as an unpaid favor, expecting trust, access, and protection whenever the old debt becomes relevant. | Intermediate | High | Grounded |
 | S129 | History & Relationship | Familiar Roles | **The Cleanup Person** | Return to the familiar role of containing damage, correcting stories, and protecting everyone from the consequences of disclosure. | Beginner | Medium | Grounded |
-| S130 | History & Relationship | Rivalry & Comparison | **Competing Detectives** | Treat each clue and inconsistency as a contest over who can understand the situation first and most completely. | Intermediate | Medium | Heightened |
+| S130 | History & Relationship | Rivalry & Comparison | **First to Solve It** | Treat each clue and inconsistency as a contest over who can understand the situation first and most completely. | Intermediate | Medium | Heightened |
 | S131 | History & Relationship | Trust & Dependence | **Only You Can Know** | Treat one person as the only safe place for your honest reactions, while hiding how much their discretion determines what you can risk. | Intermediate | High | Grounded |
 | S132 | History & Relationship | Rupture & Unfinished Business | **The Missing Truth** | Treat every present exchange as incomplete until an old concealment, unanswered question, or broken confidence is finally addressed. | Intermediate | High | Grounded |
 | S133 | Emotional Assumptions | Admiration & Envy | **Envious of the Lie** | Treat another person’s composure under scrutiny as both impressive and unfair, resenting how easily they seem to control what others believe. | Intermediate | Medium | Grounded |
@@ -34,7 +37,7 @@ Every formal Card Bible subtheme receives exactly one selected Pack 6 card. This
 | S141 | Worldview & Absurdity | Celebration & Optimism | **A Delicious Mystery** | Treat every missing fact, contradiction, and suspicious detail as delightful proof that the situation is becoming more interesting. | Beginner | Medium | Heightened |
 | S142 | Worldview & Absurdity | Practical Grounding | **Cover Story Logistics** | Accept that a secret plan exists, then focus on schedules, witnesses, explanations, cleanup, and what everyone must remember. | Beginner | Medium | Grounded |
 | S143 | Worldview & Absurdity | Fixation & Significance | **One Suspicious Detail** | Choose one ordinary detail and treat it as the clue that will expose the entire hidden story. | Beginner | Medium | Heightened |
-| S144 | Worldview & Absurdity | Pattern & Grand Meaning | **Everything Connects** | Treat every interruption, coincidence, and denial as part of one expanding hidden design, and doubt as further evidence. | Advanced | High | Absurd |
+| S144 | Worldview & Absurdity | Pattern & Grand Meaning | **Competing Theories** | Create several explanations for what is happening. Test each new clue against them, and switch allegiance whenever one theory gains strength. | Advanced | High | Absurd |
 
 ## Drives
 
@@ -46,16 +49,16 @@ Every formal Card Bible subtheme receives exactly one selected Pack 6 card. This
 | D124 | Direct Objectives | Gain Approval | **Approve the Cover Story** | Get someone to endorse an explanation that protects the plan, reputation, or people involved. | Intermediate | Medium | Grounded |
 | D125 | Direct Objectives | Transfer the Task | **You Handle the Evidence** | Make someone else take responsibility for the evidence, loose end, or difficult follow-up. | Beginner | Medium | Grounded |
 | D126 | Direct Objectives | Extract Information | **What Really Happened?** | Find the truth by comparing details, repeating questions, and testing which parts of the story remain consistent. | Beginner | Medium | Grounded |
-| D127 | Direct Objectives | Recruit an Ally | **Join the Inner Circle** | Recruit someone into a hidden plan by offering trust, purpose, and just enough privileged information. | Beginner | Medium | Heightened |
+| D127 | Direct Objectives | Recruit an Ally | **Back My Version** | Recruit someone to remember, repeat, and defend one shared version of events when questions begin. | Beginner | Medium | Heightened |
 | D128 | Direct Objectives | Induce Risk | **Test the Story First** | Get someone else to repeat the explanation, ask the dangerous question, or test the risky step before you commit. | Intermediate | High | Grounded |
 | D129 | Direct Objectives | Gain Recognition | **Credit for the Discovery** | Make someone acknowledge that you found the clue, saw through the deception, or designed the successful scheme. | Intermediate | Medium | Grounded |
 | D130 | Direct Objectives | Force a Choice | **Truth or Loyalty** | Make someone choose between protecting the relationship and answering a dangerous question honestly. | Intermediate | High | Grounded |
 | D131 | Direct Objectives | Test Loyalty | **Can You Keep It?** | Use increasingly sensitive details to test whether someone deserves deeper trust. | Intermediate | High | Grounded |
 | D132 | Direct Objectives | Obtain Surrender | **Hand Over the Proof** | Persuade someone to surrender information, evidence, a key, or access that would let you proceed. | Beginner | Medium | Grounded |
-| D133 | Secrets & Avoidance | Conceal Culpability | **The Helpful Suspect** | Hide your role in creating the problem while eagerly organizing the investigation. | Intermediate | Medium | Grounded |
+| D133 | Secrets & Avoidance | Conceal Culpability | **Steer the Suspicion** | Hide your responsibility by redirecting every new clue toward a safer explanation before anyone can connect it back to you. | Intermediate | Medium | Grounded |
 | D134 | Secrets & Avoidance | Avoid the Subject | **Anything but That Question** | Redirect every attempt to discuss the one detail that could expose your real motive or involvement. | Beginner | High | Grounded |
 | D135 | Secrets & Avoidance | Protective Deception | **A Kinder Version** | Protect someone from the full truth by offering a carefully edited explanation that feels kinder than complete honesty. | Intermediate | Medium | Grounded |
-| D136 | Secrets & Avoidance | Induce a Confession | **Confess Before I Do** | Maneuver someone into admitting their secret, motive, or mistake before you reveal your own. | Intermediate | High | Grounded |
+| D136 | Secrets & Avoidance | Induce a Confession | **Tell Me Why** | Get someone to reveal the motive behind a choice by offering small pieces of your own truth as bait. | Intermediate | High | Grounded |
 | D137 | Secrets & Avoidance | Reframe Failure | **Exactly as Planned** | Treat every exposed flaw, failed step, and unexpected consequence as proof that the scheme is unfolding by design. | Beginner | Medium | Heightened |
 | D138 | Secrets & Avoidance | Feign Competence | **I Know the Procedure** | Perform investigative confidence while quietly using each response to discover what the questions, clues, and next steps should be. | Intermediate | Medium | Grounded |
 | D139 | Repeatable Behaviors | Competition Loop | **Outsmart the Room** | Turn every clue, deduction, and secret into a contest you must solve or control first. | Beginner | Medium | Heightened |

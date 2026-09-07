@@ -10,7 +10,7 @@ const validator = require("../tools/card-validator.js");
 
 assert.equal(pack.id, "rules-rituals-institutions");
 assert.equal(pack.status, "playtest");
-assert.equal(pack.version, "0.15.0");
+assert.equal(pack.version, "0.18.0");
 assert.equal(pack.sequence, 8);
 assert.equal(pack.stances.length, 24);
 assert.equal(pack.drives.length, 24);
@@ -51,7 +51,7 @@ for (const motif of ["administration", "bureaucracy", "ceremony", "custom", "doc
   assert.ok(bible.motifs.includes(motif), `Missing Rules, Rituals & Institutions motif: ${motif}`);
 }
 
-assert.equal(cards.libraryPlanVersion, "1.9.0");
+assert.equal(cards.libraryPlanVersion, "1.10.0");
 assert.equal(cards.stances.length, 240);
 assert.equal(cards.drives.length, 240);
 assert.equal(cards.activePackCount, 10);

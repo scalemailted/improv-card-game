@@ -10,7 +10,7 @@ const validator = require("../tools/card-validator.js");
 
 assert.equal(pack.id, "advanced-scene-engines");
 assert.equal(pack.status, "playtest");
-assert.equal(pack.version, "0.17.0");
+assert.equal(pack.version, "0.18.0");
 assert.equal(pack.sequence, 10);
 assert.equal(pack.stances.length, 24);
 assert.equal(pack.drives.length, 24);
@@ -51,7 +51,7 @@ for (const motif of ["ambiguity", "callback", "contradiction", "delay", "delayed
   assert.ok(bible.motifs.includes(motif), `Missing Advanced Scene Engines motif: ${motif}`);
 }
 
-assert.equal(cards.libraryPlanVersion, "1.9.0");
+assert.equal(cards.libraryPlanVersion, "1.10.0");
 assert.equal(cards.stances.length, 240);
 assert.equal(cards.drives.length, 240);
 assert.equal(cards.activePackCount, 10);

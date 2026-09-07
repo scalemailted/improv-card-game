@@ -18,7 +18,8 @@
   }
 
   const PACK_ID = "rules-rituals-institutions";
-  const CONTENT_VERSION = "0.15.0";
+  const DEFAULT_CONTENT_VERSION = "0.15.0";
+  const PACK_VERSION = "0.18.0";
   const ALL_MODES = ["open", "mirror", "paired"];
 
   function createCard(definition) {
@@ -33,7 +34,7 @@
       id: definition.id,
       type: definition.type,
       packId: PACK_ID,
-      contentVersion: CONTENT_VERSION,
+      contentVersion: definition.contentVersion || DEFAULT_CONTENT_VERSION,
       status: "playtest",
       title: definition.title,
       instruction: definition.instruction,
@@ -124,8 +125,8 @@
   {
     "id": "S172",
     "type": "stance",
-    "title": "Knows the Customs",
-    "instruction": "Behave as though effortless knowledge of the unwritten rules proves you belong. Follow them conspicuously and conceal every moment of uncertainty.",
+    "title": "Customs Interpreter",
+    "instruction": "Act as the translator of unwritten customs. Correct breaches, explain exceptions, and make your usefulness proof that you belong.",
     "categoryId": "status-authority",
     "subthemeId": "belonging-legitimacy",
     "difficulty": "beginner",
@@ -133,16 +134,17 @@
     "tone": "grounded",
     "orientation": "self-focused",
     "coachRoles": [
-      "outsider",
+      "interpreter",
       "traditionalist",
-      "interpreter"
+      "outsider"
     ],
     "motifs": [
       "custom",
       "belonging",
-      "etiquette",
-      "uncertainty"
-    ]
+      "exceptions",
+      "etiquette"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "S173",
@@ -285,8 +287,8 @@
   {
     "id": "S179",
     "type": "stance",
-    "title": "I Need Your Access",
-    "instruction": "Use someone’s guidance to navigate the system while resisting every sign that their help gives them influence over you.",
+    "title": "My Sponsor Inside",
+    "instruction": "Treat one person as your sponsor inside the system. Seek their introductions and approval while resisting the identity their support assigns you.",
     "categoryId": "history-relationship",
     "subthemeId": "trust-dependence",
     "difficulty": "intermediate",
@@ -295,15 +297,16 @@
     "orientation": "toward-partner",
     "coachRoles": [
       "dependent",
-      "interpreter",
-      "broker"
+      "approval-seeker",
+      "outsider"
     ],
     "motifs": [
       "dependence",
       "access",
-      "control",
-      "trust"
-    ]
+      "approval",
+      "identity"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "S180",
@@ -630,8 +633,8 @@
   {
     "id": "D170",
     "type": "drive",
-    "title": "You Haven’t Been Dismissed",
-    "instruction": "Keep someone present by insisting that one final step, acknowledgment, or ceremony must happen before anyone may leave.",
+    "title": "Close It Properly",
+    "instruction": "Keep them present until both of you complete the ritual that formally ends this role, meeting, or relationship.",
     "categoryId": "direct-objectives",
     "subthemeId": "prevent-departure",
     "difficulty": "beginner",
@@ -640,15 +643,16 @@
     "orientation": "toward-partner",
     "coachRoles": [
       "retainer",
-      "compliance-keeper",
-      "ritualist"
+      "ritualist",
+      "reconciler"
     ],
     "motifs": [
-      "process",
       "ritual",
-      "rules",
-      "time"
-    ]
+      "process",
+      "connection",
+      "turning-point"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "D171",
@@ -791,7 +795,7 @@
   {
     "id": "D177",
     "type": "drive",
-    "title": "Credit in the Minutes",
+    "title": "Record My Contribution",
     "instruction": "Get your contribution formally recognized, recorded, or repeated where it cannot be quietly forgotten.",
     "categoryId": "direct-objectives",
     "subthemeId": "gain-recognition",
@@ -809,7 +813,8 @@
       "documentation",
       "record",
       "pride"
-    ]
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "D178",
@@ -837,8 +842,8 @@
   {
     "id": "D179",
     "type": "drive",
-    "title": "Follow the Custom",
-    "instruction": "Create increasingly inconvenient formalities to test whether someone respects the group, relationship, or institution.",
+    "title": "Interpret the Custom",
+    "instruction": "Ask them to apply an ambiguous custom where the wording is unclear. Treat their interpretation as the real test of loyalty.",
     "categoryId": "direct-objectives",
     "subthemeId": "test-loyalty",
     "difficulty": "beginner",
@@ -847,15 +852,16 @@
     "orientation": "against-partner",
     "coachRoles": [
       "tester",
-      "ritualist",
+      "interpreter",
       "loyalist"
     ],
     "motifs": [
       "loyalty",
       "custom",
-      "institution",
-      "compliance"
-    ]
+      "ambiguity",
+      "tradition"
+    ],
+    "contentVersion": "0.18.0"
   },
   {
     "id": "D180",
@@ -1165,9 +1171,13 @@
     schemaVersion: bible.CARD_SCHEMA_VERSION,
     id: PACK_ID,
     title: "Rules, Rituals & Institutions",
-    version: CONTENT_VERSION,
+    version: PACK_VERSION,
     status: "playtest",
     sequence: 8,
+    publicationStage: bible.getPack(PACK_ID).publicationStage,
+    publicationWave: bible.getPack(PACK_ID).publicationWave,
+    editorialReviewVersion: bible.getPack(PACK_ID).editorialReviewVersion,
+    remainingPublicationGates: [...bible.getPack(PACK_ID).remainingPublicationGates],
     description: "Bureaucracy, process, standards, customs, systems, traditions, and institutional behavior.",
     stances,
     drives

@@ -1,5 +1,8 @@
 # Power Games — 48-Slot Authoring Matrix
 
+> **v0.18.0 editorial consolidation:** Stable card IDs are preserved. The selected-card copy below reflects the current v0.18.0 wording; the original release wording remains recorded in `editorial/v0.18.0/revision-ledger.json`.
+
+
 **Status:** Editorial selection complete; live playtest pending  
 **Reserved IDs:** S49–S72 / D49–D72  
 **Rule:** One selected card occupies every formal Imprompt subtheme.
@@ -12,7 +15,7 @@
 | S50 | Status & Authority | Precarious Authority | **Conditional Command** | Project firm authority, then soften whenever the source of that authority might be questioned. |
 | S51 | Status & Authority | Professional Expertise | **The Gatekeeper** | Use expertise and standards to decide who is qualified to judge, participate, or proceed. |
 | S52 | Status & Authority | Belonging & Legitimacy | **Rightful Place** | Carry yourself as the rightful holder of your role and treat any demand for proof as an insult. |
-| S53 | Status & Authority | Mentorship & Rank | **I Made You Ready** | Treat another person’s competence as evidence of your teaching, influence, and continuing seniority. |
+| S53 | Status & Authority | Mentorship & Rank | **The Crown Must Pass** | Treat another person as your likely successor. Prepare them to lead, then reclaim authority whenever their independence makes your influence feel temporary. |
 | S54 | Status & Authority | Hidden Leverage | **The Quiet Veto** | Remain pleasant and cooperative while behaving as though nothing can proceed without your private consent. |
 | S55 | History & Relationship | Shared Origins | **We Started Equal** | Use shared beginnings to erase present rank, titles, and attempts to place distance between you. |
 | S56 | History & Relationship | Debts & Favors | **My Support, My Say** | Treat every past favor as a continuing investment in your right to influence present decisions. |
@@ -48,7 +51,7 @@
 | D57 | Direct Objectives | Gain Recognition | **Use the Proper Title** | Make someone acknowledge your standing through a title, privilege, courtesy, or public sign of respect. |
 | D58 | Direct Objectives | Force a Choice | **Declare Allegiance** | Make someone choose which person, side, or claim to authority they will support. |
 | D59 | Direct Objectives | Test Loyalty | **Obey Without Explanation** | Create increasingly inconvenient requests that test whether someone accepts your authority. |
-| D60 | Direct Objectives | Obtain Surrender | **Yield Control** | Make someone surrender control of a decision, resource, or symbol of authority. |
+| D60 | Direct Objectives | Obtain Surrender | **Pass Me the Authority** | Get someone to transfer authority publicly by naming you as the person who decides what happens next. |
 | D61 | Secrets & Avoidance | Conceal Culpability | **Orders from the Shadows** | Hide that you set the problem in motion while quietly directing how everyone responds. |
 | D62 | Secrets & Avoidance | Avoid the Subject | **Not Up for Debate** | Keep the conversation from examining where your authority comes from or whether it is legitimate. |
 | D63 | Secrets & Avoidance | Protective Deception | **For Stability’s Sake** | Hide a destabilizing truth because you believe the current balance of power must be protected. |

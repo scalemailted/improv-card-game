@@ -13,7 +13,7 @@ const app = read("app.js");
 const styles = read("styles.css");
 const serviceWorker = read("sw.js");
 const manifest = read("manifest.webmanifest");
-const releaseNotes = read("RELEASE-NOTES-v0.22.0.md");
+const releaseNotes = read("RELEASE-NOTES-v0.21.2.md");
 const sceneCraftReleaseNotes = read("RELEASE-NOTES-v0.19.0.md");
 const editorialReleaseNotes = read("RELEASE-NOTES-v0.18.0.md");
 const editorialDocs = [
@@ -114,7 +114,7 @@ assert.match(app, /function renderHintControls/);
 assert.match(app, /function openSingleHint/);
 assert.match(app, /function openCombinationHint/);
 assert.match(app, /function showAnotherHintAngle/);
-assert.match(app, /quickExamples\.next/);
+assert.match(app, /hintEngine\.getSingleHint/);
 assert.match(app, /hintEngine\.getCombinationHint/);
 assert.match(styles, /\.card-nudge-button/);
 assert.match(styles, /\.hint-modal/);
@@ -122,7 +122,8 @@ assert.match(styles, /\.combination-hint-button/);
 assert.match(styles, /\.card-inline-action/);
 assert.match(styles, /\.card-veto-button/);
 assert.match(app, /function vetoInlineCard/);
-assert.match(app, /Drawn prompts are accepted by default/);
+assert.doesNotMatch(app, /Tap card to keep/);
+assert.match(app, /config\.action\.hidden = isRevealed/);
 
 // Category identity remains consistent and accessible by color, icon, and written label.
 const expectedCategories = [
@@ -146,23 +147,23 @@ assert.equal(exercises.getPresets("mirror").length, 4);
 assert.equal(exercises.getPresets("paired").length, 4);
 
 // Card Bible runtime files load before the compatibility aggregator.
-assert.ok(html.indexOf("./card-bible.js?v=0.22.0") < html.indexOf("./cards/core-foundations.js?v=0.22.0"));
-assert.ok(html.indexOf("./cards/core-foundations.js?v=0.22.0") < html.indexOf("./cards/everyday-friction.js?v=0.22.0"));
-assert.ok(html.indexOf("./cards/everyday-friction.js?v=0.22.0") < html.indexOf("./cards/power-games.js?v=0.22.0"));
-assert.ok(html.indexOf("./cards/power-games.js?v=0.22.0") < html.indexOf("./cards/relationship-knots.js?v=0.22.0"));
-assert.ok(html.indexOf("./cards/relationship-knots.js?v=0.22.0") < html.indexOf("./cards/emotional-pressure.js?v=0.22.0"));
-assert.ok(html.indexOf("./cards/emotional-pressure.js?v=0.22.0") < html.indexOf("./cards/secrets-schemes.js?v=0.22.0"));
-assert.ok(html.indexOf("./cards/secrets-schemes.js?v=0.22.0") < html.indexOf("./cards/absurd-commitment.js?v=0.22.0"));
-assert.ok(html.indexOf("./cards/absurd-commitment.js?v=0.22.0") < html.indexOf("./cards/rules-rituals-institutions.js?v=0.22.0"));
-assert.ok(html.indexOf("./cards/rules-rituals-institutions.js?v=0.22.0") < html.indexOf("./cards/competition-consequences.js?v=0.22.0"));
-assert.ok(html.indexOf("./cards/competition-consequences.js?v=0.22.0") < html.indexOf("./cards/advanced-scene-engines.js?v=0.22.0"));
-assert.ok(html.indexOf("./cards/advanced-scene-engines.js?v=0.22.0") < html.indexOf("./cards.js?v=0.22.0"));
-assert.ok(html.indexOf("./cards.js?v=0.22.0") < html.indexOf("./hint-bible.js?v=0.22.0"));
-assert.ok(html.indexOf("./hint-bible.js?v=0.22.0") < html.indexOf("./hints/card-hints.js?v=0.22.0"));
-assert.ok(html.indexOf("./hints/card-hints.js?v=0.22.0") < html.indexOf("./hints/fusion-profiles.js?v=0.22.0"));
-assert.ok(html.indexOf("./hints/fusion-profiles.js?v=0.22.0") < html.indexOf("./hints/concrete-fusion.js?v=0.22.0"));
-assert.ok(html.indexOf("./hints/concrete-fusion.js?v=0.22.0") < html.indexOf("./hint-engine.js?v=0.22.0"));
-assert.ok(html.indexOf("./hint-engine.js?v=0.22.0") < html.indexOf("./exercises.js?v=0.22.0"));
+assert.ok(html.indexOf("./card-bible.js?v=0.22.1") < html.indexOf("./cards/core-foundations.js?v=0.22.1"));
+assert.ok(html.indexOf("./cards/core-foundations.js?v=0.22.1") < html.indexOf("./cards/everyday-friction.js?v=0.22.1"));
+assert.ok(html.indexOf("./cards/everyday-friction.js?v=0.22.1") < html.indexOf("./cards/power-games.js?v=0.22.1"));
+assert.ok(html.indexOf("./cards/power-games.js?v=0.22.1") < html.indexOf("./cards/relationship-knots.js?v=0.22.1"));
+assert.ok(html.indexOf("./cards/relationship-knots.js?v=0.22.1") < html.indexOf("./cards/emotional-pressure.js?v=0.22.1"));
+assert.ok(html.indexOf("./cards/emotional-pressure.js?v=0.22.1") < html.indexOf("./cards/secrets-schemes.js?v=0.22.1"));
+assert.ok(html.indexOf("./cards/secrets-schemes.js?v=0.22.1") < html.indexOf("./cards/absurd-commitment.js?v=0.22.1"));
+assert.ok(html.indexOf("./cards/absurd-commitment.js?v=0.22.1") < html.indexOf("./cards/rules-rituals-institutions.js?v=0.22.1"));
+assert.ok(html.indexOf("./cards/rules-rituals-institutions.js?v=0.22.1") < html.indexOf("./cards/competition-consequences.js?v=0.22.1"));
+assert.ok(html.indexOf("./cards/competition-consequences.js?v=0.22.1") < html.indexOf("./cards/advanced-scene-engines.js?v=0.22.1"));
+assert.ok(html.indexOf("./cards/advanced-scene-engines.js?v=0.22.1") < html.indexOf("./cards.js?v=0.22.1"));
+assert.ok(html.indexOf("./cards.js?v=0.22.1") < html.indexOf("./hint-bible.js?v=0.22.1"));
+assert.ok(html.indexOf("./hint-bible.js?v=0.22.1") < html.indexOf("./hints/card-hints.js?v=0.22.1"));
+assert.ok(html.indexOf("./hints/card-hints.js?v=0.22.1") < html.indexOf("./hints/fusion-profiles.js?v=0.22.1"));
+assert.ok(html.indexOf("./hints/fusion-profiles.js?v=0.22.1") < html.indexOf("./hints/concrete-fusion.js?v=0.22.1"));
+assert.ok(html.indexOf("./hints/concrete-fusion.js?v=0.22.1") < html.indexOf("./hint-engine.js?v=0.22.1"));
+assert.ok(html.indexOf("./hint-engine.js?v=0.22.1") < html.indexOf("./exercises.js?v=0.22.1"));
 assert.equal(cards.activePackCount, 10);
 assert.equal(cards.publishedPackCount, 1);
 assert.equal(cards.playtestPackCount, 9);
@@ -183,10 +184,10 @@ assert.equal(cards.targetDriveCount, 240);
 
 // Release and offline contract.
 for (const asset of ["styles.css", "card-bible.js", "cards/core-foundations.js", "cards/everyday-friction.js", "cards/power-games.js", "cards/relationship-knots.js", "cards/emotional-pressure.js", "cards/secrets-schemes.js", "cards/absurd-commitment.js", "cards/rules-rituals-institutions.js", "cards/competition-consequences.js", "cards/advanced-scene-engines.js", "cards.js", "hint-bible.js", "hints/card-hints.js", "hints/fusion-profiles.js", "hints/concrete-fusion.js", "hint-engine.js", "exercises.js", "deck-engine.js", "vendor/qrcode-core.js", "app.js"]) {
-  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.22\\.0`));
-  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.22\\.0`));
+  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.22\\.1`));
+  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.22\\.1`));
 }
-assert.match(serviceWorker, /imprompt-v0\.22\.0/);
+assert.match(serviceWorker, /imprompt-v0\.22\.1/);
 assert.doesNotMatch(serviceWorker, /skipWaiting/);
 assert.match(app, /updateViaCache:\s*"none"/);
 assert.match(manifest, /"short_name": "Imprompt"/);
@@ -196,7 +197,7 @@ assert.match(manifest, /concrete local coaching hints/i);
 // v0.18 editorial-readiness evidence is packaged with the application source.
 assert.match(editorialReleaseNotes, /24 semantic rewrites/i);
 assert.match(sceneCraftReleaseNotes, /Scene Craft Guide/i);
-assert.match(releaseNotes, /Optional Local AI/i);
+assert.match(releaseNotes, /Concrete Fusion Repair/i);
 assert.match(editorialReleaseNotes, /1,200 opposite-deck pairings/i);
 for (const file of [...editorialDocs, ...editorialData]) {
   assert.ok(fs.existsSync(path.join(root, file)), `Missing editorial artifact: ${file}`);
@@ -208,4 +209,4 @@ for (const file of editorialData) {
 // QR SVG modules must not inherit the global rounded SVG stroke.
 assert.match(styles, /\.dynamic-qr-panel svg,\s*\.dynamic-qr-panel svg \*[\s\S]*?stroke:\s*none\s*!important/);
 
-console.log("✓ Imprompt v0.22.0 application, pair-specific concrete fusion, card-integrated actions, Scene Craft Guide, editorial readiness, guided-exercise, gallery, history, and cache contracts passed");
+console.log("✓ Imprompt v0.21.2 application, pair-specific concrete fusion, card-integrated actions, Scene Craft Guide, editorial readiness, guided-exercise, gallery, history, and cache contracts passed");

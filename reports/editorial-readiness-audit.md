@@ -1,6 +1,6 @@
 # Imprompt v0.18.0 Editorial Readiness Audit
 
-Generated: 2026-09-07T04:04:08.636Z
+Generated: 2026-09-08T17:29:47.850Z
 
 **Result:** PASS
 

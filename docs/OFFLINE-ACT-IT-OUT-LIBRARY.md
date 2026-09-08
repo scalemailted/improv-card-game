@@ -1,107 +1,106 @@
-# Imprompt Offline Act-It-Out Library — Edition 0.23.0
+# Imprompt Act-It-Out Scene Library · v0.24.0
 
-## Purpose
+## What an example must do
 
-Show one thing the player can actually perform: **[I do a visible action.] “One short in-character line.”** The example is not an explanation of what a Stance or Drive means. Specific props, situations and words are illustrative possibilities, not obligations imposed on the other performer.
+An example is a performed moment with an exchange, not an instruction to invent one. Each single card receives an A–B–A scene. A pair receives A–B–A or A–B–A–B–A. In both cases, **A holds the selected card(s)**. B is not assigned a second private deck or an undisclosed prompt.
 
-The displayed output is stored text. No language model runs on the phone, and no model service receives prompts. An example is selected, not newly generated.
+A's first action establishes a concrete choice. B supplies one plausible offer, objection or consequence. A's next line responds to that specific offer and exposes more of the card's behavior. A five-turn scene adds another response and changed pressure, not a second unrelated plot.
 
-## Authoring contract
+No subtheme explanation, motivation analysis or instruction to heighten appears on the nudge screen. Those ideas belong to live coaches and the separate Learn to Play guide.
 
-Each Stance source row is keyed by its permanent ID and supplies two actions, two speech frames, and its own standalone request. Each Drive row supplies two actions and two spoken requests. Authors must read the actual instruction, not infer it from a category/subtheme label. Empty or missing exact-card source causes a build failure.
+### Example: Chain of Command + Start the Hard Part
 
-For example, S124 Cleared to Know uses an unredacted document and visitor/insider status. It does not reuse the generic idea of copying an unfamiliar routine. S67 Chain of Command names procedural rank and who is authorized to begin. D101 Start the Hard Part delegates the emotionally difficult opening, not any arbitrary unwanted chore.
+**A** [I slide the cancellation notice up the committee chart.] “The chair introduces difficult business. You tell them the trip is cancelled; I will take the minutes.”
 
-Source text files use `|` as a separator and may start comments with `#`. Do not include a literal pipe in a field. `{ask}` is the only allowed Stance speech-frame slot; the compiled runtime data cannot contain unfilled slots.
+**B** “You cancelled the trip.”
 
-### Single cards
+**A** “Which makes me the author of the notice, not its authorized speaker.”
 
-Every card has two individually drafted demonstrations. A Stance's own standalone request completes its two authored frames. A Drive's authored action and request stand alone. Aim for a different playable tactic, not merely new props. Two source frames do not automatically establish two useful interpretations; this requires editorial judgment.
+A routes difficult disclosure through a hierarchy. It is one causal behavior, not two separate demonstrations. The committee setting illustrates the cards; players can transfer that behavior to another relationship. The real partner need not say B's line.
 
-### Exact pairs
+## Scope and provenance
 
-The baseline build joins a specific Stance action/speech frame and a specific Drive request. This often makes the Stance the social method by which the Drive is pursued. Both complete performances are written to the static exact-pair shard before deployment. The phone never retrieves subtheme paragraphs or concatenates fragments.
+All 480 cards have two individually extended single scenes. Their opening actions and lines were adapted from the supplied v0.23.0 author's material, with a newly authored reply and follow-through for each alternative. They are creative editorial work, not externally conducted blind reads or live-tested outcomes.
 
-**This does not equal individually bespoke pair authoring.** The card frames repeat across their 240 pairings, and some combinations can feel like adjacent motives instead of one integrated tactic. Complete string coverage is an engineering property. Distinctive synthesis remains an editorial property.
+The 57,600 exact pairs have two stored scenes apiece. Most are composed at build time from those exact single-scene records plus an authored transfer method for the specific Stance. Twenty-five pairs have bespoke replacements. The compiler's transfer method applies the Stance to the Drive's concrete object, request and response, rather than preserving two unrelated props from two unconnected scenes.
 
-Bespoke overrides replace the baseline examples for a pair, not append hidden superior examples to generic output. At present, 32 pairs have 68 overrides. The source stores a rationale identifying each card's contribution. Overriding a weak pair is the primary refinement path.
+This is **complete lookup coverage**, not proof of complete semantic quality. A card-specific template can still produce an awkward exchange for an unexpected partner card. Composition provenance remains explicit. Strong format checks cannot establish comedic effectiveness, realistic character behavior, or that both cards are indispensable. Troupe review and revisions remain necessary.
 
-### Example quality rubric
+## Data format
 
-1. The first-person action is visible and concrete; it is not “I feel,” “I would,” or a personality label.
-2. The spoken line gives the player actual words, not “make a remark about...”
-3. The exact card's distinguishing instruction is observable.
-4. In a pair, the Stance changes how the Drive is pursued. Merely mentioning both titles is insufficient.
-5. Do not narrate what the partner thinks, says, accepts or must do.
-6. An unsuccessful request still leaves playable interaction; no completed objective is guaranteed.
-7. A detail may be invented for illustration but must not rewrite existing facts of the actual scene.
-8. Favor a changed tactic on Another angle. Different wording or props alone are weak variety.
-9. Keep it brief: target 20–35 words for both action and dialogue; current maximum is 36.
-10. Leave the unfolding scene in charge. Release the illustrated tactic when listening suggests something better.
-
-## Status and provenance
-
-The manifest says `entryStatus: editorial-preview`.
-
-Runtime record `provenance` distinguishes `individually-drafted` and `compiled-from-card-specific-material`. Bespoke records may include an internal copy-review status and tactic name. There is **no** independent human/troupe-validation claim. Original pack publication metadata concerns the cards themselves and is not promoted because examples now exist.
-
-The automated auditor checks exact coverage, fingerprints, hash/size integrity, well-formed action/line fields, missing slots, record-ID uniqueness, word count, and different strings within a selection. It cannot prove relevance, comic usefulness, causal fusion, safety in every live context or distinct performance tactics. Literal word overlap is not used as a substitute for semantic review.
-
-## Data shape
+A runtime scene has:
 
 ```json
 {
-  "id": "S67+D101-a",
-  "action": "I slide the cancellation notice up the duty chart.",
-  "line": "You outrank me. You announce the cancellation; I will take the minutes.",
-  "provenance": "individually-drafted",
-  "tactic": "Delegate upward"
+  "id": "S67+D101-scene-1",
+  "format": "ABA",
+  "beats": [
+    {"speaker": "A", "action": "I slide the cancellation notice up the committee chart.", "text": "The chair introduces difficult business. You tell them the trip is cancelled; I will take the minutes."},
+    {"speaker": "B", "text": "You cancelled the trip."},
+    {"speaker": "A", "text": "Which makes me the author of the notice, not its authorized speaker."}
+  ],
+  "provenance": "authored-pair",
+  "seedRefs": ["S67-single-a", "D101-single-a"]
 }
 ```
 
-The UI adds brackets and quotes. No executable markup, model tokens or code is in the example record.
+`provenance` distinguishes `authored-single`, `authored-pair`, and `composed-from-authored-scenes`. Source-review notes and full card instructions are not repeated in runtime records. Individual examples have no pair `seedRefs` because they are the seeds.
 
-Each file declares schema and dataset ID. `singles` maps permanent card IDs to examples. A pair shard is keyed by Stance and contains all 240 Drive IDs. Filenames include raw-content hash prefixes. The manifest contains full raw/gzip hashes, lengths, card `contentVersion` and fingerprints computed from `[id,type,contentVersion,title,instruction]`.
+Canonical files are `examples/authoring/single-scenes.json`, `stance-transfers.json` and `pair-scenes.json`. Build scripts do not overwrite them.
 
-Changing a card without rebuilding the dataset yields an explicit stale-revision error, not an old example shown under new copy. Dataset identity includes all source rows, overrides and card fingerprints. Add an example by rebuilding files and shipping one coherent release.
+## How pairs are constructed
 
-## Compression and smartphone loading
+The compiler reads the actual single-card scenes, not generic category paragraphs.
 
-There are 241 logical files: singles plus 240 Stance partitions. Each is shipped as gzip and plain JSON. Complete gzip content is 3.86 MB versus 28.04 MB plain; the delivery ZIP contains both editions plus the app and documentation.
+1. Select the exact Stance and Drive sources by stable IDs and checked card revisions.
+2. Take a concrete object, request, B response and A counter-response from the Drive scene.
+3. Apply the Stance's authored physical method and speech framing to that same object and request.
+4. Have B respond to the actual pursuit.
+5. Let A's reply express the Stance's interpretation while changing or renewing the pursuit.
+6. For the longer alternative, add a B challenge to that Stance and A's in-character follow-through.
+7. Replace the entire composition when an exact-pair authored scene exists.
 
-Native `DecompressionStream('gzip')` runs inside a dedicated Worker. The reader detects already-decoded HTTP responses and verifies the decoded SHA-256 either way. If gzip decompression is unavailable it requests plain JSON instead. No external decompressor is required.
+The longer alternative also draws from the Drive's second single scene. It is not simply extra text appended to the same first exchange. Some transfer methods still recur across pairs, so the corpus is finite structured writing rather than unlimited spontaneous generation.
 
-The worker parses singles and no more than four recently used pair shards. It never unpacks the full 28 MB corpus on application launch. Whole-app/JavaScript-engine RAM has not been measured; bounded JSON retention is not a peak-memory benchmark.
+## Revision safeguards
 
-A full offline download verifies each file and stores its compressed response in a separate Cache Storage namespace. It decompresses partitions sequentially for integrity verification but does not retain the parsed corpus. Save can be cancelled and resumed. Quota/permission errors leave already completed files intact and must not display a successful complete status.
+The card fingerprint hashes `[id, type, contentVersion, title, instruction]`. A changed card invalidates its reviewed source until a person or editor explicitly reconciles the content and updates the recorded fingerprint. The reader uses the same mapping to refuse an incompatible dataset at runtime.
 
-Browser storage can be evicted or cleared. The status display checks file presence; Save/Verify additionally reads and validates the bytes. A corrupt file is repaired online or fails explicitly offline. The core service worker includes the small singles files, while pair downloads are owned by the example worker.
+Each Stance transfer records hashes for its two reviewed single scenes. Editing a seed without rechecking the transfer makes the build fail with a specific review message. Bespoke pairs also record the two reviewed card fingerprints. The compiler never silently refreshes those acknowledgments.
 
-## Variation and privacy
+Historical Scene Log snapshots do not point to the new example text. They continue to store the actual card wording played in that past scene. This release does not migrate or rewrite them.
 
-Another angle uses a shuffled bag, exhausting choices before reshuffling and preventing immediate repetition across a shuffle boundary. It stores a bounded recent history of 96 selection keys. Past keys may eventually be forgotten, and no limitless novelty is claimed.
+## Acceptance checks
 
-The request allowlist includes only the revealed card(s), needed instruction/version data and permitted hint kind. Coach policy is checked before spawning the Worker. Unrevealed cards do not enter a hint request.
+Mechanical tests cover complete IDs and pair keys, two alternatives, expected actor order, A at both ends, real speech rather than empty fields, reasonable length, absence of leftover placeholders or HTML, exact source references, gzip/raw equality, SHA-256 integrity and per-selection rotation.
 
-The application never sends a prompt or scene history to inference. An uncached pair download nevertheless has a Stance-ID filename visible to the static host. This ordinary network metadata is disclosed. Download all files before rehearsal for fully local subsequent selection. No synchronization between devices is introduced.
+The current measured single-scene maximum is 49 words including the stage direction. Pair sketches have approximately 52 words at the three-turn median and 67 words at the five-turn median. The permitted ceilings are deliberately above the current lengths to flag bloat without truncating dialogue.
 
-Flags are local and opt-in. Exporting flags is a separate user action that downloads a JSON file; it does not transmit it automatically. Export includes sample text and selected IDs for editorial diagnosis, not the complete deck/session log.
+Editorial questions are different:
 
-## Release/readiness procedure
+- Does A's final line answer what B just contributed?
+- Does the Stance determine **how** the Drive is pursued?
+- Do the setting and objects belong to the same situation?
+- Would removing either card materially change A's behavior?
+- Does the alternate scene change the approach instead of merely swapping a noun?
+- Is B a plausible illustrative response rather than a device that guarantees A wins?
 
-1. Edit exact-card source or an override; document the tactic and both-card contribution.
-2. Run `npm run build:examples` then `npm run audit:examples`.
-3. Update app cache/asset versions for a new deployment and sync the two singles precache filenames in sw.js.
-4. Run the full application tests and archive checks.
-5. Review reported/problem pairs and a cross-pack sample manually. Do not equate mechanical passes with editorial approval.
-6. On a real hosted release, save the full library, restart offline, and try uncached-in-memory pairs.
-7. Try on a physical Pixel and an iPhone, with short screens and enlarged text.
-8. Collect live-use flags and replace weak pairs with bespoke records.
+Passing structural tests does not answer these questions. Use Flag for review to identify weak records; edit a single source for systematic issues or add an exact pair override for a local issue.
 
-## Documentation references
+## Delivery and storage
 
-Native browser decompression: https://developer.mozilla.org/en-US/docs/Web/API/DecompressionStream
+The manifest points to one singles partition and one Drive-indexed partition for each Stance: 241 files per representation. JSON and gzip are content-addressed. The worker validates decompressed bytes before parsing, holds singles plus at most four decoded pair partitions, and does not inflate the full library at startup.
 
-Browser cache/storage behavior: https://developer.mozilla.org/en-US/docs/Web/API/Cache and https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria
+A deliberate full-library download saves the compressed representation when native gzip decoding is available, otherwise the plain compatibility copy. Normal uncached reads require connectivity. Saving is resumable. Bad cached bytes are removed and repaired while online; missing offline data yields an explicit message, not a generic coaching substitute.
 
-These references describe browser APIs; they are not evidence of this app's deployment behavior or the editorial quality of the dataset.
+All runtime requests stay on the site's origin. No models, cloud inference, API keys or analysis of the other performer's cards is involved. A requested partition can reveal its Stance ID in ordinary hosting logs before complete offline caching.
+
+## Player interface and policies
+
+The modal contains a title, one compact actor key, the exchange, Another scene, Done, an optional index, and a review flag. No coaching accordion, AI installer, generation status or repeated introduction is present.
+
+The saved policy IDs remain `full`, `nudges`, `after-attempt` and `off`. `nudges` now restricts display to three-turn examples. It does not mean abstract advice. The general coach exercise system remains intact.
+
+## Publication boundary
+
+No release status has been promoted as a result of formatting examples. The existing nine expansion packs remain at their recorded playtest/publication stages. Example scenes form a separate editorial-preview dataset. Quality review must be tracked as actual review, not inferred from file count or successful unit tests.

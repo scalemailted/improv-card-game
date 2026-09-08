@@ -1,6 +1,6 @@
 /* Static example reader. No inference and no run-time text composition. */
 'use strict';
-importScripts('./manifest.js?v=0.23.0');
+importScripts('./manifest.js?v=0.24.0');
 const manifest=self.IMPROMPT_EXAMPLE_MANIFEST;
 const BASE=new URL('../',self.location.href);
 const CACHE='imprompt-examples-'+manifest.datasetId;
@@ -47,7 +47,7 @@ async function loadDoc(key,signal){
  if(parsed.has(key)){const doc=parsed.get(key);parsed.delete(key);parsed.set(key,doc);return doc;}
  const f=manifest.files[key],raw=await loadFile(key,{signal});checkAbort(signal);
  const doc=JSON.parse(new TextDecoder().decode(raw));
- if(doc.schema!==1||doc.datasetId!==manifest.datasetId||!doc.records)throw Error('Incompatible example file.');
+ if(doc.schema!==2||doc.datasetId!==manifest.datasetId||!doc.records)throw Error('Incompatible example file.');
  parsed.set(key,doc);
  // Keep singles plus at most four Stance partitions parsed, never the entire corpus.
  const shards=[...parsed.keys()].filter(k=>k!=='singles');while(shards.length>4)parsed.delete(shards.shift());
@@ -63,7 +63,10 @@ async function get(request,signal){
  if(request.kind==='combination'&&(cs[0].type!=='stance'||cs[1].type!=='drive'))throw Error('A pair needs Stance then Drive.');
  const key=request.kind==='single'?'singles':cs[0].id,recordId=request.kind==='single'?cs[0].id:cs[1].id;
  const doc=await loadDoc(key,signal), records=doc.records[recordId];
- if(!records?.length)throw Error('No example has been authored for this exact selection.');
+ if(!records?.length)throw Error('No scene has been authored for this exact selection.');
+ for(const record of records){
+  if(!Array.isArray(record.beats)||!['ABA','ABABA'].includes(record.format)||record.beats.map(beat=>beat.speaker).join('')!==record.format||record.beats.some(beat=>typeof beat.text!=='string'||!beat.text.trim()))throw Error('The scene record is incomplete. Reconnect to update the library.');
+ }
  return {records,key:cs.map(c=>c.id).join('+'),datasetId:manifest.datasetId};
 }
 async function status(){

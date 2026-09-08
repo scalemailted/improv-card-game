@@ -11,7 +11,7 @@ const app = read("app.js");
 const styles = read("styles.css");
 const sw = read("sw.js");
 const guide = read("docs/IMPROMPT-HINT-BIBLE.md");
-const notes = read("RELEASE-NOTES-v0.21.2.md");
+const notes = read("RELEASE-NOTES-v0.24.0.md");
 
 for (const id of [
   "stanceNudgeButton", "driveNudgeButton", "stanceVetoButton", "driveVetoButton", "combinationHintButton", "hintUnlockCard", "unlockHintsButton",
@@ -23,10 +23,10 @@ for (const id of [
 }
 assert.match(html, /Need a nudge\?/i);
 assert.match(html, /How might these work together\?/i);
-assert.match(html, /Another angle/i);
+assert.match(html, /Another scene/i);
 assert.match(html, /Save all examples offline/i);
 assert.doesNotMatch(html, /id="hintDialogIntro"/);
-assert.match(html, /Full coaching/i);
+assert.match(html, /Examples available/i);
 assert.match(html, /After first attempt/i);
 assert.match(html, /Hints off/i);
 
@@ -42,14 +42,14 @@ assert.match(app, /renderHintPolicySummary/);
 for (const selector of [".card-inline-action", ".card-veto-button", ".card-nudge-button", ".combination-hint-button", ".hint-modal", ".hint-block", ".hint-policy-summary"]) {
   assert.ok(styles.includes(selector), `Missing CSS selector ${selector}`);
 }
-for (const asset of ["hint-bible.js?v=0.23.0", "examples/manifest.js?v=0.23.0", "examples/library-client.js?v=0.23.0"]) {
+for (const asset of ["hint-bible.js?v=0.24.0", "examples/manifest.js?v=0.24.0", "examples/library-client.js?v=0.24.0"]) {
   assert.ok(html.includes(asset), `HTML does not load ${asset}`);
   assert.ok(sw.includes(asset), `Service worker does not cache ${asset}`);
 }
-assert.match(guide, /one possible way in/i);
-assert.match(guide, /Holder-only contract/i);
+assert.match(guide, /A holds/i);
+assert.match(guide, /illustrative/i);
 assert.match(guide, /57,600/i);
-assert.match(notes, /Concrete Fusion Repair/i);
+assert.match(notes, /Act-It-Out Scenes/i);
 
 
 const stanceWrap = html.match(/<div class="prompt-card-wrap" id="stanceCardWrap">([\s\S]*?)<\/div>\s*<div class="prompt-card-wrap" id="driveCardWrap">/i);
@@ -64,4 +64,4 @@ assert.match(styles, /\.card-veto-button\s*\{[\s\S]*?left:\s*16px/);
 assert.match(styles, /\.card-nudge-button\s*\{[\s\S]*?right:\s*16px/);
 assert.doesNotMatch(app, /Tap card to keep/);
 assert.match(app, /config\.action\.hidden = isRevealed/);
-console.log("✓ v0.23.0 card-integrated actions, example-reader wiring, policies, and historical Hint Bible references passed");
+console.log("✓ v0.24.0 card-integrated actions, example-reader wiring, policies, and historical Hint Bible references passed");

@@ -35,13 +35,16 @@ def fixture(b,w=412,policy='full',stance='S67',drive='D101'):
    },fixtureMode==='slow'?700:15);
   }});
  }''',DATA)
+ bundle=[]
  for file in SCRIPTS:
   text=(ROOT/file).read_text()
   if file=='app.js':
-   page.evaluate('''x=>{const s=ImpromptEngine.createState(IMPROMPT_CARDS);s.stanceQueue=[x.s,...s.stanceQueue.filter(id=>id!==x.s)];s.driveQueue=[x.d,...s.driveQueue.filter(id=>id!==x.d)];ImpromptEngine.startSession(s,IMPROMPT_CARDS,{name:'Open Play',mode:'open',source:'open',hintPolicy:x.p});localStorage.setItem('imprompt:deck-state:v1',JSON.stringify(s));}''',{'s':stance,'d':drive,'p':policy})
-   text=text.replace("workerFactory: () => new Worker(new URL('./examples/library-worker.js?v=0.23.0', document.baseURI))","workerFactory: () => window.fixtureWorker()")
+   settings=json.dumps({'s':stance,'d':drive,'p':policy})
+   bundle.append("((x)=>{const s=ImpromptEngine.createState(IMPROMPT_CARDS);s.stanceQueue=[x.s,...s.stanceQueue.filter(id=>id!==x.s)];s.driveQueue=[x.d,...s.driveQueue.filter(id=>id!==x.d)];ImpromptEngine.startSession(s,IMPROMPT_CARDS,{name:'Open Play',mode:'open',source:'open',hintPolicy:x.p});localStorage.setItem('imprompt:deck-state:v1',JSON.stringify(s));})("+settings+");")
+   text=text.replace("workerFactory: () => new Worker(new URL('./examples/library-worker.js?v=0.24.0', document.baseURI))","workerFactory: () => window.fixtureWorker()")
    text=text.replace('  registerServiceWorker();','  /* Transport fixture: deployment tested separately. */')
-  page.add_script_tag(content=text)
+  bundle.append(text)
+ page.add_script_tag(content=';\n'.join(bundle))
  page.click('#enterButton');page.click('#startSessionButton');page.click('#stanceCard');page.click('#driveCard')
  return ctx,page,errors
 
@@ -59,32 +62,36 @@ with sync_playwright() as p:
  browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH','/usr/bin/chromium'),headless=True,args=['--no-sandbox'])
  results=[]
  for width in [320,412,1280]:
+  print("Viewport",width,flush=True)
   ctx,page,errors=fixture(browser,width)
   check_width(page);page.screenshot(path=str(OUT/f'{width}-cards.png'),full_page=True)
-  page.click('#combinationHintButton');expect(page.locator('.performed-line')).to_be_visible()
-  before=page.locator('.performed-line').inner_text();assert any(t in before for t in ['outrank','chair','authorized'])
-  page.screenshot(path=str(OUT/f'{width}-pair.png'),full_page=True)
-  page.click('#anotherHintAngleButton');expect(page.locator('.performed-line')).not_to_have_text(before)
+  page.click('#combinationHintButton');expect(page.locator('.scene-line').first).to_be_visible()
+  before=page.locator('.scene-line').first.inner_text();assert any(t in page.locator('#hintDialogBody').inner_text().lower() for t in ['chair','secretary','cancellation'])
+  box=page.locator('#hintDialogPanel').bounding_box(); assert box['y'] >= -1 and box['y']+box['height'] <= page.evaluate('innerHeight')+1, box
+  page.screenshot(path=str(OUT/f'{width}-pair.png'),full_page=False)
+  page.click('#anotherHintAngleButton');expect(page.locator('.scene-line').first).not_to_have_text(before)
   page.click('#flagExampleButton');assert 'S67+D101' in page.evaluate('localStorage.getItem("imprompt:example-feedback:v1")')
   page.click('#doneHintButton');d=page.locator('#driveTitle').inner_text();page.click('#stanceVetoButton');assert page.locator('#driveTitle').inner_text()==d
   assert page.locator('#stanceNudgeButton').is_hidden()
   assert not errors,errors;results.append({'viewport':width,'flow':'pair, another, flag, close, single veto','pass':True});ctx.close()
- ctx,page,errors=fixture(browser,412,stance='S124');page.click('#stanceNudgeButton');expect(page.locator('.performed-line')).to_be_visible();assert 'unredacted' in page.locator('.performed-line').inner_text()
- page.screenshot(path=str(OUT/'412-single-cleared-to-know.png'),full_page=True)
- before=page.locator('.performed-line').inner_text();page.click('#anotherHintAngleButton');expect(page.locator('.performed-line')).not_to_have_text(before)
+ print('Single and history',flush=True)
+ ctx,page,errors=fixture(browser,412,stance='S124');page.click('#stanceNudgeButton');expect(page.locator('.scene-line').first).to_be_visible();assert any(x in page.locator('.scene-line').first.inner_text().lower() for x in ['unredacted','visitor','public'])
+ page.screenshot(path=str(OUT/'412-single-cleared-to-know.png'),full_page=False)
+ before=page.locator('.scene-line').first.inner_text();page.click('#anotherHintAngleButton');expect(page.locator('.scene-line').first).not_to_have_text(before)
  page.click('#doneHintButton');page.click('#completeButton');page.click('#historyButton');assert 'Cleared to Know' in page.locator('#historyList').inner_text()
  page.click('#historyBackButton');page.click('#exampleSettingsButton');expect(page.locator('#exampleStorageStatus')).to_contain_text('2 of 241')
- page.screenshot(path=str(OUT/'412-storage.png'),full_page=True)
+ page.screenshot(path=str(OUT/'412-storage.png'),full_page=False)
  page.click('#downloadExamplesButton');expect(page.locator('#exampleStorageStatus')).to_contain_text('All 241')
  assert not errors,errors;ctx.close();results.append({'flow':'single exact ID, alternate, completion snapshot, storage UI (fixture)','pass':True})
  for policy in ['off','after-attempt','nudges']:
+  print('Policy',policy,flush=True)
   ctx,page,errors=fixture(browser,320,policy=policy)
   if policy=='off':assert page.locator('#stanceNudgeButton').is_hidden() and page.locator('#combinationHintButton').is_hidden();assert not page.evaluate('fixtureRequests')
-  elif policy=='after-attempt':assert page.locator('#combinationHintButton').is_hidden();page.click('#unlockHintsButton');page.click('#combinationHintButton');expect(page.locator('.performed-line')).to_be_visible()
-  else:page.click('#stanceNudgeButton');expect(page.locator('.performed-line')).to_be_visible()
+  elif policy=='after-attempt':assert page.locator('#combinationHintButton').is_hidden();page.click('#unlockHintsButton');page.click('#combinationHintButton');expect(page.locator('.scene-line').first).to_be_visible()
+  else:page.click('#stanceNudgeButton');expect(page.locator('.scene-line').first).to_be_visible()
   assert not errors,errors;ctx.close();results.append({'policy':policy,'pass':True})
- ctx,page,errors=fixture(browser);page.evaluate("fixtureMode='failed'");page.click('#combinationHintButton');expect(page.locator('#hintFeedback')).to_contain_text('not saved');assert page.locator('.performed-line').count()==0
- page.evaluate("fixtureMode='normal'");page.click('#anotherHintAngleButton');expect(page.locator('.performed-line')).to_be_visible();page.click('#doneHintButton')
+ ctx,page,errors=fixture(browser);page.evaluate("fixtureMode='failed'");page.click('#combinationHintButton');expect(page.locator('#hintFeedback')).to_contain_text('not saved');assert page.locator('.scene-line').first.count()==0
+ page.evaluate("fixtureMode='normal'");page.click('#anotherHintAngleButton');expect(page.locator('.scene-line').first).to_be_visible();page.click('#doneHintButton')
  page.evaluate("fixtureMode='slow'");page.click('#combinationHintButton');page.click('#doneHintButton');page.wait_for_timeout(800);assert not page.locator('#hintDialog').is_visible();assert not errors
  # Native Chromium gzip decoding of the shipped compressed file, independent of DOM fixture records.
  compressed=base64.b64encode((ROOT/M['files']['singles']['url']).read_bytes()).decode()

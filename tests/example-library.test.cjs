@@ -33,13 +33,13 @@ test('shuffle bag exhausts examples before repeats and avoids a cycle-boundary r
 });
 test('worker performs real gzip decompression, JSON parsing and SHA-256 checks',async()=>{
  const h=harness(),r=await h.call('get',client.prepare(input(['S124']))).promise;
- assert.equal(r.records.length,2);assert.match(r.records[0].line,/insider|unredacted/i);
- assert.doesNotMatch(r.records[0].line,/copy a small routine|right to be here/);
+ assert.equal(r.records.length,2);assert.match(r.records[0].beats.map(b=>b.text).join(" "),/insider|unredacted/i);
+ assert.doesNotMatch(r.records[0].beats.map(b=>b.text).join(" "),/copy a small routine|right to be here/);
 });
 test('exact paired fixture, with both cards, not two generic instructions',async()=>{
  const h=harness(),r=await h.call('get',client.prepare(input(['S67','D101']))).promise;
- assert.equal(r.records.length,3);assert.match(r.records[0].line,/outrank.*announce.*minutes/);
- assert.equal(r.records[0].provenance,'individually-drafted');
+ assert.equal(r.records.length,2);assert.match(r.records[0].beats.map(b=>b.text).join(" "),/chair.*cancelled.*minutes/);
+ assert.equal(r.records[0].provenance,'authored-pair');
 });
 test('changed instruction or version cannot silently retrieve stale examples',async()=>{
  const h=harness(),q=client.prepare(input(['S124']));q.cards[0].instruction='New meaning';
@@ -48,14 +48,14 @@ test('changed instruction or version cannot silently retrieve stale examples',as
 });
 test('a cached selected pair is available with simulated network disabled',async()=>{
  const h=harness(),q=client.prepare(input(['S22','D14']));const first=await h.call('get',q).promise;h.offline(true);
- const next=await h.call('get',q).promise;assert.equal(next.records[0].line,first.records[0].line);assert.equal(h.fetchCount(),1);
+ const next=await h.call('get',q).promise;assert.equal(JSON.stringify(next.records[0].beats),JSON.stringify(first.records[0].beats));assert.equal(h.fetchCount(),1);
 });
 test('missing offline pair gives an explicit error, not a generic fallback',async()=>{
  const h=harness();h.offline(true);await assert.rejects(h.call('get',client.prepare(input(['S22','D14']))).promise,/not saved/);
 });
 test('older-browser plain JSON fallback uses identical examples',async()=>{
  const h=harness({decompression:false});const r=await h.call('get',client.prepare(input(['S67','D101']))).promise;
- assert.match(r.records[0].line,/outrank/);const status=await h.call('status').promise;assert.equal(status.compression,false);assert.equal(status.savedFiles,1);
+ assert.match(r.records[0].beats.map(b=>b.text).join(" "),/chair/);const status=await h.call('status').promise;assert.equal(status.compression,false);assert.equal(status.savedFiles,1);
 });
 test('entire dataset installs, resumes without downloads, and reports only saved files',async()=>{
  const h=harness();const r=await h.call('install').promise;assert.equal(r.complete,true);assert.equal(r.savedFiles,241);
@@ -65,7 +65,7 @@ test('entire dataset installs, resumes without downloads, and reports only saved
 test('corrupt cached partition is evicted then repaired, never displayed',async()=>{
  const h=harness(),cache=await h.caches.open('imprompt-examples-'+m.datasetId);
  const url=new URL(m.files.S124.url,origin).href;await cache.put(url,new Response('not json'));
- const r=await h.call('get',client.prepare(input(['S124','D101']))).promise;assert.match(r.records[0].line,/meeting/);assert.equal(h.fetchCount(),1);
+ const r=await h.call('get',client.prepare(input(['S124','D101']))).promise;assert.match(r.records[0].beats.map(b=>b.text).join(" "),/public version|one of us|organizer/i);assert.equal(h.fetchCount(),1);
 });
 test('invalid cached file plus offline network is explicit, not silently accepted',async()=>{
  const h=harness(),cache=await h.caches.open('imprompt-examples-'+m.datasetId);

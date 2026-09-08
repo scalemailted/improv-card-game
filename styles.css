@@ -4749,39 +4749,10 @@ html {
   color: #d9c2ff;
 }
 
-/* v0.22.0 — one example first; optional local inference never blocks play. */
+/* v0.24.0: one scene, no inference or coaching controls. */
 .prompt-card.is-revealed .card-action { display: none; }
-.hint-block > span:empty { display: none; }
-.hint-block > span:empty + p { margin-top: 0; }
-.hint-extra-coaching { margin-top: 8px; }
-.hint-extra-coaching summary { cursor: pointer; color: var(--muted); font-size: .78rem; padding: 9px 2px; }
-.hint-extra-coaching .hint-block { margin-top: 8px; }
-.hint-source-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; color: var(--soft); font-size: .7rem; }
-.hint-source-row .text-button { margin: 0; padding: 8px 0 8px 12px; min-height: 40px; font-size: .72rem; }
 .hint-feedback { color: var(--muted); font-size: .8rem; line-height: 1.5; margin: 12px 0 0; }
-.generate-hint-button { width: 100%; margin-top: 14px; }
-.local-hints-menu { display: block; margin: 18px auto 0; font-size: .78rem; }
-.local-hints-menu span { color: var(--soft); font-size: .68rem; margin-left: 6px; }
-.local-model-intro { color: var(--muted); line-height: 1.55; font-size: .9rem; margin: 16px 0; }
-.local-model-note { color: var(--muted); font-size: .77rem; line-height: 1.5; margin: 10px 0; }
-.local-download-notice { border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin: 14px 0; background: rgba(255,255,255,.025); }
-.local-download-notice strong { font-size: .88rem; }
-.local-download-notice p { color: var(--muted); font-size: .76rem; line-height: 1.5; margin: 8px 0 0; }
-.local-model-status { font-size: .82rem; line-height: 1.5; overflow-wrap: anywhere; }
-.local-model-actions { display: grid; gap: 10px; margin-top: 15px; }
-.local-model-actions button { margin: 0; width: 100%; }
-.local-model-actions .local-remove-button { font-size: .75rem; line-height: 1.45; min-height: 44px; }
-#localModelProgress { width: 100%; height: 9px; }
 #hintDialogTitle { overflow-wrap: anywhere; }
-
-/* v0.23.0: performed examples and opt-in, local-only diagnostics. */
-.primary-hint-block p { white-space: pre-line; }
-.stop-hint-button { margin: 0 auto 8px; display: block; }
-.generation-diagnostics { margin: 10px 0; font-size: .8rem; min-width: 0; }
-.generation-diagnostics summary { cursor: pointer; padding: 7px 0; font-weight: 650; }
-.generation-diagnostics p { margin: 6px 0; }
-.generation-diagnostics pre { white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; max-height: 240px; overflow-y: auto; padding: 10px; border: 1px solid currentColor; border-radius: 8px; font-size: .72rem; user-select: text; }
-
 /* v0.23: one acted moment, no runtime model or repeated coaching prose. */
 .performed-example { border: 1px solid rgba(186, 163, 255, .3); background: rgba(176,156,234,.08); border-radius:18px; padding:20px; }
 .performed-action { font-size:.95rem; line-height:1.55; color:var(--muted); margin:0 0 12px; font-style:italic; }
@@ -4804,3 +4775,31 @@ html {
 .example-footer { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:4px; }
 .example-footer .example-flag { margin:0; }
 .example-footer .hint-angle-count { white-space:nowrap; }
+
+/* Short dialogic examples: A always holds the requested card(s). */
+#hintDialogPanel { display:flex; flex-direction:column; max-height:calc(100svh - 24px); }
+#hintDialogPanel .modal-header { flex-shrink:0; margin-bottom:0; }
+#hintDialogTitle { font-size:clamp(1.25rem,5.5vw,2rem); line-height:1.15; margin-top:7px; }
+.scene-actor-key { color:var(--muted); font-size:.72rem; line-height:1.45; margin:12px 0 14px; flex-shrink:0; }
+#hintDialogBody { min-height:0; overflow-y:auto; overscroll-behavior:contain; }
+.scene-script { margin:0; padding:0; list-style:none; border:1px solid rgba(176,156,234,.22); border-radius:16px; overflow:hidden; }
+.scene-beat { display:grid; grid-template-columns:24px minmax(0,1fr); gap:10px; padding:13px 15px; background:rgba(176,156,234,.065); }
+.scene-beat + .scene-beat { border-top:1px solid rgba(255,255,255,.06); }
+.scene-beat[data-speaker="B"] { background:rgba(255,255,255,.018); }
+.scene-speaker { width:24px; height:24px; border-radius:50%; display:grid; place-items:center; background:rgba(118,224,210,.14); color:var(--stance); font-size:.72rem; font-weight:850; margin-top:1px; }
+.scene-beat[data-speaker="B"] .scene-speaker { background:rgba(255,255,255,.08); color:var(--muted); }
+.scene-speech { min-width:0; }
+.scene-action { margin:0 0 6px; font-size:.83rem; line-height:1.4; font-style:italic; color:var(--muted); }
+.scene-line { margin:0; font-size:.95rem; line-height:1.45; font-weight:650; overflow-wrap:break-word; }
+.scene-beat[data-speaker="B"] .scene-line { color:var(--muted); font-weight:500; }
+#hintDialog .hint-dialog-actions, #hintDialog .example-footer { flex-shrink:0; }
+#hintDialog .hint-dialog-actions { margin-top:14px; }
+@media(max-width:360px) {
+ #hintDialogPanel { padding:16px; }
+ .scene-beat { padding:11px; gap:8px; grid-template-columns:21px minmax(0,1fr); }
+ .scene-speaker { width:21px; height:21px; font-size:.67rem; }
+ .scene-action { font-size:.78rem; } .scene-line { font-size:.9rem; }
+ .scene-actor-key { font-size:.68rem; margin:10px 0; }
+}
+
+#hintDialogBody { margin-top:0; }

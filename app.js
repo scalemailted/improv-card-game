@@ -81,7 +81,7 @@
     "keepCardButton", "vetoCardButton", "hintDialog", "hintDialogPanel", "hintDialogEyebrow", "hintDialogTitle",
     "closeHintDialogButton", "hintFeedback", "flagExampleButton", "exampleSettingsButton", "exampleSettingsDialog",
     "closeExampleSettingsButton", "exampleDownloadSize", "exampleCoverage", "exampleStorageStatus", "exampleProgress",
-    "downloadExamplesButton", "cancelExamplesButton", "clearExamplesButton", "removeOldModelsButton", "exportExampleFeedbackButton",
+    "downloadExamplesButton", "cancelExamplesButton", "clearExamplesButton", "exportExampleFeedbackButton",
     "hintDialogBody", "anotherHintAngleButton", "hintAngleCount", "doneHintButton",
     "filterDialog", "filterDialogPanel", "filterDialogType",
     "filterDialogTitle", "filterDialogDescription", "filterOptions", "closeFilterDialogButton", "confirmDialog",
@@ -128,7 +128,7 @@
   const exampleManifest = window.IMPROMPT_EXAMPLE_MANIFEST;
   const exampleLibrary = window.IMPROMPT_EXAMPLE_LIBRARY.create({
     manifest: exampleManifest, storage: exampleStorage,
-    workerFactory: () => new Worker(new URL('./examples/library-worker.js?v=0.23.0', document.baseURI))
+    workerFactory: () => new Worker(new URL('./examples/library-worker.js?v=0.24.0', document.baseURI))
   });
 
   function loadState() {
@@ -589,17 +589,6 @@
       : "Tap each panel to draw. Use Veto to replace a card or Nudge for an example.";
   }
 
-  function createHintBlock(label, text, className = "") {
-    const block = document.createElement("section");
-    block.className = `hint-block${className ? ` ${className}` : ""}`;
-    const heading = document.createElement("span");
-    heading.textContent = label;
-    const copy = document.createElement("p");
-    copy.textContent = text;
-    block.append(heading, copy);
-    return block;
-  }
-
   function renderHintControls() {
     const hasScene = Boolean(state.current);
     const policy = currentHintPolicy();
@@ -657,6 +646,7 @@
     if(!context || !request) return;
     const serial = ++hintRequestSerial;
     elements.anotherHintAngleButton.disabled = true;
+    elements.anotherHintAngleButton.hidden=false;
     elements.hintDialogBody.setAttribute('aria-busy','true');
     elements.hintFeedback.hidden = Boolean(context.example);
     elements.hintFeedback.textContent = 'Opening example…';
@@ -664,12 +654,21 @@
       const result = await exampleLibrary.next(request);
       if(serial !== hintRequestSerial || activeHintContext !== context || !elements.hintDialog.open || !hintRequestForContext()) return;
       context.example = result.example; context.key = result.key;
-      const panel=document.createElement('section'); panel.className='performed-example';
-      const action=document.createElement('p'); action.className='performed-action';action.textContent=`[${result.example.action}]`;
-      const line=document.createElement('p'); line.className='performed-line';line.textContent=`“${result.example.line}”`;
-      panel.append(action,line); elements.hintDialogBody.replaceChildren(panel);
+      const panel=document.createElement('ol'); panel.className='scene-script';
+      panel.setAttribute('aria-label', result.example.format.split('').join(', ')+' example scene');
+      for(const beat of result.example.beats){
+        const row=document.createElement('li'); row.className='scene-beat'; row.dataset.speaker=beat.speaker;
+        const speaker=document.createElement('span'); speaker.className='scene-speaker'; speaker.textContent=beat.speaker;
+        speaker.setAttribute('aria-label',beat.speaker==='A'?'A, your character':'B, illustrative partner');
+        const speech=document.createElement('div'); speech.className='scene-speech';
+        if(beat.action){const action=document.createElement('p'); action.className='scene-action'; action.textContent=`[${beat.action}]`; speech.append(action);}
+        const line=document.createElement('p'); line.className='scene-line'; line.textContent=`“${beat.text}”`; speech.append(line);
+        row.append(speaker,speech); panel.append(row);
+      }
+      elements.hintDialogBody.replaceChildren(panel); elements.hintDialogBody.scrollTop=0;
       elements.hintAngleCount.textContent=`${result.index} of ${result.count}`;
-      elements.anotherHintAngleButton.textContent='Another angle';
+      elements.anotherHintAngleButton.textContent='Another scene';
+      elements.anotherHintAngleButton.hidden=result.count<2;
       elements.hintFeedback.hidden=true; elements.flagExampleButton.hidden=false;
       elements.flagExampleButton.textContent='Flag for review';
       announce('Example ready.');
@@ -704,7 +703,7 @@
       let saved=JSON.parse(window.localStorage.getItem(key)||'[]');if(!Array.isArray(saved))saved=[];
       const e=activeHintContext.example;
       if(!saved.some(item=>item.id===e.id&&item.datasetId===exampleManifest.datasetId))saved.push({
-        id:e.id,key:activeHintContext.key,datasetId:exampleManifest.datasetId,action:e.action,line:e.line,
+        id:e.id,key:activeHintContext.key,datasetId:exampleManifest.datasetId,format:e.format,beats:e.beats,seedRefs:e.seedRefs,
         provenance:e.provenance,flaggedAt:new Date().toISOString()});
       window.localStorage.setItem(key,JSON.stringify(saved.slice(-500)));
       elements.flagExampleButton.textContent='Flagged on this phone';
@@ -743,18 +742,10 @@
     if(!window.confirm('Remove downloaded example files? Your cards, deck, sessions, and Scene Log will not change.'))return;
     try{await exampleLibrary.clear();await renderExampleStorage();}catch(error){elements.exampleStorageStatus.textContent=error.message;}
   }
-  async function removeOldModels(){
-    if(!window.confirm('Remove the previous Imprompt AI model downloads and generated hints? Keep other Imprompt tabs closed. Your deck and Scene Log are not touched.'))return;
-    const failures=[];
-    try{if(navigator.storage?.getDirectory){const root=await navigator.storage.getDirectory();await root.removeEntry('imprompt-local-models-v1',{recursive:true}).catch(e=>{if(e.name!=='NotFoundError')throw e;});}}catch(error){failures.push(error.message);}
-    try{if(window.caches){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith('imprompt-llm-runtime-')||n.startsWith('imprompt-local-ai-')).map(n=>caches.delete(n)));}}catch(error){failures.push(error.message);}
-    try{['imprompt:generated-hints:v2','imprompt:local-model-preference:v1'].forEach(k=>window.localStorage.removeItem(k));}catch(error){failures.push(error.message);}
-    elements.exampleStorageStatus.textContent=failures.length?'Some old files could not be removed: '+failures.join('; '):'Old model downloads removed. Deck and Scene Log preserved.';
-  }
   function exportExampleFeedback(){
     try{
       const flags=JSON.parse(window.localStorage.getItem('imprompt:example-feedback:v1')||'[]');
-      const file=new Blob([JSON.stringify({appVersion:'0.23.0',datasetId:exampleManifest.datasetId,flags},null,2)],{type:'application/json'});
+      const file=new Blob([JSON.stringify({appVersion:'0.24.0',datasetId:exampleManifest.datasetId,flags},null,2)],{type:'application/json'});
       const link=document.createElement('a'), url=URL.createObjectURL(file);link.href=url;link.download='imprompt-example-feedback.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
     }catch(error){elements.exampleStorageStatus.textContent=error.message;}
   }
@@ -2249,7 +2240,6 @@
     elements.downloadExamplesButton.addEventListener('click', () => { void downloadExamples(); });
     elements.cancelExamplesButton.addEventListener('click', () => exampleInstall?.cancel());
     elements.clearExamplesButton.addEventListener('click', () => { void clearExamples(); });
-    elements.removeOldModelsButton.addEventListener('click', () => { void removeOldModels(); });
     elements.exportExampleFeedbackButton.addEventListener('click', exportExampleFeedback);
     window.addEventListener('pagehide', () => { cancelHintRequest(); exampleLibrary.dispose(); });
 

@@ -78,3 +78,7 @@ Ask each player to make one clear offer from the Drive, then observe the respons
 - **Paired exercises:** explore how complementary functions feed, resist, ground, or heighten one another.
 
 The coaching goal is not perfect execution of two assignments. It is convergence through listening.
+
+## Example scenes (v0.24.0)
+
+Nudge now shows A–B–A dialogue for a single card and A–B–A or A–B–A–B–A for a pair. A holds your selected card(s); B is an illustrative partner. These examples may invent a concrete setting or prop to make the behavior visible. They are not a script the two real performers must reproduce. The local-inference and hint-coaching panels have been removed. Example availability remains a coach-controlled exercise setting.

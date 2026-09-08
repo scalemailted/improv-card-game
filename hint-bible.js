@@ -16,9 +16,9 @@ const DEFAULT_HINT_POLICY='full';
     },
     {
       id: "nudges",
-      label: "Short scenes only",
-      shortLabel: "Short scenes",
-      description: "Only three-turn A–B–A examples are shown. No five-turn scenes or coaching text.",
+      label: "Brief scenes",
+      shortLabel: "Brief scenes",
+      description: "Shows the shorter available five-turn exchange. No coaching text; no dialogue is truncated.",
       allowsSingle: true,
       allowsCombination: true,
       allowsDepth: false,

@@ -38,7 +38,7 @@ test('worker performs real gzip decompression, JSON parsing and SHA-256 checks',
 });
 test('exact paired fixture, with both cards, not two generic instructions',async()=>{
  const h=harness(),r=await h.call('get',client.prepare(input(['S67','D101']))).promise;
- assert.equal(r.records.length,2);assert.match(r.records[0].beats.map(b=>b.text).join(" "),/chair.*cancelled.*minutes/);
+ assert.equal(r.records.length,2);assert.match(r.records[0].beats.map(b=>b.text).join(" "),/chair.*cancelled.*refund/);
  assert.equal(r.records[0].provenance,'authored-pair');
 });
 test('changed instruction or version cannot silently retrieve stale examples',async()=>{

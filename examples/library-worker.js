@@ -1,6 +1,6 @@
 /* Static example reader. No inference and no run-time text composition. */
 'use strict';
-importScripts('./manifest.js?v=0.24.0');
+importScripts('./manifest.js?v=0.25.0');
 const manifest=self.IMPROMPT_EXAMPLE_MANIFEST;
 const BASE=new URL('../',self.location.href);
 const CACHE='imprompt-examples-'+manifest.datasetId;
@@ -65,7 +65,7 @@ async function get(request,signal){
  const doc=await loadDoc(key,signal), records=doc.records[recordId];
  if(!records?.length)throw Error('No scene has been authored for this exact selection.');
  for(const record of records){
-  if(!Array.isArray(record.beats)||!['ABA','ABABA'].includes(record.format)||record.beats.map(beat=>beat.speaker).join('')!==record.format||record.beats.some(beat=>typeof beat.text!=='string'||!beat.text.trim()))throw Error('The scene record is incomplete. Reconnect to update the library.');
+  if(!Array.isArray(record.beats)||record.format!=='ABABA'||record.beats.map(beat=>beat.speaker).join('')!==record.format||record.beats.some(beat=>typeof beat.text!=='string'||!beat.text.trim()||Object.hasOwn(beat,'action')))throw Error('The scene record is incomplete. Reconnect to update the library.');
  }
  return {records,key:cs.map(c=>c.id).join('+'),datasetId:manifest.datasetId};
 }

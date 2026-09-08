@@ -17,7 +17,7 @@
   }
   const id=remaining.shift();return {example:records.find(r=>r.id===id),history:{remaining,last:id},count:records.length,index:ids.indexOf(id)+1};
  }
- function create({manifest,storage,workerFactory=()=>new Worker(new URL('./library-worker.js?v=0.24.0',document.currentScript?.src||new URL('./examples/',document.baseURI)).href),random=Math.random}={}){
+ function create({manifest,storage,workerFactory=()=>new Worker(new URL('./library-worker.js?v=0.25.0',document.currentScript?.src||new URL('./examples/',document.baseURI)).href),random=Math.random}={}){
   let worker=null,serial=0;const pending=new Map();let cycles={};
   try{const parsed=JSON.parse(storage?.getItem(CYCLE_KEY)||'{}');if(parsed&&typeof parsed==='object'&&!Array.isArray(parsed))cycles=parsed;}catch{}
   function spawn(){if(worker)return;worker=workerFactory();worker.onmessage=({data})=>{const p=pending.get(data.id);if(!p)return;if(data.type==='progress'){p.onProgress?.(data);return;}pending.delete(data.id);clearTimeout(p.timer);data.type==='result'?p.resolve(data.result):p.reject(Object.assign(Error(data.error),{name:data.code||'Error'}));};
@@ -28,8 +28,11 @@
    return {promise,cancel(){worker?.postMessage({command:'cancel',payload:{target:id}});}};
   }
   async function next(input){const request=prepare(input);const result=await rpc('get',request).promise;
-   const records = input.policy.allowsDepth === false ? result.records.filter(record=>record.format==='ABA') : result.records;
-   if(!records.length)throw Error('No short scene is available for this selection.');
+   // Brief means fewer words, not a broken or truncated game. Keep all five turns.
+   const lengthOf = record => record.beats.reduce((sum,beat)=>sum+beat.text.trim().split(/\s+/).length,0);
+   const minimum = Math.min(...result.records.map(lengthOf));
+   const records = input.policy.allowsDepth === false ? result.records.filter(record=>lengthOf(record)===minimum) : result.records;
+   if(!records.length)throw Error('No five-turn scene is available for this selection.');
    const key=manifest.datasetId+':'+result.key+':'+(input.policy.allowsDepth===false?'short':'all');const choice=selectNext(records,cycles[key],random);delete cycles[key];cycles[key]=choice.history;
    const keys=Object.keys(cycles);while(keys.length>96)delete cycles[keys.shift()];
    try{storage?.setItem(CYCLE_KEY,JSON.stringify(cycles));}catch{}

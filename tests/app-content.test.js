@@ -147,18 +147,18 @@ assert.equal(exercises.getPresets("mirror").length, 4);
 assert.equal(exercises.getPresets("paired").length, 4);
 
 // Card Bible runtime files load before the compatibility aggregator.
-assert.ok(html.indexOf("./card-bible.js?v=0.24.0") < html.indexOf("./cards/core-foundations.js?v=0.24.0"));
-assert.ok(html.indexOf("./cards/core-foundations.js?v=0.24.0") < html.indexOf("./cards/everyday-friction.js?v=0.24.0"));
-assert.ok(html.indexOf("./cards/everyday-friction.js?v=0.24.0") < html.indexOf("./cards/power-games.js?v=0.24.0"));
-assert.ok(html.indexOf("./cards/power-games.js?v=0.24.0") < html.indexOf("./cards/relationship-knots.js?v=0.24.0"));
-assert.ok(html.indexOf("./cards/relationship-knots.js?v=0.24.0") < html.indexOf("./cards/emotional-pressure.js?v=0.24.0"));
-assert.ok(html.indexOf("./cards/emotional-pressure.js?v=0.24.0") < html.indexOf("./cards/secrets-schemes.js?v=0.24.0"));
-assert.ok(html.indexOf("./cards/secrets-schemes.js?v=0.24.0") < html.indexOf("./cards/absurd-commitment.js?v=0.24.0"));
-assert.ok(html.indexOf("./cards/absurd-commitment.js?v=0.24.0") < html.indexOf("./cards/rules-rituals-institutions.js?v=0.24.0"));
-assert.ok(html.indexOf("./cards/rules-rituals-institutions.js?v=0.24.0") < html.indexOf("./cards/competition-consequences.js?v=0.24.0"));
-assert.ok(html.indexOf("./cards/competition-consequences.js?v=0.24.0") < html.indexOf("./cards/advanced-scene-engines.js?v=0.24.0"));
-assert.ok(html.indexOf("./cards/advanced-scene-engines.js?v=0.24.0") < html.indexOf("./cards.js?v=0.24.0"));
-assert.ok(html.indexOf("./cards.js?v=0.24.0") < html.indexOf("./hint-bible.js?v=0.24.0"));
+assert.ok(html.indexOf("./card-bible.js?v=0.25.0") < html.indexOf("./cards/core-foundations.js?v=0.25.0"));
+assert.ok(html.indexOf("./cards/core-foundations.js?v=0.25.0") < html.indexOf("./cards/everyday-friction.js?v=0.25.0"));
+assert.ok(html.indexOf("./cards/everyday-friction.js?v=0.25.0") < html.indexOf("./cards/power-games.js?v=0.25.0"));
+assert.ok(html.indexOf("./cards/power-games.js?v=0.25.0") < html.indexOf("./cards/relationship-knots.js?v=0.25.0"));
+assert.ok(html.indexOf("./cards/relationship-knots.js?v=0.25.0") < html.indexOf("./cards/emotional-pressure.js?v=0.25.0"));
+assert.ok(html.indexOf("./cards/emotional-pressure.js?v=0.25.0") < html.indexOf("./cards/secrets-schemes.js?v=0.25.0"));
+assert.ok(html.indexOf("./cards/secrets-schemes.js?v=0.25.0") < html.indexOf("./cards/absurd-commitment.js?v=0.25.0"));
+assert.ok(html.indexOf("./cards/absurd-commitment.js?v=0.25.0") < html.indexOf("./cards/rules-rituals-institutions.js?v=0.25.0"));
+assert.ok(html.indexOf("./cards/rules-rituals-institutions.js?v=0.25.0") < html.indexOf("./cards/competition-consequences.js?v=0.25.0"));
+assert.ok(html.indexOf("./cards/competition-consequences.js?v=0.25.0") < html.indexOf("./cards/advanced-scene-engines.js?v=0.25.0"));
+assert.ok(html.indexOf("./cards/advanced-scene-engines.js?v=0.25.0") < html.indexOf("./cards.js?v=0.25.0"));
+assert.ok(html.indexOf("./cards.js?v=0.25.0") < html.indexOf("./hint-bible.js?v=0.25.0"));
 assert.equal(cards.activePackCount, 10);
 assert.equal(cards.publishedPackCount, 1);
 assert.equal(cards.playtestPackCount, 9);
@@ -179,10 +179,10 @@ assert.equal(cards.targetDriveCount, 240);
 
 // Release and offline contract.
 for (const asset of ["styles.css", "card-bible.js", "cards/core-foundations.js", "cards/everyday-friction.js", "cards/power-games.js", "cards/relationship-knots.js", "cards/emotional-pressure.js", "cards/secrets-schemes.js", "cards/absurd-commitment.js", "cards/rules-rituals-institutions.js", "cards/competition-consequences.js", "cards/advanced-scene-engines.js", "cards.js", "hint-bible.js", "examples/manifest.js", "examples/library-client.js", "exercises.js", "deck-engine.js", "vendor/qrcode-core.js", "app.js"]) {
-  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.24\\.0`));
-  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.24\\.0`));
+  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.25\\.0`));
+  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=0\\.25\\.0`));
 }
-assert.match(serviceWorker, /imprompt-v0\.24\.0/);
+assert.match(serviceWorker, /imprompt-v0\.25\.0/);
 assert.doesNotMatch(serviceWorker, /skipWaiting/);
 assert.match(app, /updateViaCache:\s*"none"/);
 assert.match(manifest, /"short_name": "Imprompt"/);

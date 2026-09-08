@@ -128,7 +128,7 @@
   const exampleManifest = window.IMPROMPT_EXAMPLE_MANIFEST;
   const exampleLibrary = window.IMPROMPT_EXAMPLE_LIBRARY.create({
     manifest: exampleManifest, storage: exampleStorage,
-    workerFactory: () => new Worker(new URL('./examples/library-worker.js?v=0.24.0', document.baseURI))
+    workerFactory: () => new Worker(new URL('./examples/library-worker.js?v=0.25.0', document.baseURI))
   });
 
   function loadState() {
@@ -661,8 +661,7 @@
         const speaker=document.createElement('span'); speaker.className='scene-speaker'; speaker.textContent=beat.speaker;
         speaker.setAttribute('aria-label',beat.speaker==='A'?'A, your character':'B, illustrative partner');
         const speech=document.createElement('div'); speech.className='scene-speech';
-        if(beat.action){const action=document.createElement('p'); action.className='scene-action'; action.textContent=`[${beat.action}]`; speech.append(action);}
-        const line=document.createElement('p'); line.className='scene-line'; line.textContent=`“${beat.text}”`; speech.append(line);
+        const line=document.createElement('p'); line.className='scene-line'; line.textContent=beat.text; speech.append(line);
         row.append(speaker,speech); panel.append(row);
       }
       elements.hintDialogBody.replaceChildren(panel); elements.hintDialogBody.scrollTop=0;
@@ -745,7 +744,7 @@
   function exportExampleFeedback(){
     try{
       const flags=JSON.parse(window.localStorage.getItem('imprompt:example-feedback:v1')||'[]');
-      const file=new Blob([JSON.stringify({appVersion:'0.24.0',datasetId:exampleManifest.datasetId,flags},null,2)],{type:'application/json'});
+      const file=new Blob([JSON.stringify({appVersion:'0.25.0',datasetId:exampleManifest.datasetId,flags},null,2)],{type:'application/json'});
       const link=document.createElement('a'), url=URL.createObjectURL(file);link.href=url;link.download='imprompt-example-feedback.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
     }catch(error){elements.exampleStorageStatus.textContent=error.message;}
   }

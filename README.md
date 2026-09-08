@@ -1,77 +1,76 @@
-# Imprompt · v0.24.0
+# Imprompt · v0.25.0
 
-**Two private cards. One shared scene.** A phone-first, client-side improv card game with 240 Stances, 240 Drives, private deck progress, guided exercises and a Scene Log.
+**Two private cards. One shared scene.** A phone-first, client-side improv game with 240 Stances, 240 Drives, independent deck progress, guided exercises and a Scene Log.
 
-## Playable examples, not hint lectures
+## Dialogue-first examples
 
-Nudge opens a short performed exchange:
+Nudge now opens **five spoken turns: A–B–A–B–A**. A establishes the situation in dialogue; B answers; A demonstrates the card; B develops the pressure; A heightens that same interaction. No separate grey stage directions, narrator, hint lecture or model installer.
 
-- **Single card:** A–B–A.
-- **Stance + Drive:** A–B–A or A–B–A–B–A. A holds **both** cards.
-- **Another scene:** a stored alternative, without an immediate repeat when more than one eligible scene is available.
+All 960 single-card examples have been rewritten, two per card. Their median is **36 words across the complete exchange**; the longest is 57. The card instructions themselves are unchanged.
 
-A is the requesting player's character. B is an illustrative reply, not an instruction imposed on the real partner. The example can use concrete roles, objects and places without making them mandatory for the actual scene.
+A is the requesting player's character and holds both cards in a pair example. B's lines are illustrative, not instructions to another player's phone. Examples can use specific places, objects and relationships without making them mandatory during play.
 
-Veto and Nudge remain inside the card. Keeping the card is assumed. No language model, model installer, inference runtime or abstract coaching panel is included. General Learn to Play and coach exercise setup remain available outside hints.
-
-## Included library
+## Included content and review limits
 
 | Coverage | Count |
 | --- | ---: |
-| Cards | 480 |
-| Individual A–B–A scenes | 960 |
-| Exact Stance–Drive pairs | 57,600 |
-| Pair scenes | 115,200 |
-| Total stored scenes | 116,160 |
-| Compressed example payload | 9.89 MB |
-| Plain compatibility payload | 68.90 MB |
+| Playable cards | 480 |
+| Rewritten single-card scenes | 960 |
+| Exact Stance–Drive pair lookups | 57,600 |
+| Pair scenes, all five-turn | 115,200 |
+| Internally rewritten bespoke pair scenes | 50 across 25 pairs |
+| Compiled pair drafts pending individual review | 115,150 |
+| Complete gzip example payload | 12.35 MB |
+| Plain JSON compatibility payload | 72.83 MB |
 
-The runtime stores complete scenes; it never assembles them on the phone. Individual scenes have new card-specific B responses and A follow-through. Pair scenes use the exact cards' authored material and Stance-specific transfer methods. Twenty-five selected pairs have bespoke dialogue overrides. Other pair entries are **composed editorial drafts**, not 115,200 individually human-approved sketches. The complete corpus has not been live-tested. Flag weak examples during rehearsal and export those flags deliberately from Offline examples & storage.
+**The internal rewrite is not independent human/live validation.** Every single-card entry has a specific editorial rationale and a before/after ledger. The large pair corpus is not individually certified as witty or coherent. Its revised compiler keeps both B responses and A's final payoff from the same five-turn Drive scene, rather than grafting on unrelated stock endings. Exact-card Stance frames can still produce weak fusions; flag those for bespoke revision.
 
-## Publish on GitHub Pages
+Veto and Nudge remain inside each card. Keeping is assumed. **Another scene** cycles stored alternatives without immediate repetition when more than one eligible alternative exists. Nothing is generated on the phone.
 
-Extract **the ZIP contents** into the repository root, retaining `examples/`, `cards/`, `icons/` and `assets/`. Commit the complete tree. No package install or build step is needed to play.
+## Publish
 
-The intended live address remains:
+Extract the **complete ZIP contents** into the repository root, including `examples/`, `cards/`, `icons/` and `assets/`. Commit the complete tree. No build or dependency install is required to play.
+
+The public address remains:
 
 https://scalemailted.github.io/improv-card-game/
 
 [![Open Imprompt on your phone](assets/improv-card-game-qr.png)](https://scalemailted.github.io/improv-card-game/)
 
-After deployment, close older Imprompt tabs and reopen the site. This release uses new asset URLs, a new schema and content-addressed example files. Do not mix releases. Do not clear all site data: that also erases deck progress and scene history.
+This release has new versioned asset URLs and a new content-addressed dataset. Do not mix files from releases. After deployment, close older Imprompt tabs and reopen. **Do not clear all site data**, which also removes saved deck/history.
 
 ## Offline rehearsal
 
-Open **Offline examples & storage → Save all examples offline**. Wait for 241 of 241 files to be saved. Reload once while connected, then test a different card pair in airplane mode before rehearsal.
+Select **Offline examples & storage → Save all examples offline**. Wait for all **241** files. Reload once online, then test another pair in airplane mode before rehearsal.
 
-Normal use downloads only needed partitions. First access to an uncached partition needs a connection. The reader decodes gzip in a worker and retains singles plus no more than four parsed Stance partitions. Browsers without native gzip decoding use the included plain JSON copies. Both representations ship in this source ZIP, but the full-library downloader saves only the usable representation.
+The worker decompresses only the needed partition and keeps singles plus at most four parsed Stance partitions. The ZIP ships gzip and plain compatibility representations, but the installer saves only the representation the browser can use. Browser data may be cleared or evicted; missing offline records produce a clear error, not generic fallback advice.
 
-Example storage is separate from deck/history storage. Removing downloaded examples does not clear cards, sessions or exercise settings. No network inference, API keys, telemetry, or external model downloads occur. Before a full offline download, the site host can observe which Stance partition was requested. Saving the full library eliminates that per-selection network request. Browser storage is not permanent archival storage.
+Removing the example cache does not remove your deck or history. No inference service, third-party model request, API key, or telemetry is used. Before a full offline download, the static host can observe which Stance partition is requested. Complete offline storage avoids per-selection requests.
 
-## Existing coaches and players
+A new dataset does not inherit the previous version's offline completeness. Save this version's library before an offline session.
 
-Playable cards, IDs, content versions, deck logic, exercise definitions and prior Scene Log snapshots are unchanged. Existing saved hint policy IDs continue to work:
+## Existing players and coaches
 
-| Saved policy | Current behavior |
+Playable card files, IDs, content versions, card catalog, Card Bible, deck engine and exercise engine are unchanged. Current prompts and historical Scene Log snapshots remain intact.
+
+| Saved policy ID | Current behavior |
 | --- | --- |
-| `full` | Examples available: three- and five-turn scenes |
-| `nudges` | Short scenes only: three turns |
-| `after-attempt` | Same scene examples after deliberate unlock |
-| `off` | No example buttons |
+| `full` | All available five-turn scenes |
+| `nudges` | Brief scenes: selects the shorter complete five-turn exchange |
+| `after-attempt` | Unlock examples only after the player marks an attempt |
+| `off` | No example controls |
 
-The shorter policy may offer only one eligible scene for a pair; Another scene is then hidden rather than pretending to generate a new answer.
+A shorter example is selected by whole-scene word count, never by deleting the last two turns. Another scene is hidden when there is only one eligible choice.
 
-## Editing and rebuilding
+## Audit and editing
 
-Canonical authoring sources:
-
-```text
-examples/authoring/single-scenes.json      # two A–B–A scenes for every actual card
-examples/authoring/stance-transfers.json   # card-specific methods for pursuing a Drive
-examples/authoring/pair-scenes.json        # exact-pair dialogue overrides
-```
-
-Each pair record identifies its source single-scene IDs. Card fingerprints and acknowledged source-scene hashes block silent reuse when instructions or seeds change. Edit canonical JSON, then run:
+- [Full single-card audit](docs/SINGLE-CARD-DIALOGUE-AUDIT-v0.25.0.md): 480 rationale notes and all 960 replacement scenes.
+- [Bespoke pair references](docs/PAIR-REFERENCE-SCENES-v0.25.0.md): 50 exchanges and their causal fusion notes.
+- [Example Bible](docs/IMPROMPT-HINT-BIBLE.md).
+- `editorial/v0.25.0/single-dialogue-ledger.json` and `.csv`: exact before/after provenance.
+- `examples/authoring/single-scenes.json`: canonical single scenes.
+- `examples/authoring/stance-transfers.json`: draft-composition transfer inputs.
+- `examples/authoring/pair-scenes.json`: bespoke pair overrides.
 
 ```sh
 npm run build:examples
@@ -81,8 +80,6 @@ npm run test:browser
 npm start
 ```
 
-`npm start` serves the app on localhost:8080. Browser tests need Python Playwright and a Chromium executable. The included fixture test is explicitly not a native hosted service-worker test; see `BUILD-VERIFICATION-v0.24.0.md`.
+The builder checks exact card fingerprints and source bindings. These prevent silent stale reuse, not semantic mistakes. `audit:dialogue` verifies internal-review coverage and dialogue structure; it does not calculate a humour score.
 
-The build emits SHA-256-addressed JSON and gzip files, regenerates the manifest and synchronizes the singleton precache. Commit the whole output together. Substantive future releases must advance the app/runtime URL version as well as the dataset identity.
-
-See [the example authoring contract](docs/OFFLINE-ACT-IT-OUT-LIBRARY.md), [release notes](RELEASE-NOTES-v0.24.0.md), and [verification boundaries](BUILD-VERIFICATION-v0.24.0.md).
+Browser checks require Python Playwright and Chromium. The included transport-fixture tests are explicitly separate from a native hosted service-worker install or a physical Pixel benchmark. See `BUILD-VERIFICATION-v0.25.0.md` for the actual test scope.

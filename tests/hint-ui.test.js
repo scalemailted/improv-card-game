@@ -24,7 +24,7 @@ for (const id of [
 assert.match(html, /Need a nudge\?/i);
 assert.match(html, /How might these work together\?/i);
 assert.match(html, /Another angle/i);
-assert.match(html, /Built-in example/i);
+assert.match(html, /Save all examples offline/i);
 assert.doesNotMatch(html, /id="hintDialogIntro"/);
 assert.match(html, /Full coaching/i);
 assert.match(html, /After first attempt/i);
@@ -35,14 +35,14 @@ assert.match(app, /function openSingleHint/);
 assert.match(app, /function openCombinationHint/);
 assert.match(app, /function showAnotherHintAngle/);
 assert.match(app, /engine\.unlockHints/);
-assert.match(app, /hintEngine\.getSingleHint/);
-assert.match(app, /hintEngine\.getCombinationHint/);
+assert.match(app, /exampleLibrary\.next/);
+assert.match(app, /hintRequestForContext/);
 assert.match(app, /renderHintPolicySummary/);
 
 for (const selector of [".card-inline-action", ".card-veto-button", ".card-nudge-button", ".combination-hint-button", ".hint-modal", ".hint-block", ".hint-policy-summary"]) {
   assert.ok(styles.includes(selector), `Missing CSS selector ${selector}`);
 }
-for (const asset of ["hint-bible.js?v=0.22.1", "hints/card-hints.js?v=0.22.1", "hints/fusion-profiles.js?v=0.22.1", "hints/concrete-fusion.js?v=0.22.1", "hint-engine.js?v=0.22.1"]) {
+for (const asset of ["hint-bible.js?v=0.23.0", "examples/manifest.js?v=0.23.0", "examples/library-client.js?v=0.23.0"]) {
   assert.ok(html.includes(asset), `HTML does not load ${asset}`);
   assert.ok(sw.includes(asset), `Service worker does not cache ${asset}`);
 }
@@ -64,4 +64,4 @@ assert.match(styles, /\.card-veto-button\s*\{[\s\S]*?left:\s*16px/);
 assert.match(styles, /\.card-nudge-button\s*\{[\s\S]*?right:\s*16px/);
 assert.doesNotMatch(app, /Tap card to keep/);
 assert.match(app, /config\.action\.hidden = isRevealed/);
-console.log("✓ v0.21.2 card-integrated actions, repaired pair-specific fusion hints, policies, offline assets, and Hint Bible documentation passed");
+console.log("✓ v0.23.0 card-integrated actions, example-reader wiring, policies, and historical Hint Bible references passed");

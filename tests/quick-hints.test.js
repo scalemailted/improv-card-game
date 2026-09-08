@@ -18,5 +18,6 @@ assert.match(quick.pair(stance,drive,engine.getCombinationHint(stance,drive),0),
 assert.notEqual(quick.pair(stance,drive,engine.getCombinationHint(stance,drive),0),quick.pair(stance,drive,engine.getCombinationHint(stance,drive),1));
 const html=fs.readFileSync(require('node:path').join(__dirname,'../index.html'),'utf8');
 assert.doesNotMatch(html,/hintDialogIntro|hint-pattern-pill/);
-for(const id of ['localModelDialog','loadLocalModelButton','loadSavedLocalModelButton','cancelLocalModelButton','generateLocalHintButton']) assert.ok(html.includes(`id="${id}"`));
-console.log("✓ 480 short built-in nudges, 96 new core-card examples, compact pair overrides, and opt-in local UI passed");
+for(const id of ['exampleSettingsDialog','downloadExamplesButton','clearExamplesButton']) assert.ok(html.includes(`id="${id}"`));
+assert.doesNotMatch(html, /src="[^"]*(?:quick-hints|local-models|local-hints)/);
+console.log("✓ Legacy hint baseline retained for comparison; NOT loaded by the v0.23 browser UI");

@@ -9,10 +9,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Imprompt">
   <title>Imprompt — Prompts for Improv</title>
-  <link rel="manifest" href="./manifest.webmanifest?v=0.22.1">
-  <link rel="icon" href="./icons/icon.svg?v=0.22.1" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="./icons/icon-192.png?v=0.22.1">
-  <link rel="stylesheet" href="./styles.css?v=0.22.1">
+  <link rel="manifest" href="./manifest.webmanifest?v=0.23.0">
+  <link rel="icon" href="./icons/icon.svg?v=0.23.0" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png?v=0.23.0">
+  <link rel="stylesheet" href="./styles.css?v=0.23.0">
 </head>
 <body>
   <div class="ambient ambient-one" aria-hidden="true"></div>
@@ -128,7 +128,7 @@
         <section class="deck-summary" aria-label="Local deck status">
           <span id="sceneSummary">Ready for scene 1</span><span aria-hidden="true">•</span><span><strong id="stancesRemaining">240</strong> Stances</span><span aria-hidden="true">•</span><span><strong id="drivesRemaining">240</strong> Drives</span>
         </section>
-        <button class="text-button local-hints-menu" id="localHintsMenuButton" type="button">Local hint engine <span>optional</span></button>
+        <button class="text-button local-hints-menu" id="exampleSettingsButton" type="button">Offline examples &amp; storage</button>
         <button class="text-button install-button" id="installButton" type="button" hidden>Install Imprompt on this phone</button>
       </section>
 
@@ -396,12 +396,12 @@
               <p class="learn-lead">Hints translate a private prompt into an observable first move. They never invent the whole scene, prescribe your partner’s response, or replace listening.</p>
               <div class="hint-principle-card"><strong>Ask for the least help you need.</strong><p>Start with a single-card nudge. Use the two-card hint only when the relationship between your Stance and Drive is unclear. “Another angle” offers a different tactic, not a better answer.</p></div>
               <div class="coach-mode-grid hint-policy-guide">
-                <article><span>FULL COACHING</span><strong>Nudge + heightening</strong><p>Shows a first move, a way to heighten, and a structured two-card blend.</p></article>
-                <article><span>NUDGES ONLY</span><strong>One concise prompt</strong><p>Offers a behavioral foothold without deeper next-beat guidance.</p></article>
+                <article><span>FULL COACHING</span><strong>Acted examples</strong><p>Offers a short action and a spoken line for your card or pair.</p></article>
+                <article><span>NUDGES ONLY</span><strong>Keep it brief</strong><p>Uses the same concise examples without adding coaching paragraphs.</p></article>
                 <article><span>AFTER FIRST ATTEMPT</span><strong>Try before opening</strong><p>Players deliberately unlock hints only after making an initial attempt.</p></article>
                 <article><span>HINTS OFF</span><strong>Cards and partner only</strong><p>Removes hint controls while leaving the Scene Craft Guide available.</p></article>
               </div>
-              <aside class="rule-callout secondary-callout"><strong>Private and offline.</strong><p>Built-in examples are available offline after the app is cached. An optional local model can generate fresh examples from revealed cards. Setup downloads model and runtime files; card prompts and generated text are not sent to a server.</p></aside>
+              <aside class="rule-callout secondary-callout"><strong>Private and offline.</strong><p>Examples are stored text, not live AI. Save the complete library under Offline examples &amp; storage before rehearsal. No card prompts are sent to an inference service. Illustrative objects and settings are suggestions, not rules; let the scene change them.</p></aside>
             </div>
           </details>
         </div>
@@ -425,7 +425,7 @@
       <section class="screen invite-screen" id="inviteScreen" data-screen="invite" aria-labelledby="inviteHeading" hidden>
         <header class="screen-header"><button class="header-button" id="inviteBackButton" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6M9 12h10"/></svg><span id="inviteBackLabel">Main menu</span></button><span class="section-wordmark"><span>im</span>prompt</span></header>
         <div class="invite-copy"><p class="eyebrow">INVITE PLAYERS</p><h1 id="inviteHeading">Scan to open an independent deck.</h1><p>This general QR code contains no exercise, prompt, shuffle, scene count, or deck progress.</p></div>
-        <a class="qr-panel" id="shareQrLink" href="https://scalemailted.github.io/improv-card-game/" target="_blank" rel="noopener"><img src="./assets/improv-card-game-qr.png?v=0.22.1" alt="QR code linking to the public Imprompt game"></a>
+        <a class="qr-panel" id="shareQrLink" href="https://scalemailted.github.io/improv-card-game/" target="_blank" rel="noopener"><img src="./assets/improv-card-game-qr.png?v=0.23.0" alt="QR code linking to the public Imprompt game"></a>
         <a class="share-url" id="shareUrlLink" href="https://scalemailted.github.io/improv-card-game/" target="_blank" rel="noopener">scalemailted.github.io/improv-card-game/</a>
         <div class="invite-actions"><button class="primary-button" id="shareLinkButton" type="button"><span class="button-icon" aria-hidden="true">↗</span><span>Share game link</span></button><button class="secondary-button" id="copyLinkButton" type="button">Copy link</button></div><p class="share-feedback" id="shareFeedback" aria-live="polite"></p>
       </section>
@@ -439,36 +439,36 @@
 
   <dialog class="hint-modal" id="hintDialog" aria-labelledby="hintDialogTitle">
     <div class="hint-card" id="hintDialogPanel">
-      <div class="modal-header"><div><span class="eyebrow" id="hintDialogEyebrow">PRIVATE NUDGE</span><h2 id="hintDialogTitle">One possible way in</h2></div><button class="icon-button modal-close" id="closeHintDialogButton" type="button" aria-label="Close hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+      <div class="modal-header"><div><span class="eyebrow" id="hintDialogEyebrow">ACT IT OUT</span><h2 id="hintDialogTitle">Example</h2></div><button class="icon-button modal-close" id="closeHintDialogButton" type="button" aria-label="Close example"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
       <div class="hint-dialog-body" id="hintDialogBody"></div>
       <p class="hint-feedback" id="hintFeedback" role="status" aria-live="polite" hidden></p>
-      <button class="secondary-button generate-hint-button" id="generateLocalHintButton" type="button" hidden>Act it out</button>
-      <button class="text-button stop-hint-button" id="cancelHintGenerationButton" type="button" hidden>Stop generating</button>
-      <details class="generation-diagnostics" id="hintDiagnostics" hidden><summary>Generation details</summary><p>Local diagnostics only. Rejected text may mention these revealed cards.</p><button class="text-button" id="copyHintDiagnosticsButton" type="button">Copy details</button><pre id="hintDiagnosticsText"></pre></details>
-      <div class="hint-source-row"><span id="hintSource">Built-in example</span><button class="text-button" id="hintLocalSettingsButton" type="button">Local hints</button></div>
-      <div class="hint-dialog-actions"><button class="secondary-button" id="anotherHintAngleButton" type="button">Another angle</button><span class="hint-angle-count" id="hintAngleCount">1 of 2</span><button class="primary-button" id="doneHintButton" type="button">Back to the scene</button></div>
+      <div class="hint-dialog-actions"><button class="secondary-button" id="anotherHintAngleButton" type="button">Another angle</button><button class="primary-button" id="doneHintButton" type="button">Done</button></div>
+      <div class="example-footer"><span class="hint-angle-count" id="hintAngleCount"></span><button class="text-button example-flag" id="flagExampleButton" type="button" hidden>Flag for review</button></div>
     </div>
   </dialog>
 
-  <dialog class="hint-modal local-model-modal" id="localModelDialog" aria-labelledby="localModelTitle">
-    <div class="hint-card local-model-card">
-      <div class="modal-header"><div><span class="eyebrow">OPTIONAL · EXPERIMENTAL</span><h2 id="localModelTitle">Local hint engine</h2></div><button class="icon-button modal-close" id="closeLocalModelButton" type="button" aria-label="Close local hint settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
-      <p class="local-model-intro">The AI plays your revealed card or pair for one moment: an action and a spoken line. The game and built-in hints work without this.</p>
-      <label class="field" for="localModelSelect"><span>Model for this device</span><select id="localModelSelect"></select></label>
-      <p class="local-model-note" id="localModelDescription"></p>
-      <aside class="local-download-notice"><strong id="localModelDownloadSize"></strong><p>The first download also loads the inference runtime. Use Wi-Fi. Generation uses this device’s memory and CPU.</p><p>Model files come from Hugging Face and the runtime from jsDelivr. These hosts receive ordinary download requests, not your card prompts. Inference stays in the browser.</p></aside>
-      <p id="localModelStatus" class="local-model-status" role="status" aria-live="polite">Off. No model downloads start automatically.</p>
-      <progress id="localModelProgress" max="100" value="0" aria-label="Local model download progress" hidden></progress>
-      <div class="local-model-actions">
-        <button class="primary-button" id="loadLocalModelButton" type="button">Download &amp; enable</button>
-        <button class="secondary-button" id="loadSavedLocalModelButton" type="button">Use saved model</button>
-        <button class="secondary-button" id="cancelLocalModelButton" type="button" hidden>Cancel download</button>
-        <button class="secondary-button" id="unloadLocalModelButton" type="button" hidden>Turn off &amp; free memory</button>
-        <button class="text-button local-remove-button" id="clearLocalModelsButton" type="button">Remove model downloads &amp; generated examples</button>
+  <dialog class="hint-modal" id="exampleSettingsDialog" aria-labelledby="exampleSettingsTitle">
+    <div class="hint-card example-settings">
+      <div class="modal-header"><div><span class="eyebrow">OFFLINE ACT-IT-OUT LIBRARY</span><h2 id="exampleSettingsTitle">Examples, not a model.</h2></div><button class="icon-button modal-close" id="closeExampleSettingsButton" type="button" aria-label="Close offline settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+      <p id="exampleDownloadSize"></p><p class="example-small" id="exampleCoverage"></p>
+      <p>Only the selected card or pair is opened. Save the complete library before rehearsal to use any example without a connection.</p>
+      <p class="example-storage-status" id="exampleStorageStatus" role="status" aria-live="polite">Checking saved files…</p>
+      <progress id="exampleProgress" max="100" value="0" aria-label="Offline example download progress" hidden></progress>
+      <div class="example-settings-actions">
+        <button class="primary-button" id="downloadExamplesButton" type="button">Save all examples offline</button>
+        <button class="secondary-button" id="cancelExamplesButton" type="button" hidden>Pause download</button>
+        <button class="text-button" id="clearExamplesButton" type="button">Remove downloaded examples</button>
       </div>
-      <p class="local-model-note">Once ready, opening a nudge generates a performed moment automatically. An already-open nudge has “Act it out.” “Another angle” requests a new moment. The built-in example stays available while AI works.</p>
-      <details class="generation-diagnostics" id="localModelDiagnostics" hidden><summary>Last local-engine operation</summary><p>Nothing here is uploaded. Copy details to report a failure; check the included text before sharing.</p><button class="text-button" id="copyModelDiagnosticsButton" type="button">Copy details</button><pre id="localModelDiagnosticsText"></pre></details>
-      <p class="local-model-note">A saved model must be loaded again after a page reload. Offline generation also needs a cached runtime. Browser storage may be cleared or evicted. Recent Chrome or Edge is the safest starting point.</p>
+      <details class="example-library-notes"><summary>About this example edition</summary>
+        <p>All 480 cards have two individually drafted moments. Every Stance–Drive pair has at least two completed examples compiled from material written for those exact card IDs, not their category. Thirty-two pairs have bespoke examples. The full pair corpus has not been individually reviewed or live-tested; it is an editorial-preview library.</p>
+        <p>The places and objects are illustrations, not scene requirements. Another angle selects a different saved example, not new AI output. These are suggestions; your partner comes first.</p>
+        <p>Example files come only from this site. Before a full offline download, a requested partition can reveal its Stance ID to the site host. After saving everything, choosing examples needs no network request. Browser storage can be cleared or evicted.</p>
+        <button class="text-button" id="exportExampleFeedbackButton" type="button">Export flagged examples</button>
+      </details>
+      <details class="example-library-notes"><summary>Remove old AI downloads</summary>
+        <p>Already downloaded a model in an earlier version? This removes only Imprompt’s model directory and AI caches, not your cards or Scene Log. Close other Imprompt tabs first.</p>
+        <button class="text-button" id="removeOldModelsButton" type="button">Remove previous AI files</button>
+      </details>
     </div>
   </dialog>
 
@@ -482,30 +482,24 @@
 
   <noscript><div class="noscript">Imprompt needs JavaScript enabled to shuffle and store your private deck.</div></noscript>
 
-  <script src="./card-bible.js?v=0.22.1"></script>
-  <script src="./cards/core-foundations.js?v=0.22.1"></script>
-  <script src="./cards/everyday-friction.js?v=0.22.1"></script>
-  <script src="./cards/power-games.js?v=0.22.1"></script>
-  <script src="./cards/relationship-knots.js?v=0.22.1"></script>
-  <script src="./cards/emotional-pressure.js?v=0.22.1"></script>
-  <script src="./cards/secrets-schemes.js?v=0.22.1"></script>
-  <script src="./cards/absurd-commitment.js?v=0.22.1"></script>
-  <script src="./cards/rules-rituals-institutions.js?v=0.22.1"></script>
-  <script src="./cards/competition-consequences.js?v=0.22.1"></script>
-  <script src="./cards/advanced-scene-engines.js?v=0.22.1"></script>
-  <script src="./cards.js?v=0.22.1"></script>
-  <script src="./hint-bible.js?v=0.22.1"></script>
-  <script src="./hints/card-hints.js?v=0.22.1"></script>
-  <script src="./hints/fusion-profiles.js?v=0.22.1"></script>
-  <script src="./hints/concrete-fusion.js?v=0.22.1"></script>
-  <script src="./hint-engine.js?v=0.22.1"></script>
-  <script src="./hints/quick-hints.js?v=0.22.1"></script>
-  <script src="./hints/local-models.js?v=0.22.1"></script>
-  <script src="./hints/local-hint-core.js?v=0.22.1"></script>
-  <script src="./hints/local-hints.js?v=0.22.1"></script>
-  <script src="./exercises.js?v=0.22.1"></script>
-  <script src="./deck-engine.js?v=0.22.1"></script>
-  <script src="./vendor/qrcode-core.js?v=0.22.1"></script>
-  <script src="./app.js?v=0.22.1"></script>
+  <script src="./card-bible.js?v=0.23.0"></script>
+  <script src="./cards/core-foundations.js?v=0.23.0"></script>
+  <script src="./cards/everyday-friction.js?v=0.23.0"></script>
+  <script src="./cards/power-games.js?v=0.23.0"></script>
+  <script src="./cards/relationship-knots.js?v=0.23.0"></script>
+  <script src="./cards/emotional-pressure.js?v=0.23.0"></script>
+  <script src="./cards/secrets-schemes.js?v=0.23.0"></script>
+  <script src="./cards/absurd-commitment.js?v=0.23.0"></script>
+  <script src="./cards/rules-rituals-institutions.js?v=0.23.0"></script>
+  <script src="./cards/competition-consequences.js?v=0.23.0"></script>
+  <script src="./cards/advanced-scene-engines.js?v=0.23.0"></script>
+  <script src="./cards.js?v=0.23.0"></script>
+  <script src="./hint-bible.js?v=0.23.0"></script>
+  <script src="./exercises.js?v=0.23.0"></script>
+  <script src="./deck-engine.js?v=0.23.0"></script>
+  <script src="./vendor/qrcode-core.js?v=0.23.0"></script>
+  <script src="./examples/manifest.js?v=0.23.0"></script>
+  <script src="./examples/library-client.js?v=0.23.0"></script>
+  <script src="./app.js?v=0.23.0"></script>
 </body>
 </html>

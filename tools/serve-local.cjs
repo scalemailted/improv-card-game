@@ -7,9 +7,7 @@ const path = require("node:path");
 const root = path.resolve(__dirname, "..");
 const port = Number(process.env.PORT || 8080);
 if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error("PORT must be between 1 and 65535.");
-// Use the worker thread pool locally unless explicitly disabled.
-const isolated = !process.argv.includes("--single-thread");
-const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".mjs": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".json": "application/json", ".webmanifest": "application/manifest+json", ".wasm": "application/wasm", ".gguf": "application/octet-stream", ".png": "image/png", ".svg": "image/svg+xml", ".md": "text/plain; charset=utf-8" };
+const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".mjs": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".json": "application/json", ".webmanifest": "application/manifest+json", ".gz": "application/gzip", ".png": "image/png", ".svg": "image/svg+xml", ".md": "text/plain; charset=utf-8" };
 const server = http.createServer(async (req, res) => {
   try {
     if (!["GET", "HEAD"].includes(req.method)) { res.writeHead(405, { Allow: "GET, HEAD" }); res.end(); return; }
@@ -19,7 +17,6 @@ const server = http.createServer(async (req, res) => {
     let stat = await fs.promises.stat(file);
     if (stat.isDirectory()) { file = path.join(file, "index.html"); stat = await fs.promises.stat(file); }
     const headers = { "Content-Type": types[path.extname(file).toLowerCase()] || "application/octet-stream", "Content-Length": stat.size, "Cache-Control": "no-cache", "X-Content-Type-Options": "nosniff" };
-    if (isolated) { headers["Cross-Origin-Opener-Policy"] = "same-origin"; headers["Cross-Origin-Embedder-Policy"] = "require-corp"; }
     res.writeHead(200, headers);
     if (req.method === "HEAD") res.end();
     else fs.createReadStream(file).on("error", () => res.destroy()).pipe(res);
@@ -29,4 +26,4 @@ const server = http.createServer(async (req, res) => {
   }
 });
 server.on("error", (error) => { console.error(error.message); process.exitCode = 1; });
-server.listen(port, "127.0.0.1", () => console.log(`Imprompt: http://localhost:${port}/${isolated ? " (cross-origin isolation enabled)" : ""}`));
+server.listen(port, "127.0.0.1", () => console.log(`Imprompt: http://localhost:${port}/`));

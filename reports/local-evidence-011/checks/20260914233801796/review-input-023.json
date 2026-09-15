@@ -1,0 +1,664 @@
+{
+  "at": "2026-09-14T23:38:01.804Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S173-single-b",
+      "card": {
+        "id": "S173",
+        "title": "I Learned It the Hard Way",
+        "instruction": "Treat experience with the system as seniority. Teach its shortcuts, warn against its traps, and remind everyone that your mistakes came first.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "87277101222db86ca8c6439b47df744ad1e0d238a7d73cf995bfbe9c94e48b3b",
+      "dialogueHash": "0a2067fd948877f0c5c4218eaed1502a0b7d403b2c9e29c52c42ca96fe8fc903",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Don't ask the committee why the roof leaks. Ask which meeting owns the leak."
+        },
+        {
+          "speaker": "B",
+          "text": "Why?"
+        },
+        {
+          "speaker": "A",
+          "text": "I asked why. They made me chair of causes."
+        },
+        {
+          "speaker": "B",
+          "text": "They've already asked me to investigate."
+        },
+        {
+          "speaker": "A",
+          "text": "Ask for your predecessor's report. That's mine. It took six meetings to learn how to request a ladder."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S173-single-a",
+        "dialogueHash": "d341d068bdd6f7943a0a1614219c910e886defbb283a54d80dd08cdc93affa25",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Bring a sandwich to the permit office. I lost three Tuesdays learning that."
+          },
+          {
+            "speaker": "B",
+            "text": "It says appointments take ten minutes."
+          },
+          {
+            "speaker": "A",
+            "text": "After they check your documents. Get that done at the side door; that was Tuesday two."
+          },
+          {
+            "speaker": "B",
+            "text": "It's marked staff only."
+          },
+          {
+            "speaker": "A",
+            "text": "Ask reception to call the document clerk out. Don't follow the clerk back inside. Tuesday three was mostly explaining myself."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S174-single-a",
+      "card": {
+        "id": "S174",
+        "title": "The Necessary Signature",
+        "instruction": "Remain helpful while controlling the one approval, record, key, or ceremonial step that allows anything to move forward.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "6a4bdc179364c7a62620d149b8b7e1cbb86b413840f9c19e01883b064323dec1",
+      "dialogueHash": "2df6a938dbb8884e21ada340fe538f8da2cc853ab8d5bd5d83e1b182a18df9c2",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Your moving van needs my release stamp. I'll help you get away promptly."
+        },
+        {
+          "speaker": "B",
+          "text": "The driver's charging by the minute."
+        },
+        {
+          "speaker": "A",
+          "text": "Then you start loading. Send him in with the form; I'll handle everything."
+        },
+        {
+          "speaker": "B",
+          "text": "He's brought it. Can he go back to loading?"
+        },
+        {
+          "speaker": "A",
+          "text": "Certainly, once I've stamped it. Meanwhile, he can help me find your file. Two of us should get you away faster."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S174-single-b",
+        "dialogueHash": "5007627009a540ec3f16a7bf8debe08a7a62036ac4b19db78d56e186fed1a073",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've brought the scissors for your club opening. I'll hand them over after the mayor's welcome."
+          },
+          {
+            "speaker": "B",
+            "text": "Her speech is ten pages. Can you help her shorten it?"
+          },
+          {
+            "speaker": "A",
+            "text": "Certainly. I'll mark the sentence where I bring her the scissors."
+          },
+          {
+            "speaker": "B",
+            "text": "She's skipping the speech. Just the ribbon."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I'll welcome everyone myself. She can hold the ribbon while I explain when I'll hand her the scissors."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S174-single-b",
+      "card": {
+        "id": "S174",
+        "title": "The Necessary Signature",
+        "instruction": "Remain helpful while controlling the one approval, record, key, or ceremonial step that allows anything to move forward.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "d9aaba60053c9ca2da03c4fb4fdca1ee604ae064c375a4abf7561b4b27a90802",
+      "dialogueHash": "5007627009a540ec3f16a7bf8debe08a7a62036ac4b19db78d56e186fed1a073",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've brought the scissors for your club opening. I'll hand them over after the mayor's welcome."
+        },
+        {
+          "speaker": "B",
+          "text": "Her speech is ten pages. Can you help her shorten it?"
+        },
+        {
+          "speaker": "A",
+          "text": "Certainly. I'll mark the sentence where I bring her the scissors."
+        },
+        {
+          "speaker": "B",
+          "text": "She's skipping the speech. Just the ribbon."
+        },
+        {
+          "speaker": "A",
+          "text": "Then I'll welcome everyone myself. She can hold the ribbon while I explain when I'll hand her the scissors."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S174-single-a",
+        "dialogueHash": "2df6a938dbb8884e21ada340fe538f8da2cc853ab8d5bd5d83e1b182a18df9c2",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Your moving van needs my release stamp. I'll help you get away promptly."
+          },
+          {
+            "speaker": "B",
+            "text": "The driver's charging by the minute."
+          },
+          {
+            "speaker": "A",
+            "text": "Then you start loading. Send him in with the form; I'll handle everything."
+          },
+          {
+            "speaker": "B",
+            "text": "He's brought it. Can he go back to loading?"
+          },
+          {
+            "speaker": "A",
+            "text": "Certainly, once I've stamped it. Meanwhile, he can help me find your file. Two of us should get you away faster."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S175-single-a",
+      "card": {
+        "id": "S175",
+        "title": "We Know the Old Rules",
+        "instruction": "Use an old custom you learned together as the deepest proof of connection, even when the present situation has changed.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "7b39dc8db82a0de2019caa36dd78425df234d7b00765719492c0d69a49b47770",
+      "dialogueHash": "0ec357fb8abdf157daebcb4f94ca329ee0d66e551d41db8d04deb2a3db2adf1d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before dinner, we still split the first bread roll. Like when we shared a room."
+        },
+        {
+          "speaker": "B",
+          "text": "We can afford two rolls now."
+        },
+        {
+          "speaker": "A",
+          "text": "Then we'll each have half of two."
+        },
+        {
+          "speaker": "B",
+          "text": "That's mathematically a whole roll."
+        },
+        {
+          "speaker": "A",
+          "text": "Yes, but you can't buy the sharing separately."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S175-single-b",
+        "dialogueHash": "c2d4d8bdce06717571b4fa09b05a009d033c743bac5faff3166c72417c335af0",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You haven't given me our old knock before coming in."
+          },
+          {
+            "speaker": "B",
+            "text": "You gave me a key."
+          },
+          {
+            "speaker": "A",
+            "text": "The key opens the door. The knock tells me it's you."
+          },
+          {
+            "speaker": "B",
+            "text": "You can see me through the glass."
+          },
+          {
+            "speaker": "A",
+            "text": "And yet I haven't heard from my best friend."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S175-single-b",
+      "card": {
+        "id": "S175",
+        "title": "We Know the Old Rules",
+        "instruction": "Use an old custom you learned together as the deepest proof of connection, even when the present situation has changed.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "3dad48732817f7391196e887121fb6076a1183db097017f0aa7eb9a6c8892d7d",
+      "dialogueHash": "c2d4d8bdce06717571b4fa09b05a009d033c743bac5faff3166c72417c335af0",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You haven't given me our old knock before coming in."
+        },
+        {
+          "speaker": "B",
+          "text": "You gave me a key."
+        },
+        {
+          "speaker": "A",
+          "text": "The key opens the door. The knock tells me it's you."
+        },
+        {
+          "speaker": "B",
+          "text": "You can see me through the glass."
+        },
+        {
+          "speaker": "A",
+          "text": "And yet I haven't heard from my best friend."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S175-single-a",
+        "dialogueHash": "0ec357fb8abdf157daebcb4f94ca329ee0d66e551d41db8d04deb2a3db2adf1d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before dinner, we still split the first bread roll. Like when we shared a room."
+          },
+          {
+            "speaker": "B",
+            "text": "We can afford two rolls now."
+          },
+          {
+            "speaker": "A",
+            "text": "Then we'll each have half of two."
+          },
+          {
+            "speaker": "B",
+            "text": "That's mathematically a whole roll."
+          },
+          {
+            "speaker": "A",
+            "text": "Yes, but you can't buy the sharing separately."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

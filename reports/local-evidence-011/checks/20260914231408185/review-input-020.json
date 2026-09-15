@@ -1,0 +1,544 @@
+{
+  "at": "2026-09-14T23:14:08.188Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S143-single-a",
+      "card": {
+        "id": "S143",
+        "title": "One Suspicious Detail",
+        "instruction": "Choose one ordinary detail and treat it as the clue that will expose the entire hidden story.",
+        "contentVersion": "0.13.0"
+      },
+      "sourceRecordHash": "214788c4731d320cd4e95df9d83c2dc55133616fd3d199becd823d79732a1dea",
+      "dialogueHash": "d656b26ff2c390c4b78357b242a6d251d7bef9a08140f789ea4020c3c4f48231",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The painting's gone. That red thread on its frame will explain everything."
+        },
+        {
+          "speaker": "B",
+          "text": "My scarf caught there last night. Can we open the gallery?"
+        },
+        {
+          "speaker": "A",
+          "text": "This thread will date the theft. Was the painting there then?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes. But I picked that thread off before leaving."
+        },
+        {
+          "speaker": "A",
+          "text": "Then this one means someone came back wearing your scarf. Keep it on; we'll reconstruct the whole night from this snag."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S143-single-b",
+        "dialogueHash": "6c7cde6fe2cc0b5ba1dcbab5edd23e9b1ce0455985cb9ad3cd02f81ae7930d4c",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "This coffee ring is the key to the missing keys."
+          },
+          {
+            "speaker": "B",
+            "text": "The keys are in your pocket."
+          },
+          {
+            "speaker": "A",
+            "text": "Then explain why the cup was beside them."
+          },
+          {
+            "speaker": "B",
+            "text": "You put it there."
+          },
+          {
+            "speaker": "A",
+            "text": "And now we have the movement sequence."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S144-single-a",
+      "card": {
+        "id": "S144",
+        "title": "Competing Theories",
+        "instruction": "Create several explanations for what is happening. Test each new clue against them, and switch allegiance whenever one theory gains strength.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "a460f1d496fcee8b172e680f443f6307d0d9cb7b25cb11ecb05a41e4d93a2d76",
+      "dialogueHash": "6f1828764c2ce01fe53cfff8d3eaac633938e2831104a1bcb94123438e8401d2",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Our wedding cake's gone: theft, accident, or the dog. I suspect theft."
+        },
+        {
+          "speaker": "B",
+          "text": "There's icing on him. Get him outside before Mum sees."
+        },
+        {
+          "speaker": "A",
+          "text": "Dog leads. I'll take him; check under the table for crumbs."
+        },
+        {
+          "speaker": "B",
+          "text": "That icing's from yesterday. The crumbs lead into the cloakroom."
+        },
+        {
+          "speaker": "A",
+          "text": "Theft leads again. Keep the dog here; let's see whether that trail ends at a dropped cake or somebody's coat."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S144-single-b",
+        "dialogueHash": "14aa3dad12e1881ada2d02b5b7667702eee3d314a0dd1dbfdc3fe362faa58ba0",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The hall lights failed: weather, wiring, or the caretaker saving electricity. Wiring's my favourite."
+          },
+          {
+            "speaker": "B",
+            "text": "He unplugged them. Help me reach the socket."
+          },
+          {
+            "speaker": "A",
+            "text": "Economy takes the lead. I'll hold your ladder."
+          },
+          {
+            "speaker": "B",
+            "text": "The socket's wet. There's rain coming through the roof."
+          },
+          {
+            "speaker": "A",
+            "text": "Weather overtakes him. Leave the plug; let's ask whether he unplugged it before the leak."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S144-single-b",
+      "card": {
+        "id": "S144",
+        "title": "Competing Theories",
+        "instruction": "Create several explanations for what is happening. Test each new clue against them, and switch allegiance whenever one theory gains strength.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "2f6252c327c1154350c07654594425786c6d85f9141182cc8e430fd9776153d6",
+      "dialogueHash": "14aa3dad12e1881ada2d02b5b7667702eee3d314a0dd1dbfdc3fe362faa58ba0",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The hall lights failed: weather, wiring, or the caretaker saving electricity. Wiring's my favourite."
+        },
+        {
+          "speaker": "B",
+          "text": "He unplugged them. Help me reach the socket."
+        },
+        {
+          "speaker": "A",
+          "text": "Economy takes the lead. I'll hold your ladder."
+        },
+        {
+          "speaker": "B",
+          "text": "The socket's wet. There's rain coming through the roof."
+        },
+        {
+          "speaker": "A",
+          "text": "Weather overtakes him. Leave the plug; let's ask whether he unplugged it before the leak."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S144-single-a",
+        "dialogueHash": "6f1828764c2ce01fe53cfff8d3eaac633938e2831104a1bcb94123438e8401d2",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Our wedding cake's gone: theft, accident, or the dog. I suspect theft."
+          },
+          {
+            "speaker": "B",
+            "text": "There's icing on him. Get him outside before Mum sees."
+          },
+          {
+            "speaker": "A",
+            "text": "Dog leads. I'll take him; check under the table for crumbs."
+          },
+          {
+            "speaker": "B",
+            "text": "That icing's from yesterday. The crumbs lead into the cloakroom."
+          },
+          {
+            "speaker": "A",
+            "text": "Theft leads again. Keep the dog here; let's see whether that trail ends at a dropped cake or somebody's coat."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

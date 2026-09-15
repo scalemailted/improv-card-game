@@ -128,7 +128,7 @@
   const exampleManifest = window.IMPROMPT_EXAMPLE_MANIFEST;
   const exampleLibrary = window.IMPROMPT_EXAMPLE_LIBRARY.create({
     manifest: exampleManifest, storage: exampleStorage,
-    workerFactory: () => new Worker(new URL('./examples/library-worker.js?v=0.25.0', document.baseURI))
+    workerFactory: () => new Worker(new URL('./examples/library-worker.js?v=0.26.0-preview.7-4f93b65af4d6', document.baseURI))
   });
 
   function loadState() {
@@ -744,7 +744,7 @@
   function exportExampleFeedback(){
     try{
       const flags=JSON.parse(window.localStorage.getItem('imprompt:example-feedback:v1')||'[]');
-      const file=new Blob([JSON.stringify({appVersion:'0.25.0',datasetId:exampleManifest.datasetId,flags},null,2)],{type:'application/json'});
+      const file=new Blob([JSON.stringify({appVersion:'0.26.0-preview.7',datasetId:exampleManifest.datasetId,flags},null,2)],{type:'application/json'});
       const link=document.createElement('a'), url=URL.createObjectURL(file);link.href=url;link.download='imprompt-example-feedback.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
     }catch(error){elements.exampleStorageStatus.textContent=error.message;}
   }

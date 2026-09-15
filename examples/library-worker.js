@@ -1,6 +1,6 @@
 /* Static example reader. No inference and no run-time text composition. */
 'use strict';
-importScripts('./manifest.js?v=0.25.0');
+importScripts('./manifest.js?v=0.26.0-preview.7-4f93b65af4d6');
 const manifest=self.IMPROMPT_EXAMPLE_MANIFEST;
 const BASE=new URL('../',self.location.href);
 const CACHE='imprompt-examples-'+manifest.datasetId;

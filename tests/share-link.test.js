@@ -1,4 +1,6 @@
 "use strict";
+const releaseVersion = require("../examples/manifest.json").assetVersion;
+
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -30,7 +32,7 @@ assert.match(html, /id="shareQrLink"/);
 assert.match(html, /id="exerciseShareScreen"/);
 assert.match(html, /id="exerciseQrCode"/);
 assert.ok(html.includes(`href="${publicUrl}"`));
-assert.match(serviceWorker, /\.\/assets\/improv-card-game-qr\.png\?v=0\.25\.0/);
+assert.ok(serviceWorker.includes(JSON.stringify("./assets/improv-card-game-qr.png?v=" + releaseVersion)), "QR image must be precached under the exact current dataset-derived asset address");
 
 const statusUrl = exercises.buildShareUrl(publicUrl, exercises.getPreset("status-clash"));
 assert.equal(statusUrl, `${publicUrl}?xv=2&h=f&x=status-clash`);
@@ -41,3 +43,10 @@ for (const value of [statusUrl, roleUrl]) {
 }
 
 console.log("✓ General invite and exercise-configuration QR links preserve independent private decks");
+
+// Worker entry and its imported manifest must use the exact precached release URLs.
+const libraryClientSource = require('fs').readFileSync(require('path').join(__dirname, '../examples/library-client.js'), 'utf8');
+const libraryWorkerSource = require('fs').readFileSync(require('path').join(__dirname, '../examples/library-worker.js'), 'utf8');
+assert.ok(libraryClientSource.includes('./library-worker.js?v=' + releaseVersion));
+assert.ok(libraryWorkerSource.includes('./manifest.js?v=' + releaseVersion));
+for (const asset of ['library-worker.js', 'manifest.js']) assert.ok(serviceWorker.includes(JSON.stringify('./examples/' + asset + '?v=' + releaseVersion)));

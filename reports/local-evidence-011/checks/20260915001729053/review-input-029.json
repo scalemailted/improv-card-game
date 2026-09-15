@@ -1,0 +1,544 @@
+{
+  "at": "2026-09-15T00:17:29.063Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S234-single-b",
+      "card": {
+        "id": "S234",
+        "title": "Humility with Evidence",
+        "instruction": "Perform modesty while planting small facts that can later assemble themselves into undeniable proof of your importance.",
+        "contentVersion": "0.17.0"
+      },
+      "sourceRecordHash": "211f9b8ddc62c918975d8f14669210c2f65134fe06a884a93358a7dd7e0faf40",
+      "dialogueHash": "9176390d72fd873aeb0be59121aa87defa1d9b37afab63159b35465622fb5aba",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Anyone could have organised the concert. My thirty-seven calls were hardly heroic."
+        },
+        {
+          "speaker": "B",
+          "text": "Thirty-seven?"
+        },
+        {
+          "speaker": "A",
+          "text": "Only the completed ones. I wouldn't inflate the figure with attempts."
+        },
+        {
+          "speaker": "B",
+          "text": "You want a thank-you speech."
+        },
+        {
+          "speaker": "A",
+          "text": "No, no. Just make sure whoever writes it has the call log."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S234-single-a",
+        "dialogueHash": "2bdd830a0ed4893796d3433b95c4c7a10e2f5be5f94cef83f4c1ccc668e267c4",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "For the hall minutes, just say the roof's repaired. My six weekends aren't worth recording."
+          },
+          {
+            "speaker": "B",
+            "text": "Good. I'm keeping the minutes to one page."
+          },
+          {
+            "speaker": "A",
+            "text": "These dated invoices can go separately. My initials only show who paid."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll put them in the accounts folder."
+          },
+          {
+            "speaker": "A",
+            "text": "Perfect. A tiny footnote will do: accounts, pages one to forty. No need to name me twice."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S235-single-a",
+      "card": {
+        "id": "S235",
+        "title": "The Ritual Explains Itself Later",
+        "instruction": "Treat one unexplained recurring action as essential. Allow its meaning to change each time it returns.",
+        "contentVersion": "0.17.0"
+      },
+      "sourceRecordHash": "a85d328a8992e04119cb6112aed3b5fcb349cf0a519643b25ef07c0ca8635256",
+      "dialogueHash": "85c6cb8654a7069b410aac01f94b6f61749dcea1b4fe4ba58c9ab76f5fa83594",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Wait, don't drink yet. Two taps on the cup first."
+        },
+        {
+          "speaker": "B",
+          "text": "For luck? That's good tea."
+        },
+        {
+          "speaker": "A",
+          "text": "Two taps meant Mum had made it weak. We'd better tap again; she'll think we've gone polite."
+        },
+        {
+          "speaker": "B",
+          "text": "I miss her complaints. The table's too quiet."
+        },
+        {
+          "speaker": "A",
+          "text": "Two more, then. These are to leave her a turn. We can wait before we drink."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S235-single-b",
+        "dialogueHash": "6d0bd9faaf1eb9c732000636e165253e3e1b3e27a363409a99c5bd9631a893ac",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before your audition, knock twice on this door. We can't skip that."
+          },
+          {
+            "speaker": "B",
+            "text": "They knocked back. Can we go in? My hands are shaking."
+          },
+          {
+            "speaker": "A",
+            "text": "Twice again. Now we're saying we're ready, even if your hands aren't."
+          },
+          {
+            "speaker": "B",
+            "text": "They're calling me in alone. How will I know you're still here?"
+          },
+          {
+            "speaker": "A",
+            "text": "I'll knock twice when your song ends. This time it means I'm staying until you come out."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S235-single-b",
+      "card": {
+        "id": "S235",
+        "title": "The Ritual Explains Itself Later",
+        "instruction": "Treat one unexplained recurring action as essential. Allow its meaning to change each time it returns.",
+        "contentVersion": "0.17.0"
+      },
+      "sourceRecordHash": "69cf34d7065cf1eb0bbffc641b5f053233d46014e44dfae4fe193562089a6fa6",
+      "dialogueHash": "6d0bd9faaf1eb9c732000636e165253e3e1b3e27a363409a99c5bd9631a893ac",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before your audition, knock twice on this door. We can't skip that."
+        },
+        {
+          "speaker": "B",
+          "text": "They knocked back. Can we go in? My hands are shaking."
+        },
+        {
+          "speaker": "A",
+          "text": "Twice again. Now we're saying we're ready, even if your hands aren't."
+        },
+        {
+          "speaker": "B",
+          "text": "They're calling me in alone. How will I know you're still here?"
+        },
+        {
+          "speaker": "A",
+          "text": "I'll knock twice when your song ends. This time it means I'm staying until you come out."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S235-single-a",
+        "dialogueHash": "85c6cb8654a7069b410aac01f94b6f61749dcea1b4fe4ba58c9ab76f5fa83594",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Wait, don't drink yet. Two taps on the cup first."
+          },
+          {
+            "speaker": "B",
+            "text": "For luck? That's good tea."
+          },
+          {
+            "speaker": "A",
+            "text": "Two taps meant Mum had made it weak. We'd better tap again; she'll think we've gone polite."
+          },
+          {
+            "speaker": "B",
+            "text": "I miss her complaints. The table's too quiet."
+          },
+          {
+            "speaker": "A",
+            "text": "Two more, then. These are to leave her a turn. We can wait before we drink."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

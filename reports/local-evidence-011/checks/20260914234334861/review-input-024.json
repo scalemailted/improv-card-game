@@ -1,0 +1,604 @@
+{
+  "at": "2026-09-14T23:43:34.865Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S184-single-a",
+      "card": {
+        "id": "S184",
+        "title": "For Everyone’s Protection",
+        "instruction": "Protect people by creating procedures for them. Turn concern into checklists, permissions, required steps, and increasingly narrow exceptions.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "3039271696ef7787d942b572f6df10445cc4534d8b387951f77df4f69d2a0907",
+      "dialogueHash": "8f655f569d50fafd7f9ca9a8232f3c43b7f9f5a448c295ad6775564fde173f32",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've written a checklist so you can safely make tea while I'm out."
+        },
+        {
+          "speaker": "B",
+          "text": "I've made tea for forty years."
+        },
+        {
+          "speaker": "A",
+          "text": "Excellent. You can initial the experience section."
+        },
+        {
+          "speaker": "B",
+          "text": "Can I just have water?"
+        },
+        {
+          "speaker": "A",
+          "text": "Cold or room temperature? I need the correct appendix."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S184-single-b",
+        "dialogueHash": "90004ccbf8d8594f52634f583b78f0dbc21f24039417761b621e805c6d863691",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before you borrow my bicycle, let's rehearse what to do if you wobble. I don't want you hurt."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll put my foot down."
+          },
+          {
+            "speaker": "A",
+            "text": "Good. Which foot? I'll tick that side off."
+          },
+          {
+            "speaker": "B",
+            "text": "Whichever side I'm falling toward. I need to get to work."
+          },
+          {
+            "speaker": "A",
+            "text": "Then we'll practise both sides separately. Until both are signed off, you can borrow it for walking."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S184-single-b",
+      "card": {
+        "id": "S184",
+        "title": "For Everyone’s Protection",
+        "instruction": "Protect people by creating procedures for them. Turn concern into checklists, permissions, required steps, and increasingly narrow exceptions.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "daf6213eabdc64d017c7b111ba71a443560b887312a0d0c4bb7bc825f6cf37e8",
+      "dialogueHash": "90004ccbf8d8594f52634f583b78f0dbc21f24039417761b621e805c6d863691",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before you borrow my bicycle, let's rehearse what to do if you wobble. I don't want you hurt."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll put my foot down."
+        },
+        {
+          "speaker": "A",
+          "text": "Good. Which foot? I'll tick that side off."
+        },
+        {
+          "speaker": "B",
+          "text": "Whichever side I'm falling toward. I need to get to work."
+        },
+        {
+          "speaker": "A",
+          "text": "Then we'll practise both sides separately. Until both are signed off, you can borrow it for walking."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S184-single-a",
+        "dialogueHash": "8f655f569d50fafd7f9ca9a8232f3c43b7f9f5a448c295ad6775564fde173f32",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've written a checklist so you can safely make tea while I'm out."
+          },
+          {
+            "speaker": "B",
+            "text": "I've made tea for forty years."
+          },
+          {
+            "speaker": "A",
+            "text": "Excellent. You can initial the experience section."
+          },
+          {
+            "speaker": "B",
+            "text": "Can I just have water?"
+          },
+          {
+            "speaker": "A",
+            "text": "Cold or room temperature? I need the correct appendix."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S185-single-a",
+      "card": {
+        "id": "S185",
+        "title": "Properly Initiated",
+        "instruction": "Treat correct participation in the ritual as proof you deserve to belong. Watch for cues, copy the form, and overcommit to every step.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "bc6c19581a890824403ede4e48e84d680394d63023ec5c4736b7c7e9cf7c175e",
+      "dialogueHash": "542c30951e9bfe8b86e6fcce8e54d520dff09fb3aceb31901972aa5dd54e4238",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "My first choir concert. I bowed when you did. Was that enough to count me in?"
+        },
+        {
+          "speaker": "B",
+          "text": "Of course. Take another bow; they're still clapping."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll stay down until you rise. I don't want to short-change the choir."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm staying down because my shoe's untied. Go and join the others."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll retie mine too. Then we can finish my first bows exactly together."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S185-single-b",
+        "dialogueHash": "59af4ae9d3b8e13884973046ecb635d88f47745b5bd03bd42e89dffa40149b7f",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "My first club dinner. I've learnt the toast so nobody regrets voting me in."
+          },
+          {
+            "speaker": "B",
+            "text": "Stand and lift your glass with mine. We sit when the chair sits."
+          },
+          {
+            "speaker": "A",
+            "text": "Same height as yours? I want to get this right."
+          },
+          {
+            "speaker": "B",
+            "text": "Any height. I have to sit; my knee's giving out."
+          },
+          {
+            "speaker": "A",
+            "text": "Lean on me. I'll keep us both standing until the chair sits. I won't let my first toast fall short."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S185-single-b",
+      "card": {
+        "id": "S185",
+        "title": "Properly Initiated",
+        "instruction": "Treat correct participation in the ritual as proof you deserve to belong. Watch for cues, copy the form, and overcommit to every step.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "d947351c83c1d5c42a657cf3e77259047a1d414d0c126bce59f9317e0957af88",
+      "dialogueHash": "59af4ae9d3b8e13884973046ecb635d88f47745b5bd03bd42e89dffa40149b7f",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "My first club dinner. I've learnt the toast so nobody regrets voting me in."
+        },
+        {
+          "speaker": "B",
+          "text": "Stand and lift your glass with mine. We sit when the chair sits."
+        },
+        {
+          "speaker": "A",
+          "text": "Same height as yours? I want to get this right."
+        },
+        {
+          "speaker": "B",
+          "text": "Any height. I have to sit; my knee's giving out."
+        },
+        {
+          "speaker": "A",
+          "text": "Lean on me. I'll keep us both standing until the chair sits. I won't let my first toast fall short."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S185-single-a",
+        "dialogueHash": "542c30951e9bfe8b86e6fcce8e54d520dff09fb3aceb31901972aa5dd54e4238",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "My first choir concert. I bowed when you did. Was that enough to count me in?"
+          },
+          {
+            "speaker": "B",
+            "text": "Of course. Take another bow; they're still clapping."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll stay down until you rise. I don't want to short-change the choir."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm staying down because my shoe's untied. Go and join the others."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll retie mine too. Then we can finish my first bows exactly together."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

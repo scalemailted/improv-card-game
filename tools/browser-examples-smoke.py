@@ -9,13 +9,13 @@ import json,re,os,base64
 from playwright.sync_api import sync_playwright,expect
 ROOT=Path(__file__).resolve().parents[1]
 OUT=Path(os.environ.get('PREVIEW_DIR',str(ROOT/'reports/browser-previews')));OUT.mkdir(parents=True,exist_ok=True)
-HTML=(ROOT/'index.html').read_text()
+HTML=(ROOT/'index.html').read_text(encoding="utf-8")
 SCRIPTS=re.findall(r'<script src="\./([^"?]+)[^"]*"></script>',HTML)
 HTML=re.sub(r'<script src="[^"]*"></script>','',HTML)
 HTML=re.sub(r'<link\b[^>]*>','',HTML)
-HTML=HTML.replace('</head>','<style>'+(ROOT/'styles.css').read_text()+'</style></head>')
-M=json.loads((ROOT/'examples/manifest.json').read_text())
-DATA={k:json.loads((ROOT/f['plainUrl']).read_text()) for k,f in M['files'].items() if k in ['singles','S67','S124','S22','S01']}
+HTML=HTML.replace('</head>','<style>'+(ROOT/'styles.css').read_text(encoding="utf-8")+'</style></head>')
+M=json.loads((ROOT/'examples/manifest.json').read_text(encoding="utf-8"))
+DATA={k:json.loads((ROOT/f['plainUrl']).read_text(encoding="utf-8")) for k,f in M['files'].items() if k in ['singles','S67','S124','S22','S01']}
 def fixture(b,w=412,policy='full',stance='S67',drive='D101'):
  ctx=b.new_context(viewport={'width':w,'height':915 if w>360 else 760},has_touch=w<700,is_mobile=w<700)
  page=ctx.new_page();page.set_default_timeout(6000);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
@@ -37,11 +37,11 @@ def fixture(b,w=412,policy='full',stance='S67',drive='D101'):
  }''',DATA)
  bundle=[]
  for file in SCRIPTS:
-  text=(ROOT/file).read_text()
+  text=(ROOT/file).read_text(encoding="utf-8")
   if file=='app.js':
    settings=json.dumps({'s':stance,'d':drive,'p':policy})
    bundle.append("((x)=>{const s=ImpromptEngine.createState(IMPROMPT_CARDS);s.stanceQueue=[x.s,...s.stanceQueue.filter(id=>id!==x.s)];s.driveQueue=[x.d,...s.driveQueue.filter(id=>id!==x.d)];ImpromptEngine.startSession(s,IMPROMPT_CARDS,{name:'Open Play',mode:'open',source:'open',hintPolicy:x.p});localStorage.setItem('imprompt:deck-state:v1',JSON.stringify(s));})("+settings+");")
-   text=text.replace("workerFactory: () => new Worker(new URL('./examples/library-worker.js?v=0.25.0', document.baseURI))","workerFactory: () => window.fixtureWorker()")
+   text=text.replace("workerFactory: () => new Worker(new URL('./examples/library-worker.js?v=0.26.0-preview.5', document.baseURI))","workerFactory: () => window.fixtureWorker()")
    text=text.replace('  registerServiceWorker();','  /* Transport fixture: deployment tested separately. */')
   bundle.append(text)
  page.add_script_tag(content=';\n'.join(bundle))
@@ -66,7 +66,7 @@ with sync_playwright() as p:
   ctx,page,errors=fixture(browser,width)
   check_width(page);page.screenshot(path=str(OUT/f'{width}-cards.png'),full_page=True)
   page.click('#combinationHintButton');expect(page.locator('.scene-line').first).to_be_visible();expect(page.locator('.scene-line')).to_have_count(5);assert page.locator('.scene-action').count()==0
-  before=page.locator('.scene-line').first.inner_text();assert any(t in page.locator('#hintDialogBody').inner_text().lower() for t in ['chair','eldest','cancelled'])
+  before=page.locator('.scene-line').first.inner_text();assert any(t in page.locator('#hintDialogBody').inner_text().lower() for t in ['headteacher','eldest','cancelled'])
   box=page.locator('#hintDialogPanel').bounding_box(); assert box['y'] >= -1 and box['y']+box['height'] <= page.evaluate('innerHeight')+1, box
   page.screenshot(path=str(OUT/f'{width}-pair.png'),full_page=False)
   page.click('#anotherHintAngleButton');expect(page.locator('.scene-line').first).not_to_have_text(before)

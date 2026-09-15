@@ -1,0 +1,1564 @@
+{
+  "at": "2026-09-15T02:04:09.085Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S234-single-b",
+      "card": {
+        "id": "S234",
+        "title": "Humility with Evidence",
+        "instruction": "Perform modesty while planting small facts that can later assemble themselves into undeniable proof of your importance.",
+        "contentVersion": "0.17.0"
+      },
+      "sourceRecordHash": "211f9b8ddc62c918975d8f14669210c2f65134fe06a884a93358a7dd7e0faf40",
+      "dialogueHash": "9176390d72fd873aeb0be59121aa87defa1d9b37afab63159b35465622fb5aba",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Anyone could have organised the concert. My thirty-seven calls were hardly heroic."
+        },
+        {
+          "speaker": "B",
+          "text": "Thirty-seven?"
+        },
+        {
+          "speaker": "A",
+          "text": "Only the completed ones. I wouldn't inflate the figure with attempts."
+        },
+        {
+          "speaker": "B",
+          "text": "You want a thank-you speech."
+        },
+        {
+          "speaker": "A",
+          "text": "No, no. Just make sure whoever writes it has the call log."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S234-single-a",
+        "dialogueHash": "2bdd830a0ed4893796d3433b95c4c7a10e2f5be5f94cef83f4c1ccc668e267c4",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "For the hall minutes, just say the roof's repaired. My six weekends aren't worth recording."
+          },
+          {
+            "speaker": "B",
+            "text": "Good. I'm keeping the minutes to one page."
+          },
+          {
+            "speaker": "A",
+            "text": "These dated invoices can go separately. My initials only show who paid."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll put them in the accounts folder."
+          },
+          {
+            "speaker": "A",
+            "text": "Perfect. A tiny footnote will do: accounts, pages one to forty. No need to name me twice."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S235-single-a",
+      "card": {
+        "id": "S235",
+        "title": "The Ritual Explains Itself Later",
+        "instruction": "Treat one unexplained recurring action as essential. Allow its meaning to change each time it returns.",
+        "contentVersion": "0.17.0"
+      },
+      "sourceRecordHash": "a85d328a8992e04119cb6112aed3b5fcb349cf0a519643b25ef07c0ca8635256",
+      "dialogueHash": "85c6cb8654a7069b410aac01f94b6f61749dcea1b4fe4ba58c9ab76f5fa83594",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Wait, don't drink yet. Two taps on the cup first."
+        },
+        {
+          "speaker": "B",
+          "text": "For luck? That's good tea."
+        },
+        {
+          "speaker": "A",
+          "text": "Two taps meant Mum had made it weak. We'd better tap again; she'll think we've gone polite."
+        },
+        {
+          "speaker": "B",
+          "text": "I miss her complaints. The table's too quiet."
+        },
+        {
+          "speaker": "A",
+          "text": "Two more, then. These are to leave her a turn. We can wait before we drink."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S235-single-b",
+        "dialogueHash": "6d0bd9faaf1eb9c732000636e165253e3e1b3e27a363409a99c5bd9631a893ac",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before your audition, knock twice on this door. We can't skip that."
+          },
+          {
+            "speaker": "B",
+            "text": "They knocked back. Can we go in? My hands are shaking."
+          },
+          {
+            "speaker": "A",
+            "text": "Twice again. Now we're saying we're ready, even if your hands aren't."
+          },
+          {
+            "speaker": "B",
+            "text": "They're calling me in alone. How will I know you're still here?"
+          },
+          {
+            "speaker": "A",
+            "text": "I'll knock twice when your song ends. This time it means I'm staying until you come out."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S235-single-b",
+      "card": {
+        "id": "S235",
+        "title": "The Ritual Explains Itself Later",
+        "instruction": "Treat one unexplained recurring action as essential. Allow its meaning to change each time it returns.",
+        "contentVersion": "0.17.0"
+      },
+      "sourceRecordHash": "69cf34d7065cf1eb0bbffc641b5f053233d46014e44dfae4fe193562089a6fa6",
+      "dialogueHash": "6d0bd9faaf1eb9c732000636e165253e3e1b3e27a363409a99c5bd9631a893ac",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before your audition, knock twice on this door. We can't skip that."
+        },
+        {
+          "speaker": "B",
+          "text": "They knocked back. Can we go in? My hands are shaking."
+        },
+        {
+          "speaker": "A",
+          "text": "Twice again. Now we're saying we're ready, even if your hands aren't."
+        },
+        {
+          "speaker": "B",
+          "text": "They're calling me in alone. How will I know you're still here?"
+        },
+        {
+          "speaker": "A",
+          "text": "I'll knock twice when your song ends. This time it means I'm staying until you come out."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S235-single-a",
+        "dialogueHash": "85c6cb8654a7069b410aac01f94b6f61749dcea1b4fe4ba58c9ab76f5fa83594",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Wait, don't drink yet. Two taps on the cup first."
+          },
+          {
+            "speaker": "B",
+            "text": "For luck? That's good tea."
+          },
+          {
+            "speaker": "A",
+            "text": "Two taps meant Mum had made it weak. We'd better tap again; she'll think we've gone polite."
+          },
+          {
+            "speaker": "B",
+            "text": "I miss her complaints. The table's too quiet."
+          },
+          {
+            "speaker": "A",
+            "text": "Two more, then. These are to leave her a turn. We can wait before we drink."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S236-single-a",
+      "card": {
+        "id": "S236",
+        "title": "The Warning Was Already Here",
+        "instruction": "Choose one early detail as the warning sign, then let every later development reveal a larger version of the same disaster.",
+        "contentVersion": "0.17.0"
+      },
+      "sourceRecordHash": "cad12f5dba7a6108ee418b901a49258e692f1ed05d2760831a276cad3d610901",
+      "dialogueHash": "a09953d5d3eb95c08a891dcfa997191d22b33861a5f6d06b72d9391b8392237c",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "That little crack beside the piano was the stage warning us."
+        },
+        {
+          "speaker": "B",
+          "text": "The piano's leaning. Help me move it."
+        },
+        {
+          "speaker": "A",
+          "text": "The crack's opened a place for the whole piano. Keep your end away from it."
+        },
+        {
+          "speaker": "B",
+          "text": "The front row's tilting too. I'm clearing the hall."
+        },
+        {
+          "speaker": "A",
+          "text": "It's reached the audience. That little crack is taking the whole concert downstairs. I'll get the balcony."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S236-single-b",
+        "dialogueHash": "290e8d737e058b504159076898ac584ab52ad236c0e4fd209db61af90e0d3723",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "They misspelled our wedding invitation. That was the warning."
+          },
+          {
+            "speaker": "B",
+            "text": "The cake names another couple. Help me scrape it off."
+          },
+          {
+            "speaker": "A",
+            "text": "Same mistake, larger icing budget. Pass me a knife."
+          },
+          {
+            "speaker": "B",
+            "text": "They booked that couple into our reception room too. We've both paid; I'm offering half."
+          },
+          {
+            "speaker": "A",
+            "text": "The typo's taking half our wedding. Before you offer them my chair, check which name's on it."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S236-single-b",
+      "card": {
+        "id": "S236",
+        "title": "The Warning Was Already Here",
+        "instruction": "Choose one early detail as the warning sign, then let every later development reveal a larger version of the same disaster.",
+        "contentVersion": "0.17.0"
+      },
+      "sourceRecordHash": "2fcb288db5964ae2e5b43e241d16b007c6897d39208433c2c7c32f5addeee055",
+      "dialogueHash": "290e8d737e058b504159076898ac584ab52ad236c0e4fd209db61af90e0d3723",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "They misspelled our wedding invitation. That was the warning."
+        },
+        {
+          "speaker": "B",
+          "text": "The cake names another couple. Help me scrape it off."
+        },
+        {
+          "speaker": "A",
+          "text": "Same mistake, larger icing budget. Pass me a knife."
+        },
+        {
+          "speaker": "B",
+          "text": "They booked that couple into our reception room too. We've both paid; I'm offering half."
+        },
+        {
+          "speaker": "A",
+          "text": "The typo's taking half our wedding. Before you offer them my chair, check which name's on it."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S236-single-a",
+        "dialogueHash": "a09953d5d3eb95c08a891dcfa997191d22b33861a5f6d06b72d9391b8392237c",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "That little crack beside the piano was the stage warning us."
+          },
+          {
+            "speaker": "B",
+            "text": "The piano's leaning. Help me move it."
+          },
+          {
+            "speaker": "A",
+            "text": "The crack's opened a place for the whole piano. Keep your end away from it."
+          },
+          {
+            "speaker": "B",
+            "text": "The front row's tilting too. I'm clearing the hall."
+          },
+          {
+            "speaker": "A",
+            "text": "It's reached the audience. That little crack is taking the whole concert downstairs. I'll get the balcony."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S237-single-a",
+      "card": {
+        "id": "S237",
+        "title": "Exactly the Victory I Meant",
+        "instruction": "Celebrate every reversal as though it secretly delivers the outcome you wanted, while preserving enthusiasm for all earlier outcomes.",
+        "contentVersion": "0.17.0"
+      },
+      "sourceRecordHash": "aabf1e75d6a3ce1e41a5ae6daff9db388f332d809104cae1d91dcdcbf4d9160b",
+      "dialogueHash": "369bb254416517424cf8e81309ffeaf74b096a9e4779d03b79db758006f91452",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Wonderful, our outdoor concert is sold out!"
+        },
+        {
+          "speaker": "B",
+          "text": "It's just been cancelled for rain."
+        },
+        {
+          "speaker": "A",
+          "text": "Wonderful, we've created an unforgettable sense of demand."
+        },
+        {
+          "speaker": "B",
+          "text": "We're refunding everyone."
+        },
+        {
+          "speaker": "A",
+          "text": "And demonstrated generosity at full capacity. Exactly the evening I hoped for."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S237-single-b",
+        "dialogueHash": "bac52ebd95c2adc05f1f8ae8315042117d09af48a28a9d19fc621f8b84706aff",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've been chosen to run the chess club tournament! Finally, I can shape the whole day."
+          },
+          {
+            "speaker": "B",
+            "text": "They changed their minds. You're on refreshments."
+          },
+          {
+            "speaker": "A",
+            "text": "Wonderful! Running it was a triumph; now I get the personal contact I wanted too."
+          },
+          {
+            "speaker": "B",
+            "text": "It's a self-service urn. I only need you to refill it."
+          },
+          {
+            "speaker": "A",
+            "text": "Perfect! Leadership, hospitality, and now uninterrupted time to study chess. Every appointment has been inspired."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S237-single-b",
+      "card": {
+        "id": "S237",
+        "title": "Exactly the Victory I Meant",
+        "instruction": "Celebrate every reversal as though it secretly delivers the outcome you wanted, while preserving enthusiasm for all earlier outcomes.",
+        "contentVersion": "0.17.0"
+      },
+      "sourceRecordHash": "7e11a1efcb381a0eea4d803e98fbe87ec66e5852ebcf8aa70d1b52e0257de788",
+      "dialogueHash": "bac52ebd95c2adc05f1f8ae8315042117d09af48a28a9d19fc621f8b84706aff",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've been chosen to run the chess club tournament! Finally, I can shape the whole day."
+        },
+        {
+          "speaker": "B",
+          "text": "They changed their minds. You're on refreshments."
+        },
+        {
+          "speaker": "A",
+          "text": "Wonderful! Running it was a triumph; now I get the personal contact I wanted too."
+        },
+        {
+          "speaker": "B",
+          "text": "It's a self-service urn. I only need you to refill it."
+        },
+        {
+          "speaker": "A",
+          "text": "Perfect! Leadership, hospitality, and now uninterrupted time to study chess. Every appointment has been inspired."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S237-single-a",
+        "dialogueHash": "369bb254416517424cf8e81309ffeaf74b096a9e4779d03b79db758006f91452",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Wonderful, our outdoor concert is sold out!"
+          },
+          {
+            "speaker": "B",
+            "text": "It's just been cancelled for rain."
+          },
+          {
+            "speaker": "A",
+            "text": "Wonderful, we've created an unforgettable sense of demand."
+          },
+          {
+            "speaker": "B",
+            "text": "We're refunding everyone."
+          },
+          {
+            "speaker": "A",
+            "text": "And demonstrated generosity at full capacity. Exactly the evening I hoped for."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S238-single-a",
+      "card": {
+        "id": "S238",
+        "title": "Track the Cost That Returns",
+        "instruction": "Accept every twist, but keep returning to one practical consequence whose importance grows as the scene becomes more complicated.",
+        "contentVersion": "0.17.0"
+      },
+      "sourceRecordHash": "8b23d5b694927226b4d49712bee76abd7a6e5d23c93b5f18bd43bc9d67ec003f",
+      "dialogueHash": "3f908b2291ce89456670f1e5f2bcd82bff96554f9e39135d0e99bcee558b3413",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Our garden fountain grants wishes. Fine. We're still paying for its water."
+        },
+        {
+          "speaker": "B",
+          "text": "I wished for ten more. We can sell admission."
+        },
+        {
+          "speaker": "A",
+          "text": "Eleven fountains on our meter. Charge enough to cover that."
+        },
+        {
+          "speaker": "B",
+          "text": "Visitors wished for fountains at home. They're all fed from ours."
+        },
+        {
+          "speaker": "A",
+          "text": "Then we're paying to water the whole queue's gardens. Sell them monthly passes before the next bill arrives."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S238-single-b",
+        "dialogueHash": "9dfd98c3c64411c0c78cab33f9798570618914f7231d694dc1b0d2aaf7b3a23d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Fine, our house travels through time. Can we stop somewhere that fixes roof tiles?"
+          },
+          {
+            "speaker": "B",
+            "text": "Ancient Rome. I'll find a roofer."
+          },
+          {
+            "speaker": "A",
+            "text": "Get a quote. The bucket's already half full."
+          },
+          {
+            "speaker": "B",
+            "text": "I touched the dial. We're underwater now."
+          },
+          {
+            "speaker": "A",
+            "text": "Right. That same leak is admitting the sea. Reverse us while I empty the bucket into the sink."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S238-single-b",
+      "card": {
+        "id": "S238",
+        "title": "Track the Cost That Returns",
+        "instruction": "Accept every twist, but keep returning to one practical consequence whose importance grows as the scene becomes more complicated.",
+        "contentVersion": "0.17.0"
+      },
+      "sourceRecordHash": "6fbd35ae0aa7d9257278502dfad31dcb5c784d25b027255d5a5f05ff527cb525",
+      "dialogueHash": "9dfd98c3c64411c0c78cab33f9798570618914f7231d694dc1b0d2aaf7b3a23d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Fine, our house travels through time. Can we stop somewhere that fixes roof tiles?"
+        },
+        {
+          "speaker": "B",
+          "text": "Ancient Rome. I'll find a roofer."
+        },
+        {
+          "speaker": "A",
+          "text": "Get a quote. The bucket's already half full."
+        },
+        {
+          "speaker": "B",
+          "text": "I touched the dial. We're underwater now."
+        },
+        {
+          "speaker": "A",
+          "text": "Right. That same leak is admitting the sea. Reverse us while I empty the bucket into the sink."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S238-single-a",
+        "dialogueHash": "3f908b2291ce89456670f1e5f2bcd82bff96554f9e39135d0e99bcee558b3413",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Our garden fountain grants wishes. Fine. We're still paying for its water."
+          },
+          {
+            "speaker": "B",
+            "text": "I wished for ten more. We can sell admission."
+          },
+          {
+            "speaker": "A",
+            "text": "Eleven fountains on our meter. Charge enough to cover that."
+          },
+          {
+            "speaker": "B",
+            "text": "Visitors wished for fountains at home. They're all fed from ours."
+          },
+          {
+            "speaker": "A",
+            "text": "Then we're paying to water the whole queue's gardens. Sell them monthly passes before the next bill arrives."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S239-single-a",
+      "card": {
+        "id": "S239",
+        "title": "The Object Changes Meaning",
+        "instruction": "Choose one ordinary detail and reinterpret it as gift, threat, evidence, or symbol as the scene evolves.",
+        "contentVersion": "0.17.0"
+      },
+      "sourceRecordHash": "df4433e95eefc373bdc2a2169ae4447387dc12327b37e52949d9ba541ee3c457",
+      "dialogueHash": "fe411ef63e2d4277426ff859268d6902eee454e348ec10e2333866355c4a55e4",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I gave you that key because you were welcome here."
+        },
+        {
+          "speaker": "B",
+          "text": "Then why are you holding it like evidence?"
+        },
+        {
+          "speaker": "A",
+          "text": "Because the cupboard was locked before the cake disappeared."
+        },
+        {
+          "speaker": "B",
+          "text": "I brought you a replacement cake."
+        },
+        {
+          "speaker": "A",
+          "text": "Then perhaps the key is a subscription. We'll discuss the terms over tea."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S239-single-b",
+        "dialogueHash": "cef94045980123e7a933aeefd2ce78577f76d0ef54e19b5cd90595963bd2e921",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Keep this old ticket. It proves we went somewhere together."
+          },
+          {
+            "speaker": "B",
+            "text": "It proves you booked us different trains."
+          },
+          {
+            "speaker": "A",
+            "text": "Then it's evidence of a mistake we survived."
+          },
+          {
+            "speaker": "B",
+            "text": "I kept my ticket too."
+          },
+          {
+            "speaker": "A",
+            "text": "Good. Put them together. Now they're an invitation to get it right."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S239-single-b",
+      "card": {
+        "id": "S239",
+        "title": "The Object Changes Meaning",
+        "instruction": "Choose one ordinary detail and reinterpret it as gift, threat, evidence, or symbol as the scene evolves.",
+        "contentVersion": "0.17.0"
+      },
+      "sourceRecordHash": "b0adb00e081fdbb713541823525e2fc7efd55f17becd9aa3821740ce5870c6c5",
+      "dialogueHash": "cef94045980123e7a933aeefd2ce78577f76d0ef54e19b5cd90595963bd2e921",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Keep this old ticket. It proves we went somewhere together."
+        },
+        {
+          "speaker": "B",
+          "text": "It proves you booked us different trains."
+        },
+        {
+          "speaker": "A",
+          "text": "Then it's evidence of a mistake we survived."
+        },
+        {
+          "speaker": "B",
+          "text": "I kept my ticket too."
+        },
+        {
+          "speaker": "A",
+          "text": "Good. Put them together. Now they're an invitation to get it right."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S239-single-a",
+        "dialogueHash": "fe411ef63e2d4277426ff859268d6902eee454e348ec10e2333866355c4a55e4",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I gave you that key because you were welcome here."
+          },
+          {
+            "speaker": "B",
+            "text": "Then why are you holding it like evidence?"
+          },
+          {
+            "speaker": "A",
+            "text": "Because the cupboard was locked before the cake disappeared."
+          },
+          {
+            "speaker": "B",
+            "text": "I brought you a replacement cake."
+          },
+          {
+            "speaker": "A",
+            "text": "Then perhaps the key is a subscription. We'll discuss the terms over tea."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S240-single-a",
+      "card": {
+        "id": "S240",
+        "title": "The Callback Changes Meaning",
+        "instruction": "Treat every returning phrase or action as evidence the relationship has changed. Repeat it with a new emotional meaning each time.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "52d0cb136d07b255e11fb11ab3c6e4e08f23e7f64480b201f4bd094eb71ff85b",
+      "dialogueHash": "66a286f32afa9d02856d0fc752a171a4e25430c5cd5ef703032c9004b58a21f1",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Make yourself at home. I've put fresh coffee on."
+        },
+        {
+          "speaker": "B",
+          "text": "I've brought six suitcases."
+        },
+        {
+          "speaker": "A",
+          "text": "Make yourself at home? I thought you meant a weekend."
+        },
+        {
+          "speaker": "B",
+          "text": "Just until my flat is repaired."
+        },
+        {
+          "speaker": "A",
+          "text": "Make yourself at home. I'll clear the drawer, but we're counting weekends together."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S240-single-b",
+        "dialogueHash": "0ec3845c4609e557dff289a1e94f684bd85e026da419477a5ebe8ab800ff38ae",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "'Anything for you.' That's what I said when you asked for a lift."
+          },
+          {
+            "speaker": "B",
+            "text": "Now could we collect my piano?"
+          },
+          {
+            "speaker": "A",
+            "text": "Anything for you was much lighter five minutes ago."
+          },
+          {
+            "speaker": "B",
+            "text": "It's the piano you learned on."
+          },
+          {
+            "speaker": "A",
+            "text": "Anything for you. But you're carrying the end with the memories."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S240-single-b",
+      "card": {
+        "id": "S240",
+        "title": "The Callback Changes Meaning",
+        "instruction": "Treat every returning phrase or action as evidence the relationship has changed. Repeat it with a new emotional meaning each time.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "674f9c83e09907fbc31e6ab93c5ae272564dd922de165fe903aa262163dbad16",
+      "dialogueHash": "0ec3845c4609e557dff289a1e94f684bd85e026da419477a5ebe8ab800ff38ae",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "'Anything for you.' That's what I said when you asked for a lift."
+        },
+        {
+          "speaker": "B",
+          "text": "Now could we collect my piano?"
+        },
+        {
+          "speaker": "A",
+          "text": "Anything for you was much lighter five minutes ago."
+        },
+        {
+          "speaker": "B",
+          "text": "It's the piano you learned on."
+        },
+        {
+          "speaker": "A",
+          "text": "Anything for you. But you're carrying the end with the memories."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S240-single-a",
+        "dialogueHash": "66a286f32afa9d02856d0fc752a171a4e25430c5cd5ef703032c9004b58a21f1",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Make yourself at home. I've put fresh coffee on."
+          },
+          {
+            "speaker": "B",
+            "text": "I've brought six suitcases."
+          },
+          {
+            "speaker": "A",
+            "text": "Make yourself at home? I thought you meant a weekend."
+          },
+          {
+            "speaker": "B",
+            "text": "Just until my flat is repaired."
+          },
+          {
+            "speaker": "A",
+            "text": "Make yourself at home. I'll clear the drawer, but we're counting weekends together."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D01-single-a",
+      "card": {
+        "id": "D01",
+        "title": "Admit You Need Me",
+        "instruction": "Make someone admit that they need your help.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "7581e1fad4727439c739684a8fe7aea99e8083f0492ae319561b6bbd2fac69ba",
+      "dialogueHash": "417a2e6586fe584fed71c63bca25010559e3be1dede27016c1624f783549ae81",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "That flat-pack cupboard's leaning. I could take a look."
+        },
+        {
+          "speaker": "B",
+          "text": "I've got the instructions."
+        },
+        {
+          "speaker": "A",
+          "text": "Wonderful. Which page explains that leftover door?"
+        },
+        {
+          "speaker": "B",
+          "text": "Could you hold it for a second?"
+        },
+        {
+          "speaker": "A",
+          "text": "Certainly. Just to clarify: you're asking for my help?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D01-single-b",
+        "dialogueHash": "7791de6b1a8ac00f1656cc4c7711740b550c5b166748cf0d00b42d4c15d7a834",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've brought a blanket. Your heater's still broken?"
+          },
+          {
+            "speaker": "B",
+            "text": "I'm managing. Leave the blanket, though."
+          },
+          {
+            "speaker": "A",
+            "text": "Gladly. Would you say you needed my help?"
+          },
+          {
+            "speaker": "B",
+            "text": "I need the blanket. I can reset the heater myself."
+          },
+          {
+            "speaker": "A",
+            "text": "Of course. The fuse box is in my locked cupboard. Shall I wait while you manage?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D01-single-b",
+      "card": {
+        "id": "D01",
+        "title": "Admit You Need Me",
+        "instruction": "Make someone admit that they need your help.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "02a40de346bed460a3d6d5c0d9c5ba99fc3bc0d64cdcc72252e1a9d82fa8ad69",
+      "dialogueHash": "7791de6b1a8ac00f1656cc4c7711740b550c5b166748cf0d00b42d4c15d7a834",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've brought a blanket. Your heater's still broken?"
+        },
+        {
+          "speaker": "B",
+          "text": "I'm managing. Leave the blanket, though."
+        },
+        {
+          "speaker": "A",
+          "text": "Gladly. Would you say you needed my help?"
+        },
+        {
+          "speaker": "B",
+          "text": "I need the blanket. I can reset the heater myself."
+        },
+        {
+          "speaker": "A",
+          "text": "Of course. The fuse box is in my locked cupboard. Shall I wait while you manage?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D01-single-a",
+        "dialogueHash": "417a2e6586fe584fed71c63bca25010559e3be1dede27016c1624f783549ae81",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "That flat-pack cupboard's leaning. I could take a look."
+          },
+          {
+            "speaker": "B",
+            "text": "I've got the instructions."
+          },
+          {
+            "speaker": "A",
+            "text": "Wonderful. Which page explains that leftover door?"
+          },
+          {
+            "speaker": "B",
+            "text": "Could you hold it for a second?"
+          },
+          {
+            "speaker": "A",
+            "text": "Certainly. Just to clarify: you're asking for my help?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D02-single-a",
+      "card": {
+        "id": "D02",
+        "title": "Don’t Go",
+        "instruction": "Create reasons another player must stay with you. Never directly ask them to stay.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "d5984fee8e357518496756c62b852f093e3d8bffc8f6ea7beb82009345bf9d01",
+      "dialogueHash": "c297150551afc5df51c39788981f7217b5bb7a73e1bc440cc0e8cf0f10afe071",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before you get your train, could you taste this soup?"
+        },
+        {
+          "speaker": "B",
+          "text": "It needs salt."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll fix that. You'll need to check again."
+        },
+        {
+          "speaker": "B",
+          "text": "My train leaves in ten minutes."
+        },
+        {
+          "speaker": "A",
+          "text": "Perfect. That's when the bread comes out."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D02-single-b",
+        "dialogueHash": "d210b9812335882ca4549a740ec09c534dedf546a16a847eaf2b0f8067d7aff0",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before you zip your suitcase, let me wrap that jar of jam."
+          },
+          {
+            "speaker": "B",
+            "text": "It's already wrapped in my jumper."
+          },
+          {
+            "speaker": "A",
+            "text": "That's your train jumper. We'll need to unpack it and find something else."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll leave the jam here."
+          },
+          {
+            "speaker": "A",
+            "text": "Then you haven't tasted it. I'll get a spoon before you decide."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D02-single-b",
+      "card": {
+        "id": "D02",
+        "title": "Don’t Go",
+        "instruction": "Create reasons another player must stay with you. Never directly ask them to stay.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "90ff06080405dacc9db59c8bb9a03b28f87ca487c2b0ced08d261c8f567eec2e",
+      "dialogueHash": "d210b9812335882ca4549a740ec09c534dedf546a16a847eaf2b0f8067d7aff0",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before you zip your suitcase, let me wrap that jar of jam."
+        },
+        {
+          "speaker": "B",
+          "text": "It's already wrapped in my jumper."
+        },
+        {
+          "speaker": "A",
+          "text": "That's your train jumper. We'll need to unpack it and find something else."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll leave the jam here."
+        },
+        {
+          "speaker": "A",
+          "text": "Then you haven't tasted it. I'll get a spoon before you decide."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D02-single-a",
+        "dialogueHash": "c297150551afc5df51c39788981f7217b5bb7a73e1bc440cc0e8cf0f10afe071",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before you get your train, could you taste this soup?"
+          },
+          {
+            "speaker": "B",
+            "text": "It needs salt."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll fix that. You'll need to check again."
+          },
+          {
+            "speaker": "B",
+            "text": "My train leaves in ten minutes."
+          },
+          {
+            "speaker": "A",
+            "text": "Perfect. That's when the bread comes out."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D03-single-a",
+      "card": {
+        "id": "D03",
+        "title": "Say You’re Sorry",
+        "instruction": "Maneuver someone into apologizing without naming the offense.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "0274b7dc817b187244f779b5ae0a29eb277cf50c7da4524789233a579217e337",
+      "dialogueHash": "6001adde92fd83663d08c5b34a979357af445216a1f44d3074ba1c180e15c5ea",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've put your usual mug out. We can still have tea."
+        },
+        {
+          "speaker": "B",
+          "text": "Still? Are you cross with me?"
+        },
+        {
+          "speaker": "A",
+          "text": "I'm hoping you won't leave me cross."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm sorry you feel that way."
+        },
+        {
+          "speaker": "A",
+          "text": "Could you try one where you're sorry about yourself? I'll keep the tea warm."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D03-single-b",
+        "dialogueHash": "b486747a03782642a8aacd539ce99a2ff2bdbcb95c90c5111026a4088e9c68e1",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Your parents arrive in ten minutes. I'd like to be able to smile at you."
+          },
+          {
+            "speaker": "B",
+            "text": "I thought we'd sorted this out by text."
+          },
+          {
+            "speaker": "A",
+            "text": "You sent a thumbs-up. I couldn't hear any remorse."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll send a sad face."
+          },
+          {
+            "speaker": "A",
+            "text": "You're right here. Could you give the sad face a sentence beginning with 'I'?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D03-single-b",
+      "card": {
+        "id": "D03",
+        "title": "Say You’re Sorry",
+        "instruction": "Maneuver someone into apologizing without naming the offense.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "c0f4bb196d29c3e7c7a43be6b914d0447a3626071db4f00dec4106d9591a5293",
+      "dialogueHash": "b486747a03782642a8aacd539ce99a2ff2bdbcb95c90c5111026a4088e9c68e1",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Your parents arrive in ten minutes. I'd like to be able to smile at you."
+        },
+        {
+          "speaker": "B",
+          "text": "I thought we'd sorted this out by text."
+        },
+        {
+          "speaker": "A",
+          "text": "You sent a thumbs-up. I couldn't hear any remorse."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll send a sad face."
+        },
+        {
+          "speaker": "A",
+          "text": "You're right here. Could you give the sad face a sentence beginning with 'I'?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D03-single-a",
+        "dialogueHash": "6001adde92fd83663d08c5b34a979357af445216a1f44d3074ba1c180e15c5ea",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've put your usual mug out. We can still have tea."
+          },
+          {
+            "speaker": "B",
+            "text": "Still? Are you cross with me?"
+          },
+          {
+            "speaker": "A",
+            "text": "I'm hoping you won't leave me cross."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm sorry you feel that way."
+          },
+          {
+            "speaker": "A",
+            "text": "Could you try one where you're sorry about yourself? I'll keep the tea warm."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D04-single-a",
+      "card": {
+        "id": "D04",
+        "title": "Retroactive Permission",
+        "instruction": "Get approval for something you have already done.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "e54678cccc393add9dde4daf340e82fa75f63548ea4ceb6b8db56ad31aac6400",
+      "dialogueHash": "a6f82bb5f420038239101d1ce4761d5d0ff542ac918030b3e614199db4c3102f",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Would you support a small improvement to the front garden?"
+        },
+        {
+          "speaker": "B",
+          "text": "What sort of improvement?"
+        },
+        {
+          "speaker": "A",
+          "text": "Something with a pond. And no tree."
+        },
+        {
+          "speaker": "B",
+          "text": "Where's the tree?"
+        },
+        {
+          "speaker": "A",
+          "text": "Let's finish agreeing before the stump grinder leaves."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D04-single-b",
+        "dialogueHash": "63021b5a6c90c096e41739a7691123cfd66f4ac7b36c16ee23502ccdc324ab62",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "How do you feel about me inviting a few people to dinner?"
+          },
+          {
+            "speaker": "B",
+            "text": "Tonight? We have two chairs."
+          },
+          {
+            "speaker": "A",
+            "text": "So standing guests would be more considerate?"
+          },
+          {
+            "speaker": "B",
+            "text": "How many people?"
+          },
+          {
+            "speaker": "A",
+            "text": "Six. I've already invited them. Would borrowing enough chairs for everyone turn that into a yes?"
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

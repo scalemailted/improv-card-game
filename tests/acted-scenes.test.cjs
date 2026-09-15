@@ -9,8 +9,8 @@ test('960 exact-card examples are actual A-B-A-B-A exchanges',()=>{
 });
 test('reference examples demonstrate reported problems with dialogue and responsive follow-through',()=>{
  const clue=src.records.S124.examples[0].beats;assert.match(clue[0].text,/unredacted|inside/i);assert.match(clue[1].text,/surprise|private/i);assert.match(clue[2].text,/visitor|family/i);
- const x=pair['S67+D101'][0];assert.equal(x.format,'ABABA');assert.match(x.beats[0].text,/chair.*cancelled.*refund/i);assert.match(x.beats[1].text,/cancelled/i);assert.match(x.beats[2].text,/upward.*outward/i);
- assert.match(pair['S22+D14'][0].beats[0].text,/floods.*maintenance/i);
+ const x=pair['S67+D101'][0];assert.equal(x.format,'ABABA');assert.match(x.beats[0].text,/headteacher.*parents.*hamster/i);assert.match(x.beats[1].text,/teacher/i);assert.match(x.beats[3].text,/deputy head/i);assert.match(x.beats[4].text,/recommendation.*headteacher/i);
+ assert.match(pair['S22+D14'][0].beats[0].text,/ceiling.*sprinklers.*budgeted.*microphone/i);
  assert.match(pair['S23+D163'][0].beats[0].text,/chair.*paperclip.*tray/i);
 });
 test('no model controls, generation calls or explanatory coaching inside nudge dialog',()=>{
@@ -31,6 +31,6 @@ test('brief policy chooses complete shorter five-turn scenes and never launches 
 });
 test('all versioned runtime assets and singleton precache point to this exact edition',()=>{
  const html=read('index.html'),sw=read('sw.js');const paths=[...html.matchAll(/<script src="\.\/([^"?]+)\?v=([^\"]+)"/g)];
- for(const match of paths){assert.equal(match[2],'0.25.0');assert.ok(fs.existsSync(path.join(root,match[1])));assert.ok(sw.includes(match[1]+'?v=0.25.0'));}
+ for(const match of paths){assert.equal(match[2],require('../examples/manifest.json').assetVersion);assert.ok(fs.existsSync(path.join(root,match[1])));assert.ok(sw.includes(match[1]+'?v='+require('../examples/manifest.json').assetVersion));}
  assert.ok(sw.includes(m.files.singles.url));assert.ok(sw.includes(m.files.singles.plainUrl));assert.doesNotMatch(sw,/skipWaiting\(/);
 });

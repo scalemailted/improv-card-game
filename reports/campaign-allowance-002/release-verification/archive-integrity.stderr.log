@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+    z=zipfile.ZipFile(sys.argv[1]);assert z.testzip() is None;names=z.namelist();assert all(not p.startswith('/') and '..' not in PurePosixPath(p).parts for p in names);bad=[p for p in names if p.endswith('.zip') or any(x in ['.checkpoint-work','node_modules','__pycache__','extracted','campaign-snapshot','.git'] for x in PurePosixPath(p).parts)];assert not bad,bad;guard=json.load(open(sys.argv[2],encoding='utf-8'));assert all(hashlib.sha256(z.read(k.replace(chr(92),'/'))).hexdigest()==v for k,v in guard.items());json.dump({'status':'archive-crc-and-source-hashes-verified','files':[{'path':i.filename,'bytes':i.file_size,'compressedBytes':i.compress_size} for i in z.infolist()]},open(sys.argv[3],'w'),indent=2)
+  File "C:\Users\Ted\AppData\Local\Python\pythoncore-3.14-64\Lib\zipfile\__init__.py", line 1480, in __init__
+    self._RealGetContents()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Ted\AppData\Local\Python\pythoncore-3.14-64\Lib\zipfile\__init__.py", line 1547, in _RealGetContents
+    raise BadZipFile("File is not a zip file")
+zipfile.BadZipFile: File is not a zip file

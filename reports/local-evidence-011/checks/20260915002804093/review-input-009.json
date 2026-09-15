@@ -1,0 +1,1564 @@
+{
+  "at": "2026-09-15T00:28:04.096Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S31-single-a",
+      "card": {
+        "id": "S31",
+        "title": "Same Old Routine",
+        "instruction": "Use familiar shorthand and old habits immediately, as though past routines still govern the present.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "34172a59295aaca517ef755c404d7dd6e36405ad7ce13c7c56f0fb5cdb6e138b",
+      "dialogueHash": "59cf3c1180504655677d5a5f97170e1d672a913ac3dd04e2309dbb76afbfaffc",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Your chipped mug, my ugly mug. I'll wash; you dry."
+        },
+        {
+          "speaker": "B",
+          "text": "I bought a dishwasher."
+        },
+        {
+          "speaker": "A",
+          "text": "Lovely. You load your side; I'll load mine."
+        },
+        {
+          "speaker": "B",
+          "text": "There's only one mug rack."
+        },
+        {
+          "speaker": "A",
+          "text": "Yours on the left, then. Pass me mine when it's done. We always put them away together."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S31-single-b",
+        "dialogueHash": "9d054e76e87d88ee926dee641030467abf65ea607c3390e275b9a6043c4164c2",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Two knocks on your window. Ready for our usual walk?"
+          },
+          {
+            "speaker": "B",
+            "text": "I'm working from home now. Text first; I might be on a call."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll text 'knock knock.' Same signal. I'll get your walking boots."
+          },
+          {
+            "speaker": "B",
+            "text": "I've only got ten minutes at lunch."
+          },
+          {
+            "speaker": "A",
+            "text": "Then straight to our usual bench. I'll bring the sandwiches. Your end, my end."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S31-single-b",
+      "card": {
+        "id": "S31",
+        "title": "Same Old Routine",
+        "instruction": "Use familiar shorthand and old habits immediately, as though past routines still govern the present.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "518dd45ac69f3a057044013c6c673cf5197a1200470ec102025a4d3b8d42509d",
+      "dialogueHash": "9d054e76e87d88ee926dee641030467abf65ea607c3390e275b9a6043c4164c2",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Two knocks on your window. Ready for our usual walk?"
+        },
+        {
+          "speaker": "B",
+          "text": "I'm working from home now. Text first; I might be on a call."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll text 'knock knock.' Same signal. I'll get your walking boots."
+        },
+        {
+          "speaker": "B",
+          "text": "I've only got ten minutes at lunch."
+        },
+        {
+          "speaker": "A",
+          "text": "Then straight to our usual bench. I'll bring the sandwiches. Your end, my end."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S31-single-a",
+        "dialogueHash": "59cf3c1180504655677d5a5f97170e1d672a913ac3dd04e2309dbb76afbfaffc",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Your chipped mug, my ugly mug. I'll wash; you dry."
+          },
+          {
+            "speaker": "B",
+            "text": "I bought a dishwasher."
+          },
+          {
+            "speaker": "A",
+            "text": "Lovely. You load your side; I'll load mine."
+          },
+          {
+            "speaker": "B",
+            "text": "There's only one mug rack."
+          },
+          {
+            "speaker": "A",
+            "text": "Yours on the left, then. Pass me mine when it's done. We always put them away together."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S32-single-a",
+      "card": {
+        "id": "S32",
+        "title": "One More Favor",
+        "instruction": "Treat every small request as part of a long-running balance sheet of favors, inconveniences, and repayments.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "9c93e787aa0491d72dcd33d4ffd4afd13487f1a383ce981bf99ac2c1fa727173",
+      "dialogueHash": "1520a884e4af7aadc3730821f64a8f66ae3d0f29323b60215bc9ed032634bbba",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll watch your dog tonight. That settles your fixing my sink."
+        },
+        {
+          "speaker": "B",
+          "text": "He just sleeps. Your sink took three hours."
+        },
+        {
+          "speaker": "A",
+          "text": "Leave him tomorrow too, then. Two nights for the awkward pipe."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll leave dinner for you. There's lasagne in the fridge."
+        },
+        {
+          "speaker": "A",
+          "text": "Don't feed me. I'm trying to get even. If you cook as well, I'll have to take him on holiday."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S32-single-b",
+        "dialogueHash": "67a3c7ac0f956e85cd50c029b3b0afa3a25128912f20cf1355e912f81af236d1",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Could you water my plants? I stayed late covering your shift in March."
+          },
+          {
+            "speaker": "B",
+            "text": "That was one afternoon."
+          },
+          {
+            "speaker": "A",
+            "text": "And these are only six small plants."
+          },
+          {
+            "speaker": "B",
+            "text": "One is a tree."
+          },
+          {
+            "speaker": "A",
+            "text": "That's the overtime. The other five are the normal shift."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S32-single-b",
+      "card": {
+        "id": "S32",
+        "title": "One More Favor",
+        "instruction": "Treat every small request as part of a long-running balance sheet of favors, inconveniences, and repayments.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "7a2738faaba4e7c54ee20bef48ad075e815b531930f774cdf78fae43e40eb0ec",
+      "dialogueHash": "67a3c7ac0f956e85cd50c029b3b0afa3a25128912f20cf1355e912f81af236d1",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Could you water my plants? I stayed late covering your shift in March."
+        },
+        {
+          "speaker": "B",
+          "text": "That was one afternoon."
+        },
+        {
+          "speaker": "A",
+          "text": "And these are only six small plants."
+        },
+        {
+          "speaker": "B",
+          "text": "One is a tree."
+        },
+        {
+          "speaker": "A",
+          "text": "That's the overtime. The other five are the normal shift."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S32-single-a",
+        "dialogueHash": "1520a884e4af7aadc3730821f64a8f66ae3d0f29323b60215bc9ed032634bbba",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll watch your dog tonight. That settles your fixing my sink."
+          },
+          {
+            "speaker": "B",
+            "text": "He just sleeps. Your sink took three hours."
+          },
+          {
+            "speaker": "A",
+            "text": "Leave him tomorrow too, then. Two nights for the awkward pipe."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll leave dinner for you. There's lasagne in the fridge."
+          },
+          {
+            "speaker": "A",
+            "text": "Don't feed me. I'm trying to get even. If you cook as well, I'll have to take him on holiday."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S33-single-a",
+      "card": {
+        "id": "S33",
+        "title": "The Designated Reminder",
+        "instruction": "Keep track of what everyone was supposed to remember. Supply reminders before being asked and treat forgetfulness as your familiar burden.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "a15a20f461b437405df43654d0d3df09bce7d20bda1b374cf818f770f74b8ed3",
+      "dialogueHash": "e762e221408cf3cc06eb76bcc52b861c30a1436e1811eb23c6ad7eb54cf622c6",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've reminded you about the dentist tomorrow."
+        },
+        {
+          "speaker": "B",
+          "text": "It's in my calendar."
+        },
+        {
+          "speaker": "A",
+          "text": "Good. I'll remind you to check the calendar."
+        },
+        {
+          "speaker": "B",
+          "text": "It sends alerts, but my phone has to stay in my locker."
+        },
+        {
+          "speaker": "A",
+          "text": "Then I'll remind you at lunch. And remind me to eat mine—no, I'll put that on my list too."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S33-single-b",
+        "dialogueHash": "4c75052ad352916a1abadb36277fb85c94837ca38d00cbc78f1051fb951fc722",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Bin day tomorrow. I've written it on your breakfast banana."
+          },
+          {
+            "speaker": "B",
+            "text": "I don't always eat breakfast."
+          },
+          {
+            "speaker": "A",
+            "text": "Right. I'll put another reminder on the coffee machine. Apparently I track breakfast now too."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll set a phone alarm. You can stop leaving notes."
+          },
+          {
+            "speaker": "A",
+            "text": "Good. I'll leave one by your charger reminding you what the alarm means."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S33-single-b",
+      "card": {
+        "id": "S33",
+        "title": "The Designated Reminder",
+        "instruction": "Keep track of what everyone was supposed to remember. Supply reminders before being asked and treat forgetfulness as your familiar burden.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "a563e82b24b0cb5c3358f98f7d608bfc976a3dba85a49db851e7cbabadd8adbc",
+      "dialogueHash": "4c75052ad352916a1abadb36277fb85c94837ca38d00cbc78f1051fb951fc722",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Bin day tomorrow. I've written it on your breakfast banana."
+        },
+        {
+          "speaker": "B",
+          "text": "I don't always eat breakfast."
+        },
+        {
+          "speaker": "A",
+          "text": "Right. I'll put another reminder on the coffee machine. Apparently I track breakfast now too."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll set a phone alarm. You can stop leaving notes."
+        },
+        {
+          "speaker": "A",
+          "text": "Good. I'll leave one by your charger reminding you what the alarm means."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S33-single-a",
+        "dialogueHash": "e762e221408cf3cc06eb76bcc52b861c30a1436e1811eb23c6ad7eb54cf622c6",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've reminded you about the dentist tomorrow."
+          },
+          {
+            "speaker": "B",
+            "text": "It's in my calendar."
+          },
+          {
+            "speaker": "A",
+            "text": "Good. I'll remind you to check the calendar."
+          },
+          {
+            "speaker": "B",
+            "text": "It sends alerts, but my phone has to stay in my locker."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I'll remind you at lunch. And remind me to eat mine—no, I'll put that on my list too."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S34-single-a",
+      "card": {
+        "id": "S34",
+        "title": "Keeping Score",
+        "instruction": "Treat arrival times, effort, memory, and sacrifice as a running score you intend to win.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "3adc774f191a296c7bfc98417da82f7042cd8b26dab156dbe6abc297678bed3e",
+      "dialogueHash": "8f1173963da52d664d03d68486720044c025b7eed30a3b59ee0acccf47f6f8fd",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I carried the heavier shopping bag. Again."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll carry both bags upstairs."
+        },
+        {
+          "speaker": "A",
+          "text": "Then I'll put everything away. Carrying gets points, but remembering where things go gets double."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll put it away too. You sit down."
+        },
+        {
+          "speaker": "A",
+          "text": "Fine. I'll count how many times you ask me which cupboard. Those go in my column."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S34-single-b",
+        "dialogueHash": "88e71027bc71c4f9109e148a3ea97b470fbebaee9bb78eb9472db7b872e264d5",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I arrived ten minutes early to help set up. That's ten in my column."
+          },
+          {
+            "speaker": "B",
+            "text": "I stayed an hour late yesterday."
+          },
+          {
+            "speaker": "A",
+            "text": "Evenings count differently. Mine required getting out of bed."
+          },
+          {
+            "speaker": "B",
+            "text": "You live upstairs. I caught the six o'clock bus."
+          },
+          {
+            "speaker": "A",
+            "text": "Then you were already up. I interrupted actual sleep. We need a separate column for sacrifice."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S34-single-b",
+      "card": {
+        "id": "S34",
+        "title": "Keeping Score",
+        "instruction": "Treat arrival times, effort, memory, and sacrifice as a running score you intend to win.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "6792527b8adb116bd785991657f00a1676e17dbe23daeb5dffc466e94d15ab0b",
+      "dialogueHash": "88e71027bc71c4f9109e148a3ea97b470fbebaee9bb78eb9472db7b872e264d5",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I arrived ten minutes early to help set up. That's ten in my column."
+        },
+        {
+          "speaker": "B",
+          "text": "I stayed an hour late yesterday."
+        },
+        {
+          "speaker": "A",
+          "text": "Evenings count differently. Mine required getting out of bed."
+        },
+        {
+          "speaker": "B",
+          "text": "You live upstairs. I caught the six o'clock bus."
+        },
+        {
+          "speaker": "A",
+          "text": "Then you were already up. I interrupted actual sleep. We need a separate column for sacrifice."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S34-single-a",
+        "dialogueHash": "8f1173963da52d664d03d68486720044c025b7eed30a3b59ee0acccf47f6f8fd",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I carried the heavier shopping bag. Again."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll carry both bags upstairs."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I'll put everything away. Carrying gets points, but remembering where things go gets double."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll put it away too. You sit down."
+          },
+          {
+            "speaker": "A",
+            "text": "Fine. I'll count how many times you ask me which cupboard. Those go in my column."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S35-single-a",
+      "card": {
+        "id": "S35",
+        "title": "You Know the System",
+        "instruction": "Use another person’s knowledge of the routine while pretending you could manage perfectly well alone.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "2bf56d95f54e269dd80b1b63ff2e2688356cfd359776f35e3b233cb86ceb941d",
+      "dialogueHash": "dccf24cd7e2109cab97331c0d25bcbf5d2c37863d20dfb380849c02f91d61e51",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Which counter takes these forms? Just checking they've not moved it."
+        },
+        {
+          "speaker": "B",
+          "text": "It's been counter three for years."
+        },
+        {
+          "speaker": "A",
+          "text": "Good. You remember."
+        },
+        {
+          "speaker": "B",
+          "text": "Wait. We need a queue ticket before we go over there."
+        },
+        {
+          "speaker": "A",
+          "text": "Of course. Which button gives us counter three? I'm checking they've labelled it sensibly."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S35-single-b",
+        "dialogueHash": "9165497cf7f153c9066b67976feb8afee972805124e4a5a97768157a8f153e26",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "We're opening the allotment shed. Which key do you usually use? I have my own method."
+          },
+          {
+            "speaker": "B",
+            "text": "The red one. Lift the handle first."
+          },
+          {
+            "speaker": "A",
+            "text": "Yes, I lift first too. Which way do you turn it afterwards? Comparing methods."
+          },
+          {
+            "speaker": "B",
+            "text": "Left. Here, I'll open it; we need the watering cans."
+          },
+          {
+            "speaker": "A",
+            "text": "Go ahead. I'll check your sequence against mine. Slowly, though."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S35-single-b",
+      "card": {
+        "id": "S35",
+        "title": "You Know the System",
+        "instruction": "Use another person’s knowledge of the routine while pretending you could manage perfectly well alone.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "6c09e72ad9e9a032eecd1a4fb215306e830be05f240a8975f17a73a8cc6c67f9",
+      "dialogueHash": "9165497cf7f153c9066b67976feb8afee972805124e4a5a97768157a8f153e26",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "We're opening the allotment shed. Which key do you usually use? I have my own method."
+        },
+        {
+          "speaker": "B",
+          "text": "The red one. Lift the handle first."
+        },
+        {
+          "speaker": "A",
+          "text": "Yes, I lift first too. Which way do you turn it afterwards? Comparing methods."
+        },
+        {
+          "speaker": "B",
+          "text": "Left. Here, I'll open it; we need the watering cans."
+        },
+        {
+          "speaker": "A",
+          "text": "Go ahead. I'll check your sequence against mine. Slowly, though."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S35-single-a",
+        "dialogueHash": "dccf24cd7e2109cab97331c0d25bcbf5d2c37863d20dfb380849c02f91d61e51",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Which counter takes these forms? Just checking they've not moved it."
+          },
+          {
+            "speaker": "B",
+            "text": "It's been counter three for years."
+          },
+          {
+            "speaker": "A",
+            "text": "Good. You remember."
+          },
+          {
+            "speaker": "B",
+            "text": "Wait. We need a queue ticket before we go over there."
+          },
+          {
+            "speaker": "A",
+            "text": "Of course. Which button gives us counter three? I'm checking they've labelled it sensibly."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S36-single-a",
+      "card": {
+        "id": "S36",
+        "title": "Still About Last Time",
+        "instruction": "Treat each minor inconvenience as confirmation of an older grievance and the same recurring problem.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "931579b9e0a3273d832fc50672bf24af1b8cb80e22ac8d31af5bd8794bff96df",
+      "dialogueHash": "c7b9bc4021c39154922141f7719061e9b3338401619e29930027a5d12bc66259",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "There's a sock on the stairs. We've reached this chapter again."
+        },
+        {
+          "speaker": "B",
+          "text": "I dropped it just now."
+        },
+        {
+          "speaker": "A",
+          "text": "And last month 'just now' lasted three days."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll pick it up. Could you hold my tea? The basket's full."
+        },
+        {
+          "speaker": "A",
+          "text": "And I'm holding your tea again. Last month I ended up carrying the laundry too. Give me the basket; we're apparently at that bit."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S36-single-b",
+        "dialogueHash": "dc38bdc22bb53c955a73e5047b2e7c5dd05a70e3d7d1456e0a43691978f10581",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Five minutes late for our anniversary dinner. We're doing last year again."
+          },
+          {
+            "speaker": "B",
+            "text": "The bus broke down."
+          },
+          {
+            "speaker": "A",
+            "text": "Last year it was a puncture. Dinner always starts with a transport report."
+          },
+          {
+            "speaker": "B",
+            "text": "I walked the last mile. I even brought your flowers on foot."
+          },
+          {
+            "speaker": "A",
+            "text": "Flowers again. Shall I find last year's vase, or are we pretending this is a new apology?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S36-single-b",
+      "card": {
+        "id": "S36",
+        "title": "Still About Last Time",
+        "instruction": "Treat each minor inconvenience as confirmation of an older grievance and the same recurring problem.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "ac8bd8506b8fbc568ff7db069fa98559732a782bb7b7c27eeb9e09fc9cb955db",
+      "dialogueHash": "dc38bdc22bb53c955a73e5047b2e7c5dd05a70e3d7d1456e0a43691978f10581",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Five minutes late for our anniversary dinner. We're doing last year again."
+        },
+        {
+          "speaker": "B",
+          "text": "The bus broke down."
+        },
+        {
+          "speaker": "A",
+          "text": "Last year it was a puncture. Dinner always starts with a transport report."
+        },
+        {
+          "speaker": "B",
+          "text": "I walked the last mile. I even brought your flowers on foot."
+        },
+        {
+          "speaker": "A",
+          "text": "Flowers again. Shall I find last year's vase, or are we pretending this is a new apology?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S36-single-a",
+        "dialogueHash": "c7b9bc4021c39154922141f7719061e9b3338401619e29930027a5d12bc66259",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "There's a sock on the stairs. We've reached this chapter again."
+          },
+          {
+            "speaker": "B",
+            "text": "I dropped it just now."
+          },
+          {
+            "speaker": "A",
+            "text": "And last month 'just now' lasted three days."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll pick it up. Could you hold my tea? The basket's full."
+          },
+          {
+            "speaker": "A",
+            "text": "And I'm holding your tea again. Last month I ended up carrying the laundry too. Give me the basket; we're apparently at that bit."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S37-single-a",
+      "card": {
+        "id": "S37",
+        "title": "Must Be Nice",
+        "instruction": "Treat another person’s ease with ordinary life as both inspiring and unfair. Copy their shortcuts while dismissing the advantage.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "0d934887a2b02a852401602fcc6fd01280d79a6b9f96cba5ad3822ec87d4a0b5",
+      "dialogueHash": "3c62b3c2f509ca2efc63f88cc9f7c4c415b95ecce3a3005b53a08255fb55699d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Must be nice, cooking dinner in twenty minutes."
+        },
+        {
+          "speaker": "B",
+          "text": "I chop tomorrow's vegetables while tonight's dinner cooks."
+        },
+        {
+          "speaker": "A",
+          "text": "Pass me tomorrow's carrots, then. Lovely having a whole spare evening inside this one."
+        },
+        {
+          "speaker": "B",
+          "text": "Take half home. Tomorrow you only have to tip them in."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll take the tub too. Apparently effortless people already have containers."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S37-single-b",
+        "dialogueHash": "d394444004388addf12de403279198fdf3440f91e26098008b9fa29c01b1ab46",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You remembered every birthday. Must be nice having that sort of time."
+          },
+          {
+            "speaker": "B",
+            "text": "I use phone reminders. Here, I'll send you the calendar."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll import it. Some of us remember people because we care."
+          },
+          {
+            "speaker": "B",
+            "text": "There's also a reminder to buy the cards a week ahead."
+          },
+          {
+            "speaker": "A",
+            "text": "Turn that on too. Mum calls you thoughtful for obeying your phone. Don't tell her you've sent me this."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S37-single-b",
+      "card": {
+        "id": "S37",
+        "title": "Must Be Nice",
+        "instruction": "Treat another person’s ease with ordinary life as both inspiring and unfair. Copy their shortcuts while dismissing the advantage.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "747c1540c57b164c6b4b2b9ff8bf84404fc8c3dd6f805c9945c35814d495c8fa",
+      "dialogueHash": "d394444004388addf12de403279198fdf3440f91e26098008b9fa29c01b1ab46",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You remembered every birthday. Must be nice having that sort of time."
+        },
+        {
+          "speaker": "B",
+          "text": "I use phone reminders. Here, I'll send you the calendar."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll import it. Some of us remember people because we care."
+        },
+        {
+          "speaker": "B",
+          "text": "There's also a reminder to buy the cards a week ahead."
+        },
+        {
+          "speaker": "A",
+          "text": "Turn that on too. Mum calls you thoughtful for obeying your phone. Don't tell her you've sent me this."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S37-single-a",
+        "dialogueHash": "3c62b3c2f509ca2efc63f88cc9f7c4c415b95ecce3a3005b53a08255fb55699d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Must be nice, cooking dinner in twenty minutes."
+          },
+          {
+            "speaker": "B",
+            "text": "I chop tomorrow's vegetables while tonight's dinner cooks."
+          },
+          {
+            "speaker": "A",
+            "text": "Pass me tomorrow's carrots, then. Lovely having a whole spare evening inside this one."
+          },
+          {
+            "speaker": "B",
+            "text": "Take half home. Tomorrow you only have to tip them in."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll take the tub too. Apparently effortless people already have containers."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S38-single-a",
+      "card": {
+        "id": "S38",
+        "title": "We Used to Be Easy",
+        "instruction": "Treat every practical difficulty as evidence that life, work, or this relationship used to be simpler.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "6751b09b2346164c95b28c89a2b44e1630fb5baf4eb806ea766d90e3d8e69ffd",
+      "dialogueHash": "c12675711e356154aaff6f6d34bd33846833f3032dda7e6dce35c584e4deeaa2",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "We used to arrange dinner by saying 'dinner?'"
+        },
+        {
+          "speaker": "B",
+          "text": "Now we check six calendars. Thursday at seven works."
+        },
+        {
+          "speaker": "A",
+          "text": "Put me down. We used to manage six people with one shout up the stairs."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll make it a standing booking. Then nobody has to check again."
+        },
+        {
+          "speaker": "A",
+          "text": "Lovely. A permanent reservation to recreate dropping in. We used to get that for knocking."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S38-single-b",
+        "dialogueHash": "a7544681c21eaaa1e173add02eda1751cfffefe81205d5f5a3e4786553802a54",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Our old shopping list just said bread, milk, eggs."
+          },
+          {
+            "speaker": "B",
+            "text": "Now we need oat milk for Jo and lactose-free for Dad."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll write both. Milk used to take one line, and we all knew whose it was."
+          },
+          {
+            "speaker": "B",
+            "text": "Save the list on your phone. We can reuse it every week."
+          },
+          {
+            "speaker": "A",
+            "text": "Help me save it, then. We used to finish the list before needing help with it."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S38-single-b",
+      "card": {
+        "id": "S38",
+        "title": "We Used to Be Easy",
+        "instruction": "Treat every practical difficulty as evidence that life, work, or this relationship used to be simpler.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "2d8dec9a48098d1a8b2e4bed8b47674fc584e9e6d0df29cefcdd6e50c1c0144c",
+      "dialogueHash": "a7544681c21eaaa1e173add02eda1751cfffefe81205d5f5a3e4786553802a54",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Our old shopping list just said bread, milk, eggs."
+        },
+        {
+          "speaker": "B",
+          "text": "Now we need oat milk for Jo and lactose-free for Dad."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll write both. Milk used to take one line, and we all knew whose it was."
+        },
+        {
+          "speaker": "B",
+          "text": "Save the list on your phone. We can reuse it every week."
+        },
+        {
+          "speaker": "A",
+          "text": "Help me save it, then. We used to finish the list before needing help with it."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S38-single-a",
+        "dialogueHash": "c12675711e356154aaff6f6d34bd33846833f3032dda7e6dce35c584e4deeaa2",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "We used to arrange dinner by saying 'dinner?'"
+          },
+          {
+            "speaker": "B",
+            "text": "Now we check six calendars. Thursday at seven works."
+          },
+          {
+            "speaker": "A",
+            "text": "Put me down. We used to manage six people with one shout up the stairs."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll make it a standing booking. Then nobody has to check again."
+          },
+          {
+            "speaker": "A",
+            "text": "Lovely. A permanent reservation to recreate dropping in. We used to get that for knocking."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S39-single-a",
+      "card": {
+        "id": "S39",
+        "title": "Don’t Be Difficult",
+        "instruction": "Treat every request, correction, or small inconvenience as a warning that you are becoming too much trouble.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "2809973ea1e545d8b113160d4b71cec470fca45828e23ec7fab1510bc5dfab76",
+      "dialogueHash": "31f1ef29d0c1434e912bef004f20f69eef04f327c0d92641b775bbe4a1d6b64c",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Could I get a lift? Only if it isn't trouble."
+        },
+        {
+          "speaker": "B",
+          "text": "Of course. I'll move my coat off the passenger seat."
+        },
+        {
+          "speaker": "A",
+          "text": "Don't move it for me. I'll sit in the back."
+        },
+        {
+          "speaker": "B",
+          "text": "That's full of shopping. Hold the coat; I'll turn the heating down."
+        },
+        {
+          "speaker": "A",
+          "text": "Please don't change it. I'll keep the coat on my lap. If I get hot, I can get out and walk the rest."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S39-single-b",
+        "dialogueHash": "079d24cea2706169b0568d3042cc8654de3265434fa0a860e4eaa2c998f692fc",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Could I have another fork? Sorry, this one's bent."
+          },
+          {
+            "speaker": "B",
+            "text": "Of course. I'll get one from the kitchen."
+          },
+          {
+            "speaker": "A",
+            "text": "Please sit down. I shouldn't have made you get up during dinner."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm getting the pudding anyway. It isn't an extra trip."
+          },
+          {
+            "speaker": "A",
+            "text": "Then just bring pudding. I've already got a spoon. I'll save the peas for another time."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S39-single-b",
+      "card": {
+        "id": "S39",
+        "title": "Don’t Be Difficult",
+        "instruction": "Treat every request, correction, or small inconvenience as a warning that you are becoming too much trouble.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "1f494f82326507f5beb3daff9f97d55a1e27bc1dee132e494c9f33bb46775058",
+      "dialogueHash": "079d24cea2706169b0568d3042cc8654de3265434fa0a860e4eaa2c998f692fc",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Could I have another fork? Sorry, this one's bent."
+        },
+        {
+          "speaker": "B",
+          "text": "Of course. I'll get one from the kitchen."
+        },
+        {
+          "speaker": "A",
+          "text": "Please sit down. I shouldn't have made you get up during dinner."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm getting the pudding anyway. It isn't an extra trip."
+        },
+        {
+          "speaker": "A",
+          "text": "Then just bring pudding. I've already got a spoon. I'll save the peas for another time."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S39-single-a",
+        "dialogueHash": "31f1ef29d0c1434e912bef004f20f69eef04f327c0d92641b775bbe4a1d6b64c",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Could I get a lift? Only if it isn't trouble."
+          },
+          {
+            "speaker": "B",
+            "text": "Of course. I'll move my coat off the passenger seat."
+          },
+          {
+            "speaker": "A",
+            "text": "Don't move it for me. I'll sit in the back."
+          },
+          {
+            "speaker": "B",
+            "text": "That's full of shopping. Hold the coat; I'll turn the heating down."
+          },
+          {
+            "speaker": "A",
+            "text": "Please don't change it. I'll keep the coat on my lap. If I get hot, I can get out and walk the rest."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S40-single-a",
+      "card": {
+        "id": "S40",
+        "title": "I Packed for You",
+        "instruction": "Take care of practical needs before anyone asks, then resist choices that make your preparation unnecessary.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "7b5f866427302c6dbfceb68cbc89c5da8fcba097b1de612c4bd99a26ec025794",
+      "dialogueHash": "b9a9c1abfeb4e94f77d54e7460f02be21afa45c65e07b95c16d8e5587106c33e",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've packed lunches for your first week at college."
+        },
+        {
+          "speaker": "B",
+          "text": "My room doesn't have a fridge."
+        },
+        {
+          "speaker": "A",
+          "text": "Then I'll drop one off every morning. I've labelled the days."
+        },
+        {
+          "speaker": "B",
+          "text": "Lunch is included in my fees. I'm meeting my flatmates there."
+        },
+        {
+          "speaker": "A",
+          "text": "How many flatmates? I'll pack theirs too. You can all meet me outside."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S40-single-b",
+        "dialogueHash": "61f69a41f297a54c72022cc12b7536ab227d1d181aa7a971b97adb86493cb24e",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Take this raincoat to the picnic. I checked the forecast all week."
+          },
+          {
+            "speaker": "B",
+            "text": "It's sunny, and my bag's full."
+          },
+          {
+            "speaker": "A",
+            "text": "Wear it, then. I didn't spend seven mornings checking so you'd have nothing ready."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll be boiling. I could sit on it if the grass is wet."
+          },
+          {
+            "speaker": "A",
+            "text": "Good. I'll pack a water bottle. We can dampen a patch if necessary."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S40-single-b",
+      "card": {
+        "id": "S40",
+        "title": "I Packed for You",
+        "instruction": "Take care of practical needs before anyone asks, then resist choices that make your preparation unnecessary.",
+        "contentVersion": "0.9.0"
+      },
+      "sourceRecordHash": "c57678ce54a5a19673ac367e87de5b41283c6b236d463e9b187645292f016c78",
+      "dialogueHash": "61f69a41f297a54c72022cc12b7536ab227d1d181aa7a971b97adb86493cb24e",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Take this raincoat to the picnic. I checked the forecast all week."
+        },
+        {
+          "speaker": "B",
+          "text": "It's sunny, and my bag's full."
+        },
+        {
+          "speaker": "A",
+          "text": "Wear it, then. I didn't spend seven mornings checking so you'd have nothing ready."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll be boiling. I could sit on it if the grass is wet."
+        },
+        {
+          "speaker": "A",
+          "text": "Good. I'll pack a water bottle. We can dampen a patch if necessary."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S40-single-a",
+        "dialogueHash": "b9a9c1abfeb4e94f77d54e7460f02be21afa45c65e07b95c16d8e5587106c33e",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've packed lunches for your first week at college."
+          },
+          {
+            "speaker": "B",
+            "text": "My room doesn't have a fridge."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I'll drop one off every morning. I've labelled the days."
+          },
+          {
+            "speaker": "B",
+            "text": "Lunch is included in my fees. I'm meeting my flatmates there."
+          },
+          {
+            "speaker": "A",
+            "text": "How many flatmates? I'll pack theirs too. You can all meet me outside."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

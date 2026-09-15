@@ -1,0 +1,1564 @@
+{
+  "at": "2026-09-15T02:19:22.828Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "D96-single-a",
+      "card": {
+        "id": "D96",
+        "title": "Here We Go Again",
+        "instruction": "Use every new disagreement to prove the same relationship pattern is repeating, then raise the consequences.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "e3a0548b4033835fbd57a91ac0c6cf5edd48897c45436e752f2c79fdc3b701dd",
+      "dialogueHash": "ee789c1c9c5f9b087e3f3a132b5312d4541676673c90acd3a9caca9996fa71ea",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You promised to call. I kept dinner warm until eleven again."
+        },
+        {
+          "speaker": "B",
+          "text": "This time my battery died."
+        },
+        {
+          "speaker": "A",
+          "text": "Last time it was the train. Different explanation, same ruined dinner. Tomorrow I'm eating at seven."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll borrow a phone next time. Please keep a plate for me."
+        },
+        {
+          "speaker": "A",
+          "text": "That's how I end up waiting again. Miss another call and you're buying and cooking your own dinners."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D96-single-b",
+        "dialogueHash": "3fd2168c8d9f46c26c565c6f371e4f6424ef483b4abba5e8e6767f73f551a6a2",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You're cancelling Sunday again? Mum's already made up the spare bed."
+          },
+          {
+            "speaker": "B",
+            "text": "Work changed my shift. I can't help it."
+          },
+          {
+            "speaker": "A",
+            "text": "Last time it was overtime. Same empty bed, same explanation from me. You tell her this time."
+          },
+          {
+            "speaker": "B",
+            "text": "She'll think I don't want to visit. Could you soften it?"
+          },
+          {
+            "speaker": "A",
+            "text": "That's the pattern: you cancel, I soften. Now you can arrange the next visit with her too."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D96-single-b",
+      "card": {
+        "id": "D96",
+        "title": "Here We Go Again",
+        "instruction": "Use every new disagreement to prove the same relationship pattern is repeating, then raise the consequences.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "1940321dc3971bd590249abae764c58ba68cf07980752f8796b6a4fb4c3fec98",
+      "dialogueHash": "3fd2168c8d9f46c26c565c6f371e4f6424ef483b4abba5e8e6767f73f551a6a2",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You're cancelling Sunday again? Mum's already made up the spare bed."
+        },
+        {
+          "speaker": "B",
+          "text": "Work changed my shift. I can't help it."
+        },
+        {
+          "speaker": "A",
+          "text": "Last time it was overtime. Same empty bed, same explanation from me. You tell her this time."
+        },
+        {
+          "speaker": "B",
+          "text": "She'll think I don't want to visit. Could you soften it?"
+        },
+        {
+          "speaker": "A",
+          "text": "That's the pattern: you cancel, I soften. Now you can arrange the next visit with her too."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D96-single-a",
+        "dialogueHash": "ee789c1c9c5f9b087e3f3a132b5312d4541676673c90acd3a9caca9996fa71ea",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You promised to call. I kept dinner warm until eleven again."
+          },
+          {
+            "speaker": "B",
+            "text": "This time my battery died."
+          },
+          {
+            "speaker": "A",
+            "text": "Last time it was the train. Different explanation, same ruined dinner. Tomorrow I'm eating at seven."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll borrow a phone next time. Please keep a plate for me."
+          },
+          {
+            "speaker": "A",
+            "text": "That's how I end up waiting again. Miss another call and you're buying and cooking your own dinners."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D97-single-a",
+      "card": {
+        "id": "D97",
+        "title": "Let Me Lean",
+        "instruction": "Get someone to carry part of the emotional burden without making you name how heavy it has become.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "e5495a6c7da64b872e965150d14cb90ac7c9dc8c677a62ec064697e27a4eebc3",
+      "dialogueHash": "0f92a8d5fc01036cd91e2300aeaee5b0ff1da37d5b1734afd21e77ef9fcfdb23",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Could you cancel our anniversary table? The restaurant number's on the fridge."
+        },
+        {
+          "speaker": "B",
+          "text": "What's happened?"
+        },
+        {
+          "speaker": "A",
+          "text": "Please let the call be the first thing you take off me."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll call. They might ask whether you want another date."
+        },
+        {
+          "speaker": "A",
+          "text": "Say no for me. Then stay while I put the anniversary glasses away. You can tell me about your day."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D97-single-b",
+        "dialogueHash": "b1b08d7d317251c08662b7d64818d6905f693e2d84ed37fd9d9c90a8e0aeef36",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Read the first line of this letter before I do."
+          },
+          {
+            "speaker": "B",
+            "text": "Shall I read it aloud?"
+          },
+          {
+            "speaker": "A",
+            "text": "Only if your face stays reasonably ordinary."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll sit beside you. We can take one line at a time."
+          },
+          {
+            "speaker": "A",
+            "text": "Keep hold of the page too. I'll follow your finger. No need to ask why I'm taking so long."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D97-single-b",
+      "card": {
+        "id": "D97",
+        "title": "Let Me Lean",
+        "instruction": "Get someone to carry part of the emotional burden without making you name how heavy it has become.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "5cf8ad1e8202b3e715dda2b46e53efeba7eeeaf104c86de4d707b0beb09cf73f",
+      "dialogueHash": "b1b08d7d317251c08662b7d64818d6905f693e2d84ed37fd9d9c90a8e0aeef36",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Read the first line of this letter before I do."
+        },
+        {
+          "speaker": "B",
+          "text": "Shall I read it aloud?"
+        },
+        {
+          "speaker": "A",
+          "text": "Only if your face stays reasonably ordinary."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll sit beside you. We can take one line at a time."
+        },
+        {
+          "speaker": "A",
+          "text": "Keep hold of the page too. I'll follow your finger. No need to ask why I'm taking so long."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D97-single-a",
+        "dialogueHash": "0f92a8d5fc01036cd91e2300aeaee5b0ff1da37d5b1734afd21e77ef9fcfdb23",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Could you cancel our anniversary table? The restaurant number's on the fridge."
+          },
+          {
+            "speaker": "B",
+            "text": "What's happened?"
+          },
+          {
+            "speaker": "A",
+            "text": "Please let the call be the first thing you take off me."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll call. They might ask whether you want another date."
+          },
+          {
+            "speaker": "A",
+            "text": "Say no for me. Then stay while I put the anniversary glasses away. You can tell me about your day."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D98-single-a",
+      "card": {
+        "id": "D98",
+        "title": "Stay Until I’m Steady",
+        "instruction": "Keep someone present until you feel steady enough to face what comes next without them.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "6752cc54d4ee43ff977e5f7661047c0b1923eb9701dd9c5f4f15919c825d5474",
+      "dialogueHash": "271f38d1571f2fef3c92e510c3f79389fbff7d64453efca2fe54a7b56d700929",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Stay for tea. I need to tell the children about tomorrow's operation without crying."
+        },
+        {
+          "speaker": "B",
+          "text": "We've had three cups."
+        },
+        {
+          "speaker": "A",
+          "text": "Then skip the kettle. Let me practise telling you before I fetch them."
+        },
+        {
+          "speaker": "B",
+          "text": "My taxi's outside."
+        },
+        {
+          "speaker": "A",
+          "text": "Ask for two minutes. Let me say 'I'll be in hospital' without apologising to you. Then I'll try telling them myself."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D98-single-b",
+        "dialogueHash": "728672c78dfac81a46f39d9985d16633dd00a260fc82bd3ef91b6ee1f373dbf1",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before you leave me in the new flat, count five breaths with me."
+          },
+          {
+            "speaker": "B",
+            "text": "That was five. Shall I close the door?"
+          },
+          {
+            "speaker": "A",
+            "text": "Not yet. Five more while I look at the empty kitchen instead of you."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll wait here while you put the kettle on."
+          },
+          {
+            "speaker": "A",
+            "text": "Stay until it boils. Then I'll try pouring one cup without getting yours out."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D98-single-b",
+      "card": {
+        "id": "D98",
+        "title": "Stay Until I’m Steady",
+        "instruction": "Keep someone present until you feel steady enough to face what comes next without them.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "0a999bd68b1ad53bb52f76d43cad31db4ff800a26c5931c7969c5e6df3a5cc58",
+      "dialogueHash": "728672c78dfac81a46f39d9985d16633dd00a260fc82bd3ef91b6ee1f373dbf1",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before you leave me in the new flat, count five breaths with me."
+        },
+        {
+          "speaker": "B",
+          "text": "That was five. Shall I close the door?"
+        },
+        {
+          "speaker": "A",
+          "text": "Not yet. Five more while I look at the empty kitchen instead of you."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll wait here while you put the kettle on."
+        },
+        {
+          "speaker": "A",
+          "text": "Stay until it boils. Then I'll try pouring one cup without getting yours out."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D98-single-a",
+        "dialogueHash": "271f38d1571f2fef3c92e510c3f79389fbff7d64453efca2fe54a7b56d700929",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Stay for tea. I need to tell the children about tomorrow's operation without crying."
+          },
+          {
+            "speaker": "B",
+            "text": "We've had three cups."
+          },
+          {
+            "speaker": "A",
+            "text": "Then skip the kettle. Let me practise telling you before I fetch them."
+          },
+          {
+            "speaker": "B",
+            "text": "My taxi's outside."
+          },
+          {
+            "speaker": "A",
+            "text": "Ask for two minutes. Let me say 'I'll be in hospital' without apologising to you. Then I'll try telling them myself."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D99-single-a",
+      "card": {
+        "id": "D99",
+        "title": "Understand the Hurt",
+        "instruction": "Make someone acknowledge why their action hurt, not merely agree that it happened.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "f7b755004ad9431d58757259ffddbe50e505ad73066c2d321302bdf3977ce139",
+      "dialogueHash": "5d2fdca1855d3d0296586e9a48fd7686918effd8d6e2a49d4af5c9df9f56e49a",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I saved you a front-row seat at my concert. Do you understand why it hurt?"
+        },
+        {
+          "speaker": "B",
+          "text": "I told you work might run late."
+        },
+        {
+          "speaker": "A",
+          "text": "I knew. I still looked at that empty seat before every song."
+        },
+        {
+          "speaker": "B",
+          "text": "You needed someone there who knew what this meant to you."
+        },
+        {
+          "speaker": "A",
+          "text": "Yes. You'd heard me practise for months. Please tell me you understand why someone else couldn't fill it."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D99-single-b",
+        "dialogueHash": "a59bad043780df8358b226481696c30af2d4df821acd3135bfb8d665e5f2f5c6",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I texted that I'd lost my job. You replied, 'What's for dinner?'"
+          },
+          {
+            "speaker": "B",
+            "text": "I thought something normal would help."
+          },
+          {
+            "speaker": "A",
+            "text": "Making your dinner? Can you see why I felt like the cook?"
+          },
+          {
+            "speaker": "B",
+            "text": "I meant we could go out. I'll book somewhere."
+          },
+          {
+            "speaker": "A",
+            "text": "I believe you. Before you book, can you see why I heard a chore? I needed you to ask how I was."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D99-single-b",
+      "card": {
+        "id": "D99",
+        "title": "Understand the Hurt",
+        "instruction": "Make someone acknowledge why their action hurt, not merely agree that it happened.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "9d3935d926a03946d5fc76255ce846ed24559fb196de8256556ef5eca2c8c4ac",
+      "dialogueHash": "a59bad043780df8358b226481696c30af2d4df821acd3135bfb8d665e5f2f5c6",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I texted that I'd lost my job. You replied, 'What's for dinner?'"
+        },
+        {
+          "speaker": "B",
+          "text": "I thought something normal would help."
+        },
+        {
+          "speaker": "A",
+          "text": "Making your dinner? Can you see why I felt like the cook?"
+        },
+        {
+          "speaker": "B",
+          "text": "I meant we could go out. I'll book somewhere."
+        },
+        {
+          "speaker": "A",
+          "text": "I believe you. Before you book, can you see why I heard a chore? I needed you to ask how I was."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D99-single-a",
+        "dialogueHash": "5d2fdca1855d3d0296586e9a48fd7686918effd8d6e2a49d4af5c9df9f56e49a",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I saved you a front-row seat at my concert. Do you understand why it hurt?"
+          },
+          {
+            "speaker": "B",
+            "text": "I told you work might run late."
+          },
+          {
+            "speaker": "A",
+            "text": "I knew. I still looked at that empty seat before every song."
+          },
+          {
+            "speaker": "B",
+            "text": "You needed someone there who knew what this meant to you."
+          },
+          {
+            "speaker": "A",
+            "text": "Yes. You'd heard me practise for months. Please tell me you understand why someone else couldn't fill it."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D100-single-a",
+      "card": {
+        "id": "D100",
+        "title": "Tell Me I Did Enough",
+        "instruction": "Get someone to reassure you that your effort, choice, or survival was enough.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "3e0765ea7f645542c71e52adbcbe284387cbfc61ae4ddd23ed2c9b221c8e1af0",
+      "dialogueHash": "2399c6af6205002aafd88ef73d9dadc8265bcd09dea4988d2593c01bef25dd43",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I only finished one painting for our exhibition. Tell me I've done enough."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll spread mine out. Nobody will notice the gap."
+        },
+        {
+          "speaker": "A",
+          "text": "I need to know I've contributed, not that you can hide where I haven't."
+        },
+        {
+          "speaker": "B",
+          "text": "Yours belongs in the middle. It's the one people will see first."
+        },
+        {
+          "speaker": "A",
+          "text": "Then introduce me as the other painter. No 'despite everything'. I want to hear that I belong here."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D100-single-b",
+        "dialogueHash": "fbf61aa679dcbe60f5e881fa0bcd3858db287a25be9fd3e888152157e721dc32",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I made it through the speech without leaving. Was that enough?"
+          },
+          {
+            "speaker": "B",
+            "text": "You forgot a paragraph."
+          },
+          {
+            "speaker": "A",
+            "text": "I know. I'm asking about staying."
+          },
+          {
+            "speaker": "B",
+            "text": "You stayed all the way through. I'll help you practise the missing bit tomorrow."
+          },
+          {
+            "speaker": "A",
+            "text": "Could staying earn me tomorrow off? Tell me I can put the speech away."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D100-single-b",
+      "card": {
+        "id": "D100",
+        "title": "Tell Me I Did Enough",
+        "instruction": "Get someone to reassure you that your effort, choice, or survival was enough.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "93ac8cacbf26d8dcf39bd0eb61da6ab6b6f331e7d8cc0ad9ae9c7e43ec5bc490",
+      "dialogueHash": "fbf61aa679dcbe60f5e881fa0bcd3858db287a25be9fd3e888152157e721dc32",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I made it through the speech without leaving. Was that enough?"
+        },
+        {
+          "speaker": "B",
+          "text": "You forgot a paragraph."
+        },
+        {
+          "speaker": "A",
+          "text": "I know. I'm asking about staying."
+        },
+        {
+          "speaker": "B",
+          "text": "You stayed all the way through. I'll help you practise the missing bit tomorrow."
+        },
+        {
+          "speaker": "A",
+          "text": "Could staying earn me tomorrow off? Tell me I can put the speech away."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D100-single-a",
+        "dialogueHash": "2399c6af6205002aafd88ef73d9dadc8265bcd09dea4988d2593c01bef25dd43",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I only finished one painting for our exhibition. Tell me I've done enough."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll spread mine out. Nobody will notice the gap."
+          },
+          {
+            "speaker": "A",
+            "text": "I need to know I've contributed, not that you can hide where I haven't."
+          },
+          {
+            "speaker": "B",
+            "text": "Yours belongs in the middle. It's the one people will see first."
+          },
+          {
+            "speaker": "A",
+            "text": "Then introduce me as the other painter. No 'despite everything'. I want to hear that I belong here."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D101-single-a",
+      "card": {
+        "id": "D101",
+        "title": "Start the Hard Part",
+        "instruction": "Get someone else to explain, announce, or begin the emotionally difficult part.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "79619867530decc72d8cf26846169b566e88e53a0eb836cae2655a12b55497de",
+      "dialogueHash": "6c628095b057aad5c23390e484b41233482d0787f52cbbd031c28ad95cc24303",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You tell the choir the tour's cancelled. I'll hand out the refund forms."
+        },
+        {
+          "speaker": "B",
+          "text": "You're the organiser."
+        },
+        {
+          "speaker": "A",
+          "text": "Exactly. The forms will need my full attention."
+        },
+        {
+          "speaker": "B",
+          "text": "They'll ask why."
+        },
+        {
+          "speaker": "A",
+          "text": "Say 'funding' first. I'll join after the disappointed silence."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D101-single-b",
+        "dialogueHash": "629ae4d7c6d07a78e664e296a2b92ea476481e838d4b433106fc744efc2bd058",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Could you phone Mum and begin the conversation about selling the house?"
+          },
+          {
+            "speaker": "B",
+            "text": "She asked to speak to you."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll take over once you've said the word selling."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll put her on speaker. You'll be there for the whole thing."
+          },
+          {
+            "speaker": "A",
+            "text": "That's fine. Introduce the idea, and when she says my full name, I'll answer."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D101-single-b",
+      "card": {
+        "id": "D101",
+        "title": "Start the Hard Part",
+        "instruction": "Get someone else to explain, announce, or begin the emotionally difficult part.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "85f7720ecf8c48543f3685eeb3088037325891e6f7ded81445ecfb6883fff17b",
+      "dialogueHash": "629ae4d7c6d07a78e664e296a2b92ea476481e838d4b433106fc744efc2bd058",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Could you phone Mum and begin the conversation about selling the house?"
+        },
+        {
+          "speaker": "B",
+          "text": "She asked to speak to you."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll take over once you've said the word selling."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll put her on speaker. You'll be there for the whole thing."
+        },
+        {
+          "speaker": "A",
+          "text": "That's fine. Introduce the idea, and when she says my full name, I'll answer."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D101-single-a",
+        "dialogueHash": "6c628095b057aad5c23390e484b41233482d0787f52cbbd031c28ad95cc24303",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You tell the choir the tour's cancelled. I'll hand out the refund forms."
+          },
+          {
+            "speaker": "B",
+            "text": "You're the organiser."
+          },
+          {
+            "speaker": "A",
+            "text": "Exactly. The forms will need my full attention."
+          },
+          {
+            "speaker": "B",
+            "text": "They'll ask why."
+          },
+          {
+            "speaker": "A",
+            "text": "Say 'funding' first. I'll join after the disappointed silence."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D102-single-a",
+      "card": {
+        "id": "D102",
+        "title": "What Aren’t You Saying?",
+        "instruction": "Find out what someone is holding back by treating every careful answer as incomplete.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "214ca7766973b54e7b79f1dbf504eb149a56f04c46ef0c8c0dd166288474a305",
+      "dialogueHash": "0ee7645a3615f39f49488a0a61c773d19e6dfab24716ce7ee54e2b81a1ab3de0",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You called my audition interesting. What came after that in your head?"
+        },
+        {
+          "speaker": "B",
+          "text": "You're my sister. I'm trying to be encouraging."
+        },
+        {
+          "speaker": "A",
+          "text": "Then give me the encouraging half and the half you swallowed."
+        },
+        {
+          "speaker": "B",
+          "text": "Your singing was better than your dancing."
+        },
+        {
+          "speaker": "A",
+          "text": "Better by how much? Are we buying dance lessons or shoes that don't move?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D102-single-b",
+        "dialogueHash": "e944436659f26172c16f323590e39633f438ad135d61c137e1d360b6e57ff50e",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "These minutes say 'discussion of my proposal.' What did you leave out?"
+          },
+          {
+            "speaker": "B",
+            "text": "Sign them and we can eat. Nobody wanted an awkward record."
+          },
+          {
+            "speaker": "A",
+            "text": "'Nobody' sounds crowded. Who wanted my name out of it?"
+          },
+          {
+            "speaker": "B",
+            "text": "I did. I suggested someone else present, to save your proposal."
+          },
+          {
+            "speaker": "A",
+            "text": "Who else? You've recorded my rescue very carefully without naming my replacement."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D102-single-b",
+      "card": {
+        "id": "D102",
+        "title": "What Aren’t You Saying?",
+        "instruction": "Find out what someone is holding back by treating every careful answer as incomplete.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "e78e2ee517fabfb9cc50000b96567f30290fcf6590a524b347505e4fbe746880",
+      "dialogueHash": "e944436659f26172c16f323590e39633f438ad135d61c137e1d360b6e57ff50e",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "These minutes say 'discussion of my proposal.' What did you leave out?"
+        },
+        {
+          "speaker": "B",
+          "text": "Sign them and we can eat. Nobody wanted an awkward record."
+        },
+        {
+          "speaker": "A",
+          "text": "'Nobody' sounds crowded. Who wanted my name out of it?"
+        },
+        {
+          "speaker": "B",
+          "text": "I did. I suggested someone else present, to save your proposal."
+        },
+        {
+          "speaker": "A",
+          "text": "Who else? You've recorded my rescue very carefully without naming my replacement."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D102-single-a",
+        "dialogueHash": "0ee7645a3615f39f49488a0a61c773d19e6dfab24716ce7ee54e2b81a1ab3de0",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You called my audition interesting. What came after that in your head?"
+          },
+          {
+            "speaker": "B",
+            "text": "You're my sister. I'm trying to be encouraging."
+          },
+          {
+            "speaker": "A",
+            "text": "Then give me the encouraging half and the half you swallowed."
+          },
+          {
+            "speaker": "B",
+            "text": "Your singing was better than your dancing."
+          },
+          {
+            "speaker": "A",
+            "text": "Better by how much? Are we buying dance lessons or shoes that don't move?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D103-single-a",
+      "card": {
+        "id": "D103",
+        "title": "Hope with Me",
+        "instruction": "Recruit someone into believing that the outcome can still change, even when the evidence is thin.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "dd2f845a3be87e6775322ace167ed33d1774fa9e268989da615996538e527963",
+      "dialogueHash": "bb331ddde1cff27d9027d6cf2c6a69cdf72b1ac63d4ffd63a9f460f738017573",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Draw another route for our parade with me. Two streets said no; the town hasn't."
+        },
+        {
+          "speaker": "B",
+          "text": "The only route left goes behind the supermarket."
+        },
+        {
+          "speaker": "A",
+          "text": "Then take the other pencil. Can you picture people cheering by the loading bay?"
+        },
+        {
+          "speaker": "B",
+          "text": "My dad would come. He works there."
+        },
+        {
+          "speaker": "A",
+          "text": "Put him on the map. Where would a second person stand?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D103-single-b",
+        "dialogueHash": "67066cb9b42c4de975ed3a349367e0acad5a1279339c2884015812a052fb4a2d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Help me choose celebration glasses for when our café application gets approved."
+          },
+          {
+            "speaker": "B",
+            "text": "We're on the waiting list. I haven't even told my mum."
+          },
+          {
+            "speaker": "A",
+            "text": "Then just believe it with me here. Which glasses belong in our café?"
+          },
+          {
+            "speaker": "B",
+            "text": "These two. Mum would insist on a mug."
+          },
+          {
+            "speaker": "A",
+            "text": "Choose her mug too. You just pictured our first customer."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D103-single-b",
+      "card": {
+        "id": "D103",
+        "title": "Hope with Me",
+        "instruction": "Recruit someone into believing that the outcome can still change, even when the evidence is thin.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "6bb904939928d50438685f7fdace0352d8f45884b93c50aa780ff1437ad0cf59",
+      "dialogueHash": "67066cb9b42c4de975ed3a349367e0acad5a1279339c2884015812a052fb4a2d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Help me choose celebration glasses for when our café application gets approved."
+        },
+        {
+          "speaker": "B",
+          "text": "We're on the waiting list. I haven't even told my mum."
+        },
+        {
+          "speaker": "A",
+          "text": "Then just believe it with me here. Which glasses belong in our café?"
+        },
+        {
+          "speaker": "B",
+          "text": "These two. Mum would insist on a mug."
+        },
+        {
+          "speaker": "A",
+          "text": "Choose her mug too. You just pictured our first customer."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D103-single-a",
+        "dialogueHash": "bb331ddde1cff27d9027d6cf2c6a69cdf72b1ac63d4ffd63a9f460f738017573",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Draw another route for our parade with me. Two streets said no; the town hasn't."
+          },
+          {
+            "speaker": "B",
+            "text": "The only route left goes behind the supermarket."
+          },
+          {
+            "speaker": "A",
+            "text": "Then take the other pencil. Can you picture people cheering by the loading bay?"
+          },
+          {
+            "speaker": "B",
+            "text": "My dad would come. He works there."
+          },
+          {
+            "speaker": "A",
+            "text": "Put him on the map. Where would a second person stand?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D104-single-a",
+      "card": {
+        "id": "D104",
+        "title": "Say the Scary Part",
+        "instruction": "Get someone else to name the frightening possibility or vulnerable feeling before you do.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "3b99b7cb5bd9995bab1e5c8d51e7aecdc6acb3a87b61966b2554600d4ccb102c",
+      "dialogueHash": "20c8a93e507c917cf0f750f9cb756f908ec663c1b56151c94e8ece3e41207345",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before we open the landlord's letter, tell me the worst thing it could mean for our shop."
+        },
+        {
+          "speaker": "B",
+          "text": "We've only missed one payment."
+        },
+        {
+          "speaker": "A",
+          "text": "I know the number. I need you to say the thing I'm counting towards."
+        },
+        {
+          "speaker": "B",
+          "text": "We could lose the shop."
+        },
+        {
+          "speaker": "A",
+          "text": "And what would that make me, after Dad trusted me with it? Say that bit first too."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D104-single-b",
+        "dialogueHash": "f314ee5d3ae9278cc46a4789370d165825301eeffad87dca6cb1386f375591bd",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before our skating qualifier, can you say the possibility we keep avoiding?"
+          },
+          {
+            "speaker": "B",
+            "text": "I don't want you carrying that onto the ice."
+          },
+          {
+            "speaker": "A",
+            "text": "I'm carrying it already. I just need you to say it first."
+          },
+          {
+            "speaker": "B",
+            "text": "We might not qualify. I'd still want to skate with you."
+          },
+          {
+            "speaker": "A",
+            "text": "Why did I need that second sentence so much? Could you name that fear too?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D104-single-b",
+      "card": {
+        "id": "D104",
+        "title": "Say the Scary Part",
+        "instruction": "Get someone else to name the frightening possibility or vulnerable feeling before you do.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "bded91496c39ef8817b4f5e8e940c4174ee2d490a73dae4173baa1be6e1ff64d",
+      "dialogueHash": "f314ee5d3ae9278cc46a4789370d165825301eeffad87dca6cb1386f375591bd",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before our skating qualifier, can you say the possibility we keep avoiding?"
+        },
+        {
+          "speaker": "B",
+          "text": "I don't want you carrying that onto the ice."
+        },
+        {
+          "speaker": "A",
+          "text": "I'm carrying it already. I just need you to say it first."
+        },
+        {
+          "speaker": "B",
+          "text": "We might not qualify. I'd still want to skate with you."
+        },
+        {
+          "speaker": "A",
+          "text": "Why did I need that second sentence so much? Could you name that fear too?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D104-single-a",
+        "dialogueHash": "20c8a93e507c917cf0f750f9cb756f908ec663c1b56151c94e8ece3e41207345",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before we open the landlord's letter, tell me the worst thing it could mean for our shop."
+          },
+          {
+            "speaker": "B",
+            "text": "We've only missed one payment."
+          },
+          {
+            "speaker": "A",
+            "text": "I know the number. I need you to say the thing I'm counting towards."
+          },
+          {
+            "speaker": "B",
+            "text": "We could lose the shop."
+          },
+          {
+            "speaker": "A",
+            "text": "And what would that make me, after Dad trusted me with it? Say that bit first too."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D105-single-a",
+      "card": {
+        "id": "D105",
+        "title": "See What This Took",
+        "instruction": "Make someone recognize the courage, restraint, or emotional labor your choices required.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "89a7c6980c61a81af1738be4ca5add7e6e5dff4254431aa918066e0dcafa8e68",
+      "dialogueHash": "4edaf8ad9d077698d3f22125396a34d01a314bd35094778e2fe08df1184f8398",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Compare the angry letter with the one I sent. Notice the crossing-out."
+        },
+        {
+          "speaker": "B",
+          "text": "I appreciate the apology you sent. Why show me the angry version?"
+        },
+        {
+          "speaker": "A",
+          "text": "Because 'sorry' took ten minutes. Not sending the rest took all night."
+        },
+        {
+          "speaker": "B",
+          "text": "Now I'm tempted to read what you spared me."
+        },
+        {
+          "speaker": "A",
+          "text": "Please admire the thickness with it shut. I'd like one night's restraint to survive breakfast."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D105-single-b",
+        "dialogueHash": "5a4fa73453e9a5f40a20b15f5e634cfbfbc402e24a103fe502e147c52c6192a7",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I told the committee I couldn't chair another year. Please appreciate what those two sentences took."
+          },
+          {
+            "speaker": "B",
+            "text": "Good. Could you stay on until we find someone?"
+          },
+          {
+            "speaker": "A",
+            "text": "I rehearsed in your car until I stopped apologising. That wasn't me advertising a temporary vacancy."
+          },
+          {
+            "speaker": "B",
+            "text": "Then I'll tell them you're exhausted and need a break."
+          },
+          {
+            "speaker": "A",
+            "text": "Please don't supply the excuse I spent an hour removing. Could you recognise a refusal I finally managed without one?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D105-single-b",
+      "card": {
+        "id": "D105",
+        "title": "See What This Took",
+        "instruction": "Make someone recognize the courage, restraint, or emotional labor your choices required.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "f84ceff6ce8c603a058893bdbb440e54116c16936fa2340382828f92bab3e2c9",
+      "dialogueHash": "5a4fa73453e9a5f40a20b15f5e634cfbfbc402e24a103fe502e147c52c6192a7",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I told the committee I couldn't chair another year. Please appreciate what those two sentences took."
+        },
+        {
+          "speaker": "B",
+          "text": "Good. Could you stay on until we find someone?"
+        },
+        {
+          "speaker": "A",
+          "text": "I rehearsed in your car until I stopped apologising. That wasn't me advertising a temporary vacancy."
+        },
+        {
+          "speaker": "B",
+          "text": "Then I'll tell them you're exhausted and need a break."
+        },
+        {
+          "speaker": "A",
+          "text": "Please don't supply the excuse I spent an hour removing. Could you recognise a refusal I finally managed without one?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D105-single-a",
+        "dialogueHash": "4edaf8ad9d077698d3f22125396a34d01a314bd35094778e2fe08df1184f8398",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Compare the angry letter with the one I sent. Notice the crossing-out."
+          },
+          {
+            "speaker": "B",
+            "text": "I appreciate the apology you sent. Why show me the angry version?"
+          },
+          {
+            "speaker": "A",
+            "text": "Because 'sorry' took ten minutes. Not sending the rest took all night."
+          },
+          {
+            "speaker": "B",
+            "text": "Now I'm tempted to read what you spared me."
+          },
+          {
+            "speaker": "A",
+            "text": "Please admire the thickness with it shut. I'd like one night's restraint to survive breakfast."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

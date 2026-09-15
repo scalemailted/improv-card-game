@@ -1,0 +1,544 @@
+{
+  "at": "2026-09-15T02:14:43.554Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "D179-single-b",
+      "card": {
+        "id": "D179",
+        "title": "Interpret the Custom",
+        "instruction": "Ask them to apply an ambiguous custom where the wording is unclear. Treat their interpretation as the real test of loyalty.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "e696afd94b307aaccb372041a5adbeb4d7a74900c7cabfe4c928fc156c310da1",
+      "dialogueHash": "a1a165bb30ba9ce19b2defa03f14087721538f950d309878c61fb06b6d4b2dc7",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Our gardening club supports members 'where possible.' Will you sign my appeal against losing my allotment?"
+        },
+        {
+          "speaker": "B",
+          "text": "That could just mean wishing you luck."
+        },
+        {
+          "speaker": "A",
+          "text": "You get to interpret it. I'd like to know whether membership reaches as far as your signature."
+        },
+        {
+          "speaker": "B",
+          "text": "Some members want my name kept off it."
+        },
+        {
+          "speaker": "A",
+          "text": "Then the same words have to cover me and their disapproval. Whose comfort does 'possible' protect?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D179-single-a",
+        "dialogueHash": "844cd68eb904d489c9c28b99df6a2334d488da3d44804fe8f217f68411aa3f7e",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before I leave for my shift, how much lasagne will you save me? Family custom says 'a proper portion.'"
+          },
+          {
+            "speaker": "B",
+            "text": "It doesn't say how big."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I'll find out what 'proper' means when it's for me."
+          },
+          {
+            "speaker": "B",
+            "text": "Your brothers want seconds."
+          },
+          {
+            "speaker": "A",
+            "text": "Save mine before you serve those. I'd like being expected home to count before being hungry twice."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D180-single-a",
+      "card": {
+        "id": "D180",
+        "title": "Withdraw the Objection",
+        "instruction": "Persuade someone to drop a complaint, challenge, or special request and accept the official process.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "eaac556eff49f74a818361161b63996560f27c690eb1bdb23684c11ed81cb43d",
+      "dialogueHash": "c83593397f6a18807c12ec8b754e3bbf129939fa8dd80a30565d6ec548fbbcc2",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Drop the demand to question our delivery driver. The missing-parcel claim goes through this form."
+        },
+        {
+          "speaker": "B",
+          "text": "Your form requires a photo of the parcel I haven't received."
+        },
+        {
+          "speaker": "A",
+          "text": "Use a photo of your empty doorstep. That's the delivery location."
+        },
+        {
+          "speaker": "B",
+          "text": "Will you stand in it holding today's newspaper?"
+        },
+        {
+          "speaker": "A",
+          "text": "Yes, beside the doormat. Put me under 'supporting evidence,' and leave the driver off your witness list."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D180-single-b",
+        "dialogueHash": "129b9fa15399af92502bee3003f86ce1d03c568b42a4590830d9a1cdc2d091d8",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Please drop the request for a private tea queue. Everyone at the fete uses this one."
+          },
+          {
+            "speaker": "B",
+            "text": "I donated the tent. Can't that count for something?"
+          },
+          {
+            "speaker": "A",
+            "text": "It does. Your name's on the thank-you board beside the queue."
+          },
+          {
+            "speaker": "B",
+            "text": "Nobody can read it behind that urn."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll move the urn. You can accept everyone's thanks while you wait your turn."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D180-single-b",
+      "card": {
+        "id": "D180",
+        "title": "Withdraw the Objection",
+        "instruction": "Persuade someone to drop a complaint, challenge, or special request and accept the official process.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "69bb9bc1c353eef9192c73ef24722c3855e1c76c203bda85f5f4565713d12ded",
+      "dialogueHash": "129b9fa15399af92502bee3003f86ce1d03c568b42a4590830d9a1cdc2d091d8",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Please drop the request for a private tea queue. Everyone at the fete uses this one."
+        },
+        {
+          "speaker": "B",
+          "text": "I donated the tent. Can't that count for something?"
+        },
+        {
+          "speaker": "A",
+          "text": "It does. Your name's on the thank-you board beside the queue."
+        },
+        {
+          "speaker": "B",
+          "text": "Nobody can read it behind that urn."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll move the urn. You can accept everyone's thanks while you wait your turn."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D180-single-a",
+        "dialogueHash": "c83593397f6a18807c12ec8b754e3bbf129939fa8dd80a30565d6ec548fbbcc2",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Drop the demand to question our delivery driver. The missing-parcel claim goes through this form."
+          },
+          {
+            "speaker": "B",
+            "text": "Your form requires a photo of the parcel I haven't received."
+          },
+          {
+            "speaker": "A",
+            "text": "Use a photo of your empty doorstep. That's the delivery location."
+          },
+          {
+            "speaker": "B",
+            "text": "Will you stand in it holding today's newspaper?"
+          },
+          {
+            "speaker": "A",
+            "text": "Yes, beside the doormat. Put me under 'supporting evidence,' and leave the driver off your witness list."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

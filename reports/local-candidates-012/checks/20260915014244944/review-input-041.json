@@ -1,0 +1,904 @@
+{
+  "at": "2026-09-15T01:42:44.947Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "D116-single-a",
+      "card": {
+        "id": "D116",
+        "title": "Hope Keeps Moving",
+        "instruction": "Turn every disappointment into a new reason the desired outcome is delayed, redirected, or becoming more meaningful.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "744e99a3f8c9edf45e86dc3d20b4608119a03545737d609bd5662166979a6ea9",
+      "dialogueHash": "ffe34171c008efba780a4e2079815e07fa8ceb3d60d44539ebedd2278cf86111",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The hall rejected our wedding booking. Apparently we're meant to marry somewhere less municipal."
+        },
+        {
+          "speaker": "B",
+          "text": "Every venue is booked for June."
+        },
+        {
+          "speaker": "A",
+          "text": "Then September gives us three more months to practise being married."
+        },
+        {
+          "speaker": "B",
+          "text": "My parents can't travel in September."
+        },
+        {
+          "speaker": "A",
+          "text": "Then we go to them. Their garden! We're finally finding out where this wedding belongs."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D116-single-b",
+        "dialogueHash": "a099b3b875a3542ade0cbb9290ad8d32198c80f545f1a62129871fcdf252328c",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Our bookshop failed here. We're meant to find readers somewhere else."
+          },
+          {
+            "speaker": "B",
+            "text": "We have no moving money."
+          },
+          {
+            "speaker": "A",
+            "text": "Then we're meant to start smaller. One shelf, properly chosen."
+          },
+          {
+            "speaker": "B",
+            "text": "I could get us a market stall beside the bus stop."
+          },
+          {
+            "speaker": "A",
+            "text": "People waiting with nothing to read! I'll pack the short stories. We've been making our customers come too far."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D116-single-b",
+      "card": {
+        "id": "D116",
+        "title": "Hope Keeps Moving",
+        "instruction": "Turn every disappointment into a new reason the desired outcome is delayed, redirected, or becoming more meaningful.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "9aada129da62d6723219847a221400645084ba44a87f20fccbd32040a67aeeff",
+      "dialogueHash": "a099b3b875a3542ade0cbb9290ad8d32198c80f545f1a62129871fcdf252328c",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Our bookshop failed here. We're meant to find readers somewhere else."
+        },
+        {
+          "speaker": "B",
+          "text": "We have no moving money."
+        },
+        {
+          "speaker": "A",
+          "text": "Then we're meant to start smaller. One shelf, properly chosen."
+        },
+        {
+          "speaker": "B",
+          "text": "I could get us a market stall beside the bus stop."
+        },
+        {
+          "speaker": "A",
+          "text": "People waiting with nothing to read! I'll pack the short stories. We've been making our customers come too far."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D116-single-a",
+        "dialogueHash": "ffe34171c008efba780a4e2079815e07fa8ceb3d60d44539ebedd2278cf86111",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The hall rejected our wedding booking. Apparently we're meant to marry somewhere less municipal."
+          },
+          {
+            "speaker": "B",
+            "text": "Every venue is booked for June."
+          },
+          {
+            "speaker": "A",
+            "text": "Then September gives us three more months to practise being married."
+          },
+          {
+            "speaker": "B",
+            "text": "My parents can't travel in September."
+          },
+          {
+            "speaker": "A",
+            "text": "Then we go to them. Their garden! We're finally finding out where this wedding belongs."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D117-single-a",
+      "card": {
+        "id": "D117",
+        "title": "Comfort Everyone Else",
+        "instruction": "Meet every painful moment by comforting someone else more intensely while your own distress becomes harder to hide.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "e2588c0f1a69abf6f563afbf9832e78d8d5c11948b35c01033c6dde3591a2198",
+      "dialogueHash": "86442368be912b7bd3ea442f9863ccf1217a58f31a67d15db9926e0bb714d3a6",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've brought tissues. Being laid off together doesn't make your day any easier."
+        },
+        {
+          "speaker": "B",
+          "text": "You're wiping your eyes on your sleeve."
+        },
+        {
+          "speaker": "A",
+          "text": "I'm saving the soft ones for you. Tell me what you're worried about."
+        },
+        {
+          "speaker": "B",
+          "text": "You. You can't even get the tissue box open."
+        },
+        {
+          "speaker": "A",
+          "text": "Then take the whole box. I'll make tea once my hands stop doing this."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D117-single-b",
+        "dialogueHash": "73f4ac364e92c06b8fe91abf1f3b7d688d4ef1f0aae23e4a1e2b26697e753400",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've made you soup. The choir rejecting us doesn't mean you should miss dinner."
+          },
+          {
+            "speaker": "B",
+            "text": "You've set a bowl for yourself too."
+          },
+          {
+            "speaker": "A",
+            "text": "So you won't have to eat alone. I'll butter your bread."
+          },
+          {
+            "speaker": "B",
+            "text": "Sit with me. I don't want you crying in the kitchen."
+          },
+          {
+            "speaker": "A",
+            "text": "All right. But take my bread too. I can't swallow yet, and you shouldn't have to ask twice."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D117-single-b",
+      "card": {
+        "id": "D117",
+        "title": "Comfort Everyone Else",
+        "instruction": "Meet every painful moment by comforting someone else more intensely while your own distress becomes harder to hide.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "aaacedadff29338caca317e6b466f440473f93311e293545cf193c556837a94a",
+      "dialogueHash": "73f4ac364e92c06b8fe91abf1f3b7d688d4ef1f0aae23e4a1e2b26697e753400",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've made you soup. The choir rejecting us doesn't mean you should miss dinner."
+        },
+        {
+          "speaker": "B",
+          "text": "You've set a bowl for yourself too."
+        },
+        {
+          "speaker": "A",
+          "text": "So you won't have to eat alone. I'll butter your bread."
+        },
+        {
+          "speaker": "B",
+          "text": "Sit with me. I don't want you crying in the kitchen."
+        },
+        {
+          "speaker": "A",
+          "text": "All right. But take my bread too. I can't swallow yet, and you shouldn't have to ask twice."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D117-single-a",
+        "dialogueHash": "86442368be912b7bd3ea442f9863ccf1217a58f31a67d15db9926e0bb714d3a6",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've brought tissues. Being laid off together doesn't make your day any easier."
+          },
+          {
+            "speaker": "B",
+            "text": "You're wiping your eyes on your sleeve."
+          },
+          {
+            "speaker": "A",
+            "text": "I'm saving the soft ones for you. Tell me what you're worried about."
+          },
+          {
+            "speaker": "B",
+            "text": "You. You can't even get the tissue box open."
+          },
+          {
+            "speaker": "A",
+            "text": "Then take the whole box. I'll make tea once my hands stop doing this."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D118-single-a",
+      "card": {
+        "id": "D118",
+        "title": "Emotional Interest",
+        "instruction": "Treat comfort, vulnerability, and forgiveness as investments that must eventually be repaid with equal emotional risk.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "49bd9e19e8fbfce5a27474d970b966b0c5edd37517a94e7c4e04651db802a0b1",
+      "dialogueHash": "a221a5f647bee41c5655dc18cc136b68cd8469746145ce6d38edc60b50c7d49b",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I told your mother I'm scared she dislikes me. Sunday, you owe me an equally embarrassing admission."
+        },
+        {
+          "speaker": "B",
+          "text": "I didn't ask you to tell her."
+        },
+        {
+          "speaker": "A",
+          "text": "I trusted you to risk something too. What scares you?"
+        },
+        {
+          "speaker": "B",
+          "text": "That she'll like you more."
+        },
+        {
+          "speaker": "A",
+          "text": "That's equal. Now tell her over lunch. Mine had an audience; yours needs one too."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D118-single-b",
+        "dialogueHash": "d2c6a5f9f5f1cadf5e9cc337663a5940123bf30bbcf52e6ca39a0f760889928a",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll stay through this hard conversation. Someday I need you equally open with me."
+          },
+          {
+            "speaker": "B",
+            "text": "Are you keeping score?"
+          },
+          {
+            "speaker": "A",
+            "text": "Not points. A place where both of us can be unsteady."
+          },
+          {
+            "speaker": "B",
+            "text": "I don't know if I can."
+          },
+          {
+            "speaker": "A",
+            "text": "Then say that honestly. It's a first payment."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D119-single-a",
+      "card": {
+        "id": "D119",
+        "title": "Ready on My Terms",
+        "instruction": "Agree to be honest, hopeful, or vulnerable only in forms that preserve your emotional safety.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "0c127d560cb71d407a6bc7465515238e6996d42beedbb743804cf273cb8326da",
+      "dialogueHash": "76b03ab444e099bd06478dacfcd84b39c8c0790065c068eeeb34ef33cb5d20d5",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll talk about last night's rent argument, but not the whole year tonight."
+        },
+        {
+          "speaker": "B",
+          "text": "The whole year matters. You've been pulling away."
+        },
+        {
+          "speaker": "A",
+          "text": "It does. One question, and let me finish before you answer."
+        },
+        {
+          "speaker": "B",
+          "text": "All right. Were you going to move out?"
+        },
+        {
+          "speaker": "A",
+          "text": "I packed a bag. It's still upstairs. Please let that be the whole answer for a minute."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D119-single-b",
+        "dialogueHash": "328f039612802406c4f2e15aef9bdab732dc0b2327158d1089e60890f0de9a71",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll sit by the door while we talk about trying again."
+          },
+          {
+            "speaker": "B",
+            "text": "Are you planning to run?"
+          },
+          {
+            "speaker": "A",
+            "text": "Knowing I can leave is helping me stay."
+          },
+          {
+            "speaker": "B",
+            "text": "We can stop when you need to."
+          },
+          {
+            "speaker": "A",
+            "text": "I want to come home. Please don't hand me a key yet; saying it is enough for tonight."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D119-single-b",
+      "card": {
+        "id": "D119",
+        "title": "Ready on My Terms",
+        "instruction": "Agree to be honest, hopeful, or vulnerable only in forms that preserve your emotional safety.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "e5b75d7226ec57baed24adae6993b25dc49d609de7f820e63eac79a2bed4b8eb",
+      "dialogueHash": "328f039612802406c4f2e15aef9bdab732dc0b2327158d1089e60890f0de9a71",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll sit by the door while we talk about trying again."
+        },
+        {
+          "speaker": "B",
+          "text": "Are you planning to run?"
+        },
+        {
+          "speaker": "A",
+          "text": "Knowing I can leave is helping me stay."
+        },
+        {
+          "speaker": "B",
+          "text": "We can stop when you need to."
+        },
+        {
+          "speaker": "A",
+          "text": "I want to come home. Please don't hand me a key yet; saying it is enough for tonight."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D119-single-a",
+        "dialogueHash": "76b03ab444e099bd06478dacfcd84b39c8c0790065c068eeeb34ef33cb5d20d5",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll talk about last night's rent argument, but not the whole year tonight."
+          },
+          {
+            "speaker": "B",
+            "text": "The whole year matters. You've been pulling away."
+          },
+          {
+            "speaker": "A",
+            "text": "It does. One question, and let me finish before you answer."
+          },
+          {
+            "speaker": "B",
+            "text": "All right. Were you going to move out?"
+          },
+          {
+            "speaker": "A",
+            "text": "I packed a bag. It's still upstairs. Please let that be the whole answer for a minute."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D120-single-a",
+      "card": {
+        "id": "D120",
+        "title": "The Same Ending",
+        "instruction": "Use every new emotional detail as evidence that the same feared ending is becoming inevitable.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "30d289e35b0ca76d382661f537fdc41b5ed8677df8aa6b7c186e55f79cf6ce53",
+      "dialogueHash": "0494da93c095fe3e81cafacdb4f7481dad70416360a3d70ad84d49b4f6a327f1",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You ended your message with 'take care.' That's how my last breakup started."
+        },
+        {
+          "speaker": "B",
+          "text": "You said you had a cold. I meant get better."
+        },
+        {
+          "speaker": "A",
+          "text": "He wanted me healthy before he left too. Less guilt."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll bring you soup tonight."
+        },
+        {
+          "speaker": "A",
+          "text": "So we're at the final kindness. Will it be in a container you don't need back?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D120-single-b",
+        "dialogueHash": "c424b19f0d4c9601da67631b5db655a48af8a87c963adfa4d3dbfd376d6e1b0c",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "First you cancel lunch, then stop calling, then ask for the key."
+          },
+          {
+            "speaker": "B",
+            "text": "I've only cancelled lunch. I'm exhausted."
+          },
+          {
+            "speaker": "A",
+            "text": "That's what he said before seeing me became another job."
+          },
+          {
+            "speaker": "B",
+            "text": "Tomorrow, then? I'll book our usual table."
+          },
+          {
+            "speaker": "A",
+            "text": "He chose a restaurant too. Public enough that I couldn't beg. Book the corner, please."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D120-single-b",
+      "card": {
+        "id": "D120",
+        "title": "The Same Ending",
+        "instruction": "Use every new emotional detail as evidence that the same feared ending is becoming inevitable.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "d308e9cb10c6487bb630c4ab57af994e61aaa0c6b4624e6ff0d81f992b568d28",
+      "dialogueHash": "c424b19f0d4c9601da67631b5db655a48af8a87c963adfa4d3dbfd376d6e1b0c",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "First you cancel lunch, then stop calling, then ask for the key."
+        },
+        {
+          "speaker": "B",
+          "text": "I've only cancelled lunch. I'm exhausted."
+        },
+        {
+          "speaker": "A",
+          "text": "That's what he said before seeing me became another job."
+        },
+        {
+          "speaker": "B",
+          "text": "Tomorrow, then? I'll book our usual table."
+        },
+        {
+          "speaker": "A",
+          "text": "He chose a restaurant too. Public enough that I couldn't beg. Book the corner, please."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D120-single-a",
+        "dialogueHash": "0494da93c095fe3e81cafacdb4f7481dad70416360a3d70ad84d49b4f6a327f1",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You ended your message with 'take care.' That's how my last breakup started."
+          },
+          {
+            "speaker": "B",
+            "text": "You said you had a cold. I meant get better."
+          },
+          {
+            "speaker": "A",
+            "text": "He wanted me healthy before he left too. Less guilt."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll bring you soup tonight."
+          },
+          {
+            "speaker": "A",
+            "text": "So we're at the final kindness. Will it be in a container you don't need back?"
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

@@ -1,0 +1,604 @@
+{
+  "at": "2026-09-15T02:10:23.291Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "D169-single-a",
+      "card": {
+        "id": "D169",
+        "title": "Co-Sign This",
+        "instruction": "Get someone to help by making them an official participant who shares responsibility for the outcome.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "701f2a1fbecf59cbd7f2142d14efd984885628668993ab8c2fc2419ff338d2e0",
+      "dialogueHash": "617a4effe0414adc5b7863072265c31362f43cc454a5914a82d8060c8da4602a",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Could you co-sign the form for borrowing this barbecue?"
+        },
+        {
+          "speaker": "B",
+          "text": "I'll help carry it. That handle looks cracked."
+        },
+        {
+          "speaker": "A",
+          "text": "Good eye. Sign as joint custodian; we'll inspect it together."
+        },
+        {
+          "speaker": "B",
+          "text": "The owner wants a replacement by Sunday if it breaks."
+        },
+        {
+          "speaker": "A",
+          "text": "Then you're co-chair of replacements too. I'll call the shops; you approve what we buy before either of us promises her anything."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D169-single-b",
+        "dialogueHash": "2889499b4a8ceb8899436356664cc0f308b85a4b8350075a66ce11c7d32055fb",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've made you co-organizer of Saturday's school trip. Can you approve the bus route?"
+          },
+          {
+            "speaker": "B",
+            "text": "I only volunteered to drive. Your route misses the museum."
+          },
+          {
+            "speaker": "A",
+            "text": "Good catch. Correct it and initial it; then we both own the plan."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll fix it, but you explain any delays to the parents."
+          },
+          {
+            "speaker": "A",
+            "text": "Together. I'll introduce you as our transport lead and take the questions beside you."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D169-single-b",
+      "card": {
+        "id": "D169",
+        "title": "Co-Sign This",
+        "instruction": "Get someone to help by making them an official participant who shares responsibility for the outcome.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "7784f260ceeb1ae15f347ff709860c75bc3e1d34956651e974da402a80ad02d5",
+      "dialogueHash": "2889499b4a8ceb8899436356664cc0f308b85a4b8350075a66ce11c7d32055fb",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've made you co-organizer of Saturday's school trip. Can you approve the bus route?"
+        },
+        {
+          "speaker": "B",
+          "text": "I only volunteered to drive. Your route misses the museum."
+        },
+        {
+          "speaker": "A",
+          "text": "Good catch. Correct it and initial it; then we both own the plan."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll fix it, but you explain any delays to the parents."
+        },
+        {
+          "speaker": "A",
+          "text": "Together. I'll introduce you as our transport lead and take the questions beside you."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D169-single-a",
+        "dialogueHash": "617a4effe0414adc5b7863072265c31362f43cc454a5914a82d8060c8da4602a",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Could you co-sign the form for borrowing this barbecue?"
+          },
+          {
+            "speaker": "B",
+            "text": "I'll help carry it. That handle looks cracked."
+          },
+          {
+            "speaker": "A",
+            "text": "Good eye. Sign as joint custodian; we'll inspect it together."
+          },
+          {
+            "speaker": "B",
+            "text": "The owner wants a replacement by Sunday if it breaks."
+          },
+          {
+            "speaker": "A",
+            "text": "Then you're co-chair of replacements too. I'll call the shops; you approve what we buy before either of us promises her anything."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D170-single-a",
+      "card": {
+        "id": "D170",
+        "title": "Close It Properly",
+        "instruction": "Keep them present until both of you complete the ritual that formally ends this role, meeting, or relationship.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "8de27d15eb8308f54bbd388e3b69f0cea754c20c9aa6cde97ae796c7c224ffec",
+      "dialogueHash": "35e45d7cff4d78dfa2f5b886c17c2b5e227745740ea0106c265791b7ef43de6e",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before you leave tonight's book club, we close the discussion together."
+        },
+        {
+          "speaker": "B",
+          "text": "I said goodnight. My taxi's coming."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll say 'chapter closed'; you answer 'until next time.' Then we can leave."
+        },
+        {
+          "speaker": "B",
+          "text": "It's here. I'll say my bit from the car."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll come to your window. Give me ten seconds of your taxi time; I only need you through 'until next time.'"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D170-single-b",
+        "dialogueHash": "7e254e71953272df2807fa1ba59245f67491832c9df6f3f5e9ad1c684702f744",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before you hand in your shop keys, we do the farewell bell."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm leaving because the bell rings constantly."
+          },
+          {
+            "speaker": "A",
+            "text": "Precisely. This is the last one you have to answer."
+          },
+          {
+            "speaker": "B",
+            "text": "Fine. Ring it."
+          },
+          {
+            "speaker": "A",
+            "text": "We ring it together. Leaving is still a team activity."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D170-single-b",
+      "card": {
+        "id": "D170",
+        "title": "Close It Properly",
+        "instruction": "Keep them present until both of you complete the ritual that formally ends this role, meeting, or relationship.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "adf7ffc00b466f76334117fcc9b4e9c350c725845a3427f37ef0f9c0caaabe5c",
+      "dialogueHash": "7e254e71953272df2807fa1ba59245f67491832c9df6f3f5e9ad1c684702f744",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before you hand in your shop keys, we do the farewell bell."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm leaving because the bell rings constantly."
+        },
+        {
+          "speaker": "A",
+          "text": "Precisely. This is the last one you have to answer."
+        },
+        {
+          "speaker": "B",
+          "text": "Fine. Ring it."
+        },
+        {
+          "speaker": "A",
+          "text": "We ring it together. Leaving is still a team activity."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D170-single-a",
+        "dialogueHash": "35e45d7cff4d78dfa2f5b886c17c2b5e227745740ea0106c265791b7ef43de6e",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before you leave tonight's book club, we close the discussion together."
+          },
+          {
+            "speaker": "B",
+            "text": "I said goodnight. My taxi's coming."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll say 'chapter closed'; you answer 'until next time.' Then we can leave."
+          },
+          {
+            "speaker": "B",
+            "text": "It's here. I'll say my bit from the car."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll come to your window. Give me ten seconds of your taxi time; I only need you through 'until next time.'"
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

@@ -1,8 +1,22 @@
-# Imprompt · v0.25.0
+> Current source: **0.26.0-preview.5**. S21–S30: twenty two-pass reviews, twelve revisions and eight retentions. Run npm start. See [status](CHECKPOINT-STATUS.md), [applied before/after report](docs/COACH-SINGLES-003-REVISIONS.md), and [verification](BUILD-VERIFICATION-v0.26.0-preview.5.md). Earlier release notes below are historical.
 
-**Two private cards. One shared scene.** A phone-first, client-side improv game with 240 Stances, 240 Drives, independent deck progress, guided exercises and a Scene Log.
+> Current source: **0.26.0-preview.4**. S11–S20: twenty two-pass reviews, ten installed revisions. Run npm start; inspect the reviewed library at tools/checkpoint-example.html. See [status](CHECKPOINT-STATUS.md), [before/after report](docs/COACH-SINGLES-002-REVISIONS.md), and [verification](BUILD-VERIFICATION-v0.26.0-preview.4.md). Earlier release notes below are preserved as history.
 
-## Dialogue-first examples
+> Current runnable source: **0.26.0-preview.3**. S01–S10: twenty two-pass reviews, eleven installed revisions. Run npm start; use tools/checkpoint-example.html to inspect the batch. See [checkpoint status](CHECKPOINT-STATUS.md), [before/after report](docs/COACH-SINGLES-001-REVISIONS.md), and [verification](BUILD-VERIFICATION-v0.26.0-preview.3.md). Earlier release descriptions below are retained as history.
+
+# Imprompt · v0.26.0-preview.2
+
+**Two private cards. One shared scene.** A smartphone-first static app with 480 cards, private independent decks, guided exercises and scene history.
+
+## Current checkpoint
+
+The first five-pair coach-review batch is now applied: **nine new dialogue revisions plus the unchanged owner-endorsed hamster reference**. Each revised scene has exact before/after text, both rubric passes, turn-specific evidence, source seeds and residual concerns. All 960 single scenes remain unchanged from v0.25.0. This is a bounded checkpoint, not a complete corpus approval.
+
+[Exact scope](CHECKPOINT-STATUS.md) · [Applied revisions](docs/COACH-BATCH-001-REVISIONS.md) · [Rubric](docs/COACH-REVIEW-RUBRIC.md) · [Batch handoff](docs/CODEX-HINT-AUDIT-HANDOFF.md) · [Browse the ten shipped reviewed examples](tools/checkpoint-example.html)
+
+The interrupted audit’s three draft files remain unavailable. They are not claimed as integrated. New-rubric progress is 10/116,160 scenes; 116,150 remain pending. The next prepared batch is the 20 single scenes for S01–S10.
+
+## Inherited v0.25 dialogue-first library
 
 Nudge now opens **five spoken turns: A–B–A–B–A**. A establishes the situation in dialogue; B answers; A demonstrates the card; B develops the pressure; A heightens that same interaction. No separate grey stage directions, narrator, hint lecture or model installer.
 
@@ -65,7 +79,7 @@ A shorter example is selected by whole-scene word count, never by deleting the l
 ## Audit and editing
 
 - [Full single-card audit](docs/SINGLE-CARD-DIALOGUE-AUDIT-v0.25.0.md): 480 rationale notes and all 960 replacement scenes.
-- [Bespoke pair references](docs/PAIR-REFERENCE-SCENES-v0.25.0.md): 50 exchanges and their causal fusion notes.
+- [Historical v0.25 pair references](docs/PAIR-REFERENCE-SCENES-v0.25.0.md): baseline exchanges; the current ten reviewed scenes are documented in docs/COACH-BATCH-001-REVISIONS.md and the versioned ledgers.
 - [Example Bible](docs/IMPROMPT-HINT-BIBLE.md).
 - `editorial/v0.25.0/single-dialogue-ledger.json` and `.csv`: exact before/after provenance.
 - `examples/authoring/single-scenes.json`: canonical single scenes.
@@ -82,4 +96,4 @@ npm start
 
 The builder checks exact card fingerprints and source bindings. These prevent silent stale reuse, not semantic mistakes. `audit:dialogue` verifies internal-review coverage and dialogue structure; it does not calculate a humour score.
 
-Browser checks require Python Playwright and Chromium. The included transport-fixture tests are explicitly separate from a native hosted service-worker install or a physical Pixel benchmark. See `BUILD-VERIFICATION-v0.25.0.md` for the actual test scope.
+Browser checks require Python Playwright and Chromium. The included transport-fixture tests are explicitly separate from a native hosted service-worker install or a physical Pixel benchmark. See `BUILD-VERIFICATION-v0.26.0-preview.2.md` for current checkpoint tests; the v0.25 report is retained as historical evidence.

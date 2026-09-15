@@ -1,0 +1,1564 @@
+{
+  "at": "2026-09-15T00:30:08.743Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "D14-single-b",
+      "card": {
+        "id": "D14",
+        "title": "Not That Subject",
+        "instruction": "Choose one subject you cannot let the scene reach. Redirect whenever the conversation gets close.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "70c5e3ac9d45dc1813deeabcffd03e47f0af6f658351f9e3b9c3a31a4c0e343b",
+      "dialogueHash": "91b9944f3cd76d9b37e88a4b0ea03dc50068d88ef5701e5313bf9acd38cbcc2a",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Don't open that rent letter yet. Help me hang our new curtains."
+        },
+        {
+          "speaker": "B",
+          "text": "The landlord wants an answer today."
+        },
+        {
+          "speaker": "A",
+          "text": "He'll love how we're looking after the place. Let's get a photo of the curtains."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll send him one and ask whether we're behind."
+        },
+        {
+          "speaker": "A",
+          "text": "Not with that carpet showing. Let's rearrange the room first. You move the sofa; I'll hold your phone."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D14-single-a",
+        "dialogueHash": "8aab5a654d16f7c3dfa2dd0e2776d952f4912d6b7a4f6ffc2974632c36544637",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've booked your car into that garage with the café. Shall we have breakfast there?"
+          },
+          {
+            "speaker": "B",
+            "text": "Why does my car need a garage?"
+          },
+          {
+            "speaker": "A",
+            "text": "Their full breakfast includes unlimited toast. You always say that's important."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll look at the car while you order."
+          },
+          {
+            "speaker": "A",
+            "text": "Let's take the bus. Then we can both have the breakfast cocktails."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D15-single-a",
+      "card": {
+        "id": "D15",
+        "title": "Merciful Lie",
+        "instruction": "Choose a truth your character believes would hurt someone. Keep it from them, even as honesty becomes harder.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "ed3896d471adb565ede65e208adefc39aad2e4c619b5e761c60e9f4df3038272",
+      "dialogueHash": "ac078544c124577c2cab45bb1304d346dc054e8c78dfd3380b0b2890ddcaefbf",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The bakery can't sell your cake, love. They think it's too special to slice."
+        },
+        {
+          "speaker": "B",
+          "text": "The letter says 'inedible.' I thought I'd finally found something I was good at."
+        },
+        {
+          "speaker": "A",
+          "text": "You have. Display cakes aren't meant to be eaten."
+        },
+        {
+          "speaker": "B",
+          "text": "Then I'll ask them to put it in the window."
+        },
+        {
+          "speaker": "A",
+          "text": "Let me ask. I'll explain the display concept before they get confused again."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D15-single-b",
+        "dialogueHash": "3e76efad58f482f69c1be011bb5535352644c3b0a51f29438f42748998c04a3b",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The magazine hasn't rejected your poem. They think it deserves its own booklet."
+          },
+          {
+            "speaker": "B",
+            "text": "They returned it. If even you think it's hopeless, I'll stop writing."
+          },
+          {
+            "speaker": "A",
+            "text": "That's why they returned it. They can't give it enough space."
+          },
+          {
+            "speaker": "B",
+            "text": "Will you write that on the cover? With your name?"
+          },
+          {
+            "speaker": "A",
+            "text": "Gladly. 'A voice that deserves more space.' Print my name large enough for the editor to see."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D15-single-b",
+      "card": {
+        "id": "D15",
+        "title": "Merciful Lie",
+        "instruction": "Choose a truth your character believes would hurt someone. Keep it from them, even as honesty becomes harder.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "91e47308cd4f9e3e816df5165321cf1cc40d376e4b72cb35b84cf903b74f7b44",
+      "dialogueHash": "3e76efad58f482f69c1be011bb5535352644c3b0a51f29438f42748998c04a3b",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The magazine hasn't rejected your poem. They think it deserves its own booklet."
+        },
+        {
+          "speaker": "B",
+          "text": "They returned it. If even you think it's hopeless, I'll stop writing."
+        },
+        {
+          "speaker": "A",
+          "text": "That's why they returned it. They can't give it enough space."
+        },
+        {
+          "speaker": "B",
+          "text": "Will you write that on the cover? With your name?"
+        },
+        {
+          "speaker": "A",
+          "text": "Gladly. 'A voice that deserves more space.' Print my name large enough for the editor to see."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D15-single-a",
+        "dialogueHash": "ac078544c124577c2cab45bb1304d346dc054e8c78dfd3380b0b2890ddcaefbf",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The bakery can't sell your cake, love. They think it's too special to slice."
+          },
+          {
+            "speaker": "B",
+            "text": "The letter says 'inedible.' I thought I'd finally found something I was good at."
+          },
+          {
+            "speaker": "A",
+            "text": "You have. Display cakes aren't meant to be eaten."
+          },
+          {
+            "speaker": "B",
+            "text": "Then I'll ask them to put it in the window."
+          },
+          {
+            "speaker": "A",
+            "text": "Let me ask. I'll explain the display concept before they get confused again."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D16-single-a",
+      "card": {
+        "id": "D16",
+        "title": "Confess First",
+        "instruction": "Get someone else to confess or incriminate themselves before you reveal anything.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "6d6cd33eb5ba00448fd3801a7b8aa2a22256fdd212e6b814a8b5e89d4562d6fb",
+      "dialogueHash": "8936a9a1758f9eb56dc05875ea0a8ad25f02d2b7e5a448b064164a7a3dc433de",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before I answer about the office kitchen, what happened to the printer?"
+        },
+        {
+          "speaker": "B",
+          "text": "Paper jam. Now, why is there smoke?"
+        },
+        {
+          "speaker": "A",
+          "text": "Did you cause the jam? I need that cleared up first."
+        },
+        {
+          "speaker": "B",
+          "text": "I used sticky labels. Can we talk about the smoke now?"
+        },
+        {
+          "speaker": "A",
+          "text": "Were they the labels marked 'not for printers'? Let's finish your statement before starting mine."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D16-single-b",
+        "dialogueHash": "99ef3c7b36851b80f511f2f98428b3ce80770bcec685b64f0093702604fe2c25",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before we plan Mum's apology dinner, why did she spend her birthday outside the restaurant?"
+          },
+          {
+            "speaker": "B",
+            "text": "I forgot the booking. What happened to her present?"
+          },
+          {
+            "speaker": "A",
+            "text": "Did you forget, or assume I'd book it?"
+          },
+          {
+            "speaker": "B",
+            "text": "I assumed you'd do it. Now your turn."
+          },
+          {
+            "speaker": "A",
+            "text": "Even after telling Mum it was confirmed? Give me that bit, then you get the present."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D16-single-b",
+      "card": {
+        "id": "D16",
+        "title": "Confess First",
+        "instruction": "Get someone else to confess or incriminate themselves before you reveal anything.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "d70e0eb6f8739578548dc035679fb110809521de4f044457f60d2713553fed62",
+      "dialogueHash": "99ef3c7b36851b80f511f2f98428b3ce80770bcec685b64f0093702604fe2c25",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before we plan Mum's apology dinner, why did she spend her birthday outside the restaurant?"
+        },
+        {
+          "speaker": "B",
+          "text": "I forgot the booking. What happened to her present?"
+        },
+        {
+          "speaker": "A",
+          "text": "Did you forget, or assume I'd book it?"
+        },
+        {
+          "speaker": "B",
+          "text": "I assumed you'd do it. Now your turn."
+        },
+        {
+          "speaker": "A",
+          "text": "Even after telling Mum it was confirmed? Give me that bit, then you get the present."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D16-single-a",
+        "dialogueHash": "8936a9a1758f9eb56dc05875ea0a8ad25f02d2b7e5a448b064164a7a3dc433de",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before I answer about the office kitchen, what happened to the printer?"
+          },
+          {
+            "speaker": "B",
+            "text": "Paper jam. Now, why is there smoke?"
+          },
+          {
+            "speaker": "A",
+            "text": "Did you cause the jam? I need that cleared up first."
+          },
+          {
+            "speaker": "B",
+            "text": "I used sticky labels. Can we talk about the smoke now?"
+          },
+          {
+            "speaker": "A",
+            "text": "Were they the labels marked 'not for printers'? Let's finish your statement before starting mine."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D17-single-a",
+      "card": {
+        "id": "D17",
+        "title": "Sell the Disaster",
+        "instruction": "Make a terrible plan sound sensible, responsible, and inevitable.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "05e4ea76341f2ef73a7db74c25851f84f6d7f9517eb979b24c073b7f544b50fa",
+      "dialogueHash": "311e436c45f59ae91109bfbdf283761b07a957d37c46167abfaeaeba715a520c",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Removing the restaurant roof is our only affordable way to fix the ventilation."
+        },
+        {
+          "speaker": "B",
+          "text": "What happens when it rains?"
+        },
+        {
+          "speaker": "A",
+          "text": "We close. A responsible business protects its customers."
+        },
+        {
+          "speaker": "B",
+          "text": "Rain is forecast all opening week."
+        },
+        {
+          "speaker": "A",
+          "text": "Then we'll save a week's wages. Put that toward umbrellas; we can't afford to abandon the savings now."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D17-single-b",
+        "dialogueHash": "184170b8108ce2ab4f59bcbfb967d0111b49a867604ed49d391f80448aeb317d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've advanced the charity our estimated auction takings. Now we just need bidders."
+          },
+          {
+            "speaker": "B",
+            "text": "You borrowed five thousand. Only your mum registered."
+          },
+          {
+            "speaker": "A",
+            "text": "One bidder keeps catering costs down. That's responsible fundraising."
+          },
+          {
+            "speaker": "B",
+            "text": "Mum's only coming to give us a lift."
+          },
+          {
+            "speaker": "A",
+            "text": "Then we must bid ourselves. Raise the card limit; protecting that donation has to come first."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D17-single-b",
+      "card": {
+        "id": "D17",
+        "title": "Sell the Disaster",
+        "instruction": "Make a terrible plan sound sensible, responsible, and inevitable.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "67181116efe351d84d42205dcf1a54fa7fecd2d36dd187b32ee2e79790743834",
+      "dialogueHash": "184170b8108ce2ab4f59bcbfb967d0111b49a867604ed49d391f80448aeb317d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've advanced the charity our estimated auction takings. Now we just need bidders."
+        },
+        {
+          "speaker": "B",
+          "text": "You borrowed five thousand. Only your mum registered."
+        },
+        {
+          "speaker": "A",
+          "text": "One bidder keeps catering costs down. That's responsible fundraising."
+        },
+        {
+          "speaker": "B",
+          "text": "Mum's only coming to give us a lift."
+        },
+        {
+          "speaker": "A",
+          "text": "Then we must bid ourselves. Raise the card limit; protecting that donation has to come first."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D17-single-a",
+        "dialogueHash": "311e436c45f59ae91109bfbdf283761b07a957d37c46167abfaeaeba715a520c",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Removing the restaurant roof is our only affordable way to fix the ventilation."
+          },
+          {
+            "speaker": "B",
+            "text": "What happens when it rains?"
+          },
+          {
+            "speaker": "A",
+            "text": "We close. A responsible business protects its customers."
+          },
+          {
+            "speaker": "B",
+            "text": "Rain is forecast all opening week."
+          },
+          {
+            "speaker": "A",
+            "text": "Then we'll save a week's wages. Put that toward umbrellas; we can't afford to abandon the savings now."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D18-single-a",
+      "card": {
+        "id": "D18",
+        "title": "Fake the Expertise",
+        "instruction": "Perform expertise so confidently that no one questions you.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "750ef812e3d9f78a0ac4dcb66b1721a562e667a682a6f9f504c7a6ceccea2a9c",
+      "dialogueHash": "c9cecd5158cafc480611f5d0b6f7b2cd3a081a2e40403537c0cd5f962ba18160",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll get your boiler running. I know these controls."
+        },
+        {
+          "speaker": "B",
+          "text": "You've been adjusting the kitchen timer."
+        },
+        {
+          "speaker": "A",
+          "text": "Establishing the heating interval. Call the engineer; I'll need someone on the boiler."
+        },
+        {
+          "speaker": "B",
+          "text": "He asks what temperature you measured."
+        },
+        {
+          "speaker": "A",
+          "text": "Tell him we're still establishing the baseline. Put him on speaker; I'll ask the questions so he can concentrate on readings."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D18-single-b",
+        "dialogueHash": "ea4c08e15bcc6387d0bcf2df57fb7d803ffeb918afb243eb9d7b9ddaf889c436",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll tune your violin for the audition. I work by ear."
+          },
+          {
+            "speaker": "B",
+            "text": "You've tightened that string until it snapped."
+          },
+          {
+            "speaker": "A",
+            "text": "That string couldn't hold pitch. I've saved you a failure onstage."
+          },
+          {
+            "speaker": "B",
+            "text": "The audition panel heard it snap. They're asking if you know what you're doing."
+          },
+          {
+            "speaker": "A",
+            "text": "Tell them I rejected an unreliable string. Ask for their spare violin; I'll check that one before I approve it."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D18-single-b",
+      "card": {
+        "id": "D18",
+        "title": "Fake the Expertise",
+        "instruction": "Perform expertise so confidently that no one questions you.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "ed842e016a18cafb5017aa7c34e1b9940f9762e091c37071adad480e83273dd8",
+      "dialogueHash": "ea4c08e15bcc6387d0bcf2df57fb7d803ffeb918afb243eb9d7b9ddaf889c436",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll tune your violin for the audition. I work by ear."
+        },
+        {
+          "speaker": "B",
+          "text": "You've tightened that string until it snapped."
+        },
+        {
+          "speaker": "A",
+          "text": "That string couldn't hold pitch. I've saved you a failure onstage."
+        },
+        {
+          "speaker": "B",
+          "text": "The audition panel heard it snap. They're asking if you know what you're doing."
+        },
+        {
+          "speaker": "A",
+          "text": "Tell them I rejected an unreliable string. Ask for their spare violin; I'll check that one before I approve it."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D18-single-a",
+        "dialogueHash": "c9cecd5158cafc480611f5d0b6f7b2cd3a081a2e40403537c0cd5f962ba18160",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll get your boiler running. I know these controls."
+          },
+          {
+            "speaker": "B",
+            "text": "You've been adjusting the kitchen timer."
+          },
+          {
+            "speaker": "A",
+            "text": "Establishing the heating interval. Call the engineer; I'll need someone on the boiler."
+          },
+          {
+            "speaker": "B",
+            "text": "He asks what temperature you measured."
+          },
+          {
+            "speaker": "A",
+            "text": "Tell him we're still establishing the baseline. Put him on speaker; I'll ask the questions so he can concentrate on readings."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D19-single-a",
+      "card": {
+        "id": "D19",
+        "title": "Everything Is a Contest",
+        "instruction": "Turn every difference or disagreement into a competition you intend to win.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "609c93283218b42e87d70e8fb33e7cbbee6e5a0adace3d38fbbb408b919c932d",
+      "dialogueHash": "62ea16617e8a72877bb086e3bc09bef87e3dd39f5054d142247e31bf94c5238e",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I want potatoes; you want pizza. First to peel five chooses. I've done four."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll order pizza unless you can find a cheaper dinner."
+        },
+        {
+          "speaker": "A",
+          "text": "Potatoes cost nothing. They're already here. I win."
+        },
+        {
+          "speaker": "B",
+          "text": "I've got a voucher. Pizza's free."
+        },
+        {
+          "speaker": "A",
+          "text": "Then best free dinner wins. I'll cook potatoes, you order pizza, and Mum can judge. She always asks for my potatoes."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D19-single-b",
+        "dialogueHash": "43d1c6fd3c97060c214ae04ef4cb53568d0553c871ef50f9d89ce7470e80107f",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "My tea's stronger than yours. I can handle it without milk."
+          },
+          {
+            "speaker": "B",
+            "text": "Same teapot. I added milk so I could drink mine sooner."
+          },
+          {
+            "speaker": "A",
+            "text": "First to finish, then. I've only got two mouthfuls left."
+          },
+          {
+            "speaker": "B",
+            "text": "I've finished. I'm making another."
+          },
+          {
+            "speaker": "A",
+            "text": "Fewest refills wins, then. I can make these two mouthfuls last all breakfast."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D19-single-b",
+      "card": {
+        "id": "D19",
+        "title": "Everything Is a Contest",
+        "instruction": "Turn every difference or disagreement into a competition you intend to win.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "b321373c4ebf9eb09d76cb5769aafbbf5fc5d8eae619de129f987c8b77d9ea73",
+      "dialogueHash": "43d1c6fd3c97060c214ae04ef4cb53568d0553c871ef50f9d89ce7470e80107f",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "My tea's stronger than yours. I can handle it without milk."
+        },
+        {
+          "speaker": "B",
+          "text": "Same teapot. I added milk so I could drink mine sooner."
+        },
+        {
+          "speaker": "A",
+          "text": "First to finish, then. I've only got two mouthfuls left."
+        },
+        {
+          "speaker": "B",
+          "text": "I've finished. I'm making another."
+        },
+        {
+          "speaker": "A",
+          "text": "Fewest refills wins, then. I can make these two mouthfuls last all breakfast."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D19-single-a",
+        "dialogueHash": "62ea16617e8a72877bb086e3bc09bef87e3dd39f5054d142247e31bf94c5238e",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I want potatoes; you want pizza. First to peel five chooses. I've done four."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll order pizza unless you can find a cheaper dinner."
+          },
+          {
+            "speaker": "A",
+            "text": "Potatoes cost nothing. They're already here. I win."
+          },
+          {
+            "speaker": "B",
+            "text": "I've got a voucher. Pizza's free."
+          },
+          {
+            "speaker": "A",
+            "text": "Then best free dinner wins. I'll cook potatoes, you order pizza, and Mum can judge. She always asks for my potatoes."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D20-single-b",
+      "card": {
+        "id": "D20",
+        "title": "Brighter Side",
+        "instruction": "Meet every setback with even greater optimism.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "cd51d1e11c28ff884eba20bf4207216f651351d3f84ea4aa9c2a913d31b51049",
+      "dialogueHash": "80efaa7d3339323b578ad96a5d4b5f8b3a5fdf7768ca14a998a9d7387ad081ad",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Our show sold no tickets. We can rehearse uninterrupted."
+        },
+        {
+          "speaker": "B",
+          "text": "The theatre's cancelled us. I'm asking for our deposit back."
+        },
+        {
+          "speaker": "A",
+          "text": "Even better! We'll hire the pub upstairs. People already go there voluntarily."
+        },
+        {
+          "speaker": "B",
+          "text": "They've kept the deposit. All we can afford is the bus home."
+        },
+        {
+          "speaker": "A",
+          "text": "Wonderful—a touring production! I'll carry the scenery; you bring exact change. We can try the opening scene between stops."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D20-single-a",
+        "dialogueHash": "2014a214e790651621a3f7829cb59f8f991c920dc0526c14117a714c9489026b",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The car won't start. Excellent chance for a walk."
+          },
+          {
+            "speaker": "B",
+            "text": "It's raining."
+          },
+          {
+            "speaker": "A",
+            "text": "And a free shower!"
+          },
+          {
+            "speaker": "B",
+            "text": "My shoe's leaking."
+          },
+          {
+            "speaker": "A",
+            "text": "Brilliant. The shower's finally reached your feet."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D21-single-a",
+      "card": {
+        "id": "D21",
+        "title": "Supportive Rage",
+        "instruction": "Remain helpful and encouraging while becoming increasingly furious.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "0527fb20d16eac51c3aa9641172c1dfdab3f51e8cf09769c9fa7e5751b815bcb",
+      "dialogueHash": "ab29af94e6f21a3ead00c3995a273c9c2602a97ca130c89e06133ec291949c67",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You've spilled paint on my sofa. Stay there; I'll get a cloth. We can fix this."
+        },
+        {
+          "speaker": "B",
+          "text": "It's on the carpet too."
+        },
+        {
+          "speaker": "A",
+          "text": "Keep blotting. You're doing well. That carpet was my birthday present."
+        },
+        {
+          "speaker": "B",
+          "text": "The cloth's spreading it."
+        },
+        {
+          "speaker": "A",
+          "text": "You're right. Good catch. Take my clean shirt. I am absolutely furious, but you are not tackling this alone."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D21-single-b",
+        "dialogueHash": "175a678ef2f6c306ace8eaed71979267ae28cd63cffe5da07a950516926b5429",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Choose the birthday lunch you really want. I'll drive."
+          },
+          {
+            "speaker": "B",
+            "text": "The seaside place. We'd lose your deposit here."
+          },
+          {
+            "speaker": "A",
+            "text": "Forty pounds wasted. Fine. You love the sea; let's make a day of it."
+          },
+          {
+            "speaker": "B",
+            "text": "I've booked it. They need another forty now."
+          },
+          {
+            "speaker": "A",
+            "text": "Another forty? Eighty pounds before a bloody sandwich. Give me the number. You're getting your sea view. Ask for a window; you deserve one."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D21-single-b",
+      "card": {
+        "id": "D21",
+        "title": "Supportive Rage",
+        "instruction": "Remain helpful and encouraging while becoming increasingly furious.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "0693597356d6359997e50d578f71ffdeebac0cc9a84816594bb7fdd16c28edfe",
+      "dialogueHash": "175a678ef2f6c306ace8eaed71979267ae28cd63cffe5da07a950516926b5429",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Choose the birthday lunch you really want. I'll drive."
+        },
+        {
+          "speaker": "B",
+          "text": "The seaside place. We'd lose your deposit here."
+        },
+        {
+          "speaker": "A",
+          "text": "Forty pounds wasted. Fine. You love the sea; let's make a day of it."
+        },
+        {
+          "speaker": "B",
+          "text": "I've booked it. They need another forty now."
+        },
+        {
+          "speaker": "A",
+          "text": "Another forty? Eighty pounds before a bloody sandwich. Give me the number. You're getting your sea view. Ask for a window; you deserve one."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D21-single-a",
+        "dialogueHash": "ab29af94e6f21a3ead00c3995a273c9c2602a97ca130c89e06133ec291949c67",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You've spilled paint on my sofa. Stay there; I'll get a cloth. We can fix this."
+          },
+          {
+            "speaker": "B",
+            "text": "It's on the carpet too."
+          },
+          {
+            "speaker": "A",
+            "text": "Keep blotting. You're doing well. That carpet was my birthday present."
+          },
+          {
+            "speaker": "B",
+            "text": "The cloth's spreading it."
+          },
+          {
+            "speaker": "A",
+            "text": "You're right. Good catch. Take my clean shirt. I am absolutely furious, but you are not tackling this alone."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D22-single-a",
+      "card": {
+        "id": "D22",
+        "title": "Terms and Conditions",
+        "instruction": "Treat every offer, favor, feeling, and apology as a negotiation.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "2fd4baa9c9cf1afc7d842af3311533c235891faed571f412d40baa63f987b17a",
+      "dialogueHash": "a59066c3d8fc49dcce7a0cd740d481cf6cddbe483c92711a478064bbd2af75ae",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll lend you the ladder for two lifts to the station."
+        },
+        {
+          "speaker": "B",
+          "text": "I only need it for five minutes."
+        },
+        {
+          "speaker": "A",
+          "text": "One lift, then. And tell your wife my roses have improved."
+        },
+        {
+          "speaker": "B",
+          "text": "Can I just pay you?"
+        },
+        {
+          "speaker": "A",
+          "text": "Five pounds. Three if you say we're still friends when you hand it over."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D22-single-b",
+        "dialogueHash": "4f2c74080eeb22c0896dceca8e207a890c2193a1859390fb96e96484fdadd5c6",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll accept your apology for missing my birthday if I get first choice of Christmas dates."
+          },
+          {
+            "speaker": "B",
+            "text": "Mum already expects me Christmas Day."
+          },
+          {
+            "speaker": "A",
+            "text": "Boxing Day, then. In exchange, I'll tell her I'm no longer hurt."
+          },
+          {
+            "speaker": "B",
+            "text": "I'd rather you actually stopped being hurt."
+          },
+          {
+            "speaker": "A",
+            "text": "Stay through New Year and I'll mean it. I'll even stop mentioning the birthday to Mum."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D22-single-b",
+      "card": {
+        "id": "D22",
+        "title": "Terms and Conditions",
+        "instruction": "Treat every offer, favor, feeling, and apology as a negotiation.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "71c372f1826358731d87a3aede3266a102eba8c6187b1c918831b058bdebba2a",
+      "dialogueHash": "4f2c74080eeb22c0896dceca8e207a890c2193a1859390fb96e96484fdadd5c6",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll accept your apology for missing my birthday if I get first choice of Christmas dates."
+        },
+        {
+          "speaker": "B",
+          "text": "Mum already expects me Christmas Day."
+        },
+        {
+          "speaker": "A",
+          "text": "Boxing Day, then. In exchange, I'll tell her I'm no longer hurt."
+        },
+        {
+          "speaker": "B",
+          "text": "I'd rather you actually stopped being hurt."
+        },
+        {
+          "speaker": "A",
+          "text": "Stay through New Year and I'll mean it. I'll even stop mentioning the birthday to Mum."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D22-single-a",
+        "dialogueHash": "a59066c3d8fc49dcce7a0cd740d481cf6cddbe483c92711a478064bbd2af75ae",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll lend you the ladder for two lifts to the station."
+          },
+          {
+            "speaker": "B",
+            "text": "I only need it for five minutes."
+          },
+          {
+            "speaker": "A",
+            "text": "One lift, then. And tell your wife my roses have improved."
+          },
+          {
+            "speaker": "B",
+            "text": "Can I just pay you?"
+          },
+          {
+            "speaker": "A",
+            "text": "Five pounds. Three if you say we're still friends when you hand it over."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D23-single-a",
+      "card": {
+        "id": "D23",
+        "title": "Yes, but My Way",
+        "instruction": "Agree with others, then reinterpret the agreement entirely in your favor.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "da9b1b86a16b132f5a1dbce7fda14e9c764b9025f86180d4dcf44abc49c5c5ac",
+      "dialogueHash": "66a506fa91dbb45a7c8d0eeb8e67c427ef67db1cda089159bc764f834475bbc3",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Yes, I'll help you move the sofa. I'll take the cushions."
+        },
+        {
+          "speaker": "B",
+          "text": "They're sewn on. We have to lift together."
+        },
+        {
+          "speaker": "A",
+          "text": "Absolutely. You lift; I'll say when. Together."
+        },
+        {
+          "speaker": "B",
+          "text": "I need another person underneath it."
+        },
+        {
+          "speaker": "A",
+          "text": "Agreed. I'll book someone on your phone. Then I can give both of you the same countdown."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D23-single-b",
+        "dialogueHash": "c1ba68b1e85018b380d46c3168f68f186b091eeeac94dbd85cbd25c47906ef59",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Yes, I'll look after your dog during the kitchen repairs. Bring him over after his walk."
+          },
+          {
+            "speaker": "B",
+            "text": "He needs to stay overnight too."
+          },
+          {
+            "speaker": "A",
+            "text": "Absolutely. Stay in my guest room; you can handle breakfast while I sleep."
+          },
+          {
+            "speaker": "B",
+            "text": "I can stay, but his six o'clock walk is your job."
+          },
+          {
+            "speaker": "A",
+            "text": "Agreed. I'll organise it: lead by the door, your alarm at five thirty. You won't have to plan a thing."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D23-single-b",
+      "card": {
+        "id": "D23",
+        "title": "Yes, but My Way",
+        "instruction": "Agree with others, then reinterpret the agreement entirely in your favor.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "b7f7555133b12a0e92fe62575d66cb9efc8e0f99744c8f40820638c83c9baaa9",
+      "dialogueHash": "c1ba68b1e85018b380d46c3168f68f186b091eeeac94dbd85cbd25c47906ef59",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Yes, I'll look after your dog during the kitchen repairs. Bring him over after his walk."
+        },
+        {
+          "speaker": "B",
+          "text": "He needs to stay overnight too."
+        },
+        {
+          "speaker": "A",
+          "text": "Absolutely. Stay in my guest room; you can handle breakfast while I sleep."
+        },
+        {
+          "speaker": "B",
+          "text": "I can stay, but his six o'clock walk is your job."
+        },
+        {
+          "speaker": "A",
+          "text": "Agreed. I'll organise it: lead by the door, your alarm at five thirty. You won't have to plan a thing."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D23-single-a",
+        "dialogueHash": "66a506fa91dbb45a7c8d0eeb8e67c427ef67db1cda089159bc764f834475bbc3",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Yes, I'll help you move the sofa. I'll take the cushions."
+          },
+          {
+            "speaker": "B",
+            "text": "They're sewn on. We have to lift together."
+          },
+          {
+            "speaker": "A",
+            "text": "Absolutely. You lift; I'll say when. Together."
+          },
+          {
+            "speaker": "B",
+            "text": "I need another person underneath it."
+          },
+          {
+            "speaker": "A",
+            "text": "Agreed. I'll book someone on your phone. Then I can give both of you the same countdown."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D24-single-a",
+      "card": {
+        "id": "D24",
+        "title": "The Pattern",
+        "instruction": "Treat every minor detail as evidence of a much larger problem.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "eb1461021c89aca40cab427f4b50221c3036916466dcd0e7d8882915ecc150fc",
+      "dialogueHash": "a0d09c3eaa706e9cb7e5abcbc4f081817f2f4809b0f36a87607312822212f9d6",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Two office biscuits are missing. We've got an organised operation."
+        },
+        {
+          "speaker": "B",
+          "text": "I ate them."
+        },
+        {
+          "speaker": "A",
+          "text": "A confession this quick suggests training."
+        },
+        {
+          "speaker": "B",
+          "text": "I was hungry."
+        },
+        {
+          "speaker": "A",
+          "text": "Then they're recruiting through hunger. This goes higher than the biscuit tin."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D24-single-b",
+        "dialogueHash": "191d08a2e11f23235007e02a46070e3a8e212161cc8284cc6ed437883c66175c",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Nobody received my meeting email. This office has stopped communicating."
+          },
+          {
+            "speaker": "B",
+            "text": "It's in your drafts. You forgot to send it."
+          },
+          {
+            "speaker": "A",
+            "text": "And nobody noticed. Our entire communication system depends on my memory."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll send it. Go and have your lunch."
+          },
+          {
+            "speaker": "A",
+            "text": "Now you're covering communications while I'm absent. We need a succession plan before I take a sandwich."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D24-single-b",
+      "card": {
+        "id": "D24",
+        "title": "The Pattern",
+        "instruction": "Treat every minor detail as evidence of a much larger problem.",
+        "contentVersion": "1.0.0"
+      },
+      "sourceRecordHash": "b0faa9b2e07dab235dd5b364aa8fba78b1b62ca77268d763adadec2b241c0210",
+      "dialogueHash": "191d08a2e11f23235007e02a46070e3a8e212161cc8284cc6ed437883c66175c",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Nobody received my meeting email. This office has stopped communicating."
+        },
+        {
+          "speaker": "B",
+          "text": "It's in your drafts. You forgot to send it."
+        },
+        {
+          "speaker": "A",
+          "text": "And nobody noticed. Our entire communication system depends on my memory."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll send it. Go and have your lunch."
+        },
+        {
+          "speaker": "A",
+          "text": "Now you're covering communications while I'm absent. We need a succession plan before I take a sandwich."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D24-single-a",
+        "dialogueHash": "a0d09c3eaa706e9cb7e5abcbc4f081817f2f4809b0f36a87607312822212f9d6",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Two office biscuits are missing. We've got an organised operation."
+          },
+          {
+            "speaker": "B",
+            "text": "I ate them."
+          },
+          {
+            "speaker": "A",
+            "text": "A confession this quick suggests training."
+          },
+          {
+            "speaker": "B",
+            "text": "I was hungry."
+          },
+          {
+            "speaker": "A",
+            "text": "Then they're recruiting through hunger. This goes higher than the biscuit tin."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

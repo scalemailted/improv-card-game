@@ -1,0 +1,1443 @@
+{
+  "executionStatus": "not-executed",
+  "instructions": "Fresh review of each primary candidate: read dialogue first, then exact cards. Assess all six unchanged criteria and all coach-2.0 gates with turn-specific evidence. For pairs, show whether the Stance changes HOW A pursues the Drive in one interaction. Do not invent missing backstory or assume prior approval. Use the alternate only to assess meaningful differentiation. Report actual reservations. No writer scores or improvement claims are supplied.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S01+D227-a",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D227",
+          "type": "drive",
+          "title": "Make the Test Test You",
+          "instruction": "Create a commitment test that gradually exposes what you are unwilling to risk yourself.",
+          "contentVersion": "0.17.0"
+        }
+      ],
+      "sourceRecordHash": "82edaee7f6a211b72d77c039ef9304827586a905f2abf50b31eb1903b7aeec92",
+      "dialogueHash": "fa4575b9cd8cfc0e2f484d8bdd73add6ca1f2282493acc45d0aa9e9ae8429ad4",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Put your name on the overnight shift. I want to know who is really committed to finishing this project."
+        },
+        {
+          "speaker": "B",
+          "text": "Will your name be beside mine?"
+        },
+        {
+          "speaker": "A",
+          "text": "I'll supervise. Ring me if a decision genuinely needs me; otherwise keep the work moving."
+        },
+        {
+          "speaker": "B",
+          "text": "The shift starts at three in the morning. Shall I ring when I arrive?"
+        },
+        {
+          "speaker": "A",
+          "text": "No, leave me a note for breakfast. I need people who can stay awake without needing me awake beside them."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D227-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "7cf187fe8f350c39d97ab9b98905587ebd045ad94b8bc93c98fe30c28dbb5cef",
+          "dialogueHash": "0a664e8394a821f97bfe27aeefa707b141c9078d1f432be3d59c63bedd7eca6f",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D227-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "bf2bb1e1a1e9e16bd5d51deefe42bf04487ff9eba2e17672485e6c21ce83e9da",
+          "dialogueHash": "24a37bb8dd4146273236bc30f91c24a7b073a663fbbabfc39c487bf1c740c004",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D227-b",
+        "dialogueHash": "958a6b27a96d398634842c2196a7dbbf9c17a3152de58c8cc8c9d42d62848f1d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Give your prize seat to one of the volunteers stuck standing. Show me you're on my side about treating them properly."
+          },
+          {
+            "speaker": "B",
+            "text": "Will you give up yours too?"
+          },
+          {
+            "speaker": "A",
+            "text": "I need to watch from the front so I can judge whether the evening runs well. You can report back from the standing area."
+          },
+          {
+            "speaker": "B",
+            "text": "There's a clear view from there. We could both stand."
+          },
+          {
+            "speaker": "A",
+            "text": "You test the view first. I'll keep this seat until I hear whether there is somewhere to lean."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D227-b",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D227",
+          "type": "drive",
+          "title": "Make the Test Test You",
+          "instruction": "Create a commitment test that gradually exposes what you are unwilling to risk yourself.",
+          "contentVersion": "0.17.0"
+        }
+      ],
+      "sourceRecordHash": "ebff6b35eb1c6500bd059bc7bf0babd145410cb339da15fd8de685e08d9ad2c0",
+      "dialogueHash": "958a6b27a96d398634842c2196a7dbbf9c17a3152de58c8cc8c9d42d62848f1d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Give your prize seat to one of the volunteers stuck standing. Show me you're on my side about treating them properly."
+        },
+        {
+          "speaker": "B",
+          "text": "Will you give up yours too?"
+        },
+        {
+          "speaker": "A",
+          "text": "I need to watch from the front so I can judge whether the evening runs well. You can report back from the standing area."
+        },
+        {
+          "speaker": "B",
+          "text": "There's a clear view from there. We could both stand."
+        },
+        {
+          "speaker": "A",
+          "text": "You test the view first. I'll keep this seat until I hear whether there is somewhere to lean."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D227-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "7cf187fe8f350c39d97ab9b98905587ebd045ad94b8bc93c98fe30c28dbb5cef",
+          "dialogueHash": "0a664e8394a821f97bfe27aeefa707b141c9078d1f432be3d59c63bedd7eca6f",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D227-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "bf2bb1e1a1e9e16bd5d51deefe42bf04487ff9eba2e17672485e6c21ce83e9da",
+          "dialogueHash": "24a37bb8dd4146273236bc30f91c24a7b073a663fbbabfc39c487bf1c740c004",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D227-a",
+        "dialogueHash": "fa4575b9cd8cfc0e2f484d8bdd73add6ca1f2282493acc45d0aa9e9ae8429ad4",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Put your name on the overnight shift. I want to know who is really committed to finishing this project."
+          },
+          {
+            "speaker": "B",
+            "text": "Will your name be beside mine?"
+          },
+          {
+            "speaker": "A",
+            "text": "I'll supervise. Ring me if a decision genuinely needs me; otherwise keep the work moving."
+          },
+          {
+            "speaker": "B",
+            "text": "The shift starts at three in the morning. Shall I ring when I arrive?"
+          },
+          {
+            "speaker": "A",
+            "text": "No, leave me a note for breakfast. I need people who can stay awake without needing me awake beside them."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D228-a",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D228",
+          "type": "drive",
+          "title": "Win the Smaller Concession",
+          "instruction": "Get one small surrender, then use its logic to make the larger claim harder to defend.",
+          "contentVersion": "0.17.0"
+        }
+      ],
+      "sourceRecordHash": "4c086c290b51de81209c420b59157a0e39d0737f077798c9062517d2fd7b948a",
+      "dialogueHash": "5b84f7b12d653d1be0fdaea568948daff45c3cf89606567c907d00d4caf2ca38",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Let me put this little plant on your windowsill. It only needs a corner."
+        },
+        {
+          "speaker": "B",
+          "text": "One small plant won't block the light."
+        },
+        {
+          "speaker": "A",
+          "text": "Good. That gives us the rule. I'll put the second one at the other end, where it won't shade this one."
+        },
+        {
+          "speaker": "B",
+          "text": "I said one, not two."
+        },
+        {
+          "speaker": "A",
+          "text": "You said the light was the problem. Stand back and check it from there; if the room is just as bright, I'll keep them both."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D228-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "041845b9536dd5093c5ed1679acef5904fa16dd12dc13bd8973e6f54fa553ec3",
+          "dialogueHash": "7804e29c6f555253961f879e5111c7d392dd532b5635724a3676416e49a0c3cf",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D228-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "b54a0ba4573a6a858dd0cbf7a7dd4235970e74229203764c4b5a11a1647a5371",
+          "dialogueHash": "9a1141f1c56cb04779ef69683dd53bb1e243bf010ecf7a2c0076f6c296d3d429",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D228-b",
+        "dialogueHash": "a25986e0aef1b9b702c77a12d071b672f3e1d10c5a5355f47d331af70bd3b210",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before you send that speech, acknowledge the paragraph I helped write."
+          },
+          {
+            "speaker": "B",
+            "text": "The opening paragraph, yes. I'll thank you for that."
+          },
+          {
+            "speaker": "A",
+            "text": "And the opening sets out the argument you use in the rest. Put that in the thanks too."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm not crediting you with the whole speech."
+          },
+          {
+            "speaker": "A",
+            "text": "Keep the wording as yours. Credit me with the argument, then show me where the opening stops doing work. You can claim the rest once you've shown me where mine ends."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D228-b",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D228",
+          "type": "drive",
+          "title": "Win the Smaller Concession",
+          "instruction": "Get one small surrender, then use its logic to make the larger claim harder to defend.",
+          "contentVersion": "0.17.0"
+        }
+      ],
+      "sourceRecordHash": "521cffbaa1dac4e0f25f366694035a1f13ae3bedbd265accd7d3ae70000c3f5b",
+      "dialogueHash": "a25986e0aef1b9b702c77a12d071b672f3e1d10c5a5355f47d331af70bd3b210",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before you send that speech, acknowledge the paragraph I helped write."
+        },
+        {
+          "speaker": "B",
+          "text": "The opening paragraph, yes. I'll thank you for that."
+        },
+        {
+          "speaker": "A",
+          "text": "And the opening sets out the argument you use in the rest. Put that in the thanks too."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm not crediting you with the whole speech."
+        },
+        {
+          "speaker": "A",
+          "text": "Keep the wording as yours. Credit me with the argument, then show me where the opening stops doing work. You can claim the rest once you've shown me where mine ends."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D228-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "041845b9536dd5093c5ed1679acef5904fa16dd12dc13bd8973e6f54fa553ec3",
+          "dialogueHash": "7804e29c6f555253961f879e5111c7d392dd532b5635724a3676416e49a0c3cf",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D228-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "b54a0ba4573a6a858dd0cbf7a7dd4235970e74229203764c4b5a11a1647a5371",
+          "dialogueHash": "9a1141f1c56cb04779ef69683dd53bb1e243bf010ecf7a2c0076f6c296d3d429",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D228-a",
+        "dialogueHash": "5b84f7b12d653d1be0fdaea568948daff45c3cf89606567c907d00d4caf2ca38",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Let me put this little plant on your windowsill. It only needs a corner."
+          },
+          {
+            "speaker": "B",
+            "text": "One small plant won't block the light."
+          },
+          {
+            "speaker": "A",
+            "text": "Good. That gives us the rule. I'll put the second one at the other end, where it won't shade this one."
+          },
+          {
+            "speaker": "B",
+            "text": "I said one, not two."
+          },
+          {
+            "speaker": "A",
+            "text": "You said the light was the problem. Stand back and check it from there; if the room is just as bright, I'll keep them both."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D229-a",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D229",
+          "type": "drive",
+          "title": "Hide Inside the Callback",
+          "instruction": "Use an early harmless detail as the explanation for each new consequence, keeping your own role outside the pattern.",
+          "contentVersion": "0.17.0"
+        }
+      ],
+      "sourceRecordHash": "91629d8a7f75c8c4c3ea8d0437dff3b9fdb6bd7e033bf3544dd01253f125a55d",
+      "dialogueHash": "db0bf3635bda61b8e717e1ebf5387c49f4834028463ed2683071c193f91bbf85",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll decide how we handle this. Remember the decorative ribbon? That's where the whole tent problem began."
+        },
+        {
+          "speaker": "B",
+          "text": "You tied it to the support rope."
+        },
+        {
+          "speaker": "A",
+          "text": "You can question the details after my decision. Yes, but nobody questioned why the ribbon was there."
+        },
+        {
+          "speaker": "B",
+          "text": "Then you pulled the rope."
+        },
+        {
+          "speaker": "A",
+          "text": "Following the ribbon's invitation. We should review decorative influences."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D229-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "bf269ce99a3289b1d5a31f390376ca7f9dd2716e471be2e92a995903aa915f7e",
+          "dialogueHash": "8a16c784f75a4e13a96a458f91c36db818432bc061db52c46de18990044bc3de",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D229-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "83242364ad2ed638d345b15f890e8bf7708c7d7dca5ebdf06cdcc8b4d70ff82b",
+          "dialogueHash": "ab044a182ec8e3e836127911f84dfd602abbc06e8e0295e8908c9466ba3a8c66",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D229-b",
+        "dialogueHash": "c10ef7b6ac6394282a29de6db265cadce4759b99b86ed0d399977aadb6ee1993",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Put that cup down. It's caused enough trouble with your letter already."
+          },
+          {
+            "speaker": "B",
+            "text": "You poured it over the letter."
+          },
+          {
+            "speaker": "A",
+            "text": "Because it was full to the edge. Next time leave room at the top; that is where this went wrong."
+          },
+          {
+            "speaker": "B",
+            "text": "You filled it, and you were holding it."
+          },
+          {
+            "speaker": "A",
+            "text": "Then keep it away from me while you dry the letter. We've established it becomes a problem the moment I get near it."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D229-b",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D229",
+          "type": "drive",
+          "title": "Hide Inside the Callback",
+          "instruction": "Use an early harmless detail as the explanation for each new consequence, keeping your own role outside the pattern.",
+          "contentVersion": "0.17.0"
+        }
+      ],
+      "sourceRecordHash": "fc6a558c0834af13286871839b7f72e7d609f8803017e6074768abdfc428c5a9",
+      "dialogueHash": "c10ef7b6ac6394282a29de6db265cadce4759b99b86ed0d399977aadb6ee1993",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Put that cup down. It's caused enough trouble with your letter already."
+        },
+        {
+          "speaker": "B",
+          "text": "You poured it over the letter."
+        },
+        {
+          "speaker": "A",
+          "text": "Because it was full to the edge. Next time leave room at the top; that is where this went wrong."
+        },
+        {
+          "speaker": "B",
+          "text": "You filled it, and you were holding it."
+        },
+        {
+          "speaker": "A",
+          "text": "Then keep it away from me while you dry the letter. We've established it becomes a problem the moment I get near it."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D229-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "bf269ce99a3289b1d5a31f390376ca7f9dd2716e471be2e92a995903aa915f7e",
+          "dialogueHash": "8a16c784f75a4e13a96a458f91c36db818432bc061db52c46de18990044bc3de",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D229-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "83242364ad2ed638d345b15f890e8bf7708c7d7dca5ebdf06cdcc8b4d70ff82b",
+          "dialogueHash": "ab044a182ec8e3e836127911f84dfd602abbc06e8e0295e8908c9466ba3a8c66",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D229-a",
+        "dialogueHash": "db0bf3635bda61b8e717e1ebf5387c49f4834028463ed2683071c193f91bbf85",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll decide how we handle this. Remember the decorative ribbon? That's where the whole tent problem began."
+          },
+          {
+            "speaker": "B",
+            "text": "You tied it to the support rope."
+          },
+          {
+            "speaker": "A",
+            "text": "You can question the details after my decision. Yes, but nobody questioned why the ribbon was there."
+          },
+          {
+            "speaker": "B",
+            "text": "Then you pulled the rope."
+          },
+          {
+            "speaker": "A",
+            "text": "Following the ribbon's invitation. We should review decorative influences."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D230-a",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D230",
+          "type": "drive",
+          "title": "Answer the Previous Question",
+          "instruction": "Redirect every dangerous question by sincerely answering an earlier, safer version of it.",
+          "contentVersion": "0.17.0"
+        }
+      ],
+      "sourceRecordHash": "607d70679742e3266e5f9e72ddd91eb7334543a25f639a22d509860ff4587a29",
+      "dialogueHash": "3263895e13cb3417174dbc05dbd5fde6f629e90fd758615462a333a4f5d1be2f",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "We'll finish your weather question first. It rained all evening, and the road was wet."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm asking why you crashed my car."
+        },
+        {
+          "speaker": "A",
+          "text": "You may ask that after I've answered the road question. There was standing water at the bend, and rain was still falling when I reached it."
+        },
+        {
+          "speaker": "B",
+          "text": "Were you driving too fast when you reached it?"
+        },
+        {
+          "speaker": "A",
+          "text": "Hold that question. The rain had started before I set off, so yes, the roads were already wet. You can put that answer down in full."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D230-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "c823b5e9818e13a3070bb43ff4002b93c16ae6083c0b5a82c2044cc62b7c3247",
+          "dialogueHash": "753e878fa5163199c95bb4fc1e14babaa6cefbd0ab7c4879c522d261405f19b8",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D230-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "bb75e01926b8a5fb4d6546ad695ebf2b50a319650663cb276d2310787cd2abeb",
+          "dialogueHash": "7dbec9484fc6282753281293ab160fd763edd73c39c78c05d6610bcc31a94a69",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D230-b",
+        "dialogueHash": "c5617ad55a5c7b68c2ce638228ba5560e83669b524baf228c601791aad96deee",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Let me finish the lunch question. The soup was excellent."
+          },
+          {
+            "speaker": "B",
+            "text": "That was before I asked who ate my birthday cake."
+          },
+          {
+            "speaker": "A",
+            "text": "And you will get a complete lunch answer first. The soup was slightly salty, but I'd order it again."
+          },
+          {
+            "speaker": "B",
+            "text": "Forget lunch. Did you eat the cake?"
+          },
+          {
+            "speaker": "A",
+            "text": "Keep the questions in order. You asked whether lunch was good, and yes: the soup alone was worth going out for. Write down yes before you move on."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D230-b",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D230",
+          "type": "drive",
+          "title": "Answer the Previous Question",
+          "instruction": "Redirect every dangerous question by sincerely answering an earlier, safer version of it.",
+          "contentVersion": "0.17.0"
+        }
+      ],
+      "sourceRecordHash": "078adf9cfb116e72179116e8a2f722a06543628b5f53cf9c1b2c6aa1176331d4",
+      "dialogueHash": "c5617ad55a5c7b68c2ce638228ba5560e83669b524baf228c601791aad96deee",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Let me finish the lunch question. The soup was excellent."
+        },
+        {
+          "speaker": "B",
+          "text": "That was before I asked who ate my birthday cake."
+        },
+        {
+          "speaker": "A",
+          "text": "And you will get a complete lunch answer first. The soup was slightly salty, but I'd order it again."
+        },
+        {
+          "speaker": "B",
+          "text": "Forget lunch. Did you eat the cake?"
+        },
+        {
+          "speaker": "A",
+          "text": "Keep the questions in order. You asked whether lunch was good, and yes: the soup alone was worth going out for. Write down yes before you move on."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D230-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "c823b5e9818e13a3070bb43ff4002b93c16ae6083c0b5a82c2044cc62b7c3247",
+          "dialogueHash": "753e878fa5163199c95bb4fc1e14babaa6cefbd0ab7c4879c522d261405f19b8",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D230-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "bb75e01926b8a5fb4d6546ad695ebf2b50a319650663cb276d2310787cd2abeb",
+          "dialogueHash": "7dbec9484fc6282753281293ab160fd763edd73c39c78c05d6610bcc31a94a69",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D230-a",
+        "dialogueHash": "3263895e13cb3417174dbc05dbd5fde6f629e90fd758615462a333a4f5d1be2f",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "We'll finish your weather question first. It rained all evening, and the road was wet."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm asking why you crashed my car."
+          },
+          {
+            "speaker": "A",
+            "text": "You may ask that after I've answered the road question. There was standing water at the bend, and rain was still falling when I reached it."
+          },
+          {
+            "speaker": "B",
+            "text": "Were you driving too fast when you reached it?"
+          },
+          {
+            "speaker": "A",
+            "text": "Hold that question. The rain had started before I set off, so yes, the roads were already wet. You can put that answer down in full."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D231-a",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D231",
+          "type": "drive",
+          "title": "Reveal the Truth in Layers",
+          "instruction": "Protect someone by disclosing the truth in stages, changing what each earlier statement appears to mean.",
+          "contentVersion": "0.17.0"
+        }
+      ],
+      "sourceRecordHash": "8ffba68eb9283aa29bccc746ce1b14ce7174e9d8e033e85ecc4d4df9be2e27a3",
+      "dialogueHash": "b3d7c16702b257cfbfe0474f4dde8bd0bb5b75df75f518e3daca3917a8f4d0be",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Sit with me before you ring anyone. There's a change to the wedding venue, but we're keeping the date in front of us."
+        },
+        {
+          "speaker": "B",
+          "text": "What changed? Have they cancelled our booking?"
+        },
+        {
+          "speaker": "A",
+          "text": "The date is still ours. The building can't be used, so we'll choose somewhere else for that day."
+        },
+        {
+          "speaker": "B",
+          "text": "Why can't we use it?"
+        },
+        {
+          "speaker": "A",
+          "text": "There was a fire. Nobody was hurt. Give yourself a minute; then bring me the guest list, and we'll choose a room big enough for the same people."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D231-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "6a681464b601a6a7d55048e82b52c9a18181589ae14b08d295e8c3b72a68608f",
+          "dialogueHash": "e8c24f0ae52d64b45baa83999602d55fe9d7085e2cd245cbf8af0637f8e0085e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D231-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "9861b6adc9433e74fb596e26fd444790dd5b9a65a8bae80bc4d9d3717c3a15ad",
+          "dialogueHash": "38a8d213149605a46df0ab2573cab20d13a94393c2cbaf9550f5187fbd0ca688",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D231-b",
+        "dialogueHash": "570058f768fcd74d8d03f20debd93456ab3d718a3a2ac3d3258f98575d7c49db",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll decide how we handle this. Your garden gnome is coming home in a different arrangement."
+          },
+          {
+            "speaker": "B",
+            "text": "What arrangement?"
+          },
+          {
+            "speaker": "A",
+            "text": "You can question the details after my decision. Several pieces, carefully packed. I wanted you to hear 'coming home' first."
+          },
+          {
+            "speaker": "B",
+            "text": "Is it broken?"
+          },
+          {
+            "speaker": "A",
+            "text": "Yes. Most pieces are here, and we can start with the smile."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D231-b",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D231",
+          "type": "drive",
+          "title": "Reveal the Truth in Layers",
+          "instruction": "Protect someone by disclosing the truth in stages, changing what each earlier statement appears to mean.",
+          "contentVersion": "0.17.0"
+        }
+      ],
+      "sourceRecordHash": "4413078227f867e43efa614cb53047b107d03afb760ffc856c9c9098f13a56c5",
+      "dialogueHash": "570058f768fcd74d8d03f20debd93456ab3d718a3a2ac3d3258f98575d7c49db",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll decide how we handle this. Your garden gnome is coming home in a different arrangement."
+        },
+        {
+          "speaker": "B",
+          "text": "What arrangement?"
+        },
+        {
+          "speaker": "A",
+          "text": "You can question the details after my decision. Several pieces, carefully packed. I wanted you to hear 'coming home' first."
+        },
+        {
+          "speaker": "B",
+          "text": "Is it broken?"
+        },
+        {
+          "speaker": "A",
+          "text": "Yes. Most pieces are here, and we can start with the smile."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D231-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "6a681464b601a6a7d55048e82b52c9a18181589ae14b08d295e8c3b72a68608f",
+          "dialogueHash": "e8c24f0ae52d64b45baa83999602d55fe9d7085e2cd245cbf8af0637f8e0085e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D231-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "9861b6adc9433e74fb596e26fd444790dd5b9a65a8bae80bc4d9d3717c3a15ad",
+          "dialogueHash": "38a8d213149605a46df0ab2573cab20d13a94393c2cbaf9550f5187fbd0ca688",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D231-a",
+        "dialogueHash": "b3d7c16702b257cfbfe0474f4dde8bd0bb5b75df75f518e3daca3917a8f4d0be",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Sit with me before you ring anyone. There's a change to the wedding venue, but we're keeping the date in front of us."
+          },
+          {
+            "speaker": "B",
+            "text": "What changed? Have they cancelled our booking?"
+          },
+          {
+            "speaker": "A",
+            "text": "The date is still ours. The building can't be used, so we'll choose somewhere else for that day."
+          },
+          {
+            "speaker": "B",
+            "text": "Why can't we use it?"
+          },
+          {
+            "speaker": "A",
+            "text": "There was a fire. Nobody was hurt. Give yourself a minute; then bring me the guest list, and we'll choose a room big enough for the same people."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

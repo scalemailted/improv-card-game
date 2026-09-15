@@ -1,0 +1,1564 @@
+{
+  "at": "2026-09-15T00:51:45.030Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "D56-single-a",
+      "card": {
+        "id": "D56",
+        "title": "Challenge by Proxy",
+        "instruction": "Persuade someone else to challenge a rule or authority before you risk doing it yourself.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "148e6da9f8878c4440da2bcfe60c4a9b4dda9124922b12f1a627e2ec013ef2af",
+      "dialogueHash": "9037f333c6a828d30079ca830cfa6800519ccfaf9fb86024d471b9c135fa89bc",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Ask the director why the overtime rule changed. I'll support you."
+        },
+        {
+          "speaker": "B",
+          "text": "Why don't you ask?"
+        },
+        {
+          "speaker": "A",
+          "text": "Your fresh perspective won't carry my disciplinary history."
+        },
+        {
+          "speaker": "B",
+          "text": "Will you stand beside me?"
+        },
+        {
+          "speaker": "A",
+          "text": "Just behind. Where supportive people remain employable."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D56-single-b",
+        "dialogueHash": "f34905cbc8c3d7a271b1010460b8d0319c6c546153eb53493d0164b5d9e1e83a",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Will you challenge the captain's queue-jumping rule at tonight's club meeting?"
+          },
+          {
+            "speaker": "B",
+            "text": "He cancelled my booking last time I complained."
+          },
+          {
+            "speaker": "A",
+            "text": "Ask him to restore your booking as well. I'll draft both requests for your speech."
+          },
+          {
+            "speaker": "B",
+            "text": "Then sign it. I want him to know it's both of us."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll leave space for my signature. Once he's agreed you have a point, call me up to add it."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D56-single-b",
+      "card": {
+        "id": "D56",
+        "title": "Challenge by Proxy",
+        "instruction": "Persuade someone else to challenge a rule or authority before you risk doing it yourself.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "a122098c2799e6c480864db75e2d228274bab52714d7b7f27c4fbb9e50ca6f53",
+      "dialogueHash": "f34905cbc8c3d7a271b1010460b8d0319c6c546153eb53493d0164b5d9e1e83a",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Will you challenge the captain's queue-jumping rule at tonight's club meeting?"
+        },
+        {
+          "speaker": "B",
+          "text": "He cancelled my booking last time I complained."
+        },
+        {
+          "speaker": "A",
+          "text": "Ask him to restore your booking as well. I'll draft both requests for your speech."
+        },
+        {
+          "speaker": "B",
+          "text": "Then sign it. I want him to know it's both of us."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll leave space for my signature. Once he's agreed you have a point, call me up to add it."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D56-single-a",
+        "dialogueHash": "9037f333c6a828d30079ca830cfa6800519ccfaf9fb86024d471b9c135fa89bc",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Ask the director why the overtime rule changed. I'll support you."
+          },
+          {
+            "speaker": "B",
+            "text": "Why don't you ask?"
+          },
+          {
+            "speaker": "A",
+            "text": "Your fresh perspective won't carry my disciplinary history."
+          },
+          {
+            "speaker": "B",
+            "text": "Will you stand beside me?"
+          },
+          {
+            "speaker": "A",
+            "text": "Just behind. Where supportive people remain employable."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D57-single-a",
+      "card": {
+        "id": "D57",
+        "title": "Use the Proper Title",
+        "instruction": "Make someone acknowledge your standing through a title, privilege, courtesy, or public sign of respect.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "9e4f8897460a6f6f219977f7a3a9910ba84e122da7fa1145b385e61066a62866",
+      "dialogueHash": "a47e2faafb377f26e4be5aa995e2c73f263d1987eff8a07390f9da9dc747bb5b",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "At the staff barbecue, introduce me as Director Patel."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm introducing everyone by first name. Even the owner."
+        },
+        {
+          "speaker": "A",
+          "text": "Then give me a separate introduction when I welcome the staff."
+        },
+        {
+          "speaker": "B",
+          "text": "The owner's doing the welcome. You offered to serve burgers."
+        },
+        {
+          "speaker": "A",
+          "text": "Then introduce the burger service: 'Director Patel will serve you.' I'd like them to hear who's making this gesture."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D57-single-b",
+        "dialogueHash": "224b086d31e315c52058cdd1641c52187487dcdad3fad6c22317cf96dd7e92b5",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "My place card should say Chairperson, not simply Jo."
+          },
+          {
+            "speaker": "B",
+            "text": "Everyone knows you."
+          },
+          {
+            "speaker": "A",
+            "text": "Then nobody will struggle with the extra word."
+          },
+          {
+            "speaker": "B",
+            "text": "There's no room on the card."
+          },
+          {
+            "speaker": "A",
+            "text": "Use the larger plate."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D57-single-b",
+      "card": {
+        "id": "D57",
+        "title": "Use the Proper Title",
+        "instruction": "Make someone acknowledge your standing through a title, privilege, courtesy, or public sign of respect.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "3924f15791ff86f6ffa302dade8c4818a9b715a02d824256a1083a95e18672cc",
+      "dialogueHash": "224b086d31e315c52058cdd1641c52187487dcdad3fad6c22317cf96dd7e92b5",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "My place card should say Chairperson, not simply Jo."
+        },
+        {
+          "speaker": "B",
+          "text": "Everyone knows you."
+        },
+        {
+          "speaker": "A",
+          "text": "Then nobody will struggle with the extra word."
+        },
+        {
+          "speaker": "B",
+          "text": "There's no room on the card."
+        },
+        {
+          "speaker": "A",
+          "text": "Use the larger plate."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D57-single-a",
+        "dialogueHash": "a47e2faafb377f26e4be5aa995e2c73f263d1987eff8a07390f9da9dc747bb5b",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "At the staff barbecue, introduce me as Director Patel."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm introducing everyone by first name. Even the owner."
+          },
+          {
+            "speaker": "A",
+            "text": "Then give me a separate introduction when I welcome the staff."
+          },
+          {
+            "speaker": "B",
+            "text": "The owner's doing the welcome. You offered to serve burgers."
+          },
+          {
+            "speaker": "A",
+            "text": "Then introduce the burger service: 'Director Patel will serve you.' I'd like them to hear who's making this gesture."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D58-single-a",
+      "card": {
+        "id": "D58",
+        "title": "Declare Allegiance",
+        "instruction": "Make someone choose which person, side, or claim to authority they will support.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "a137bf1c14644c796fba4d1c3e7de9e3fa55d7ba6d2bcc931f3d25d49623db9d",
+      "dialogueHash": "98e3df890b73ca286638f79826b7782144984899280526cbfe6bc7d76ee9058f",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "For the workshop move, are you backing my proposal or Morgan's?"
+        },
+        {
+          "speaker": "B",
+          "text": "Your location, Morgan's budget."
+        },
+        {
+          "speaker": "A",
+          "text": "Fine. Whose proposal will you call that in the meeting?"
+        },
+        {
+          "speaker": "B",
+          "text": "I'll call it a compromise."
+        },
+        {
+          "speaker": "A",
+          "text": "And when Morgan and I both claim you supported us, which one will you correct?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D58-single-b",
+        "dialogueHash": "bea7da71d91d52c8b44fbbcc3d286c0b0c5807b738e5dd18b001a341ab09b826",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Will you wear my ribbon or Nina's for the chess club election?"
+          },
+          {
+            "speaker": "B",
+            "text": "Neither. You're both my friends."
+          },
+          {
+            "speaker": "A",
+            "text": "Keep us both as friends. Which one do you want as chair?"
+          },
+          {
+            "speaker": "B",
+            "text": "Could I wear yours today and hers tomorrow?"
+          },
+          {
+            "speaker": "A",
+            "text": "Tomorrow's the vote. Tell me which ribbon you'll wear then; I'll happily lend you the other one today."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D58-single-b",
+      "card": {
+        "id": "D58",
+        "title": "Declare Allegiance",
+        "instruction": "Make someone choose which person, side, or claim to authority they will support.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "ff70f5fe50c2a8f6e85f1a1ee5ae180bb682f6fc5b9e9c35fe3b15c43848d935",
+      "dialogueHash": "bea7da71d91d52c8b44fbbcc3d286c0b0c5807b738e5dd18b001a341ab09b826",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Will you wear my ribbon or Nina's for the chess club election?"
+        },
+        {
+          "speaker": "B",
+          "text": "Neither. You're both my friends."
+        },
+        {
+          "speaker": "A",
+          "text": "Keep us both as friends. Which one do you want as chair?"
+        },
+        {
+          "speaker": "B",
+          "text": "Could I wear yours today and hers tomorrow?"
+        },
+        {
+          "speaker": "A",
+          "text": "Tomorrow's the vote. Tell me which ribbon you'll wear then; I'll happily lend you the other one today."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D58-single-a",
+        "dialogueHash": "98e3df890b73ca286638f79826b7782144984899280526cbfe6bc7d76ee9058f",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "For the workshop move, are you backing my proposal or Morgan's?"
+          },
+          {
+            "speaker": "B",
+            "text": "Your location, Morgan's budget."
+          },
+          {
+            "speaker": "A",
+            "text": "Fine. Whose proposal will you call that in the meeting?"
+          },
+          {
+            "speaker": "B",
+            "text": "I'll call it a compromise."
+          },
+          {
+            "speaker": "A",
+            "text": "And when Morgan and I both claim you supported us, which one will you correct?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D59-single-a",
+      "card": {
+        "id": "D59",
+        "title": "Obey Without Explanation",
+        "instruction": "Create increasingly inconvenient requests that test whether someone accepts your authority.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "2e109fd18164eaa58ca3c21e5ba3a465e329b184f5645efb40579c67d49ee4fc",
+      "dialogueHash": "1e8d0911d7528738fe6065c9fa5e530b5970f1e382fb47b6e51e14ec7e6de907",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Bring that empty box to my desk."
+        },
+        {
+          "speaker": "B",
+          "text": "What do you need it for?"
+        },
+        {
+          "speaker": "A",
+          "text": "At present, to establish whether you'll bring it."
+        },
+        {
+          "speaker": "B",
+          "text": "It's here."
+        },
+        {
+          "speaker": "A",
+          "text": "Good. Take it back without the question this time."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D59-single-b",
+        "dialogueHash": "1b65b946e0018ba59a919edd2b92aa328dd12ac33195cfd1aa79592c79bb7427",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Leave your desk and stand by that open window."
+          },
+          {
+            "speaker": "B",
+            "text": "Why?"
+          },
+          {
+            "speaker": "A",
+            "text": "I need to know whether my team follows a direct request."
+          },
+          {
+            "speaker": "B",
+            "text": "It's freezing. Can I get my coat?"
+          },
+          {
+            "speaker": "A",
+            "text": "Yes. Fetch mine too, then come back and hold it while I check the rest of the team."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D59-single-b",
+      "card": {
+        "id": "D59",
+        "title": "Obey Without Explanation",
+        "instruction": "Create increasingly inconvenient requests that test whether someone accepts your authority.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "06d088d7cf57c59cebbc74e8c2c43b3de07ff1f60af0ceb70342cc03b044022a",
+      "dialogueHash": "1b65b946e0018ba59a919edd2b92aa328dd12ac33195cfd1aa79592c79bb7427",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Leave your desk and stand by that open window."
+        },
+        {
+          "speaker": "B",
+          "text": "Why?"
+        },
+        {
+          "speaker": "A",
+          "text": "I need to know whether my team follows a direct request."
+        },
+        {
+          "speaker": "B",
+          "text": "It's freezing. Can I get my coat?"
+        },
+        {
+          "speaker": "A",
+          "text": "Yes. Fetch mine too, then come back and hold it while I check the rest of the team."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D59-single-a",
+        "dialogueHash": "1e8d0911d7528738fe6065c9fa5e530b5970f1e382fb47b6e51e14ec7e6de907",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Bring that empty box to my desk."
+          },
+          {
+            "speaker": "B",
+            "text": "What do you need it for?"
+          },
+          {
+            "speaker": "A",
+            "text": "At present, to establish whether you'll bring it."
+          },
+          {
+            "speaker": "B",
+            "text": "It's here."
+          },
+          {
+            "speaker": "A",
+            "text": "Good. Take it back without the question this time."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D60-single-a",
+      "card": {
+        "id": "D60",
+        "title": "Pass Me the Authority",
+        "instruction": "Get someone to transfer authority publicly by naming you as the person who decides what happens next.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "4ee37d9094adedbf67410181f132fa9dbd65684a6441da4a7875e583e98407cc",
+      "dialogueHash": "4ab5351f88131139d0a81b1611c7849509fcd6feeb8cbdba0aff46c8ab0ba8b0",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Hand me the hall key and tell everyone I'm now in charge."
+        },
+        {
+          "speaker": "B",
+          "text": "Can't I just give you the key? My retirement taxi's waiting."
+        },
+        {
+          "speaker": "A",
+          "text": "The door will understand. The committee needs words."
+        },
+        {
+          "speaker": "B",
+          "text": "They're outside asking me whether to cancel Saturday's dance."
+        },
+        {
+          "speaker": "A",
+          "text": "Tell them I decide whether it goes ahead. Then ask me, in front of them. Your taxi can be my first approval."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D60-single-b",
+        "dialogueHash": "23871d43299feac08a441d8a39cbcf06f0f6069412b274ea5f3254d3672af364",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before leaving the meeting, name me as the person who decides."
+          },
+          {
+            "speaker": "B",
+            "text": "You're sitting in my chair."
+          },
+          {
+            "speaker": "A",
+            "text": "Furniture announces location, not succession."
+          },
+          {
+            "speaker": "B",
+            "text": "Fine. You're chairing."
+          },
+          {
+            "speaker": "A",
+            "text": "To the room, please. I already agree."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D60-single-b",
+      "card": {
+        "id": "D60",
+        "title": "Pass Me the Authority",
+        "instruction": "Get someone to transfer authority publicly by naming you as the person who decides what happens next.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "6458ac2df8761c507eca476147057d51ab7b93f6e78d9dda17e2d014e48d3298",
+      "dialogueHash": "23871d43299feac08a441d8a39cbcf06f0f6069412b274ea5f3254d3672af364",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before leaving the meeting, name me as the person who decides."
+        },
+        {
+          "speaker": "B",
+          "text": "You're sitting in my chair."
+        },
+        {
+          "speaker": "A",
+          "text": "Furniture announces location, not succession."
+        },
+        {
+          "speaker": "B",
+          "text": "Fine. You're chairing."
+        },
+        {
+          "speaker": "A",
+          "text": "To the room, please. I already agree."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D60-single-a",
+        "dialogueHash": "4ab5351f88131139d0a81b1611c7849509fcd6feeb8cbdba0aff46c8ab0ba8b0",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Hand me the hall key and tell everyone I'm now in charge."
+          },
+          {
+            "speaker": "B",
+            "text": "Can't I just give you the key? My retirement taxi's waiting."
+          },
+          {
+            "speaker": "A",
+            "text": "The door will understand. The committee needs words."
+          },
+          {
+            "speaker": "B",
+            "text": "They're outside asking me whether to cancel Saturday's dance."
+          },
+          {
+            "speaker": "A",
+            "text": "Tell them I decide whether it goes ahead. Then ask me, in front of them. Your taxi can be my first approval."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D61-single-a",
+      "card": {
+        "id": "D61",
+        "title": "Orders from the Shadows",
+        "instruction": "Hide that you set the problem in motion while quietly directing how everyone responds.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "219daf57c27d2d280413206b479d75c46652b6b95329eb9c62d38ff992e0029f",
+      "dialogueHash": "86cd20f4369ac7388641a8b5c523e1d6bea4df668592a15c1ddc8882d7da57d7",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The crates went to Leeds. Send the driver to me; I'll sort it quietly."
+        },
+        {
+          "speaker": "B",
+          "text": "Your email says Leeds. Shall I forward it to the manager?"
+        },
+        {
+          "speaker": "A",
+          "text": "Forward my corrected address instead. She needs the destination, not the correspondence."
+        },
+        {
+          "speaker": "B",
+          "text": "She wants a timeline before approving another van."
+        },
+        {
+          "speaker": "A",
+          "text": "Start with when we discovered the error. I'll arrange the van while you write."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D61-single-b",
+        "dialogueHash": "5f373c564c4fa4868d024d64bebe59909f824a1eeedcf784cdc44fe0424e487d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll rebuild the wedding bookings. Could you reassure the couples?"
+          },
+          {
+            "speaker": "B",
+            "text": "The cancellation log has your initials."
+          },
+          {
+            "speaker": "A",
+            "text": "Keep that screen here. Give them the replacement dates; I'll handle the log."
+          },
+          {
+            "speaker": "B",
+            "text": "I can restore everything, but they'll get an email naming whoever cancelled."
+          },
+          {
+            "speaker": "A",
+            "text": "That's helpful. Restore the dates individually instead; I'll stay and read them out."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D61-single-b",
+      "card": {
+        "id": "D61",
+        "title": "Orders from the Shadows",
+        "instruction": "Hide that you set the problem in motion while quietly directing how everyone responds.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "67d5dd4fc3579abd30b57bfd7b7327fb3877ca716358e6e38f83ead1775ba18b",
+      "dialogueHash": "5f373c564c4fa4868d024d64bebe59909f824a1eeedcf784cdc44fe0424e487d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll rebuild the wedding bookings. Could you reassure the couples?"
+        },
+        {
+          "speaker": "B",
+          "text": "The cancellation log has your initials."
+        },
+        {
+          "speaker": "A",
+          "text": "Keep that screen here. Give them the replacement dates; I'll handle the log."
+        },
+        {
+          "speaker": "B",
+          "text": "I can restore everything, but they'll get an email naming whoever cancelled."
+        },
+        {
+          "speaker": "A",
+          "text": "That's helpful. Restore the dates individually instead; I'll stay and read them out."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D61-single-a",
+        "dialogueHash": "86cd20f4369ac7388641a8b5c523e1d6bea4df668592a15c1ddc8882d7da57d7",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The crates went to Leeds. Send the driver to me; I'll sort it quietly."
+          },
+          {
+            "speaker": "B",
+            "text": "Your email says Leeds. Shall I forward it to the manager?"
+          },
+          {
+            "speaker": "A",
+            "text": "Forward my corrected address instead. She needs the destination, not the correspondence."
+          },
+          {
+            "speaker": "B",
+            "text": "She wants a timeline before approving another van."
+          },
+          {
+            "speaker": "A",
+            "text": "Start with when we discovered the error. I'll arrange the van while you write."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D62-single-a",
+      "card": {
+        "id": "D62",
+        "title": "Not Up for Debate",
+        "instruction": "Keep the conversation from examining where your authority comes from or whether it is legitimate.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "0c41afd8cc9f0e600753975e5deb35594541973cc3e2e57b70938480ee9dd8d8",
+      "dialogueHash": "39608c08ebff77f7dca1278f587f7109177d43941def4f3dea0038279e97c58d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Put me down as café shift leader. We need tomorrow's stock order."
+        },
+        {
+          "speaker": "B",
+          "text": "Who put you in charge? I usually do the order."
+        },
+        {
+          "speaker": "A",
+          "text": "And you're excellent at it. How much milk for tomorrow?"
+        },
+        {
+          "speaker": "B",
+          "text": "I'll order it, but I'm writing 'appointment unconfirmed' beside your name."
+        },
+        {
+          "speaker": "A",
+          "text": "Leave names off. Make it a supplies list; milk doesn't need a leadership column."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D62-single-b",
+        "dialogueHash": "ecb9c3de1aa401e1d5fc033701e7f18815c72242ca68be86fd5b8cc180fd8207",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'm inspecting the theatre's costume cupboard. Please unlock it."
+          },
+          {
+            "speaker": "B",
+            "text": "That badge is cardboard. Who sent you?"
+          },
+          {
+            "speaker": "A",
+            "text": "Let's discuss the costumes. You mentioned moths in the velvet."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll bring the wardrobe manager. She'll want to know who authorized this."
+          },
+          {
+            "speaker": "A",
+            "text": "Introduce me as someone helping with the moths. No titles for her to get stuck on."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D62-single-b",
+      "card": {
+        "id": "D62",
+        "title": "Not Up for Debate",
+        "instruction": "Keep the conversation from examining where your authority comes from or whether it is legitimate.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "bc59b1e6c0ff3a15cd9d117938552b57ae60ca33e4fcd7b32d220d26c0e8e35f",
+      "dialogueHash": "ecb9c3de1aa401e1d5fc033701e7f18815c72242ca68be86fd5b8cc180fd8207",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'm inspecting the theatre's costume cupboard. Please unlock it."
+        },
+        {
+          "speaker": "B",
+          "text": "That badge is cardboard. Who sent you?"
+        },
+        {
+          "speaker": "A",
+          "text": "Let's discuss the costumes. You mentioned moths in the velvet."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll bring the wardrobe manager. She'll want to know who authorized this."
+        },
+        {
+          "speaker": "A",
+          "text": "Introduce me as someone helping with the moths. No titles for her to get stuck on."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D62-single-a",
+        "dialogueHash": "39608c08ebff77f7dca1278f587f7109177d43941def4f3dea0038279e97c58d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Put me down as café shift leader. We need tomorrow's stock order."
+          },
+          {
+            "speaker": "B",
+            "text": "Who put you in charge? I usually do the order."
+          },
+          {
+            "speaker": "A",
+            "text": "And you're excellent at it. How much milk for tomorrow?"
+          },
+          {
+            "speaker": "B",
+            "text": "I'll order it, but I'm writing 'appointment unconfirmed' beside your name."
+          },
+          {
+            "speaker": "A",
+            "text": "Leave names off. Make it a supplies list; milk doesn't need a leadership column."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D63-single-a",
+      "card": {
+        "id": "D63",
+        "title": "For Stability’s Sake",
+        "instruction": "Hide a destabilizing truth because you believe the current balance of power must be protected.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "f6c1a41c2bbd121b920a75756741f0787b7ccee5d6446a7cc4ddd4b613283d7f",
+      "dialogueHash": "3523808f676ffae647f7dfab7099c4bb7f2b661a16f8a295b6645a2329e28780",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Leave the director's name on the launch programme. The department heads need someone above them."
+        },
+        {
+          "speaker": "B",
+          "text": "Her resignation is in the printer."
+        },
+        {
+          "speaker": "A",
+          "text": "Put it in my drawer. Without her, they'll each claim the launch."
+        },
+        {
+          "speaker": "B",
+          "text": "They're asking which of them gets her opening speech."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll read it on her behalf. Give them equal introductions; nobody inherits the microphone."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D63-single-b",
+        "dialogueHash": "f791d04bf42e0ee0ef166bfd90829e9102529060c011381822232c495cc1ea7a",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Keep the treasurer's page out of the fair briefing. Our chair needs everyone's confidence today."
+          },
+          {
+            "speaker": "B",
+            "text": "She spent the stall money on that arch."
+          },
+          {
+            "speaker": "A",
+            "text": "Call it donated decoration. If the stallholders find out, they'll replace her before we open."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll cover the shortfall, but she must sign an IOU."
+          },
+          {
+            "speaker": "A",
+            "text": "Privately, after her welcome. Let them see her opening the fair, not borrowing to open it."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D63-single-b",
+      "card": {
+        "id": "D63",
+        "title": "For Stability’s Sake",
+        "instruction": "Hide a destabilizing truth because you believe the current balance of power must be protected.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "2216571d7a7b6406330983e297b6fcec51ae1bf81113c1d9aeaa8d40ffc6b03d",
+      "dialogueHash": "f791d04bf42e0ee0ef166bfd90829e9102529060c011381822232c495cc1ea7a",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Keep the treasurer's page out of the fair briefing. Our chair needs everyone's confidence today."
+        },
+        {
+          "speaker": "B",
+          "text": "She spent the stall money on that arch."
+        },
+        {
+          "speaker": "A",
+          "text": "Call it donated decoration. If the stallholders find out, they'll replace her before we open."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll cover the shortfall, but she must sign an IOU."
+        },
+        {
+          "speaker": "A",
+          "text": "Privately, after her welcome. Let them see her opening the fair, not borrowing to open it."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D63-single-a",
+        "dialogueHash": "3523808f676ffae647f7dfab7099c4bb7f2b661a16f8a295b6645a2329e28780",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Leave the director's name on the launch programme. The department heads need someone above them."
+          },
+          {
+            "speaker": "B",
+            "text": "Her resignation is in the printer."
+          },
+          {
+            "speaker": "A",
+            "text": "Put it in my drawer. Without her, they'll each claim the launch."
+          },
+          {
+            "speaker": "B",
+            "text": "They're asking which of them gets her opening speech."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll read it on her behalf. Give them equal introductions; nobody inherits the microphone."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D64-single-a",
+      "card": {
+        "id": "D64",
+        "title": "Name Your Backers",
+        "instruction": "Get someone to reveal who supports their position, who authorized it, and who benefits from it.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "cd09309a710f4c384423c0faed1bfca11335d87460d4ac231b1d48fd38df1fec",
+      "dialogueHash": "5465f7d40e4c7e50e959dfd7c37818348f185c84a8399ebbf4ff370bdf7769f0",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before I tell the workshop staff they're closing, who backed your decision?"
+        },
+        {
+          "speaker": "B",
+          "text": "The director approved it. Please just send the notice."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll name her approval. Who else supported it?"
+        },
+        {
+          "speaker": "B",
+          "text": "Sales. They're getting the floor space, but leave them out."
+        },
+        {
+          "speaker": "A",
+          "text": "Then Sales can join the staff meeting. Who signed off on giving them our space?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D64-single-b",
+        "dialogueHash": "fc6a740871f5370d2800a93bc12c7ec1276bf686dce539e0e90932d2c680d4f1",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "This roof proposal says 'we recommend.' Who's we?"
+          },
+          {
+            "speaker": "B",
+            "text": "Finance backed the cheaper tiles. I need your signature to order them."
+          },
+          {
+            "speaker": "A",
+            "text": "Who authorized Finance to choose the tiles?"
+          },
+          {
+            "speaker": "B",
+            "text": "The facilities director. Savings go into her office refurbishment."
+          },
+          {
+            "speaker": "A",
+            "text": "Add her approval and that refurbishment to the proposal. Before I sign, can she explain the trade-off to our maintenance team?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D64-single-b",
+      "card": {
+        "id": "D64",
+        "title": "Name Your Backers",
+        "instruction": "Get someone to reveal who supports their position, who authorized it, and who benefits from it.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "a5bb51027fdc50a544ad046f60967c9dfb9799bf414de3f17e857bc0bf775d46",
+      "dialogueHash": "fc6a740871f5370d2800a93bc12c7ec1276bf686dce539e0e90932d2c680d4f1",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "This roof proposal says 'we recommend.' Who's we?"
+        },
+        {
+          "speaker": "B",
+          "text": "Finance backed the cheaper tiles. I need your signature to order them."
+        },
+        {
+          "speaker": "A",
+          "text": "Who authorized Finance to choose the tiles?"
+        },
+        {
+          "speaker": "B",
+          "text": "The facilities director. Savings go into her office refurbishment."
+        },
+        {
+          "speaker": "A",
+          "text": "Add her approval and that refurbishment to the proposal. Before I sign, can she explain the trade-off to our maintenance team?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D64-single-a",
+        "dialogueHash": "5465f7d40e4c7e50e959dfd7c37818348f185c84a8399ebbf4ff370bdf7769f0",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before I tell the workshop staff they're closing, who backed your decision?"
+          },
+          {
+            "speaker": "B",
+            "text": "The director approved it. Please just send the notice."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll name her approval. Who else supported it?"
+          },
+          {
+            "speaker": "B",
+            "text": "Sales. They're getting the floor space, but leave them out."
+          },
+          {
+            "speaker": "A",
+            "text": "Then Sales can join the staff meeting. Who signed off on giving them our space?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D65-single-a",
+      "card": {
+        "id": "D65",
+        "title": "Strategic Retreat",
+        "instruction": "Describe every loss of control as a deliberate concession made from strength.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "ed91f2587b13fe4ec20d390168988cb21d40cf2d7e91800e94bb4e4960da47a4",
+      "dialogueHash": "1aacedf1bd92a0bda40badfec99ae59b92d3000243a82fe807b91ff7e254f573",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've graciously handed you the chess club chairmanship. You'll need room to develop."
+        },
+        {
+          "speaker": "B",
+          "text": "You lost the vote. I need the cupboard key for tonight's match."
+        },
+        {
+          "speaker": "A",
+          "text": "Of course. I'm releasing equipment control so you can practice responsibility."
+        },
+        {
+          "speaker": "B",
+          "text": "And remove yourself as administrator. I can't change the fixtures."
+        },
+        {
+          "speaker": "A",
+          "text": "Gladly. I'll surrender my override too. You must learn to make decisions without my safety net."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D65-single-b",
+        "dialogueHash": "9f6e1d35364e61b8d8c19332ebf25793dcd1fec667d1f945fbba663c260e4e3c",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've released the gallery from hosting my exhibition. They need room for smaller ambitions."
+          },
+          {
+            "speaker": "B",
+            "text": "They rejected us. Shall I collect your paintings?"
+          },
+          {
+            "speaker": "A",
+            "text": "Yes. Withdrawing my best work gives them space to recover."
+          },
+          {
+            "speaker": "B",
+            "text": "They've already put it outside. I'll bring the van."
+          },
+          {
+            "speaker": "A",
+            "text": "Good. I'm conceding the pavement too. No need to overshadow their entrance."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D65-single-b",
+      "card": {
+        "id": "D65",
+        "title": "Strategic Retreat",
+        "instruction": "Describe every loss of control as a deliberate concession made from strength.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "8a64df9371789e8a8646cd48f774177f38ece7d8d828b0b422efe4ca4a2f586e",
+      "dialogueHash": "9f6e1d35364e61b8d8c19332ebf25793dcd1fec667d1f945fbba663c260e4e3c",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've released the gallery from hosting my exhibition. They need room for smaller ambitions."
+        },
+        {
+          "speaker": "B",
+          "text": "They rejected us. Shall I collect your paintings?"
+        },
+        {
+          "speaker": "A",
+          "text": "Yes. Withdrawing my best work gives them space to recover."
+        },
+        {
+          "speaker": "B",
+          "text": "They've already put it outside. I'll bring the van."
+        },
+        {
+          "speaker": "A",
+          "text": "Good. I'm conceding the pavement too. No need to overshadow their entrance."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D65-single-a",
+        "dialogueHash": "1aacedf1bd92a0bda40badfec99ae59b92d3000243a82fe807b91ff7e254f573",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've graciously handed you the chess club chairmanship. You'll need room to develop."
+          },
+          {
+            "speaker": "B",
+            "text": "You lost the vote. I need the cupboard key for tonight's match."
+          },
+          {
+            "speaker": "A",
+            "text": "Of course. I'm releasing equipment control so you can practice responsibility."
+          },
+          {
+            "speaker": "B",
+            "text": "And remove yourself as administrator. I can't change the fixtures."
+          },
+          {
+            "speaker": "A",
+            "text": "Gladly. I'll surrender my override too. You must learn to make decisions without my safety net."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

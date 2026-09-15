@@ -1,0 +1,1564 @@
+{
+  "at": "2026-09-15T00:12:25.693Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "D191-single-a",
+      "card": {
+        "id": "D191",
+        "title": "Exactly Within Policy",
+        "instruction": "Agree to every request only after interpreting the policy so it grants you authority, protection, or an exemption.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "01b5d538899acf7c2c38044e34581d3df7922af088b44bc54cfc7f4d5ff9c218",
+      "dialogueHash": "d30251424df81ac71427b205e9bd60021d26ec3a3175cfb05d11d88e7f053238",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Yes, I'll clean the hall. The policy lets senior volunteers supervise."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm asking you to mop."
+        },
+        {
+          "speaker": "A",
+          "text": "Exactly. Supervising the mop is covered."
+        },
+        {
+          "speaker": "B",
+          "text": "Who will hold it?"
+        },
+        {
+          "speaker": "A",
+          "text": "Someone whose contribution isn't restricted by seniority."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D191-single-b",
+        "dialogueHash": "08adc3f494a6fd0eb155917fa655ebbeb55fc647112b736072b2e81f38e69160",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Under our shared-effort rule, providing the house counts as my contribution. Yes, I'll host Christmas."
+          },
+          {
+            "speaker": "B",
+            "text": "Will you roast the potatoes?"
+          },
+          {
+            "speaker": "A",
+            "text": "Only if reheating counts as hosting. Bring them cooked and I'll warm them."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll cook here, then. Can I have the kitchen?"
+          },
+          {
+            "speaker": "A",
+            "text": "Yes. Shared effort means the cook handles the washing-up. I'll contribute the sink."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D191-single-b",
+      "card": {
+        "id": "D191",
+        "title": "Exactly Within Policy",
+        "instruction": "Agree to every request only after interpreting the policy so it grants you authority, protection, or an exemption.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "d21a9588d58c5fe60fce5dafddb18be24f7d0009a589f71629e423fa21c08dbe",
+      "dialogueHash": "08adc3f494a6fd0eb155917fa655ebbeb55fc647112b736072b2e81f38e69160",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Under our shared-effort rule, providing the house counts as my contribution. Yes, I'll host Christmas."
+        },
+        {
+          "speaker": "B",
+          "text": "Will you roast the potatoes?"
+        },
+        {
+          "speaker": "A",
+          "text": "Only if reheating counts as hosting. Bring them cooked and I'll warm them."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll cook here, then. Can I have the kitchen?"
+        },
+        {
+          "speaker": "A",
+          "text": "Yes. Shared effort means the cook handles the washing-up. I'll contribute the sink."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D191-single-a",
+        "dialogueHash": "d30251424df81ac71427b205e9bd60021d26ec3a3175cfb05d11d88e7f053238",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Yes, I'll clean the hall. The policy lets senior volunteers supervise."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm asking you to mop."
+          },
+          {
+            "speaker": "A",
+            "text": "Exactly. Supervising the mop is covered."
+          },
+          {
+            "speaker": "B",
+            "text": "Who will hold it?"
+          },
+          {
+            "speaker": "A",
+            "text": "Someone whose contribution isn't restricted by seniority."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D192-single-a",
+      "card": {
+        "id": "D192",
+        "title": "New Rule Required",
+        "instruction": "Use every problem as justification for adding another rule, ceremony, checkpoint, or layer of oversight.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "33912c56a8b2d2a9c706e9e8033490eadeb0aa21ab76ab0354d9be2c7f861024",
+      "dialogueHash": "363596b052e66674fe31616ab92bfa8bd30f217e4cd4d6a4928f9e5fe4c0c309",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You've spilled tea on the club minutes. We need pouring permits."
+        },
+        {
+          "speaker": "B",
+          "text": "Can you issue mine now? The committee's thirsty."
+        },
+        {
+          "speaker": "A",
+          "text": "After you demonstrate a safe pour over the sink."
+        },
+        {
+          "speaker": "B",
+          "text": "Fine. Come and watch."
+        },
+        {
+          "speaker": "A",
+          "text": "I wrote the test. We'll need an independent witness before I can certify you."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D192-single-b",
+        "dialogueHash": "e234f912e234eb85e3967476c5790d2dba5ea3967aeb4d479c263ba27fd79897",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The family photo failed because someone blinked. We need a blinking rota."
+          },
+          {
+            "speaker": "B",
+            "text": "You can't schedule a blink."
+          },
+          {
+            "speaker": "A",
+            "text": "Then we'll rehearse unscheduled blinking before each photograph."
+          },
+          {
+            "speaker": "B",
+            "text": "That will take all afternoon."
+          },
+          {
+            "speaker": "A",
+            "text": "We should appoint someone to monitor rehearsal duration."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D192-single-b",
+      "card": {
+        "id": "D192",
+        "title": "New Rule Required",
+        "instruction": "Use every problem as justification for adding another rule, ceremony, checkpoint, or layer of oversight.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "ab3ebc1693cb8063635586946491e80d6456d2b99ea4f690ba6fa13904d670f9",
+      "dialogueHash": "e234f912e234eb85e3967476c5790d2dba5ea3967aeb4d479c263ba27fd79897",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The family photo failed because someone blinked. We need a blinking rota."
+        },
+        {
+          "speaker": "B",
+          "text": "You can't schedule a blink."
+        },
+        {
+          "speaker": "A",
+          "text": "Then we'll rehearse unscheduled blinking before each photograph."
+        },
+        {
+          "speaker": "B",
+          "text": "That will take all afternoon."
+        },
+        {
+          "speaker": "A",
+          "text": "We should appoint someone to monitor rehearsal duration."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D192-single-a",
+        "dialogueHash": "363596b052e66674fe31616ab92bfa8bd30f217e4cd4d6a4928f9e5fe4c0c309",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You've spilled tea on the club minutes. We need pouring permits."
+          },
+          {
+            "speaker": "B",
+            "text": "Can you issue mine now? The committee's thirsty."
+          },
+          {
+            "speaker": "A",
+            "text": "After you demonstrate a safe pour over the sink."
+          },
+          {
+            "speaker": "B",
+            "text": "Fine. Come and watch."
+          },
+          {
+            "speaker": "A",
+            "text": "I wrote the test. We'll need an independent witness before I can certify you."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D193-single-a",
+      "card": {
+        "id": "D193",
+        "title": "Lend Me the Edge",
+        "instruction": "Get someone to provide the one advantage you need without making the eventual success feel borrowed.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "8024a2f370abd4db1dcb36373b0884943ee33d846d010351e036c565696ff96d",
+      "dialogueHash": "a50a363ebbe5799fb941139943640765ceca5b3f17d9b929452d93f58f3e8cd2",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Lend me your good tennis racket. I'd like my talent to have a fair surface."
+        },
+        {
+          "speaker": "B",
+          "text": "Will you admit it helped?"
+        },
+        {
+          "speaker": "A",
+          "text": "I'll thank the strings. The strokes remain mine."
+        },
+        {
+          "speaker": "B",
+          "text": "You can use your own racket."
+        },
+        {
+          "speaker": "A",
+          "text": "And let inferior equipment take credit for my defeat?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D193-single-b",
+        "dialogueHash": "a2b86e936a441597ce57c0345fa0dfcffd08ce3614f3a6ac22428b53542b9bfb",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "What temperature won you the cake prize? Mine keeps sinking."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll tell you if you mention my help when you enter."
+          },
+          {
+            "speaker": "A",
+            "text": "Could I thank you for oven advice? The cake is entirely mine."
+          },
+          {
+            "speaker": "B",
+            "text": "Put that on the entry form. There's a box for helpers."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll put you under equipment support. Now, what temperature lets my cake stand on its own?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D193-single-b",
+      "card": {
+        "id": "D193",
+        "title": "Lend Me the Edge",
+        "instruction": "Get someone to provide the one advantage you need without making the eventual success feel borrowed.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "ee90570f6d0c77b9083b1ad803eeab7a9d2c41cdabb4485c2bd5a8bd10ebdaac",
+      "dialogueHash": "a2b86e936a441597ce57c0345fa0dfcffd08ce3614f3a6ac22428b53542b9bfb",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "What temperature won you the cake prize? Mine keeps sinking."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll tell you if you mention my help when you enter."
+        },
+        {
+          "speaker": "A",
+          "text": "Could I thank you for oven advice? The cake is entirely mine."
+        },
+        {
+          "speaker": "B",
+          "text": "Put that on the entry form. There's a box for helpers."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll put you under equipment support. Now, what temperature lets my cake stand on its own?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D193-single-a",
+        "dialogueHash": "a50a363ebbe5799fb941139943640765ceca5b3f17d9b929452d93f58f3e8cd2",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Lend me your good tennis racket. I'd like my talent to have a fair surface."
+          },
+          {
+            "speaker": "B",
+            "text": "Will you admit it helped?"
+          },
+          {
+            "speaker": "A",
+            "text": "I'll thank the strings. The strokes remain mine."
+          },
+          {
+            "speaker": "B",
+            "text": "You can use your own racket."
+          },
+          {
+            "speaker": "A",
+            "text": "And let inferior equipment take credit for my defeat?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D194-single-a",
+      "card": {
+        "id": "D194",
+        "title": "Stay for the Result",
+        "instruction": "Keep them present until the contest, bargain, or consequence reaches an undeniable outcome.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "1c0a1264d7c3b740e595a25992b9eec54e31edd746fdad162f1f2230289b088e",
+      "dialogueHash": "c571ce1196ae297a105f87c4d19167cfecc3f39ef93f93d11b76fce209c9f04e",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Don't leave the allotment until we've weighed both pumpkins."
+        },
+        {
+          "speaker": "B",
+          "text": "Yours is clearly bigger."
+        },
+        {
+          "speaker": "A",
+          "text": "Then you won't mind witnessing how much bigger."
+        },
+        {
+          "speaker": "B",
+          "text": "Tell me tomorrow."
+        },
+        {
+          "speaker": "A",
+          "text": "Tomorrow you'll say the scales were generous. Stay for the number."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D194-single-b",
+        "dialogueHash": "2590dfcb4d6a927f2e5c972be16a69d9d82120dc98179fcb08f1876f24481f1f",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Stay until we've settled the dinner bill. Your 'cheap little starter' is forty pounds."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll transfer you twenty. I need to go."
+          },
+          {
+            "speaker": "A",
+            "text": "Wait. Is twenty your half of dinner or half the starter?"
+          },
+          {
+            "speaker": "B",
+            "text": "That's a mistake. We ordered the small platter."
+          },
+          {
+            "speaker": "A",
+            "text": "Then stay and tell the waiter with me. I'm happy to discover you were economical, but I'd like a corrected bill as proof."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D194-single-b",
+      "card": {
+        "id": "D194",
+        "title": "Stay for the Result",
+        "instruction": "Keep them present until the contest, bargain, or consequence reaches an undeniable outcome.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "6d6dbce3d8f54e3faa841a7dcd62b4b26ff8060710a22f8fcd1f0ebbf67f33da",
+      "dialogueHash": "2590dfcb4d6a927f2e5c972be16a69d9d82120dc98179fcb08f1876f24481f1f",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Stay until we've settled the dinner bill. Your 'cheap little starter' is forty pounds."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll transfer you twenty. I need to go."
+        },
+        {
+          "speaker": "A",
+          "text": "Wait. Is twenty your half of dinner or half the starter?"
+        },
+        {
+          "speaker": "B",
+          "text": "That's a mistake. We ordered the small platter."
+        },
+        {
+          "speaker": "A",
+          "text": "Then stay and tell the waiter with me. I'm happy to discover you were economical, but I'd like a corrected bill as proof."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D194-single-a",
+        "dialogueHash": "c571ce1196ae297a105f87c4d19167cfecc3f39ef93f93d11b76fce209c9f04e",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Don't leave the allotment until we've weighed both pumpkins."
+          },
+          {
+            "speaker": "B",
+            "text": "Yours is clearly bigger."
+          },
+          {
+            "speaker": "A",
+            "text": "Then you won't mind witnessing how much bigger."
+          },
+          {
+            "speaker": "B",
+            "text": "Tell me tomorrow."
+          },
+          {
+            "speaker": "A",
+            "text": "Tomorrow you'll say the scales were generous. Stay for the number."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D195-single-a",
+      "card": {
+        "id": "D195",
+        "title": "Admit It Wasn’t Fair",
+        "instruction": "Get an apology that acknowledges how the rules, comparison, or outcome worked against you.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "bd958b01554221b327453c98f08add63c0889f7530d90e9f15a47e58ffd1275e",
+      "dialogueHash": "0085aa572f858febe4f860aea90908f6c9ac656009494a289ced0bdd0986f837",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before congratulating the winner, apologise for starting me behind the shed."
+        },
+        {
+          "speaker": "B",
+          "text": "You still finished last."
+        },
+        {
+          "speaker": "A",
+          "text": "Yes. I spent the first ten seconds finding the race."
+        },
+        {
+          "speaker": "B",
+          "text": "It was an honest mistake."
+        },
+        {
+          "speaker": "A",
+          "text": "Lovely opening. Add 'and that was unfair to you.'"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D195-single-b",
+        "dialogueHash": "8241ae1a71c22e5cb12916eb747de72948be2d7331ceb0b5d2a8f3ef91dbf523",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Could you apologise for judging my cake after everyone knew it was mine?"
+          },
+          {
+            "speaker": "B",
+            "text": "You lost on flavour."
+          },
+          {
+            "speaker": "A",
+            "text": "You introduced it as 'another interesting attempt.'"
+          },
+          {
+            "speaker": "B",
+            "text": "I was being encouraging."
+          },
+          {
+            "speaker": "A",
+            "text": "Then apologise for encouraging the judges before they'd tasted it."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D195-single-b",
+      "card": {
+        "id": "D195",
+        "title": "Admit It Wasn’t Fair",
+        "instruction": "Get an apology that acknowledges how the rules, comparison, or outcome worked against you.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "b6635e5575a5ba2c95576dc76729380f8f978fe43275902ca353b8e4833cc893",
+      "dialogueHash": "8241ae1a71c22e5cb12916eb747de72948be2d7331ceb0b5d2a8f3ef91dbf523",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Could you apologise for judging my cake after everyone knew it was mine?"
+        },
+        {
+          "speaker": "B",
+          "text": "You lost on flavour."
+        },
+        {
+          "speaker": "A",
+          "text": "You introduced it as 'another interesting attempt.'"
+        },
+        {
+          "speaker": "B",
+          "text": "I was being encouraging."
+        },
+        {
+          "speaker": "A",
+          "text": "Then apologise for encouraging the judges before they'd tasted it."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D195-single-a",
+        "dialogueHash": "0085aa572f858febe4f860aea90908f6c9ac656009494a289ced0bdd0986f837",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before congratulating the winner, apologise for starting me behind the shed."
+          },
+          {
+            "speaker": "B",
+            "text": "You still finished last."
+          },
+          {
+            "speaker": "A",
+            "text": "Yes. I spent the first ten seconds finding the race."
+          },
+          {
+            "speaker": "B",
+            "text": "It was an honest mistake."
+          },
+          {
+            "speaker": "A",
+            "text": "Lovely opening. Add 'and that was unfair to you.'"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D196-single-a",
+      "card": {
+        "id": "D196",
+        "title": "Call It a Fair Win",
+        "instruction": "Get them to recognize the result as deserved rather than accidental, gifted, or manipulated.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "6b0b83a3734457c97544ffce2e8702e9b05285ce0e383fc57b319daa9b6a2778",
+      "dialogueHash": "075c3373924d87577b8de2de52599e4e1df783e22ad0ad8d6d445efe05ca71e7",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Please say I earned the quiz trophy. I studied for six months."
+        },
+        {
+          "speaker": "B",
+          "text": "Half the questions were birds. You're a birdwatcher."
+        },
+        {
+          "speaker": "A",
+          "text": "Birdwatching was the revision. I didn't get those answers by standing near a duck."
+        },
+        {
+          "speaker": "B",
+          "text": "I'd have won if they'd asked about football."
+        },
+        {
+          "speaker": "A",
+          "text": "And I'd have called that knowledge. Could you extend the same courtesy to my ducks?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D196-single-b",
+        "dialogueHash": "77a49c17d56b15f6b015dcb577f104dfe5c241fb2d87435a168b6eb9c4d6256e",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You don't think they let me win the race, do you?"
+          },
+          {
+            "speaker": "B",
+            "text": "They slowed near the end."
+          },
+          {
+            "speaker": "A",
+            "text": "Because they couldn't maintain my pace."
+          },
+          {
+            "speaker": "B",
+            "text": "One of them stopped to tie a shoe."
+          },
+          {
+            "speaker": "A",
+            "text": "Then acknowledge my superior knot preparation."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D196-single-b",
+      "card": {
+        "id": "D196",
+        "title": "Call It a Fair Win",
+        "instruction": "Get them to recognize the result as deserved rather than accidental, gifted, or manipulated.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "98fce0416efb06617bd87933995fe3941423f8b841517b9c6e578be7a0793938",
+      "dialogueHash": "77a49c17d56b15f6b015dcb577f104dfe5c241fb2d87435a168b6eb9c4d6256e",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You don't think they let me win the race, do you?"
+        },
+        {
+          "speaker": "B",
+          "text": "They slowed near the end."
+        },
+        {
+          "speaker": "A",
+          "text": "Because they couldn't maintain my pace."
+        },
+        {
+          "speaker": "B",
+          "text": "One of them stopped to tie a shoe."
+        },
+        {
+          "speaker": "A",
+          "text": "Then acknowledge my superior knot preparation."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D196-single-a",
+        "dialogueHash": "075c3373924d87577b8de2de52599e4e1df783e22ad0ad8d6d445efe05ca71e7",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Please say I earned the quiz trophy. I studied for six months."
+          },
+          {
+            "speaker": "B",
+            "text": "Half the questions were birds. You're a birdwatcher."
+          },
+          {
+            "speaker": "A",
+            "text": "Birdwatching was the revision. I didn't get those answers by standing near a duck."
+          },
+          {
+            "speaker": "B",
+            "text": "I'd have won if they'd asked about football."
+          },
+          {
+            "speaker": "A",
+            "text": "And I'd have called that knowledge. Could you extend the same courtesy to my ducks?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D197-single-a",
+      "card": {
+        "id": "D197",
+        "title": "Take the Consequence",
+        "instruction": "Get them to accept responsibility for carrying out the cost, penalty, or unpleasant next step.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "53037513d6c0fd100e3d097536f58c90dcdab235cceb73540d834b34a89572a1",
+      "dialogueHash": "5263d6415c41f28e647c6d0770774de81669f5eaa972089a664f92ce861c2ed4",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You lost the chess game. The agreement says you wash up."
+        },
+        {
+          "speaker": "B",
+          "text": "I thought we were joking."
+        },
+        {
+          "speaker": "A",
+          "text": "You were very serious about my washing up while you were winning."
+        },
+        {
+          "speaker": "B",
+          "text": "Can't we play again?"
+        },
+        {
+          "speaker": "A",
+          "text": "After the dishes. Call it a practical interval."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D197-single-b",
+        "dialogueHash": "5c1d54ca767a981d274d21e5bef32a505f64f3af97876d9e68b4b2176bf2cd81",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You said you'd announce the budget cut if your plan cost more."
+          },
+          {
+            "speaker": "B",
+            "text": "It only cost slightly more."
+          },
+          {
+            "speaker": "A",
+            "text": "Then the announcement can be slightly apologetic."
+          },
+          {
+            "speaker": "B",
+            "text": "You could explain it better."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll write you a clear opening: 'My plan ran over budget.' Will you take it to the staff meeting?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D197-single-b",
+      "card": {
+        "id": "D197",
+        "title": "Take the Consequence",
+        "instruction": "Get them to accept responsibility for carrying out the cost, penalty, or unpleasant next step.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "a775ee8680f961ef9b61e35d17519e5c737887a30c91d0cf5b3033d34662e559",
+      "dialogueHash": "5c1d54ca767a981d274d21e5bef32a505f64f3af97876d9e68b4b2176bf2cd81",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You said you'd announce the budget cut if your plan cost more."
+        },
+        {
+          "speaker": "B",
+          "text": "It only cost slightly more."
+        },
+        {
+          "speaker": "A",
+          "text": "Then the announcement can be slightly apologetic."
+        },
+        {
+          "speaker": "B",
+          "text": "You could explain it better."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll write you a clear opening: 'My plan ran over budget.' Will you take it to the staff meeting?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D197-single-a",
+        "dialogueHash": "5263d6415c41f28e647c6d0770774de81669f5eaa972089a664f92ce861c2ed4",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You lost the chess game. The agreement says you wash up."
+          },
+          {
+            "speaker": "B",
+            "text": "I thought we were joking."
+          },
+          {
+            "speaker": "A",
+            "text": "You were very serious about my washing up while you were winning."
+          },
+          {
+            "speaker": "B",
+            "text": "Can't we play again?"
+          },
+          {
+            "speaker": "A",
+            "text": "After the dishes. Call it a practical interval."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D198-single-a",
+      "card": {
+        "id": "D198",
+        "title": "Show Me the Score",
+        "instruction": "Find out how they measure success, what they stand to gain, and where you currently rank.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "47bb8dd27fa4eb92a312aa8ef0be6c7f29503d0a109444de4b122aca06c36526",
+      "dialogueHash": "b285ae2c82ae17eda7a3be0c9812b9b8acba87165968561156dc9ce22e87f7fd",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "How are you judging my picnic against last year's?"
+        },
+        {
+          "speaker": "B",
+          "text": "Happy families. We need twenty memberships renewed."
+        },
+        {
+          "speaker": "A",
+          "text": "How many have renewed, and what do you get if we reach twenty?"
+        },
+        {
+          "speaker": "B",
+          "text": "Eighteen. I keep my organiser's allowance. Last year got nineteen."
+        },
+        {
+          "speaker": "A",
+          "text": "So I'm one behind, and two renewals save your allowance. Which family should I take the remaining cake to?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D198-single-b",
+        "dialogueHash": "f53d6fbf63e26081da87dfe1c254c0c00b56202f4ced95b460b55a19567d8e28",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Why back your cousin over me for club president? What counts as success?"
+          },
+          {
+            "speaker": "B",
+            "text": "Getting the car park resurfaced before winter."
+          },
+          {
+            "speaker": "A",
+            "text": "And what does that get you personally?"
+          },
+          {
+            "speaker": "B",
+            "text": "Dry shoes. I run outdoor classes. He's promised September; you've promised a consultation."
+          },
+          {
+            "speaker": "A",
+            "text": "So I'm behind on dry shoes. If I secure an August contractor, do I move ahead of family?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D198-single-b",
+      "card": {
+        "id": "D198",
+        "title": "Show Me the Score",
+        "instruction": "Find out how they measure success, what they stand to gain, and where you currently rank.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "a6431bf62ae096e96fc4ad844e652e6741b85c688a37078af09605bee1d3e389",
+      "dialogueHash": "f53d6fbf63e26081da87dfe1c254c0c00b56202f4ced95b460b55a19567d8e28",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Why back your cousin over me for club president? What counts as success?"
+        },
+        {
+          "speaker": "B",
+          "text": "Getting the car park resurfaced before winter."
+        },
+        {
+          "speaker": "A",
+          "text": "And what does that get you personally?"
+        },
+        {
+          "speaker": "B",
+          "text": "Dry shoes. I run outdoor classes. He's promised September; you've promised a consultation."
+        },
+        {
+          "speaker": "A",
+          "text": "So I'm behind on dry shoes. If I secure an August contractor, do I move ahead of family?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D198-single-a",
+        "dialogueHash": "b285ae2c82ae17eda7a3be0c9812b9b8acba87165968561156dc9ce22e87f7fd",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "How are you judging my picnic against last year's?"
+          },
+          {
+            "speaker": "B",
+            "text": "Happy families. We need twenty memberships renewed."
+          },
+          {
+            "speaker": "A",
+            "text": "How many have renewed, and what do you get if we reach twenty?"
+          },
+          {
+            "speaker": "B",
+            "text": "Eighteen. I keep my organiser's allowance. Last year got nineteen."
+          },
+          {
+            "speaker": "A",
+            "text": "So I'm one behind, and two renewals save your allowance. Which family should I take the remaining cake to?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D199-single-a",
+      "card": {
+        "id": "D199",
+        "title": "Enter on My Side",
+        "instruction": "Recruit them into your side of a contest or bargain before the stakes become fully clear.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "ffe7cc157ecb3be9f9a6de28876284da27508a893e21ceb05bc8d45e4ae9024a",
+      "dialogueHash": "81c0c6dababd4360f16b269d80673d4c734201fab43bc43a44534a6d22b2c284",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Put on our quiz-team badge before I explain the final round."
+        },
+        {
+          "speaker": "B",
+          "text": "Why? What happens if we lose?"
+        },
+        {
+          "speaker": "A",
+          "text": "We'll face that together. That's what the badge means."
+        },
+        {
+          "speaker": "B",
+          "text": "I haven't agreed to face anything."
+        },
+        {
+          "speaker": "A",
+          "text": "Then let's start with the very easy agreement to wear blue."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D199-single-b",
+        "dialogueHash": "4aebc7db340b9a7c80fcfc401754c2a063a467531cc21ac6428ae27b5bc1eaef",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Back my stall at the fete. Sign here above 'joint entrant.'"
+          },
+          {
+            "speaker": "B",
+            "text": "What's the penalty clause below it?"
+          },
+          {
+            "speaker": "A",
+            "text": "The sort of challenge best discussed between partners."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm not signing unless I get half the takings."
+          },
+          {
+            "speaker": "A",
+            "text": "Half, and your name first on the stall. Let's secure our pitch before we work through what we might owe."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D199-single-b",
+      "card": {
+        "id": "D199",
+        "title": "Enter on My Side",
+        "instruction": "Recruit them into your side of a contest or bargain before the stakes become fully clear.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "88933b29a5d518c31917fce92f901b28da62618dbe72c19c4182a89f317274a8",
+      "dialogueHash": "4aebc7db340b9a7c80fcfc401754c2a063a467531cc21ac6428ae27b5bc1eaef",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Back my stall at the fete. Sign here above 'joint entrant.'"
+        },
+        {
+          "speaker": "B",
+          "text": "What's the penalty clause below it?"
+        },
+        {
+          "speaker": "A",
+          "text": "The sort of challenge best discussed between partners."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm not signing unless I get half the takings."
+        },
+        {
+          "speaker": "A",
+          "text": "Half, and your name first on the stall. Let's secure our pitch before we work through what we might owe."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D199-single-a",
+        "dialogueHash": "81c0c6dababd4360f16b269d80673d4c734201fab43bc43a44534a6d22b2c284",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Put on our quiz-team badge before I explain the final round."
+          },
+          {
+            "speaker": "B",
+            "text": "Why? What happens if we lose?"
+          },
+          {
+            "speaker": "A",
+            "text": "We'll face that together. That's what the badge means."
+          },
+          {
+            "speaker": "B",
+            "text": "I haven't agreed to face anything."
+          },
+          {
+            "speaker": "A",
+            "text": "Then let's start with the very easy agreement to wear blue."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D200-single-a",
+      "card": {
+        "id": "D200",
+        "title": "Raise the Stakes",
+        "instruction": "Persuade them to accept a larger risk, cost, or commitment so the outcome will feel decisive.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "1c4728014305333e6242807d9730ab58d516606b51a5aec503d460522b31d9b5",
+      "dialogueHash": "9d327b9c66c6feca332126fb458a5b69a666a2aba30e0e61907c808f91eb024c",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Let's make this chess game decide who cooks all weekend."
+        },
+        {
+          "speaker": "B",
+          "text": "We were playing for a biscuit."
+        },
+        {
+          "speaker": "A",
+          "text": "You can lose a biscuit and forget who won. Three dinners should settle it."
+        },
+        {
+          "speaker": "B",
+          "text": "Only if you stop demanding rematches when you lose."
+        },
+        {
+          "speaker": "A",
+          "text": "Agreed. No rematches, and the loser does breakfast too. By Sunday we'll both remember."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D200-single-b",
+        "dialogueHash": "c8b8513cbce1072357343464182dda81ae98286b9df921fd601d4dd61408953d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Will you put your club captaincy on the rematch?"
+          },
+          {
+            "speaker": "B",
+            "text": "That's a ridiculous risk."
+          },
+          {
+            "speaker": "A",
+            "text": "Exactly. We'll both remember the result."
+          },
+          {
+            "speaker": "B",
+            "text": "Isn't pride enough?"
+          },
+          {
+            "speaker": "A",
+            "text": "We've misplaced the results of six games played for pride."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D200-single-b",
+      "card": {
+        "id": "D200",
+        "title": "Raise the Stakes",
+        "instruction": "Persuade them to accept a larger risk, cost, or commitment so the outcome will feel decisive.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "56b9a03abd887e93f4b4cd60c648e33dc2f19bd5088f5952bbc2cc1eea41f799",
+      "dialogueHash": "c8b8513cbce1072357343464182dda81ae98286b9df921fd601d4dd61408953d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Will you put your club captaincy on the rematch?"
+        },
+        {
+          "speaker": "B",
+          "text": "That's a ridiculous risk."
+        },
+        {
+          "speaker": "A",
+          "text": "Exactly. We'll both remember the result."
+        },
+        {
+          "speaker": "B",
+          "text": "Isn't pride enough?"
+        },
+        {
+          "speaker": "A",
+          "text": "We've misplaced the results of six games played for pride."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D200-single-a",
+        "dialogueHash": "9d327b9c66c6feca332126fb458a5b69a666a2aba30e0e61907c808f91eb024c",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Let's make this chess game decide who cooks all weekend."
+          },
+          {
+            "speaker": "B",
+            "text": "We were playing for a biscuit."
+          },
+          {
+            "speaker": "A",
+            "text": "You can lose a biscuit and forget who won. Three dinners should settle it."
+          },
+          {
+            "speaker": "B",
+            "text": "Only if you stop demanding rematches when you lose."
+          },
+          {
+            "speaker": "A",
+            "text": "Agreed. No rematches, and the loser does breakfast too. By Sunday we'll both remember."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

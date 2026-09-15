@@ -1,0 +1,1564 @@
+{
+  "at": "2026-09-15T02:19:22.828Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "D179-single-b",
+      "card": {
+        "id": "D179",
+        "title": "Interpret the Custom",
+        "instruction": "Ask them to apply an ambiguous custom where the wording is unclear. Treat their interpretation as the real test of loyalty.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "e696afd94b307aaccb372041a5adbeb4d7a74900c7cabfe4c928fc156c310da1",
+      "dialogueHash": "a1a165bb30ba9ce19b2defa03f14087721538f950d309878c61fb06b6d4b2dc7",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Our gardening club supports members 'where possible.' Will you sign my appeal against losing my allotment?"
+        },
+        {
+          "speaker": "B",
+          "text": "That could just mean wishing you luck."
+        },
+        {
+          "speaker": "A",
+          "text": "You get to interpret it. I'd like to know whether membership reaches as far as your signature."
+        },
+        {
+          "speaker": "B",
+          "text": "Some members want my name kept off it."
+        },
+        {
+          "speaker": "A",
+          "text": "Then the same words have to cover me and their disapproval. Whose comfort does 'possible' protect?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D179-single-a",
+        "dialogueHash": "844cd68eb904d489c9c28b99df6a2334d488da3d44804fe8f217f68411aa3f7e",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before I leave for my shift, how much lasagne will you save me? Family custom says 'a proper portion.'"
+          },
+          {
+            "speaker": "B",
+            "text": "It doesn't say how big."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I'll find out what 'proper' means when it's for me."
+          },
+          {
+            "speaker": "B",
+            "text": "Your brothers want seconds."
+          },
+          {
+            "speaker": "A",
+            "text": "Save mine before you serve those. I'd like being expected home to count before being hungry twice."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D180-single-a",
+      "card": {
+        "id": "D180",
+        "title": "Withdraw the Objection",
+        "instruction": "Persuade someone to drop a complaint, challenge, or special request and accept the official process.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "eaac556eff49f74a818361161b63996560f27c690eb1bdb23684c11ed81cb43d",
+      "dialogueHash": "c83593397f6a18807c12ec8b754e3bbf129939fa8dd80a30565d6ec548fbbcc2",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Drop the demand to question our delivery driver. The missing-parcel claim goes through this form."
+        },
+        {
+          "speaker": "B",
+          "text": "Your form requires a photo of the parcel I haven't received."
+        },
+        {
+          "speaker": "A",
+          "text": "Use a photo of your empty doorstep. That's the delivery location."
+        },
+        {
+          "speaker": "B",
+          "text": "Will you stand in it holding today's newspaper?"
+        },
+        {
+          "speaker": "A",
+          "text": "Yes, beside the doormat. Put me under 'supporting evidence,' and leave the driver off your witness list."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D180-single-b",
+        "dialogueHash": "129b9fa15399af92502bee3003f86ce1d03c568b42a4590830d9a1cdc2d091d8",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Please drop the request for a private tea queue. Everyone at the fete uses this one."
+          },
+          {
+            "speaker": "B",
+            "text": "I donated the tent. Can't that count for something?"
+          },
+          {
+            "speaker": "A",
+            "text": "It does. Your name's on the thank-you board beside the queue."
+          },
+          {
+            "speaker": "B",
+            "text": "Nobody can read it behind that urn."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll move the urn. You can accept everyone's thanks while you wait your turn."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D180-single-b",
+      "card": {
+        "id": "D180",
+        "title": "Withdraw the Objection",
+        "instruction": "Persuade someone to drop a complaint, challenge, or special request and accept the official process.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "69bb9bc1c353eef9192c73ef24722c3855e1c76c203bda85f5f4565713d12ded",
+      "dialogueHash": "129b9fa15399af92502bee3003f86ce1d03c568b42a4590830d9a1cdc2d091d8",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Please drop the request for a private tea queue. Everyone at the fete uses this one."
+        },
+        {
+          "speaker": "B",
+          "text": "I donated the tent. Can't that count for something?"
+        },
+        {
+          "speaker": "A",
+          "text": "It does. Your name's on the thank-you board beside the queue."
+        },
+        {
+          "speaker": "B",
+          "text": "Nobody can read it behind that urn."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll move the urn. You can accept everyone's thanks while you wait your turn."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D180-single-a",
+        "dialogueHash": "c83593397f6a18807c12ec8b754e3bbf129939fa8dd80a30565d6ec548fbbcc2",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Drop the demand to question our delivery driver. The missing-parcel claim goes through this form."
+          },
+          {
+            "speaker": "B",
+            "text": "Your form requires a photo of the parcel I haven't received."
+          },
+          {
+            "speaker": "A",
+            "text": "Use a photo of your empty doorstep. That's the delivery location."
+          },
+          {
+            "speaker": "B",
+            "text": "Will you stand in it holding today's newspaper?"
+          },
+          {
+            "speaker": "A",
+            "text": "Yes, beside the doormat. Put me under 'supporting evidence,' and leave the driver off your witness list."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D181-single-a",
+      "card": {
+        "id": "D181",
+        "title": "Lost in the Process",
+        "instruction": "Hide your role in the problem by distributing blame across steps, policies, and unnamed procedures.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "a22aad9d7e925fe897267f64b6f31d1d8529ef9fcfab5745293ce9f282fd44f4",
+      "dialogueHash": "a784e11fdd79c6c25c9619eee028950c4beec74313bcd24061be76c874e81afe",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Your parcel got caught between reception and dispatch."
+        },
+        {
+          "speaker": "B",
+          "text": "You left it on the bus."
+        },
+        {
+          "speaker": "A",
+          "text": "Dispatch handed it to transport without a receipt."
+        },
+        {
+          "speaker": "B",
+          "text": "Both departments are you. Call the bus company."
+        },
+        {
+          "speaker": "A",
+          "text": "Certainly. I'll report a failure across dispatch, transport and receipt control. They'll need to investigate all three."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D181-single-b",
+        "dialogueHash": "e0d2478e38658459b25d2efaad30ddbf507887594e2b5df75a6c00ac825593b5",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The birthday invitations failed during address verification."
+          },
+          {
+            "speaker": "B",
+            "text": "You wrote our old address on every one."
+          },
+          {
+            "speaker": "A",
+            "text": "The archive supplied an outdated location."
+          },
+          {
+            "speaker": "B",
+            "text": "You are the archive."
+          },
+          {
+            "speaker": "A",
+            "text": "Which suggests we've identified a staffing problem, not an individual error."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D181-single-b",
+      "card": {
+        "id": "D181",
+        "title": "Lost in the Process",
+        "instruction": "Hide your role in the problem by distributing blame across steps, policies, and unnamed procedures.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "06ef27914323d3f6e9e22bbf6ab696b04bad39fb1c34125e8f33d4ad038486b2",
+      "dialogueHash": "e0d2478e38658459b25d2efaad30ddbf507887594e2b5df75a6c00ac825593b5",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The birthday invitations failed during address verification."
+        },
+        {
+          "speaker": "B",
+          "text": "You wrote our old address on every one."
+        },
+        {
+          "speaker": "A",
+          "text": "The archive supplied an outdated location."
+        },
+        {
+          "speaker": "B",
+          "text": "You are the archive."
+        },
+        {
+          "speaker": "A",
+          "text": "Which suggests we've identified a staffing problem, not an individual error."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D181-single-a",
+        "dialogueHash": "a784e11fdd79c6c25c9619eee028950c4beec74313bcd24061be76c874e81afe",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Your parcel got caught between reception and dispatch."
+          },
+          {
+            "speaker": "B",
+            "text": "You left it on the bus."
+          },
+          {
+            "speaker": "A",
+            "text": "Dispatch handed it to transport without a receipt."
+          },
+          {
+            "speaker": "B",
+            "text": "Both departments are you. Call the bus company."
+          },
+          {
+            "speaker": "A",
+            "text": "Certainly. I'll report a failure across dispatch, transport and receipt control. They'll need to investigate all three."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D182-single-a",
+      "card": {
+        "id": "D182",
+        "title": "Outside the Scope",
+        "instruction": "Redirect personal or dangerous questions by declaring them irrelevant, premature, or assigned to another process.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "45b2967211b8bdd75f1ec200d562b786cab76cb6469cac85a8165978a2c8ec33",
+      "dialogueHash": "ca3ae8a6187d9d2e8e60938eec0aecc8466caaf766954dd3bd1974d64635e48c",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Whether I broke the window is outside this repair meeting's scope."
+        },
+        {
+          "speaker": "B",
+          "text": "Then let's hold a responsibility meeting."
+        },
+        {
+          "speaker": "A",
+          "text": "After the repairs. We need a safe venue."
+        },
+        {
+          "speaker": "B",
+          "text": "We can meet outside."
+        },
+        {
+          "speaker": "A",
+          "text": "Location changes require a separate planning discussion."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D182-single-b",
+        "dialogueHash": "d5b3d6ecd6d3e39a58a21294d4f30d59b9edfc55d31bc10b6d24d5a175cb2098",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Why I missed our anniversary dinner belongs in the calendar review."
+          },
+          {
+            "speaker": "B",
+            "text": "We're having the replacement dinner now. Explain."
+          },
+          {
+            "speaker": "A",
+            "text": "This booking covers dinner, not the review."
+          },
+          {
+            "speaker": "B",
+            "text": "Fine. I'll cancel dessert and we can talk."
+          },
+          {
+            "speaker": "A",
+            "text": "Then we need to resolve the cancellation before opening a second complaint."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D182-single-b",
+      "card": {
+        "id": "D182",
+        "title": "Outside the Scope",
+        "instruction": "Redirect personal or dangerous questions by declaring them irrelevant, premature, or assigned to another process.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "da87989534e47cff4e91d0c8db496502ef4b5c7452b8282ca01fc9daab663aab",
+      "dialogueHash": "d5b3d6ecd6d3e39a58a21294d4f30d59b9edfc55d31bc10b6d24d5a175cb2098",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Why I missed our anniversary dinner belongs in the calendar review."
+        },
+        {
+          "speaker": "B",
+          "text": "We're having the replacement dinner now. Explain."
+        },
+        {
+          "speaker": "A",
+          "text": "This booking covers dinner, not the review."
+        },
+        {
+          "speaker": "B",
+          "text": "Fine. I'll cancel dessert and we can talk."
+        },
+        {
+          "speaker": "A",
+          "text": "Then we need to resolve the cancellation before opening a second complaint."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D182-single-a",
+        "dialogueHash": "ca3ae8a6187d9d2e8e60938eec0aecc8466caaf766954dd3bd1974d64635e48c",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Whether I broke the window is outside this repair meeting's scope."
+          },
+          {
+            "speaker": "B",
+            "text": "Then let's hold a responsibility meeting."
+          },
+          {
+            "speaker": "A",
+            "text": "After the repairs. We need a safe venue."
+          },
+          {
+            "speaker": "B",
+            "text": "We can meet outside."
+          },
+          {
+            "speaker": "A",
+            "text": "Location changes require a separate planning discussion."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D183-single-a",
+      "card": {
+        "id": "D183",
+        "title": "The Approved Explanation",
+        "instruction": "Protect someone or the group by maintaining a simplified account that everyone can safely repeat.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "7f07f52ba32cc950299433fbdee26b1503408e59db697e6c91747ac85ad275f4",
+      "dialogueHash": "ebbdb78cadafb1deda794305d6b09819d8d1f765cfdddc056f066b0c7f3145ed",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Tell the children the trip's postponed for bus repairs. They'll worry about Mr Patel."
+        },
+        {
+          "speaker": "B",
+          "text": "He's fine. His parked bus rolled into the pond."
+        },
+        {
+          "speaker": "A",
+          "text": "Then everyone says, 'Mr Patel is fine; the bus needs repairs.'"
+        },
+        {
+          "speaker": "B",
+          "text": "The parents will ask whether he was driving."
+        },
+        {
+          "speaker": "A",
+          "text": "Then 'The parked bus needs repairs; Mr Patel is fine.' Same sentence for the office. We don't need three versions of his afternoon."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D183-single-b",
+        "dialogueHash": "1ee5da7c96a0f5f78ef505e21f7ecbb13d99ae6ddf3cca507575ad8ba11fb699",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Grandad's embarrassed about the gazebo. Let's tell everyone the party moved indoors because the garden's unavailable."
+          },
+          {
+            "speaker": "B",
+            "text": "He's already told Aunt Jean he set it on fire."
+          },
+          {
+            "speaker": "A",
+            "text": "Then we all say, 'Everyone's fine; we're celebrating indoors.'"
+          },
+          {
+            "speaker": "B",
+            "text": "Jean wants him to explain it in his birthday speech."
+          },
+          {
+            "speaker": "A",
+            "text": "That's his opening sentence too. Then straight to thanking her for the trifle."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D183-single-b",
+      "card": {
+        "id": "D183",
+        "title": "The Approved Explanation",
+        "instruction": "Protect someone or the group by maintaining a simplified account that everyone can safely repeat.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "d3c016b229b4fc2a065adcb61bb07e1e90da9900081b8a46480558f3d025767b",
+      "dialogueHash": "1ee5da7c96a0f5f78ef505e21f7ecbb13d99ae6ddf3cca507575ad8ba11fb699",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Grandad's embarrassed about the gazebo. Let's tell everyone the party moved indoors because the garden's unavailable."
+        },
+        {
+          "speaker": "B",
+          "text": "He's already told Aunt Jean he set it on fire."
+        },
+        {
+          "speaker": "A",
+          "text": "Then we all say, 'Everyone's fine; we're celebrating indoors.'"
+        },
+        {
+          "speaker": "B",
+          "text": "Jean wants him to explain it in his birthday speech."
+        },
+        {
+          "speaker": "A",
+          "text": "That's his opening sentence too. Then straight to thanking her for the trifle."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D183-single-a",
+        "dialogueHash": "ebbdb78cadafb1deda794305d6b09819d8d1f765cfdddc056f066b0c7f3145ed",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Tell the children the trip's postponed for bus repairs. They'll worry about Mr Patel."
+          },
+          {
+            "speaker": "B",
+            "text": "He's fine. His parked bus rolled into the pond."
+          },
+          {
+            "speaker": "A",
+            "text": "Then everyone says, 'Mr Patel is fine; the bus needs repairs.'"
+          },
+          {
+            "speaker": "B",
+            "text": "The parents will ask whether he was driving."
+          },
+          {
+            "speaker": "A",
+            "text": "Then 'The parked bus needs repairs; Mr Patel is fine.' Same sentence for the office. We don't need three versions of his afternoon."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D184-single-a",
+      "card": {
+        "id": "D184",
+        "title": "For the Record",
+        "instruction": "Get someone to state exactly what they did, knew, or authorized before you reveal your own involvement.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "c1db049d7aab480c877b79a457f34dcd3c7afa774db88b1fe0be6f577ed7a47e",
+      "dialogueHash": "59f6eabbd48f1f610842cb24dddbe851cc0aa354bd04138f5c8d86bde0b62b71",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before I show you the fireworks invoice, exactly what did you approve?"
+        },
+        {
+          "speaker": "B",
+          "text": "Did you buy the enormous rocket?"
+        },
+        {
+          "speaker": "A",
+          "text": "First, did your 'make it memorable' include rockets?"
+        },
+        {
+          "speaker": "B",
+          "text": "It included sparklers. Nothing that needed a trailer."
+        },
+        {
+          "speaker": "A",
+          "text": "When did you first mention the trailer limit? I need that date before we get to the delivery date."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D184-single-b",
+        "dialogueHash": "83a3ff6b04b1596ecbb5b2745f3f8c511e364f1a8792f897e0bbf3e84d693520",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before I show you my dinner invitations, who did you authorize your sister to bring?"
+          },
+          {
+            "speaker": "B",
+            "text": "A date. Did you invite my ex?"
+          },
+          {
+            "speaker": "A",
+            "text": "Did you name anyone she couldn't bring? Then we'll get to my list."
+          },
+          {
+            "speaker": "B",
+            "text": "Yes. My ex. I sent you both the same message."
+          },
+          {
+            "speaker": "A",
+            "text": "What time did you send it to me? I'll put that beside my invitation's timestamp before we open it."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D184-single-b",
+      "card": {
+        "id": "D184",
+        "title": "For the Record",
+        "instruction": "Get someone to state exactly what they did, knew, or authorized before you reveal your own involvement.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "daa7617f285d3e972097718785b155bcf631e592f3aad65c9e44d4ee04262e82",
+      "dialogueHash": "83a3ff6b04b1596ecbb5b2745f3f8c511e364f1a8792f897e0bbf3e84d693520",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before I show you my dinner invitations, who did you authorize your sister to bring?"
+        },
+        {
+          "speaker": "B",
+          "text": "A date. Did you invite my ex?"
+        },
+        {
+          "speaker": "A",
+          "text": "Did you name anyone she couldn't bring? Then we'll get to my list."
+        },
+        {
+          "speaker": "B",
+          "text": "Yes. My ex. I sent you both the same message."
+        },
+        {
+          "speaker": "A",
+          "text": "What time did you send it to me? I'll put that beside my invitation's timestamp before we open it."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D184-single-a",
+        "dialogueHash": "59f6eabbd48f1f610842cb24dddbe851cc0aa354bd04138f5c8d86bde0b62b71",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before I show you the fireworks invoice, exactly what did you approve?"
+          },
+          {
+            "speaker": "B",
+            "text": "Did you buy the enormous rocket?"
+          },
+          {
+            "speaker": "A",
+            "text": "First, did your 'make it memorable' include rockets?"
+          },
+          {
+            "speaker": "B",
+            "text": "It included sparklers. Nothing that needed a trailer."
+          },
+          {
+            "speaker": "A",
+            "text": "When did you first mention the trailer limit? I need that date before we get to the delivery date."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D185-single-a",
+      "card": {
+        "id": "D185",
+        "title": "Successful Compliance",
+        "instruction": "Describe a failed outcome as proof that the correct process was followed and therefore the system worked.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "07f5491ac4e5bb4f7951de48b0206cd1b2d7094496756cce4ff9eb01ac02bde0",
+      "dialogueHash": "488775ba041fec6410bf623acfe94d16075fe4e7783b0f3918a90cdeb6637b8d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The wedding cake collapsed, but our final inspection caught it. The system worked."
+        },
+        {
+          "speaker": "B",
+          "text": "There's nothing to serve."
+        },
+        {
+          "speaker": "A",
+          "text": "Exactly. No defective cake reached a guest."
+        },
+        {
+          "speaker": "B",
+          "text": "The couple want a refund for the entire cake."
+        },
+        {
+          "speaker": "A",
+          "text": "Which matches our rejection of the entire cake. I'll record that as full customer agreement with quality control."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D185-single-b",
+        "dialogueHash": "166dab8dde415bec31cbef1f4dc5882c29a19c4bf8e59ef0de963de1c65c8f28",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Our evacuation drill followed all seventeen instructions perfectly."
+          },
+          {
+            "speaker": "B",
+            "text": "We're locked in the cupboard."
+          },
+          {
+            "speaker": "A",
+            "text": "Then everyone reached the designated assembly point and nobody wandered off. Full compliance."
+          },
+          {
+            "speaker": "B",
+            "text": "I can't reach the door handle with all twelve of us in here."
+          },
+          {
+            "speaker": "A",
+            "text": "All twelve accounted for, with nobody able to leave before the headcount. That's both final checks passed."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D185-single-b",
+      "card": {
+        "id": "D185",
+        "title": "Successful Compliance",
+        "instruction": "Describe a failed outcome as proof that the correct process was followed and therefore the system worked.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "87b6273c34752c5127af5416a8c33dcfba41628443a50152640a6045f347c3f6",
+      "dialogueHash": "166dab8dde415bec31cbef1f4dc5882c29a19c4bf8e59ef0de963de1c65c8f28",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Our evacuation drill followed all seventeen instructions perfectly."
+        },
+        {
+          "speaker": "B",
+          "text": "We're locked in the cupboard."
+        },
+        {
+          "speaker": "A",
+          "text": "Then everyone reached the designated assembly point and nobody wandered off. Full compliance."
+        },
+        {
+          "speaker": "B",
+          "text": "I can't reach the door handle with all twelve of us in here."
+        },
+        {
+          "speaker": "A",
+          "text": "All twelve accounted for, with nobody able to leave before the headcount. That's both final checks passed."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D185-single-a",
+        "dialogueHash": "488775ba041fec6410bf623acfe94d16075fe4e7783b0f3918a90cdeb6637b8d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The wedding cake collapsed, but our final inspection caught it. The system worked."
+          },
+          {
+            "speaker": "B",
+            "text": "There's nothing to serve."
+          },
+          {
+            "speaker": "A",
+            "text": "Exactly. No defective cake reached a guest."
+          },
+          {
+            "speaker": "B",
+            "text": "The couple want a refund for the entire cake."
+          },
+          {
+            "speaker": "A",
+            "text": "Which matches our rejection of the entire cake. I'll record that as full customer agreement with quality control."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D186-single-a",
+      "card": {
+        "id": "D186",
+        "title": "Use the Right Vocabulary",
+        "instruction": "Perform belonging by using official language confidently, adjusting each term whenever someone reveals what it actually means.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "5b9d89b4a0f42ecb5bb162225609deb417317209008e7e258e26b166ea2e4b3f",
+      "dialogueHash": "1008f9623cb6902b01eb42758b0bd205d45ef27482196505bed92aeb4adbefba",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "First day in accounts, and I've reconciled this invoice. I put it in the right drawer."
+        },
+        {
+          "speaker": "B",
+          "text": "That's filing. Reconciliation means matching it to our records."
+        },
+        {
+          "speaker": "A",
+          "text": "Filed, then. I'll reconcile it against this quote."
+        },
+        {
+          "speaker": "B",
+          "text": "That's an estimate. You need the purchase order."
+        },
+        {
+          "speaker": "A",
+          "text": "Naturally. Estimate filed; purchase order requested. I'm getting fluent in accounts already."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D186-single-b",
+        "dialogueHash": "a7a002c2179d0ce2d6caa7a2f0c03ae09f22bff24d0bc02c8b477ced616ecbdc",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "As your newest club member, I'd like to second the minutes. They took ages."
+          },
+          {
+            "speaker": "B",
+            "text": "You second a motion. I'm proposing we approve the minutes."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I second your motion. Unanimously."
+          },
+          {
+            "speaker": "B",
+            "text": "Unanimous means everyone agrees. Ruth hasn't voted."
+          },
+          {
+            "speaker": "A",
+            "text": "Seconded, with unanimity pending Ruth. Shall I put that in our minutes?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D186-single-b",
+      "card": {
+        "id": "D186",
+        "title": "Use the Right Vocabulary",
+        "instruction": "Perform belonging by using official language confidently, adjusting each term whenever someone reveals what it actually means.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "37a3d818968c62fff172edffaa813f2cf2fde0388677428e3d7df8a363c0fdb4",
+      "dialogueHash": "a7a002c2179d0ce2d6caa7a2f0c03ae09f22bff24d0bc02c8b477ced616ecbdc",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "As your newest club member, I'd like to second the minutes. They took ages."
+        },
+        {
+          "speaker": "B",
+          "text": "You second a motion. I'm proposing we approve the minutes."
+        },
+        {
+          "speaker": "A",
+          "text": "Then I second your motion. Unanimously."
+        },
+        {
+          "speaker": "B",
+          "text": "Unanimous means everyone agrees. Ruth hasn't voted."
+        },
+        {
+          "speaker": "A",
+          "text": "Seconded, with unanimity pending Ruth. Shall I put that in our minutes?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D186-single-a",
+        "dialogueHash": "1008f9623cb6902b01eb42758b0bd205d45ef27482196505bed92aeb4adbefba",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "First day in accounts, and I've reconciled this invoice. I put it in the right drawer."
+          },
+          {
+            "speaker": "B",
+            "text": "That's filing. Reconciliation means matching it to our records."
+          },
+          {
+            "speaker": "A",
+            "text": "Filed, then. I'll reconcile it against this quote."
+          },
+          {
+            "speaker": "B",
+            "text": "That's an estimate. You need the purchase order."
+          },
+          {
+            "speaker": "A",
+            "text": "Naturally. Estimate filed; purchase order requested. I'm getting fluent in accounts already."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D187-single-a",
+      "card": {
+        "id": "D187",
+        "title": "More Official Than You",
+        "instruction": "Turn every suggestion into a contest over whose method, title, precedent, or paperwork is more legitimate.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "d869c88ef972a06a03c4c7e6f545f7f0eb853b3a768b852db5c8e27a8304f0bb",
+      "dialogueHash": "1feb7644c3423ce11c19c3939f88d2edaeac14d5b073660999fd1a339a73f967",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Your picnic rota is useful. Mine has committee approval."
+        },
+        {
+          "speaker": "B",
+          "text": "Mine got everyone to bring sandwiches."
+        },
+        {
+          "speaker": "A",
+          "text": "Mine establishes who was entitled to request those sandwiches."
+        },
+        {
+          "speaker": "B",
+          "text": "Then approve mine. We've already started eating."
+        },
+        {
+          "speaker": "A",
+          "text": "Gladly. I'll attach it as an appendix to mine, so lunch has a legitimate basis."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D187-single-b",
+        "dialogueHash": "1b24beae93c0901d4bd1d827c188462a8b446c0bf815d1e50f5c3850a5b8e2ee",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Your bow at the ceremony was adequate. Mine follows the founder's original diagram."
+          },
+          {
+            "speaker": "B",
+            "text": "The founder asked us to wave instead."
+          },
+          {
+            "speaker": "A",
+            "text": "His original diagram is in the constitution. My bow follows that."
+          },
+          {
+            "speaker": "B",
+            "text": "He's signed my programme: 'Please wave.'"
+          },
+          {
+            "speaker": "A",
+            "text": "Then you have a signed exception. I'll bow on behalf of everyone still governed by the constitution."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D187-single-b",
+      "card": {
+        "id": "D187",
+        "title": "More Official Than You",
+        "instruction": "Turn every suggestion into a contest over whose method, title, precedent, or paperwork is more legitimate.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "91c0c86598ac742fd2eab9dabb2e3fb1eb722345f777952f2c259905503112dc",
+      "dialogueHash": "1b24beae93c0901d4bd1d827c188462a8b446c0bf815d1e50f5c3850a5b8e2ee",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Your bow at the ceremony was adequate. Mine follows the founder's original diagram."
+        },
+        {
+          "speaker": "B",
+          "text": "The founder asked us to wave instead."
+        },
+        {
+          "speaker": "A",
+          "text": "His original diagram is in the constitution. My bow follows that."
+        },
+        {
+          "speaker": "B",
+          "text": "He's signed my programme: 'Please wave.'"
+        },
+        {
+          "speaker": "A",
+          "text": "Then you have a signed exception. I'll bow on behalf of everyone still governed by the constitution."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D187-single-a",
+        "dialogueHash": "1feb7644c3423ce11c19c3939f88d2edaeac14d5b073660999fd1a339a73f967",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Your picnic rota is useful. Mine has committee approval."
+          },
+          {
+            "speaker": "B",
+            "text": "Mine got everyone to bring sandwiches."
+          },
+          {
+            "speaker": "A",
+            "text": "Mine establishes who was entitled to request those sandwiches."
+          },
+          {
+            "speaker": "B",
+            "text": "Then approve mine. We've already started eating."
+          },
+          {
+            "speaker": "A",
+            "text": "Gladly. I'll attach it as an appendix to mine, so lunch has a legitimate basis."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D188-single-a",
+      "card": {
+        "id": "D188",
+        "title": "A Valuable Safeguard",
+        "instruction": "Treat every delay, restriction, and extra step as evidence that the system is becoming safer and more thorough.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "e6bec591cc79864a058f2f146c3e3b8cd4871524360c2c5e5597317c3504952c",
+      "dialogueHash": "54d29e74f48df01472d8867db8119b6554f0a16ad12959d813155e600c5eb7a1",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "They've added a fourth inspection to our climbing wall. Wonderful."
+        },
+        {
+          "speaker": "B",
+          "text": "Opening is delayed another month."
+        },
+        {
+          "speaker": "A",
+          "text": "A whole month without an uninspected climb."
+        },
+        {
+          "speaker": "B",
+          "text": "We'll lose the season."
+        },
+        {
+          "speaker": "A",
+          "text": "Then the safest season we've ever offered."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D188-single-b",
+        "dialogueHash": "7531d16de46a4d819e649b9687e285f0ceed6031c3c56c6814b6484a734106ee",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Our school trip now needs two signatures on every consent form. Reassuring."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm the only teacher here. We'll have to wait for June."
+          },
+          {
+            "speaker": "A",
+            "text": "Good. Independent eyes before any child boards a bus."
+          },
+          {
+            "speaker": "B",
+            "text": "June wrote the forms. She wants someone else to check her work."
+          },
+          {
+            "speaker": "A",
+            "text": "Even better. We've found a safeguard our second safeguard needed. Who's checking that third person?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D188-single-b",
+      "card": {
+        "id": "D188",
+        "title": "A Valuable Safeguard",
+        "instruction": "Treat every delay, restriction, and extra step as evidence that the system is becoming safer and more thorough.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "f2a1f9db9dfa477cfdc3255fe888756ab77426731c21af3c90cc1ec69a5c7dd3",
+      "dialogueHash": "7531d16de46a4d819e649b9687e285f0ceed6031c3c56c6814b6484a734106ee",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Our school trip now needs two signatures on every consent form. Reassuring."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm the only teacher here. We'll have to wait for June."
+        },
+        {
+          "speaker": "A",
+          "text": "Good. Independent eyes before any child boards a bus."
+        },
+        {
+          "speaker": "B",
+          "text": "June wrote the forms. She wants someone else to check her work."
+        },
+        {
+          "speaker": "A",
+          "text": "Even better. We've found a safeguard our second safeguard needed. Who's checking that third person?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D188-single-a",
+        "dialogueHash": "54d29e74f48df01472d8867db8119b6554f0a16ad12959d813155e600c5eb7a1",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "They've added a fourth inspection to our climbing wall. Wonderful."
+          },
+          {
+            "speaker": "B",
+            "text": "Opening is delayed another month."
+          },
+          {
+            "speaker": "A",
+            "text": "A whole month without an uninspected climb."
+          },
+          {
+            "speaker": "B",
+            "text": "We'll lose the season."
+          },
+          {
+            "speaker": "A",
+            "text": "Then the safest season we've ever offered."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D189-single-a",
+      "card": {
+        "id": "D189",
+        "title": "Warmly Enforced",
+        "instruction": "Remain kind and welcoming while enforcing increasingly restrictive rules without exception.",
+        "contentVersion": "0.15.0"
+      },
+      "sourceRecordHash": "249af9b5cc60363ff58260490bd2437f8e4bd95ea901b6a726f982ae2c976ca7",
+      "dialogueHash": "bb29e8e890831a04c94a9c4844de6b29e387ab22aed4d0c121745e6b12f637ff",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "We're so glad you're staying. The guest bed is yours; just no food upstairs."
+        },
+        {
+          "speaker": "B",
+          "text": "Of course. I'll have my breakfast downstairs."
+        },
+        {
+          "speaker": "A",
+          "text": "Lovely. After nine, please; we keep the kitchen quiet before then."
+        },
+        {
+          "speaker": "B",
+          "text": "My train's at eight. Could I take a banana?"
+        },
+        {
+          "speaker": "A",
+          "text": "I'd love you to have one. Breakfast food stays in the kitchen, though. Can you catch a later train?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D189-single-b",
+        "dialogueHash": "db0947acba73b654f9c7bd6dec40ace6ba40fc80846bea9b4ef7dca0286aac31",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Welcome to the swimming club! You're very welcome to watch until your induction."
+          },
+          {
+            "speaker": "B",
+            "text": "Lovely. Can I join today's induction?"
+          },
+          {
+            "speaker": "A",
+            "text": "Absolutely, once you've observed one. Today you can watch from the gallery."
+          },
+          {
+            "speaker": "B",
+            "text": "The gallery's closed. Could I watch from the poolside?"
+          },
+          {
+            "speaker": "A",
+            "text": "I'd love to have you there. Poolside access requires induction, though. Let's find you a brochure with a lovely view."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

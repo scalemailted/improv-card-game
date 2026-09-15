@@ -38,7 +38,7 @@ test('worker performs real gzip decompression, JSON parsing and SHA-256 checks',
 });
 test('exact paired fixture, with both cards, not two generic instructions',async()=>{
  const h=harness(),r=await h.call('get',client.prepare(input(['S67','D101']))).promise;
- assert.equal(r.records.length,2);assert.match(r.records[0].beats.map(b=>b.text).join(" "),/chair.*cancelled.*refund/);
+ assert.equal(r.records.length,2);assert.match(r.records[0].beats.map(b=>b.text).join(" "),/headteacher.*hamster.*deputy head.*recommendation/);
  assert.equal(r.records[0].provenance,'authored-pair');
 });
 test('changed instruction or version cannot silently retrieve stale examples',async()=>{
@@ -55,7 +55,7 @@ test('missing offline pair gives an explicit error, not a generic fallback',asyn
 });
 test('older-browser plain JSON fallback uses identical examples',async()=>{
  const h=harness({decompression:false});const r=await h.call('get',client.prepare(input(['S67','D101']))).promise;
- assert.match(r.records[0].beats.map(b=>b.text).join(" "),/chair/);const status=await h.call('status').promise;assert.equal(status.compression,false);assert.equal(status.savedFiles,1);
+ assert.match(r.records[0].beats.map(b=>b.text).join(" "),/headteacher/);const status=await h.call('status').promise;assert.equal(status.compression,false);assert.equal(status.savedFiles,1);
 });
 test('entire dataset installs, resumes without downloads, and reports only saved files',async()=>{
  const h=harness();const r=await h.call('install').promise;assert.equal(r.complete,true);assert.equal(r.savedFiles,241);
@@ -89,4 +89,9 @@ test('deployment has no model-loading runtime and keeps request-specific data ou
  const html=fs.readFileSync(path.join(root,'index.html'),'utf8'),app=fs.readFileSync(path.join(root,'app.js'),'utf8');
  assert.doesNotMatch(html,/<script[^>]+(?:wllama|local-hints|quick-hints|hint-engine)/);assert.doesNotMatch(app,/import\(.*wllama|createChatCompletion|getCombinationHint|getSingleHint/);
  assert.match(app,/examples\/library-worker/);assert.match(html,/Save all examples offline/);assert.doesNotMatch(html,/id="hintDialogIntro"|id="localModelSelect"/);
+});
+
+test('current app, worker, manifest and offline shell use the same dataset-derived asset address',()=>{
+ const version=m.assetVersion;assert.ok(version&&version.startsWith(m.version+'-'));const root=require('node:path').resolve(__dirname,'..');
+ for(const file of ['index.html','app.js','examples/library-client.js','examples/library-worker.js','sw.js']){const text=fs.readFileSync(require('node:path').join(root,file),'utf8'),versions=[...text.matchAll(/\?v=([a-zA-Z0-9.+_-]+)/g)].map(x=>x[1]);assert.ok(versions.length,file);assert.ok(versions.every(v=>v===version),'Stale asset URL in '+file);}
 });

@@ -1,4 +1,6 @@
 "use strict";
+const releaseVersion = require("../examples/manifest.json").assetVersion;
+
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -42,7 +44,7 @@ assert.match(app, /renderHintPolicySummary/);
 for (const selector of [".card-inline-action", ".card-veto-button", ".card-nudge-button", ".combination-hint-button", ".hint-modal", ".hint-block", ".hint-policy-summary"]) {
   assert.ok(styles.includes(selector), `Missing CSS selector ${selector}`);
 }
-for (const asset of ["hint-bible.js?v=0.25.0", "examples/manifest.js?v=0.25.0", "examples/library-client.js?v=0.25.0"]) {
+for (const asset of ["hint-bible.js?v=" + releaseVersion, "examples/manifest.js?v=" + releaseVersion, "examples/library-client.js?v=" + releaseVersion]) {
   assert.ok(html.includes(asset), `HTML does not load ${asset}`);
   assert.ok(sw.includes(asset), `Service worker does not cache ${asset}`);
 }

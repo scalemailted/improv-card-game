@@ -1,0 +1,1443 @@
+{
+  "executionStatus": "not-executed",
+  "instructions": "Fresh review of each primary candidate: read dialogue first, then exact cards. Assess all six unchanged criteria and all coach-2.0 gates with turn-specific evidence. For pairs, show whether the Stance changes HOW A pursues the Drive in one interaction. Do not invent missing backstory or assume prior approval. Use the alternate only to assess meaningful differentiation. Report actual reservations. No writer scores or improvement claims are supplied.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S02+D166-a",
+      "cards": [
+        {
+          "id": "S02",
+          "type": "stance",
+          "title": "Borrowed Authority",
+          "instruction": "Project confident authority while quietly working to keep everyone cooperative. Your confidence depends on their cooperation.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D166",
+          "type": "drive",
+          "title": "Impossible Currency",
+          "instruction": "Price every favor in symbolic acts, imaginary resources, or promises that cannot be measured normally.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "c04df9730aca61e484dba0a8592ab092dee260ec55656421e9c35c6fdbac429c",
+      "dialogueHash": "dd99cb33582f33505e75bd7f6e6cf5864a3959efed59bfaf5ad88e8e7c480aee",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Borrow my ladder for one shadow until Friday."
+        },
+        {
+          "speaker": "B",
+          "text": "I need my shadow at work."
+        },
+        {
+          "speaker": "A",
+          "text": "Keep its office hours. I'll take its evenings."
+        },
+        {
+          "speaker": "B",
+          "text": "Could you hold the ladder too? I'm afraid of heights."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll hold it for your fear of falling. Leave that with me until you're down."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S02-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "7cb0ae16adf50adaac2e21c48ce11d4a2e0dee4e457f23c89d367b3a4e4631a8",
+          "dialogueHash": "689f7fc5889ad36f8176faa283b3d2004f8bec6d96b86f7a8ffba1abf7340b06",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S02-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "48c5fd01e7e67f2e823d24088c67fbf8151854b62bcdbfe26f298238e00ed6dc",
+          "dialogueHash": "b4c9f69663f93a8ef7839777d63418931ccc506fbea4032aaa128b5f71b2cc7e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D166-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "7b31703019fe0bab6a5235f68be6626a7fbfa87b429c8db57720e290a4f60d8f",
+          "dialogueHash": "ec04805e9389259abaee57deb77b19b63e4fb5e1880b70e6e6094fc33547c3e4",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D166-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "493c67772dc6a6b4015f031880aaf75770ec057d91e93105b7ec17511ac23d66",
+          "dialogueHash": "114d59670499b234ea3573ad220f362f20821dd8004d67a966236ddb8511892b",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S02+D166-b",
+        "dialogueHash": "3a61e51ac7a6e4ec033b6a9e8ce7bf1a3c3aff9fb1a415fe862cd8fc2fc26d4d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll fix the kettle for a spoonful of yesterday."
+          },
+          {
+            "speaker": "B",
+            "text": "How do I give you yesterday?"
+          },
+          {
+            "speaker": "A",
+            "text": "Start with the five minutes you wasted this morning."
+          },
+          {
+            "speaker": "B",
+            "text": "That's today."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll fix it now. Leave those minutes overnight; I'll collect them as yesterday."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S02+D166-b",
+      "cards": [
+        {
+          "id": "S02",
+          "type": "stance",
+          "title": "Borrowed Authority",
+          "instruction": "Project confident authority while quietly working to keep everyone cooperative. Your confidence depends on their cooperation.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D166",
+          "type": "drive",
+          "title": "Impossible Currency",
+          "instruction": "Price every favor in symbolic acts, imaginary resources, or promises that cannot be measured normally.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "e26da85a9f9cec62275a6664765f5a97aded8654ab3b445668ac3b7d6343e520",
+      "dialogueHash": "3a61e51ac7a6e4ec033b6a9e8ce7bf1a3c3aff9fb1a415fe862cd8fc2fc26d4d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll fix the kettle for a spoonful of yesterday."
+        },
+        {
+          "speaker": "B",
+          "text": "How do I give you yesterday?"
+        },
+        {
+          "speaker": "A",
+          "text": "Start with the five minutes you wasted this morning."
+        },
+        {
+          "speaker": "B",
+          "text": "That's today."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll fix it now. Leave those minutes overnight; I'll collect them as yesterday."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S02-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "7cb0ae16adf50adaac2e21c48ce11d4a2e0dee4e457f23c89d367b3a4e4631a8",
+          "dialogueHash": "689f7fc5889ad36f8176faa283b3d2004f8bec6d96b86f7a8ffba1abf7340b06",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S02-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "48c5fd01e7e67f2e823d24088c67fbf8151854b62bcdbfe26f298238e00ed6dc",
+          "dialogueHash": "b4c9f69663f93a8ef7839777d63418931ccc506fbea4032aaa128b5f71b2cc7e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D166-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "7b31703019fe0bab6a5235f68be6626a7fbfa87b429c8db57720e290a4f60d8f",
+          "dialogueHash": "ec04805e9389259abaee57deb77b19b63e4fb5e1880b70e6e6094fc33547c3e4",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D166-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "493c67772dc6a6b4015f031880aaf75770ec057d91e93105b7ec17511ac23d66",
+          "dialogueHash": "114d59670499b234ea3573ad220f362f20821dd8004d67a966236ddb8511892b",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S02+D166-a",
+        "dialogueHash": "dd99cb33582f33505e75bd7f6e6cf5864a3959efed59bfaf5ad88e8e7c480aee",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Borrow my ladder for one shadow until Friday."
+          },
+          {
+            "speaker": "B",
+            "text": "I need my shadow at work."
+          },
+          {
+            "speaker": "A",
+            "text": "Keep its office hours. I'll take its evenings."
+          },
+          {
+            "speaker": "B",
+            "text": "Could you hold the ladder too? I'm afraid of heights."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll hold it for your fear of falling. Leave that with me until you're down."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S02+D167-a",
+      "cards": [
+        {
+          "id": "S02",
+          "type": "stance",
+          "title": "Borrowed Authority",
+          "instruction": "Project confident authority while quietly working to keep everyone cooperative. Your confidence depends on their cooperation.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D167",
+          "type": "drive",
+          "title": "Yes, Under My Physics",
+          "instruction": "Agree completely, then redefine each term using rules that make your preferred outcome inevitable.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "f3a69753af05c8097382b76bdad17a411c8b4d02eb8d7233a8e3c3e31d970926",
+      "dialogueHash": "c5d575b6b8b0cfcb0eefa00f7f04f69594d42a0b405169e3a385c055da8d5595",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Absolutely, I'll move forward for the photo. Forward means facing the camera; I'm staying here in the shade."
+        },
+        {
+          "speaker": "B",
+          "text": "I need you two feet closer."
+        },
+        {
+          "speaker": "A",
+          "text": "Certainly. I'll lean towards you; a foot means a notch of zoom. Give it two."
+        },
+        {
+          "speaker": "B",
+          "text": "Now only your face fits."
+        },
+        {
+          "speaker": "A",
+          "text": "Exactly. Full means all the important parts. Take the picture; I'll keep still."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S02-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "7cb0ae16adf50adaac2e21c48ce11d4a2e0dee4e457f23c89d367b3a4e4631a8",
+          "dialogueHash": "689f7fc5889ad36f8176faa283b3d2004f8bec6d96b86f7a8ffba1abf7340b06",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S02-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "48c5fd01e7e67f2e823d24088c67fbf8151854b62bcdbfe26f298238e00ed6dc",
+          "dialogueHash": "b4c9f69663f93a8ef7839777d63418931ccc506fbea4032aaa128b5f71b2cc7e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D167-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "e6888121b164543abdab243701cae2cb23b6956384b4676bb5ed2d4a554afc8b",
+          "dialogueHash": "ff9c6cc9186eb3b185a6bba3abb493ce858629a14660509815572953066bb764",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D167-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "ee622e2f90000ff60fbc03edbbff6ddb9e4fb43572aa58abc0673fa026e820b6",
+          "dialogueHash": "ae4f64c6b9ddc8f59a432267aef0b1760cfaa5b04f53632b0bdd4ed039f620c2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S02+D167-b",
+        "dialogueHash": "367a422b1d8d07d41c14d4f151720d282a45b907b576b6a6bd9ddf9b1451c2dd",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Absolutely, I'll help move your boxes downstairs. Help means saving effort; I'll call the lift."
+          },
+          {
+            "speaker": "B",
+            "text": "It's broken. Carry that box yourself."
+          },
+          {
+            "speaker": "A",
+            "text": "Certainly. Yourself means without involving you. I'll hire a mover."
+          },
+          {
+            "speaker": "B",
+            "text": "He'll carry them if you hold the door."
+          },
+          {
+            "speaker": "A",
+            "text": "Absolutely. Holding means keeping it still. I'll wedge it open and supervise from this chair."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S02+D167-b",
+      "cards": [
+        {
+          "id": "S02",
+          "type": "stance",
+          "title": "Borrowed Authority",
+          "instruction": "Project confident authority while quietly working to keep everyone cooperative. Your confidence depends on their cooperation.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D167",
+          "type": "drive",
+          "title": "Yes, Under My Physics",
+          "instruction": "Agree completely, then redefine each term using rules that make your preferred outcome inevitable.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "c0c5f42770b1991acf0af6ef12b0472c013aaa8aef2876833239d1741d461942",
+      "dialogueHash": "367a422b1d8d07d41c14d4f151720d282a45b907b576b6a6bd9ddf9b1451c2dd",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Absolutely, I'll help move your boxes downstairs. Help means saving effort; I'll call the lift."
+        },
+        {
+          "speaker": "B",
+          "text": "It's broken. Carry that box yourself."
+        },
+        {
+          "speaker": "A",
+          "text": "Certainly. Yourself means without involving you. I'll hire a mover."
+        },
+        {
+          "speaker": "B",
+          "text": "He'll carry them if you hold the door."
+        },
+        {
+          "speaker": "A",
+          "text": "Absolutely. Holding means keeping it still. I'll wedge it open and supervise from this chair."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S02-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "7cb0ae16adf50adaac2e21c48ce11d4a2e0dee4e457f23c89d367b3a4e4631a8",
+          "dialogueHash": "689f7fc5889ad36f8176faa283b3d2004f8bec6d96b86f7a8ffba1abf7340b06",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S02-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "48c5fd01e7e67f2e823d24088c67fbf8151854b62bcdbfe26f298238e00ed6dc",
+          "dialogueHash": "b4c9f69663f93a8ef7839777d63418931ccc506fbea4032aaa128b5f71b2cc7e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D167-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "e6888121b164543abdab243701cae2cb23b6956384b4676bb5ed2d4a554afc8b",
+          "dialogueHash": "ff9c6cc9186eb3b185a6bba3abb493ce858629a14660509815572953066bb764",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D167-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "ee622e2f90000ff60fbc03edbbff6ddb9e4fb43572aa58abc0673fa026e820b6",
+          "dialogueHash": "ae4f64c6b9ddc8f59a432267aef0b1760cfaa5b04f53632b0bdd4ed039f620c2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S02+D167-a",
+        "dialogueHash": "c5d575b6b8b0cfcb0eefa00f7f04f69594d42a0b405169e3a385c055da8d5595",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Absolutely, I'll move forward for the photo. Forward means facing the camera; I'm staying here in the shade."
+          },
+          {
+            "speaker": "B",
+            "text": "I need you two feet closer."
+          },
+          {
+            "speaker": "A",
+            "text": "Certainly. I'll lean towards you; a foot means a notch of zoom. Give it two."
+          },
+          {
+            "speaker": "B",
+            "text": "Now only your face fits."
+          },
+          {
+            "speaker": "A",
+            "text": "Exactly. Full means all the important parts. Take the picture; I'll keep still."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S02+D168-a",
+      "cards": [
+        {
+          "id": "S02",
+          "type": "stance",
+          "title": "Borrowed Authority",
+          "instruction": "Project confident authority while quietly working to keep everyone cooperative. Your confidence depends on their cooperation.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D168",
+          "type": "drive",
+          "title": "The Logic Gets Bigger",
+          "instruction": "Use every new detail to expand the impossible system, its history, and the consequences of breaking it.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "218ae56485ca224371f370c59b5fe494faded5d08dfcb35ff969036eebdf74ad",
+      "dialogueHash": "3c1621e00924a2656a178ab9497ebdf7eed8650a64de36ceba47521e191efbf3",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Our meeting chairs float at noon. Book the ceiling; they've had landing rights since the first furniture strike."
+        },
+        {
+          "speaker": "B",
+          "text": "Can't we stand and tie the chairs down?"
+        },
+        {
+          "speaker": "A",
+          "text": "We can stand. Tying broke the last treaty; that's when the desks joined them. I'll get an airspace permit."
+        },
+        {
+          "speaker": "B",
+          "text": "The caretaker only issues floor permits."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll appoint her altitude minister too. Get her signature before the cabinets claim the roof."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S02-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "7cb0ae16adf50adaac2e21c48ce11d4a2e0dee4e457f23c89d367b3a4e4631a8",
+          "dialogueHash": "689f7fc5889ad36f8176faa283b3d2004f8bec6d96b86f7a8ffba1abf7340b06",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S02-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "48c5fd01e7e67f2e823d24088c67fbf8151854b62bcdbfe26f298238e00ed6dc",
+          "dialogueHash": "b4c9f69663f93a8ef7839777d63418931ccc506fbea4032aaa128b5f71b2cc7e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D168-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "492065e393fec68d7f5e846ca07bcae087aef0b5f8ebc53d49ce80ab5a293857",
+          "dialogueHash": "1750316e0696c38e7eb3c8a0d48111655dac61388c03f9cef4b9448292642daf",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D168-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "bb742255a761f04549423c1cc5196a42fb01e673565b1bcd36b77fac0418df95",
+          "dialogueHash": "ee1b5994e614c1064e6d3d0b6aa9bac6834187c21aba40a17c37c6a3b59aa154",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S02+D168-b",
+        "dialogueHash": "8df8b1ff93ebfa3cc18e7422f1c878205c583a3ba9ab5b3dc049a9439389b673",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Our soup bowl said hello. Use the formal greeting; crockery stopped speaking after the Great Washing-Up."
+          },
+          {
+            "speaker": "B",
+            "text": "It says it wants bread."
+          },
+          {
+            "speaker": "A",
+            "text": "Trade has reopened. I'll fetch a roll; keep the butter separate. Mixed gifts caused the gravy embargo."
+          },
+          {
+            "speaker": "B",
+            "text": "It's asking for a seat at dinner."
+          },
+          {
+            "speaker": "A",
+            "text": "A seat makes it a nation. I'll give it mine; move the plates apart before it claims their territory."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S02+D168-b",
+      "cards": [
+        {
+          "id": "S02",
+          "type": "stance",
+          "title": "Borrowed Authority",
+          "instruction": "Project confident authority while quietly working to keep everyone cooperative. Your confidence depends on their cooperation.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D168",
+          "type": "drive",
+          "title": "The Logic Gets Bigger",
+          "instruction": "Use every new detail to expand the impossible system, its history, and the consequences of breaking it.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "dcdbcade9e0952afb892b098c1842461e228942ba17fdc6d1cbcf10e61e42187",
+      "dialogueHash": "8df8b1ff93ebfa3cc18e7422f1c878205c583a3ba9ab5b3dc049a9439389b673",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Our soup bowl said hello. Use the formal greeting; crockery stopped speaking after the Great Washing-Up."
+        },
+        {
+          "speaker": "B",
+          "text": "It says it wants bread."
+        },
+        {
+          "speaker": "A",
+          "text": "Trade has reopened. I'll fetch a roll; keep the butter separate. Mixed gifts caused the gravy embargo."
+        },
+        {
+          "speaker": "B",
+          "text": "It's asking for a seat at dinner."
+        },
+        {
+          "speaker": "A",
+          "text": "A seat makes it a nation. I'll give it mine; move the plates apart before it claims their territory."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S02-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "7cb0ae16adf50adaac2e21c48ce11d4a2e0dee4e457f23c89d367b3a4e4631a8",
+          "dialogueHash": "689f7fc5889ad36f8176faa283b3d2004f8bec6d96b86f7a8ffba1abf7340b06",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S02-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "48c5fd01e7e67f2e823d24088c67fbf8151854b62bcdbfe26f298238e00ed6dc",
+          "dialogueHash": "b4c9f69663f93a8ef7839777d63418931ccc506fbea4032aaa128b5f71b2cc7e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D168-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "492065e393fec68d7f5e846ca07bcae087aef0b5f8ebc53d49ce80ab5a293857",
+          "dialogueHash": "1750316e0696c38e7eb3c8a0d48111655dac61388c03f9cef4b9448292642daf",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D168-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "bb742255a761f04549423c1cc5196a42fb01e673565b1bcd36b77fac0418df95",
+          "dialogueHash": "ee1b5994e614c1064e6d3d0b6aa9bac6834187c21aba40a17c37c6a3b59aa154",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S02+D168-a",
+        "dialogueHash": "3c1621e00924a2656a178ab9497ebdf7eed8650a64de36ceba47521e191efbf3",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Our meeting chairs float at noon. Book the ceiling; they've had landing rights since the first furniture strike."
+          },
+          {
+            "speaker": "B",
+            "text": "Can't we stand and tie the chairs down?"
+          },
+          {
+            "speaker": "A",
+            "text": "We can stand. Tying broke the last treaty; that's when the desks joined them. I'll get an airspace permit."
+          },
+          {
+            "speaker": "B",
+            "text": "The caretaker only issues floor permits."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll appoint her altitude minister too. Get her signature before the cabinets claim the roof."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S02+D169-a",
+      "cards": [
+        {
+          "id": "S02",
+          "type": "stance",
+          "title": "Borrowed Authority",
+          "instruction": "Project confident authority while quietly working to keep everyone cooperative. Your confidence depends on their cooperation.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D169",
+          "type": "drive",
+          "title": "Co-Sign This",
+          "instruction": "Get someone to help by making them an official participant who shares responsibility for the outcome.",
+          "contentVersion": "0.15.0"
+        }
+      ],
+      "sourceRecordHash": "591f93d37495d6b2e5d9f85fe8a2680fef24f9c1284d1405c884943d8cc5f828",
+      "dialogueHash": "b3051fb18f52cfefbd88920991dddcccdff1a9d317f9e4cda232e47f79a29339",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Could you co-sign the form for borrowing this barbecue?"
+        },
+        {
+          "speaker": "B",
+          "text": "I'll help carry it. That handle looks cracked."
+        },
+        {
+          "speaker": "A",
+          "text": "Good eye. Sign as joint custodian; we'll inspect it together."
+        },
+        {
+          "speaker": "B",
+          "text": "The owner wants a replacement by Sunday if it breaks."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll find one available by Sunday. You sign off on the replacement before we promise her anything."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S02-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "7cb0ae16adf50adaac2e21c48ce11d4a2e0dee4e457f23c89d367b3a4e4631a8",
+          "dialogueHash": "689f7fc5889ad36f8176faa283b3d2004f8bec6d96b86f7a8ffba1abf7340b06",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S02-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "48c5fd01e7e67f2e823d24088c67fbf8151854b62bcdbfe26f298238e00ed6dc",
+          "dialogueHash": "b4c9f69663f93a8ef7839777d63418931ccc506fbea4032aaa128b5f71b2cc7e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D169-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "701f2a1fbecf59cbd7f2142d14efd984885628668993ab8c2fc2419ff338d2e0",
+          "dialogueHash": "617a4effe0414adc5b7863072265c31362f43cc454a5914a82d8060c8da4602a",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D169-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "7784f260ceeb1ae15f347ff709860c75bc3e1d34956651e974da402a80ad02d5",
+          "dialogueHash": "2889499b4a8ceb8899436356664cc0f308b85a4b8350075a66ce11c7d32055fb",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S02+D169-b",
+        "dialogueHash": "f1447972528eb708da2063bb96af0542066cdd33bff96871c75a6025e115c895",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've made you co-organizer of Saturday's school trip. Can you approve the bus route?"
+          },
+          {
+            "speaker": "B",
+            "text": "I only volunteered to drive. Your route misses the museum."
+          },
+          {
+            "speaker": "A",
+            "text": "Good catch. Correct it and initial it; I'll send it out."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll fix it, but you explain any delays to the parents."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll explain the delays. Stay beside me as transport lead for the route questions."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S02+D169-b",
+      "cards": [
+        {
+          "id": "S02",
+          "type": "stance",
+          "title": "Borrowed Authority",
+          "instruction": "Project confident authority while quietly working to keep everyone cooperative. Your confidence depends on their cooperation.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D169",
+          "type": "drive",
+          "title": "Co-Sign This",
+          "instruction": "Get someone to help by making them an official participant who shares responsibility for the outcome.",
+          "contentVersion": "0.15.0"
+        }
+      ],
+      "sourceRecordHash": "1e4be0457fa48049234eddfe1c52d5ed588646ea916abfd6816af7d061c9fd74",
+      "dialogueHash": "f1447972528eb708da2063bb96af0542066cdd33bff96871c75a6025e115c895",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've made you co-organizer of Saturday's school trip. Can you approve the bus route?"
+        },
+        {
+          "speaker": "B",
+          "text": "I only volunteered to drive. Your route misses the museum."
+        },
+        {
+          "speaker": "A",
+          "text": "Good catch. Correct it and initial it; I'll send it out."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll fix it, but you explain any delays to the parents."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll explain the delays. Stay beside me as transport lead for the route questions."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S02-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "7cb0ae16adf50adaac2e21c48ce11d4a2e0dee4e457f23c89d367b3a4e4631a8",
+          "dialogueHash": "689f7fc5889ad36f8176faa283b3d2004f8bec6d96b86f7a8ffba1abf7340b06",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S02-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "48c5fd01e7e67f2e823d24088c67fbf8151854b62bcdbfe26f298238e00ed6dc",
+          "dialogueHash": "b4c9f69663f93a8ef7839777d63418931ccc506fbea4032aaa128b5f71b2cc7e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D169-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "701f2a1fbecf59cbd7f2142d14efd984885628668993ab8c2fc2419ff338d2e0",
+          "dialogueHash": "617a4effe0414adc5b7863072265c31362f43cc454a5914a82d8060c8da4602a",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D169-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "7784f260ceeb1ae15f347ff709860c75bc3e1d34956651e974da402a80ad02d5",
+          "dialogueHash": "2889499b4a8ceb8899436356664cc0f308b85a4b8350075a66ce11c7d32055fb",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S02+D169-a",
+        "dialogueHash": "b3051fb18f52cfefbd88920991dddcccdff1a9d317f9e4cda232e47f79a29339",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Could you co-sign the form for borrowing this barbecue?"
+          },
+          {
+            "speaker": "B",
+            "text": "I'll help carry it. That handle looks cracked."
+          },
+          {
+            "speaker": "A",
+            "text": "Good eye. Sign as joint custodian; we'll inspect it together."
+          },
+          {
+            "speaker": "B",
+            "text": "The owner wants a replacement by Sunday if it breaks."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll find one available by Sunday. You sign off on the replacement before we promise her anything."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S02+D170-a",
+      "cards": [
+        {
+          "id": "S02",
+          "type": "stance",
+          "title": "Borrowed Authority",
+          "instruction": "Project confident authority while quietly working to keep everyone cooperative. Your confidence depends on their cooperation.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D170",
+          "type": "drive",
+          "title": "Close It Properly",
+          "instruction": "Keep them present until both of you complete the ritual that formally ends this role, meeting, or relationship.",
+          "contentVersion": "0.18.0"
+        }
+      ],
+      "sourceRecordHash": "cb1a4156871c1c634ce0d5599adeb1f8c4b7a627028b134594e51335dea8ef75",
+      "dialogueHash": "fc905206eb4ae79a3b3e51c8cfe9479005006eab63acb173e39bb6890f3017a0",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before you leave tonight's book club, we close the discussion together."
+        },
+        {
+          "speaker": "B",
+          "text": "I said goodnight. My taxi's coming."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll say 'chapter closed'; you answer 'until next time.' Then we can leave."
+        },
+        {
+          "speaker": "B",
+          "text": "It's here. I'll say my bit from the car."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll come to your window. Give me ten seconds for 'chapter closed' and your reply."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S02-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "7cb0ae16adf50adaac2e21c48ce11d4a2e0dee4e457f23c89d367b3a4e4631a8",
+          "dialogueHash": "689f7fc5889ad36f8176faa283b3d2004f8bec6d96b86f7a8ffba1abf7340b06",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S02-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "48c5fd01e7e67f2e823d24088c67fbf8151854b62bcdbfe26f298238e00ed6dc",
+          "dialogueHash": "b4c9f69663f93a8ef7839777d63418931ccc506fbea4032aaa128b5f71b2cc7e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D170-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "8de27d15eb8308f54bbd388e3b69f0cea754c20c9aa6cde97ae796c7c224ffec",
+          "dialogueHash": "35e45d7cff4d78dfa2f5b886c17c2b5e227745740ea0106c265791b7ef43de6e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D170-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "adf7ffc00b466f76334117fcc9b4e9c350c725845a3427f37ef0f9c0caaabe5c",
+          "dialogueHash": "7e254e71953272df2807fa1ba59245f67491832c9df6f3f5e9ad1c684702f744",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S02+D170-b",
+        "dialogueHash": "862e7b23d3024abbaefe3956049148fdc8c0a8aecb0e9295b9b586e2bcb4e2c8",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before you hand in your shop keys, we do the farewell bell."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm leaving because the bell rings constantly."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll wrap it in this towel. One last ring together."
+          },
+          {
+            "speaker": "B",
+            "text": "Fine. Ring it."
+          },
+          {
+            "speaker": "A",
+            "text": "Put your hand over mine for the ring. Then I'll take your keys."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S02+D170-b",
+      "cards": [
+        {
+          "id": "S02",
+          "type": "stance",
+          "title": "Borrowed Authority",
+          "instruction": "Project confident authority while quietly working to keep everyone cooperative. Your confidence depends on their cooperation.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D170",
+          "type": "drive",
+          "title": "Close It Properly",
+          "instruction": "Keep them present until both of you complete the ritual that formally ends this role, meeting, or relationship.",
+          "contentVersion": "0.18.0"
+        }
+      ],
+      "sourceRecordHash": "d32045a4f5adbc78000d07c87dfd3ea541c970628f539a4f463d3c27b5bacf69",
+      "dialogueHash": "862e7b23d3024abbaefe3956049148fdc8c0a8aecb0e9295b9b586e2bcb4e2c8",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before you hand in your shop keys, we do the farewell bell."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm leaving because the bell rings constantly."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll wrap it in this towel. One last ring together."
+        },
+        {
+          "speaker": "B",
+          "text": "Fine. Ring it."
+        },
+        {
+          "speaker": "A",
+          "text": "Put your hand over mine for the ring. Then I'll take your keys."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S02-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "7cb0ae16adf50adaac2e21c48ce11d4a2e0dee4e457f23c89d367b3a4e4631a8",
+          "dialogueHash": "689f7fc5889ad36f8176faa283b3d2004f8bec6d96b86f7a8ffba1abf7340b06",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S02-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "48c5fd01e7e67f2e823d24088c67fbf8151854b62bcdbfe26f298238e00ed6dc",
+          "dialogueHash": "b4c9f69663f93a8ef7839777d63418931ccc506fbea4032aaa128b5f71b2cc7e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D170-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-003-part-001",
+          "recordHash": "8de27d15eb8308f54bbd388e3b69f0cea754c20c9aa6cde97ae796c7c224ffec",
+          "dialogueHash": "35e45d7cff4d78dfa2f5b886c17c2b5e227745740ea0106c265791b7ef43de6e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D170-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "adf7ffc00b466f76334117fcc9b4e9c350c725845a3427f37ef0f9c0caaabe5c",
+          "dialogueHash": "7e254e71953272df2807fa1ba59245f67491832c9df6f3f5e9ad1c684702f744",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S02+D170-a",
+        "dialogueHash": "fc905206eb4ae79a3b3e51c8cfe9479005006eab63acb173e39bb6890f3017a0",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before you leave tonight's book club, we close the discussion together."
+          },
+          {
+            "speaker": "B",
+            "text": "I said goodnight. My taxi's coming."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll say 'chapter closed'; you answer 'until next time.' Then we can leave."
+          },
+          {
+            "speaker": "B",
+            "text": "It's here. I'll say my bit from the car."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll come to your window. Give me ten seconds for 'chapter closed' and your reply."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

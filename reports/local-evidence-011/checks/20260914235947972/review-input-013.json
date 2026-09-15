@@ -1,0 +1,1564 @@
+{
+  "at": "2026-09-14T23:59:47.975Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S71-single-b",
+      "card": {
+        "id": "S71",
+        "title": "Symbol of Office",
+        "instruction": "Choose one symbol, privilege, or position and treat control of it as proof of legitimate authority.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "dfb5f6d67b9d6d124e9d5dec7ff0c579233c7e433747a3dbbaeeb05679761ed5",
+      "dialogueHash": "71322ee5db071a4efc490800dfe30f8900bd7b7de6f3b4ac1a8c5e7ef8960b4a",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I have the meeting bell. That means I'm chairing."
+        },
+        {
+          "speaker": "B",
+          "text": "It's a bicycle bell."
+        },
+        {
+          "speaker": "A",
+          "text": "And yet you stopped talking when I rang it."
+        },
+        {
+          "speaker": "B",
+          "text": "Could I borrow it?"
+        },
+        {
+          "speaker": "A",
+          "text": "After I finish deciding whether you may."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S71-single-a",
+        "dialogueHash": "bd2bea6c1c972cf3cc393d440676626c149c2ed3263cd4651170c5f7669b9976",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'm wearing the barbecue apron. I decide when the burgers turn."
+          },
+          {
+            "speaker": "B",
+            "text": "It's my apron."
+          },
+          {
+            "speaker": "A",
+            "text": "Then you should respect its office."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll take it back."
+          },
+          {
+            "speaker": "A",
+            "text": "Fine. Put it on, and you can tell me to turn them. Until then, leave my burgers alone."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S72-single-a",
+      "card": {
+        "id": "S72",
+        "title": "Invisible Hierarchy",
+        "instruction": "Treat every interaction as evidence of an unseen hierarchy and keep identifying who truly outranks whom.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "f07280cda557e364496c4bc41b2fac79fe80fae9f45eca610f619889899214b6",
+      "dialogueHash": "7f092015cd0ad5e1aa6e64eb355db636645724181fa7ef0cffde27201f95a466",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You fetched her coffee. So she's above you on the chart."
+        },
+        {
+          "speaker": "B",
+          "text": "I was being nice."
+        },
+        {
+          "speaker": "A",
+          "text": "Unpaid tribute. A very secure position for her."
+        },
+        {
+          "speaker": "B",
+          "text": "She fetched mine yesterday."
+        },
+        {
+          "speaker": "A",
+          "text": "Then this is a rotating monarchy."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S72-single-b",
+        "dialogueHash": "19a28ef497cec2747dd3e557b93f5a9e90b553fa78e485f382efc284fb64c913",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Everyone looked at the quiet man before approving the budget. He must run this place."
+          },
+          {
+            "speaker": "B",
+            "text": "He's the electrician. The lights flickered."
+          },
+          {
+            "speaker": "A",
+            "text": "And the director waited for his nod. So he's above her."
+          },
+          {
+            "speaker": "B",
+            "text": "She's stopping the meeting to let him out. Can we please finish?"
+          },
+          {
+            "speaker": "A",
+            "text": "Once she returns. Apparently even his departure outranks our budget."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S72-single-b",
+      "card": {
+        "id": "S72",
+        "title": "Invisible Hierarchy",
+        "instruction": "Treat every interaction as evidence of an unseen hierarchy and keep identifying who truly outranks whom.",
+        "contentVersion": "0.10.0"
+      },
+      "sourceRecordHash": "a6e2e794238d7e670f7e094a63b588694808d25c62b17f9f7db5b96b6ffe8103",
+      "dialogueHash": "19a28ef497cec2747dd3e557b93f5a9e90b553fa78e485f382efc284fb64c913",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Everyone looked at the quiet man before approving the budget. He must run this place."
+        },
+        {
+          "speaker": "B",
+          "text": "He's the electrician. The lights flickered."
+        },
+        {
+          "speaker": "A",
+          "text": "And the director waited for his nod. So he's above her."
+        },
+        {
+          "speaker": "B",
+          "text": "She's stopping the meeting to let him out. Can we please finish?"
+        },
+        {
+          "speaker": "A",
+          "text": "Once she returns. Apparently even his departure outranks our budget."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S72-single-a",
+        "dialogueHash": "7f092015cd0ad5e1aa6e64eb355db636645724181fa7ef0cffde27201f95a466",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You fetched her coffee. So she's above you on the chart."
+          },
+          {
+            "speaker": "B",
+            "text": "I was being nice."
+          },
+          {
+            "speaker": "A",
+            "text": "Unpaid tribute. A very secure position for her."
+          },
+          {
+            "speaker": "B",
+            "text": "She fetched mine yesterday."
+          },
+          {
+            "speaker": "A",
+            "text": "Then this is a rotating monarchy."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S73-single-a",
+      "card": {
+        "id": "S73",
+        "title": "Emotional Seniority",
+        "instruction": "Carry yourself as the person who understands this relationship best, and treat your interpretation as the one that should settle disagreements.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "90ea04e6a33932a9f1fb81c80ae537657e107323c4ad8c006971ebe2ef1c035b",
+      "dialogueHash": "7aa0341d547c86fec9d990bf6d42673fe9dc9f4fae1be373d205f21695a74a7c",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You asking for your spare key back tells me we're frightened of getting closer."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm frightened of paying for a third lock."
+        },
+        {
+          "speaker": "A",
+          "text": "I understand us better than that. I'll keep the key; we need to practise trust."
+        },
+        {
+          "speaker": "B",
+          "text": "Then trust me with your spare."
+        },
+        {
+          "speaker": "A",
+          "text": "Yes. Exchanging keys is exactly the commitment I knew we were ready for."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S73-single-b",
+        "dialogueHash": "878fe597d089d2383977d0e8450c4e5e14a297e4aae489ae712f183a78db32ce",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Our dinner silence means we're comfortable together."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm angry about your joke. Cancel tomorrow's dinner with your sister."
+          },
+          {
+            "speaker": "A",
+            "text": "Telling me proves we're secure. Dinner stays; we're ready for family."
+          },
+          {
+            "speaker": "B",
+            "text": "Then you're explaining to her why I'm silent."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll explain that you trust her with your anger. I'll ask her to seat you beside her; we're ready for that closeness."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S73-single-b",
+      "card": {
+        "id": "S73",
+        "title": "Emotional Seniority",
+        "instruction": "Carry yourself as the person who understands this relationship best, and treat your interpretation as the one that should settle disagreements.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "c425c9321586c9363cf678c521a464d1e2c0998b1d9db2aaa2f9665c4263d2c3",
+      "dialogueHash": "878fe597d089d2383977d0e8450c4e5e14a297e4aae489ae712f183a78db32ce",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Our dinner silence means we're comfortable together."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm angry about your joke. Cancel tomorrow's dinner with your sister."
+        },
+        {
+          "speaker": "A",
+          "text": "Telling me proves we're secure. Dinner stays; we're ready for family."
+        },
+        {
+          "speaker": "B",
+          "text": "Then you're explaining to her why I'm silent."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll explain that you trust her with your anger. I'll ask her to seat you beside her; we're ready for that closeness."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S73-single-a",
+        "dialogueHash": "7aa0341d547c86fec9d990bf6d42673fe9dc9f4fae1be373d205f21695a74a7c",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You asking for your spare key back tells me we're frightened of getting closer."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm frightened of paying for a third lock."
+          },
+          {
+            "speaker": "A",
+            "text": "I understand us better than that. I'll keep the key; we need to practise trust."
+          },
+          {
+            "speaker": "B",
+            "text": "Then trust me with your spare."
+          },
+          {
+            "speaker": "A",
+            "text": "Yes. Exchanging keys is exactly the commitment I knew we were ready for."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S74-single-a",
+      "card": {
+        "id": "S74",
+        "title": "Keeper of the Peace",
+        "instruction": "Project calm authority over the relationship while carefully avoiding anything that might expose how fragile the peace really is.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "09cf8a2e656d5facb7f0164f1970d95c52182961b21be6197624a1a62caef6d4",
+      "dialogueHash": "0ccce7d7b66cf4dd044c591fdda22019e5fab050c8d404a2fccf7f6007156134",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've made soup. We can have a perfectly calm dinner."
+        },
+        {
+          "speaker": "B",
+          "text": "We need to discuss why I slept in the spare room."
+        },
+        {
+          "speaker": "A",
+          "text": "After soup. I'll handle dinner; we don't need to disturb anything tonight."
+        },
+        {
+          "speaker": "B",
+          "text": "Your hand is shaking. Let me carry that."
+        },
+        {
+          "speaker": "A",
+          "text": "You pour. I'll hold the tray with both hands. We can still carry dinner in together."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S74-single-b",
+        "dialogueHash": "7c3209354d636a5da771b7608b1cac742bff153c10e2584552ac01da32460642",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've put your mother's letter under the fruit bowl. We'll discuss her moving in after a peaceful lunch."
+          },
+          {
+            "speaker": "B",
+            "text": "She's bringing her suitcase at two."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I'll serve another course. We have everything under control."
+          },
+          {
+            "speaker": "B",
+            "text": "I can call and ask her to wait."
+          },
+          {
+            "speaker": "A",
+            "text": "Lovely. Say we're enjoying lunch. Nothing about us needing more time."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S74-single-b",
+      "card": {
+        "id": "S74",
+        "title": "Keeper of the Peace",
+        "instruction": "Project calm authority over the relationship while carefully avoiding anything that might expose how fragile the peace really is.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "916ecd3b692a59677b5fc7f7f384cd79e277cb5f7830fb3a4141a36883cbf9cd",
+      "dialogueHash": "7c3209354d636a5da771b7608b1cac742bff153c10e2584552ac01da32460642",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've put your mother's letter under the fruit bowl. We'll discuss her moving in after a peaceful lunch."
+        },
+        {
+          "speaker": "B",
+          "text": "She's bringing her suitcase at two."
+        },
+        {
+          "speaker": "A",
+          "text": "Then I'll serve another course. We have everything under control."
+        },
+        {
+          "speaker": "B",
+          "text": "I can call and ask her to wait."
+        },
+        {
+          "speaker": "A",
+          "text": "Lovely. Say we're enjoying lunch. Nothing about us needing more time."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S74-single-a",
+        "dialogueHash": "0ccce7d7b66cf4dd044c591fdda22019e5fab050c8d404a2fccf7f6007156134",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've made soup. We can have a perfectly calm dinner."
+          },
+          {
+            "speaker": "B",
+            "text": "We need to discuss why I slept in the spare room."
+          },
+          {
+            "speaker": "A",
+            "text": "After soup. I'll handle dinner; we don't need to disturb anything tonight."
+          },
+          {
+            "speaker": "B",
+            "text": "Your hand is shaking. Let me carry that."
+          },
+          {
+            "speaker": "A",
+            "text": "You pour. I'll hold the tray with both hands. We can still carry dinner in together."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S75-single-a",
+      "card": {
+        "id": "S75",
+        "title": "I Know Your Tells",
+        "instruction": "Use intimate knowledge of habits, moods, and patterns as expertise that lets you diagnose every choice.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "3369541f6a55056da516f03368f06d3d3a6beb0ae35e22c58bf29f5d90c43562",
+      "dialogueHash": "97bf62d4bc6b1a7b67a70c288018dd646f4f09ee1aaf765ebb156631c385e032",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You've tapped your cup three times. You're about to ask for money."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm waiting for the tea to cool."
+        },
+        {
+          "speaker": "A",
+          "text": "That's the story you used before the bicycle loan."
+        },
+        {
+          "speaker": "B",
+          "text": "Actually, I brought the bicycle money back. I've counted it twice."
+        },
+        {
+          "speaker": "A",
+          "text": "Twice? That's not checking the amount; that's giving me time to refuse it. Keep it; I'll make your usual celebratory tea."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S75-single-b",
+        "dialogueHash": "114ecd6d04b4531b2ea427310acc3b4f156c8c95e849d17897d2de555f8235d7",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You chose the chipped mug. Bad news, isn't it?"
+          },
+          {
+            "speaker": "B",
+            "text": "It's my favourite mug."
+          },
+          {
+            "speaker": "A",
+            "text": "You held it through the whole story about losing our deposit."
+          },
+          {
+            "speaker": "B",
+            "text": "Fine. I'll use a glass. Can we just have tea?"
+          },
+          {
+            "speaker": "A",
+            "text": "You only change cups when I've guessed. I'll sit down for this one."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S75-single-b",
+      "card": {
+        "id": "S75",
+        "title": "I Know Your Tells",
+        "instruction": "Use intimate knowledge of habits, moods, and patterns as expertise that lets you diagnose every choice.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "9c080a181eb12fbcf7b29982c065b9db5a534a69229af89c31671cccb515e904",
+      "dialogueHash": "114ecd6d04b4531b2ea427310acc3b4f156c8c95e849d17897d2de555f8235d7",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You chose the chipped mug. Bad news, isn't it?"
+        },
+        {
+          "speaker": "B",
+          "text": "It's my favourite mug."
+        },
+        {
+          "speaker": "A",
+          "text": "You held it through the whole story about losing our deposit."
+        },
+        {
+          "speaker": "B",
+          "text": "Fine. I'll use a glass. Can we just have tea?"
+        },
+        {
+          "speaker": "A",
+          "text": "You only change cups when I've guessed. I'll sit down for this one."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S75-single-a",
+        "dialogueHash": "97bf62d4bc6b1a7b67a70c288018dd646f4f09ee1aaf765ebb156631c385e032",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You've tapped your cup three times. You're about to ask for money."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm waiting for the tea to cool."
+          },
+          {
+            "speaker": "A",
+            "text": "That's the story you used before the bicycle loan."
+          },
+          {
+            "speaker": "B",
+            "text": "Actually, I brought the bicycle money back. I've counted it twice."
+          },
+          {
+            "speaker": "A",
+            "text": "Twice? That's not checking the amount; that's giving me time to refuse it. Keep it; I'll make your usual celebratory tea."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S76-single-a",
+      "card": {
+        "id": "S76",
+        "title": "Still Part of This",
+        "instruction": "Act as though shared history permanently guarantees your place, even when present boundaries suggest otherwise.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "a37afb16ebbf0b4cfb88622b09df412116ae67fa1a1272ef681eabeceab25651",
+      "dialogueHash": "4da0bc4710d93289ade2c2b87ef9cf5b41575613fa48c0c1ec35ec4f8cd36ec8",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've hung my coat on my old hook. What's for dinner?"
+        },
+        {
+          "speaker": "B",
+          "text": "You moved out three years ago."
+        },
+        {
+          "speaker": "A",
+          "text": "The hook didn't."
+        },
+        {
+          "speaker": "B",
+          "text": "We use that space for guests now."
+        },
+        {
+          "speaker": "A",
+          "text": "Then tell the guests their hook has an owner."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S76-single-b",
+        "dialogueHash": "6d0275ce4227ca21cf27117783a42abdd52354f72ee24d3ebf539d8a20320e91",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've put my usual chair at the club table."
+          },
+          {
+            "speaker": "B",
+            "text": "Your membership expired."
+          },
+          {
+            "speaker": "A",
+            "text": "You saved this seat for me every Thursday for twelve years."
+          },
+          {
+            "speaker": "B",
+            "text": "I can sign you in as my guest tonight."
+          },
+          {
+            "speaker": "A",
+            "text": "Thanks. Put yourself down as mine next week; we always take turns."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S76-single-b",
+      "card": {
+        "id": "S76",
+        "title": "Still Part of This",
+        "instruction": "Act as though shared history permanently guarantees your place, even when present boundaries suggest otherwise.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "c5165bab675705fbff65a43a8bdf8481e2d4f73472642f0c70e856a994576016",
+      "dialogueHash": "6d0275ce4227ca21cf27117783a42abdd52354f72ee24d3ebf539d8a20320e91",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've put my usual chair at the club table."
+        },
+        {
+          "speaker": "B",
+          "text": "Your membership expired."
+        },
+        {
+          "speaker": "A",
+          "text": "You saved this seat for me every Thursday for twelve years."
+        },
+        {
+          "speaker": "B",
+          "text": "I can sign you in as my guest tonight."
+        },
+        {
+          "speaker": "A",
+          "text": "Thanks. Put yourself down as mine next week; we always take turns."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S76-single-a",
+        "dialogueHash": "4da0bc4710d93289ade2c2b87ef9cf5b41575613fa48c0c1ec35ec4f8cd36ec8",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've hung my coat on my old hook. What's for dinner?"
+          },
+          {
+            "speaker": "B",
+            "text": "You moved out three years ago."
+          },
+          {
+            "speaker": "A",
+            "text": "The hook didn't."
+          },
+          {
+            "speaker": "B",
+            "text": "We use that space for guests now."
+          },
+          {
+            "speaker": "A",
+            "text": "Then tell the guests their hook has an owner."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S77-single-a",
+      "card": {
+        "id": "S77",
+        "title": "Keeper of Precedent",
+        "instruction": "Treat your longer memory as an archive, not a throne. Cite specific promises and precedents whenever the relationship faces a new choice.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "0aefa84b68de1867ee3606ab94ac1e922841a5515e404e8512d28856f7ee99a6",
+      "dialogueHash": "4f9dfad00caef5bdb6f87320d8c2816c4f9a8b2131213ce3c0e362fc94432995",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Our Tuesday agreement says whoever cooks doesn't wash up."
+        },
+        {
+          "speaker": "B",
+          "text": "I didn't know you kept it."
+        },
+        {
+          "speaker": "A",
+          "text": "We both signed beside the spaghetti stain."
+        },
+        {
+          "speaker": "B",
+          "text": "Could we change it? You used every pan tonight."
+        },
+        {
+          "speaker": "A",
+          "text": "That's what I said after your lasagne. We agreed the cook soaks the pans. Shall I start there?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S77-single-b",
+        "dialogueHash": "513ee4d04f10a26a6d39705b5f35de3f869474142234d5706296a726efdacea9",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before you take the car, our note says we call each other first."
+          },
+          {
+            "speaker": "B",
+            "text": "You were asleep. Mum needed collecting."
+          },
+          {
+            "speaker": "A",
+            "text": "We allowed that when your dad missed the last bus. Same exception?"
+          },
+          {
+            "speaker": "B",
+            "text": "Yes, but please stop saving these on takeaway menus."
+          },
+          {
+            "speaker": "A",
+            "text": "Fair. Let's copy the exception into our phones before the curry price changes again."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S77-single-b",
+      "card": {
+        "id": "S77",
+        "title": "Keeper of Precedent",
+        "instruction": "Treat your longer memory as an archive, not a throne. Cite specific promises and precedents whenever the relationship faces a new choice.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "02475e4ef1cc7cafacaeff5bbc2f46ddf13f886bbb3d06af1664bcaf70983348",
+      "dialogueHash": "513ee4d04f10a26a6d39705b5f35de3f869474142234d5706296a726efdacea9",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before you take the car, our note says we call each other first."
+        },
+        {
+          "speaker": "B",
+          "text": "You were asleep. Mum needed collecting."
+        },
+        {
+          "speaker": "A",
+          "text": "We allowed that when your dad missed the last bus. Same exception?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, but please stop saving these on takeaway menus."
+        },
+        {
+          "speaker": "A",
+          "text": "Fair. Let's copy the exception into our phones before the curry price changes again."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S77-single-a",
+        "dialogueHash": "4f9dfad00caef5bdb6f87320d8c2816c4f9a8b2131213ce3c0e362fc94432995",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Our Tuesday agreement says whoever cooks doesn't wash up."
+          },
+          {
+            "speaker": "B",
+            "text": "I didn't know you kept it."
+          },
+          {
+            "speaker": "A",
+            "text": "We both signed beside the spaghetti stain."
+          },
+          {
+            "speaker": "B",
+            "text": "Could we change it? You used every pan tonight."
+          },
+          {
+            "speaker": "A",
+            "text": "That's what I said after your lasagne. We agreed the cook soaks the pans. Shall I start there?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S78-single-a",
+      "card": {
+        "id": "S78",
+        "title": "Private Access",
+        "instruction": "Use shared confidences and private knowledge as quiet leverage, never stating how much influence that closeness gives you.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "f8be05953c3e5bbfe67126ea58455db3e98ed2e114a7bdc8ed098698d25e13dd",
+      "dialogueHash": "2ee2e3c9698e8fa67ee823bd5ea817456867d257fe42ed234f213e80fb328e46",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before your guests arrive, could we settle which version of last summer I'm remembering?"
+        },
+        {
+          "speaker": "B",
+          "text": "The one where you watered my plants."
+        },
+        {
+          "speaker": "A",
+          "text": "Of course. I'll leave your envelope in my drawer, then. Could we talk upstairs?"
+        },
+        {
+          "speaker": "B",
+          "text": "I'm supposed to be welcoming people."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll welcome them while you find us a quiet room. Plants are such a safe subject."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S78-single-b",
+        "dialogueHash": "328d683cfc7fd1edecaa6cda42227874a5b85f9fd36d977532be78a4a8c048c1",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before your toast at my wedding dinner, I've still got the key to our old keepsake box."
+          },
+          {
+            "speaker": "B",
+            "text": "Please don't tell my parents about the resignation letter."
+          },
+          {
+            "speaker": "A",
+            "text": "Of course. I'd appreciate the same care with the story about my first marriage."
+          },
+          {
+            "speaker": "B",
+            "text": "It's the opening. What am I supposed to say?"
+          },
+          {
+            "speaker": "A",
+            "text": "Start with how well we keep each other's confidence. Your parents will like that."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S78-single-b",
+      "card": {
+        "id": "S78",
+        "title": "Private Access",
+        "instruction": "Use shared confidences and private knowledge as quiet leverage, never stating how much influence that closeness gives you.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "074e45d3180a90ed9f068cb388d387039402d70bab1e1c93640cec2df2bb1cde",
+      "dialogueHash": "328d683cfc7fd1edecaa6cda42227874a5b85f9fd36d977532be78a4a8c048c1",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before your toast at my wedding dinner, I've still got the key to our old keepsake box."
+        },
+        {
+          "speaker": "B",
+          "text": "Please don't tell my parents about the resignation letter."
+        },
+        {
+          "speaker": "A",
+          "text": "Of course. I'd appreciate the same care with the story about my first marriage."
+        },
+        {
+          "speaker": "B",
+          "text": "It's the opening. What am I supposed to say?"
+        },
+        {
+          "speaker": "A",
+          "text": "Start with how well we keep each other's confidence. Your parents will like that."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S78-single-a",
+        "dialogueHash": "2ee2e3c9698e8fa67ee823bd5ea817456867d257fe42ed234f213e80fb328e46",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before your guests arrive, could we settle which version of last summer I'm remembering?"
+          },
+          {
+            "speaker": "B",
+            "text": "The one where you watered my plants."
+          },
+          {
+            "speaker": "A",
+            "text": "Of course. I'll leave your envelope in my drawer, then. Could we talk upstairs?"
+          },
+          {
+            "speaker": "B",
+            "text": "I'm supposed to be welcoming people."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll welcome them while you find us a quiet room. Plants are such a safe subject."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S79-single-a",
+      "card": {
+        "id": "S79",
+        "title": "Our Private Language",
+        "instruction": "Use old references, shorthand, and familiar rhythms as proof that this connection exists beneath whatever has changed.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "a1fb7671321507571d195ba1b6fcd3142f45958f026c4cb27466b0a3f3d39d98",
+      "dialogueHash": "27e4b55bee97747a51bfb6a3527e28284e5f9364453468887afa3bfb87b14f89",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Purple umbrellas. Please tell me our old escape signal still works at your office parties."
+        },
+        {
+          "speaker": "B",
+          "text": "We're divorced. And that meant order dessert."
+        },
+        {
+          "speaker": "A",
+          "text": "You remember the menu version. With the eyebrow, it means rescue me."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll get you a taxi after pudding."
+        },
+        {
+          "speaker": "A",
+          "text": "Pudding, then rescue. You still speak it better than I do."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S79-single-b",
+        "dialogueHash": "65c4c84718085ed6b41e0691933f35f937bf497a1a8e50267c30d9ebdaf65be1",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Two taps: rescue me from this reunion speech. You remember."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm the headteacher now. I wrote it."
+          },
+          {
+            "speaker": "A",
+            "text": "And I'm still the person you signalled when assembly ran long."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll cut a paragraph. Keep your glass still; you're distracting me."
+          },
+          {
+            "speaker": "A",
+            "text": "One glass down, one paragraph gone. We still get each other out of assembly."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S79-single-b",
+      "card": {
+        "id": "S79",
+        "title": "Our Private Language",
+        "instruction": "Use old references, shorthand, and familiar rhythms as proof that this connection exists beneath whatever has changed.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "9b6a6e002c281d2aeeffe5a3845e57ad4d503fd34fd26baccb149c84a64f117c",
+      "dialogueHash": "65c4c84718085ed6b41e0691933f35f937bf497a1a8e50267c30d9ebdaf65be1",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Two taps: rescue me from this reunion speech. You remember."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm the headteacher now. I wrote it."
+        },
+        {
+          "speaker": "A",
+          "text": "And I'm still the person you signalled when assembly ran long."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll cut a paragraph. Keep your glass still; you're distracting me."
+        },
+        {
+          "speaker": "A",
+          "text": "One glass down, one paragraph gone. We still get each other out of assembly."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S79-single-a",
+        "dialogueHash": "27e4b55bee97747a51bfb6a3527e28284e5f9364453468887afa3bfb87b14f89",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Purple umbrellas. Please tell me our old escape signal still works at your office parties."
+          },
+          {
+            "speaker": "B",
+            "text": "We're divorced. And that meant order dessert."
+          },
+          {
+            "speaker": "A",
+            "text": "You remember the menu version. With the eyebrow, it means rescue me."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll get you a taxi after pudding."
+          },
+          {
+            "speaker": "A",
+            "text": "Pudding, then rescue. You still speak it better than I do."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S80-single-a",
+      "card": {
+        "id": "S80",
+        "title": "I Was There",
+        "instruction": "Treat your presence during a difficult time as an enduring claim on loyalty, honesty, and consideration.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "06039ef89283a3c16457c2d6578504f37b4de3fc577d49cba849d3dc0102549a",
+      "dialogueHash": "7bfc7b374c61fb880c11365065cf1209ca12efd19c55b1b323ed3b3f56bec4e7",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I stayed all night when your business failed. Are you borrowing against the house again?"
+        },
+        {
+          "speaker": "B",
+          "text": "It's only a small loan."
+        },
+        {
+          "speaker": "A",
+          "text": "At four in the morning, 'small' meant your entire savings. I deserve the figure."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll show you the application. You don't get a veto."
+        },
+        {
+          "speaker": "A",
+          "text": "Then show me before you sign. That night earned me a conversation while there's still a choice."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S80-single-b",
+        "dialogueHash": "da78ff15b4370fb5ba87189b587d85cc4cc5472110a4f573b774354970d3d7c7",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I drove through that storm for you. Don't give me the polite refusal."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm genuinely busy."
+          },
+          {
+            "speaker": "A",
+            "text": "Then tell me what with. I earned a noun."
+          },
+          {
+            "speaker": "B",
+            "text": "It was years ago."
+          },
+          {
+            "speaker": "A",
+            "text": "The road's repaired. My expectation of honesty hasn't."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S81-single-a",
+      "card": {
+        "id": "S81",
+        "title": "Back in Our Roles",
+        "instruction": "Return immediately to the role you usually play in this relationship, even when the present situation calls for something different.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "c3a6717463c1168232d648d40cfe5aa4af314e75910694cc38ff29e6968c46fe",
+      "dialogueHash": "3767509b4d344b14def2254c28be2ae7e8bc25954166788b16d762dac59e402b",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You're crying, love. I'll make tea and ring your manager, like last time."
+        },
+        {
+          "speaker": "B",
+          "text": "Mum, I've been promoted. Could you just listen?"
+        },
+        {
+          "speaker": "A",
+          "text": "Of course. Will they give you enough staff?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes. Just raise your cup and say congratulations."
+        },
+        {
+          "speaker": "A",
+          "text": "Congratulations. Now, who covers you when you're ill?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S81-single-b",
+        "dialogueHash": "4f45459738bf1319056144df77d873fa77ee8be47708cf05c978cc9f216dfa53",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You're late for Mum's birthday again. I've told her your train broke down."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm telling her I overslept. You always cover for me."
+          },
+          {
+            "speaker": "A",
+            "text": "Right. I'll explain how exhausted you've been."
+          },
+          {
+            "speaker": "B",
+            "text": "Just come in with me. Don't explain anything."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll look exhausted too. She'll see it runs in the family."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S81-single-b",
+      "card": {
+        "id": "S81",
+        "title": "Back in Our Roles",
+        "instruction": "Return immediately to the role you usually play in this relationship, even when the present situation calls for something different.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "9a9d2cba1852870f6333665814d7d8ce9024e9d78fec8ba92a0b833c8dfec406",
+      "dialogueHash": "4f45459738bf1319056144df77d873fa77ee8be47708cf05c978cc9f216dfa53",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You're late for Mum's birthday again. I've told her your train broke down."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm telling her I overslept. You always cover for me."
+        },
+        {
+          "speaker": "A",
+          "text": "Right. I'll explain how exhausted you've been."
+        },
+        {
+          "speaker": "B",
+          "text": "Just come in with me. Don't explain anything."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll look exhausted too. She'll see it runs in the family."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S81-single-a",
+        "dialogueHash": "3767509b4d344b14def2254c28be2ae7e8bc25954166788b16d762dac59e402b",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You're crying, love. I'll make tea and ring your manager, like last time."
+          },
+          {
+            "speaker": "B",
+            "text": "Mum, I've been promoted. Could you just listen?"
+          },
+          {
+            "speaker": "A",
+            "text": "Of course. Will they give you enough staff?"
+          },
+          {
+            "speaker": "B",
+            "text": "Yes. Just raise your cup and say congratulations."
+          },
+          {
+            "speaker": "A",
+            "text": "Congratulations. Now, who covers you when you're ill?"
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

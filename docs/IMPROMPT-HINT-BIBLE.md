@@ -1,3 +1,11 @@
+> Current checkpoint: 0.26.0-preview.5 completes singles-003, with twelve revisions and eight retentions. Cumulative coach-1.0 progress is 60 singles and 10 pairs; 116,090 scenes remain pending. See COACH-SINGLES-003-REVISIONS.md. Earlier checkpoint notes below remain historical.
+
+> Current checkpoint: 0.26.0-preview.4 completes singles-002: twenty internal two-pass reviews, ten revisions and ten retained scenes. Cumulative coach-1.0 progress: 40 singles and 10 pairs, with 116,110 scenes pending. See COACH-SINGLES-002-REVISIONS.md. Earlier checkpoint notes below remain historical.
+
+> Current checkpoint: 0.26.0-preview.3 completes singles-001: 20 coach-1.0 single reviews (11 amended, 9 retained), plus 10 preserved pair reviews. 116,130 scenes remain pending. See COACH-SINGLES-001-REVISIONS.md. Earlier checkpoint statements below are historical.
+
+> Current checkpoint: v0.26.0-preview.2 has ten pair scenes reviewed under coach-1.0, including nine new source revisions. The full re-audit remains pending. See COACH-BATCH-001-REVISIONS.md and ../CHECKPOINT-STATUS.md. The v0.25 material below records the earlier, narrower internal editorial pass.
+
 # Imprompt Example Bible — v0.25.0
 
 ## A spoken scene, not a lecture
@@ -54,3 +62,10 @@ Normal hints contain dialogue, Another scene, Done, and an optional review flag.
 8. Ask the troupe whether the example is understandable and usable in one read. Keep independent/live status separate.
 
 See `SINGLE-CARD-DIALOGUE-AUDIT-v0.25.0.md` for all 480 notes and 960 rewritten exchanges, and `PAIR-REFERENCE-SCENES-v0.25.0.md` for the reviewed pair subset.
+
+
+## Current coach-review amendment: 0.26.0-preview.2
+
+The first five-pair batch is complete under coach-1.0: ten pair scenes, of which nine were newly rewritten in preview.2 and the endorsed hamster example remains unchanged from preview.1. The other 116,150 records remain pending under this newer rubric. The legacy `internal-editorial-pass` label is not a claim that every scene passed the newer rubric. The versioned review ledgers and CHECKPOINT-STATUS.md are authoritative for that distinction.
+
+See COACH-BATCH-001-REVISIONS.md for the original and revised exchanges, both score passes and turn-specific evidence. All single-card dialogues remain unchanged.

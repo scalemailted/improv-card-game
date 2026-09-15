@@ -1,0 +1,10 @@
+# Local continuation under allowance-013
+
+1. Read README.md, working-summary.json and pairs/candidate-manifest.json. Check actual time against 2026-09-15T09:32:38.033Z (authoring) and 2026-09-15T09:47:38.033Z (hard deadline). This window is already granted. Do not grant again, renew, or reset its clock.
+2. Confirm no other writer with a permitted process/lock check. Reuse complete hash-matched selections and evidence. Candidate manifests pin the prior 320 pair records; singles stay in the unchanged allowance-012 manifest.
+3. Start the actual next selection in the current manifest. At this checkpoint it is S01+D212, group-043. Read both exact cards, all four canonical single seeds and both originals. Use existing report-only helper .checkpoint-work/local-pair-store-013.cjs for explicitly authored selections, revisions and manual evidence; it enforces the actual work deadline and local two-version cap.
+4. Preserve all prior versions and rejected assessments. Do not reopen unresolved capped scenes or protected references. Complete each small group and save its manual variety findings.
+5. Validate local artifacts and prepare unexecuted score-free payloads with: node .checkpoint-work/check-local-pairs-013.cjs . This invokes no reviewer and makes no canonical edits. Existing single verification can be reused while hashes match.
+6. Continue successive pending pair groups under the same valid allowance. Keep source and evidence checkpoints. This procedure does not authorize the denied fresh-review/production stage, another wrapper, campaign resume, canonical integration, or a new allowance. After expiry, another window requires new explicit authorization through documented grant-allowance; this report grants none.
+
+No security/authentication changes, billing change, ZIP, commit, push or deployment.

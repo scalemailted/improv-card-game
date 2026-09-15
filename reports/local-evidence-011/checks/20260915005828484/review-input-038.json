@@ -1,0 +1,964 @@
+{
+  "at": "2026-09-15T00:58:28.487Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "D86-single-a",
+      "card": {
+        "id": "D86",
+        "title": "Not Why We Drifted",
+        "instruction": "Keep the conversation away from the real reason the relationship changed.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "ccf53226ddc16f6ce904d1b1431538acece9114a58f46afebf637135f7f3df16",
+      "dialogueHash": "851a9ebfa8913763099c4c428bdd08d009e6d63f283a29eedfdf62b40c5f5325",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've brought the picnic basket. Same sandwiches as our last afternoon here."
+        },
+        {
+          "speaker": "B",
+          "text": "The afternoon you said we needed space?"
+        },
+        {
+          "speaker": "A",
+          "text": "We've got more space under that tree. Shall we move the blanket?"
+        },
+        {
+          "speaker": "B",
+          "text": "Moving won't stop me asking why."
+        },
+        {
+          "speaker": "A",
+          "text": "Then stay here. You always had strong views about mustard; tell me if I've finally got it right."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D86-single-b",
+        "dialogueHash": "8f2a75013f684c8c0cbb6c58ac7b9b8c247de6cb3f484f3589db1c259487b1ff",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've found our wedding video. Shall we watch it?"
+          },
+          {
+            "speaker": "B",
+            "text": "I'd rather discuss why we're living separately."
+          },
+          {
+            "speaker": "A",
+            "text": "Here's your father's speech. We never could agree what he meant by 'good luck'."
+          },
+          {
+            "speaker": "B",
+            "text": "He meant exactly this. Pause it. I don't want another speech."
+          },
+          {
+            "speaker": "A",
+            "text": "Paused. Let's skip to the dancing, then. No speeches. You can help me settle whether your uncle actually falls into the cake."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D86-single-b",
+      "card": {
+        "id": "D86",
+        "title": "Not Why We Drifted",
+        "instruction": "Keep the conversation away from the real reason the relationship changed.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "fd54bfc7b72a58c73a7c1f48a471ff5806f53c3217011f1e5f5cb67ddf240352",
+      "dialogueHash": "8f2a75013f684c8c0cbb6c58ac7b9b8c247de6cb3f484f3589db1c259487b1ff",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've found our wedding video. Shall we watch it?"
+        },
+        {
+          "speaker": "B",
+          "text": "I'd rather discuss why we're living separately."
+        },
+        {
+          "speaker": "A",
+          "text": "Here's your father's speech. We never could agree what he meant by 'good luck'."
+        },
+        {
+          "speaker": "B",
+          "text": "He meant exactly this. Pause it. I don't want another speech."
+        },
+        {
+          "speaker": "A",
+          "text": "Paused. Let's skip to the dancing, then. No speeches. You can help me settle whether your uncle actually falls into the cake."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D86-single-a",
+        "dialogueHash": "851a9ebfa8913763099c4c428bdd08d009e6d63f283a29eedfdf62b40c5f5325",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've brought the picnic basket. Same sandwiches as our last afternoon here."
+          },
+          {
+            "speaker": "B",
+            "text": "The afternoon you said we needed space?"
+          },
+          {
+            "speaker": "A",
+            "text": "We've got more space under that tree. Shall we move the blanket?"
+          },
+          {
+            "speaker": "B",
+            "text": "Moving won't stop me asking why."
+          },
+          {
+            "speaker": "A",
+            "text": "Then stay here. You always had strong views about mustard; tell me if I've finally got it right."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D87-single-a",
+      "card": {
+        "id": "D87",
+        "title": "Keep the Peace",
+        "instruction": "Hide a truth because you believe the relationship cannot survive one more conflict.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "e99830ff66b24e43718c3ffad2051e2b6bd47dae680fd04d651809678ffc42f5",
+      "dialogueHash": "7e66738a39ad6ca871b9e57704b2f247229b0856179f4607226958d79a0edf40",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Leave that letter under my plate. We only just managed breakfast together again."
+        },
+        {
+          "speaker": "B",
+          "text": "Has your brother cancelled paying us back?"
+        },
+        {
+          "speaker": "A",
+          "text": "I've covered this month's rent. We don't need another suitcase in the hall."
+        },
+        {
+          "speaker": "B",
+          "text": "Then let me open it."
+        },
+        {
+          "speaker": "A",
+          "text": "Please finish breakfast with me first. Yesterday you finally unpacked; I can't risk you packing again."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D87-single-b",
+        "dialogueHash": "0cbf0c83e061f8d29f60b9b814c9b355fd618b642abe1edebae5f9dc96a09774",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The missing savings are a banking complication. Please keep our anniversary reservation."
+          },
+          {
+            "speaker": "B",
+            "text": "Did you lend your sister money again?"
+          },
+          {
+            "speaker": "A",
+            "text": "It's coming back Friday. Last time we discussed her, you asked for separate bedrooms."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll ring the bank, then."
+          },
+          {
+            "speaker": "A",
+            "text": "Let me handle the complication. I'd like us still sharing a table when the money arrives."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D87-single-b",
+      "card": {
+        "id": "D87",
+        "title": "Keep the Peace",
+        "instruction": "Hide a truth because you believe the relationship cannot survive one more conflict.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "a0b500dd855d0e74ec08fe29e6529e7b79b188f07239eabe973713895992ebc2",
+      "dialogueHash": "0cbf0c83e061f8d29f60b9b814c9b355fd618b642abe1edebae5f9dc96a09774",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The missing savings are a banking complication. Please keep our anniversary reservation."
+        },
+        {
+          "speaker": "B",
+          "text": "Did you lend your sister money again?"
+        },
+        {
+          "speaker": "A",
+          "text": "It's coming back Friday. Last time we discussed her, you asked for separate bedrooms."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll ring the bank, then."
+        },
+        {
+          "speaker": "A",
+          "text": "Let me handle the complication. I'd like us still sharing a table when the money arrives."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D87-single-a",
+        "dialogueHash": "7e66738a39ad6ca871b9e57704b2f247229b0856179f4607226958d79a0edf40",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Leave that letter under my plate. We only just managed breakfast together again."
+          },
+          {
+            "speaker": "B",
+            "text": "Has your brother cancelled paying us back?"
+          },
+          {
+            "speaker": "A",
+            "text": "I've covered this month's rent. We don't need another suitcase in the hall."
+          },
+          {
+            "speaker": "B",
+            "text": "Then let me open it."
+          },
+          {
+            "speaker": "A",
+            "text": "Please finish breakfast with me first. Yesterday you finally unpacked; I can't risk you packing again."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D88-single-a",
+      "card": {
+        "id": "D88",
+        "title": "Say You Missed Me",
+        "instruction": "Get someone to admit longing, jealousy, hurt, or attachment before you reveal your own.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "3827fafa1f376a5c2ecfad5cbe4cf48a8ce42aa22eaa64749b953a7933cfc719",
+      "dialogueHash": "c2ce900a986b004106d6da8a2aced94b3a472124c26d3f9f2325a566bced37a1",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Now I'm back, can you admit the flat was too quiet without me?"
+        },
+        {
+          "speaker": "B",
+          "text": "Only if you tell me whether you missed me."
+        },
+        {
+          "speaker": "A",
+          "text": "You first. Did you ever hear a key and hope it was mine?"
+        },
+        {
+          "speaker": "B",
+          "text": "Every evening. There, your turn."
+        },
+        {
+          "speaker": "A",
+          "text": "I rang our landline just to hear your voice. Could you say 'hello' without asking about the gas bill?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D88-single-b",
+        "dialogueHash": "3315194b9b66959b162dbedf251622dbbe32ab9b6cbc736812a1a58740967e5f",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You're selling the sofa but keeping my chair?"
+          },
+          {
+            "speaker": "B",
+            "text": "Nobody offered anything for it. Have you brought its cushion back?"
+          },
+          {
+            "speaker": "A",
+            "text": "If someone offered twenty pounds, would you still keep it?"
+          },
+          {
+            "speaker": "B",
+            "text": "Yes. I like pretending you're about to sit down."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I'll admit I sleep with the cushion. Could you take the price sticker off before I sit?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D88-single-b",
+      "card": {
+        "id": "D88",
+        "title": "Say You Missed Me",
+        "instruction": "Get someone to admit longing, jealousy, hurt, or attachment before you reveal your own.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "86a360641f34f6b0e1b3ab58c26bedaede47379000e8865eb49bc386932e0140",
+      "dialogueHash": "3315194b9b66959b162dbedf251622dbbe32ab9b6cbc736812a1a58740967e5f",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You're selling the sofa but keeping my chair?"
+        },
+        {
+          "speaker": "B",
+          "text": "Nobody offered anything for it. Have you brought its cushion back?"
+        },
+        {
+          "speaker": "A",
+          "text": "If someone offered twenty pounds, would you still keep it?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes. I like pretending you're about to sit down."
+        },
+        {
+          "speaker": "A",
+          "text": "Then I'll admit I sleep with the cushion. Could you take the price sticker off before I sit?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D88-single-a",
+        "dialogueHash": "c2ce900a986b004106d6da8a2aced94b3a472124c26d3f9f2325a566bced37a1",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Now I'm back, can you admit the flat was too quiet without me?"
+          },
+          {
+            "speaker": "B",
+            "text": "Only if you tell me whether you missed me."
+          },
+          {
+            "speaker": "A",
+            "text": "You first. Did you ever hear a key and hope it was mine?"
+          },
+          {
+            "speaker": "B",
+            "text": "Every evening. There, your turn."
+          },
+          {
+            "speaker": "A",
+            "text": "I rang our landline just to hear your voice. Could you say 'hello' without asking about the gas bill?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D89-single-a",
+      "card": {
+        "id": "D89",
+        "title": "We Needed the Break",
+        "instruction": "Frame a rupture, absence, or failed connection as a healthy decision that ultimately helped.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "ca320529136bd5c93dfd11f2a37118716dc88d5628b47e5ec7f29750e26e11b6",
+      "dialogueHash": "0316684048c3f749f8797c3e2575947419fee335cd95ed87035c1459f94116cb",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Coffee on Sunday? That year apart was good for us."
+        },
+        {
+          "speaker": "B",
+          "text": "You used to insist we spend every Saturday together."
+        },
+        {
+          "speaker": "A",
+          "text": "Exactly. We needed the break to stop treating a free afternoon as proof of love."
+        },
+        {
+          "speaker": "B",
+          "text": "I've booked pottery this Sunday too."
+        },
+        {
+          "speaker": "A",
+          "text": "Then coffee Monday. Look at us: a whole extra day apart without an emergency meeting."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D89-single-b",
+        "dialogueHash": "857464e7d7b0350e9a2d23ba03ddb00f6c61054cccff14682199b297e9efccd0",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Just us for lunch. That disastrous family reunion did us a favour."
+          },
+          {
+            "speaker": "B",
+            "text": "We shouted over each other until everyone left."
+          },
+          {
+            "speaker": "A",
+            "text": "Exactly. We learned an audience makes us compete."
+          },
+          {
+            "speaker": "B",
+            "text": "The waiter just asked if we're expecting twelve more."
+          },
+          {
+            "speaker": "A",
+            "text": "Tell him two. We're already applying what we learned; nobody has to storm out to get a turn."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D89-single-b",
+      "card": {
+        "id": "D89",
+        "title": "We Needed the Break",
+        "instruction": "Frame a rupture, absence, or failed connection as a healthy decision that ultimately helped.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "5551f62fa1483b2ad192ea0e521e9d43d4409bf43391ad4283d862c37fceafd6",
+      "dialogueHash": "857464e7d7b0350e9a2d23ba03ddb00f6c61054cccff14682199b297e9efccd0",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Just us for lunch. That disastrous family reunion did us a favour."
+        },
+        {
+          "speaker": "B",
+          "text": "We shouted over each other until everyone left."
+        },
+        {
+          "speaker": "A",
+          "text": "Exactly. We learned an audience makes us compete."
+        },
+        {
+          "speaker": "B",
+          "text": "The waiter just asked if we're expecting twelve more."
+        },
+        {
+          "speaker": "A",
+          "text": "Tell him two. We're already applying what we learned; nobody has to storm out to get a turn."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D89-single-a",
+        "dialogueHash": "0316684048c3f749f8797c3e2575947419fee335cd95ed87035c1459f94116cb",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Coffee on Sunday? That year apart was good for us."
+          },
+          {
+            "speaker": "B",
+            "text": "You used to insist we spend every Saturday together."
+          },
+          {
+            "speaker": "A",
+            "text": "Exactly. We needed the break to stop treating a free afternoon as proof of love."
+          },
+          {
+            "speaker": "B",
+            "text": "I've booked pottery this Sunday too."
+          },
+          {
+            "speaker": "A",
+            "text": "Then coffee Monday. Look at us: a whole extra day apart without an emergency meeting."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D90-single-a",
+      "card": {
+        "id": "D90",
+        "title": "I Know How to Fix Us",
+        "instruction": "Perform confidence about repairing the relationship while improvising every step.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "8ccdbdb1d9a8a14e93aa1d3fcc7d5fb43e7789329360af94e1f642974c572a89",
+      "dialogueHash": "bdc94d74de198c72f541bba3d807b6927c6f20f09a961a21366508979269fb3c",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "We can fix last night's shouting. Tea first, then one honest sentence each."
+        },
+        {
+          "speaker": "B",
+          "text": "I don't want tea. I want you to listen without interrupting."
+        },
+        {
+          "speaker": "A",
+          "text": "Of course. Listening stage. I'll write down anything I want to interrupt with."
+        },
+        {
+          "speaker": "B",
+          "text": "You'll be writing instead of listening."
+        },
+        {
+          "speaker": "A",
+          "text": "Then you keep the pen. Supervised listening. If I interrupt, write it down; we'll start with that."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D90-single-b",
+        "dialogueHash": "9e3a214d67f6a2a6271e4b2cfb10112cb8ba5b161737c4b6fbe749fa028b5257",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "We're on stage two of reconciliation. Choose a biscuit."
+          },
+          {
+            "speaker": "B",
+            "text": "What was stage one?"
+          },
+          {
+            "speaker": "A",
+            "text": "Getting you to ask about the process."
+          },
+          {
+            "speaker": "B",
+            "text": "You haven't got a process."
+          },
+          {
+            "speaker": "A",
+            "text": "Good honesty. Stage two is already working."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D90-single-b",
+      "card": {
+        "id": "D90",
+        "title": "I Know How to Fix Us",
+        "instruction": "Perform confidence about repairing the relationship while improvising every step.",
+        "contentVersion": "0.11.0"
+      },
+      "sourceRecordHash": "1f21ffc40f5750f14a86a71ab4f287b905ad3c7efa1acf54c1a892bce11b791e",
+      "dialogueHash": "9e3a214d67f6a2a6271e4b2cfb10112cb8ba5b161737c4b6fbe749fa028b5257",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "We're on stage two of reconciliation. Choose a biscuit."
+        },
+        {
+          "speaker": "B",
+          "text": "What was stage one?"
+        },
+        {
+          "speaker": "A",
+          "text": "Getting you to ask about the process."
+        },
+        {
+          "speaker": "B",
+          "text": "You haven't got a process."
+        },
+        {
+          "speaker": "A",
+          "text": "Good honesty. Stage two is already working."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D90-single-a",
+        "dialogueHash": "bdc94d74de198c72f541bba3d807b6927c6f20f09a961a21366508979269fb3c",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "We can fix last night's shouting. Tea first, then one honest sentence each."
+          },
+          {
+            "speaker": "B",
+            "text": "I don't want tea. I want you to listen without interrupting."
+          },
+          {
+            "speaker": "A",
+            "text": "Of course. Listening stage. I'll write down anything I want to interrupt with."
+          },
+          {
+            "speaker": "B",
+            "text": "You'll be writing instead of listening."
+          },
+          {
+            "speaker": "A",
+            "text": "Then you keep the pen. Supervised listening. If I interrupt, write it down; we'll start with that."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

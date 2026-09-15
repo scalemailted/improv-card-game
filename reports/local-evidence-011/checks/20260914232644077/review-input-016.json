@@ -1,0 +1,1564 @@
+{
+  "at": "2026-09-14T23:26:44.082Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S103-single-a",
+      "card": {
+        "id": "S103",
+        "title": "When We Still Believed",
+        "instruction": "Use a shared earlier hope as your emotional home base, returning to it whenever the present feels uncertain or disappointing.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "99421db0a8deea2600cf6b54edfafd471d19930d7c01d36da403a3f5ff911b16",
+      "dialogueHash": "b0ebb227b3944fa1fee1a931ac90854035043920fa5e8dfb012d54708adc111d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "This napkin still says we'll open a bookshop by the sea."
+        },
+        {
+          "speaker": "B",
+          "text": "We drew that before rent became real."
+        },
+        {
+          "speaker": "A",
+          "text": "We also drew two chairs by the window. Could we put ours together tonight?"
+        },
+        {
+          "speaker": "B",
+          "text": "In the flat? I need to work at that window."
+        },
+        {
+          "speaker": "A",
+          "text": "After work, then. I'll bring our books. Ten minutes pretending we're in our seaside bookshop before we look at the bills."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S103-single-b",
+        "dialogueHash": "2c6e606e9b6f1cb6e4808407013ebdba0fd0adeee8725da56eccf8bf1260cf88",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Remember when this jar was for our anniversary at the seaside?"
+          },
+          {
+            "speaker": "B",
+            "text": "We spent the money on the boiler."
+          },
+          {
+            "speaker": "A",
+            "text": "We promised we'd swim together. The boiler didn't cancel that."
+          },
+          {
+            "speaker": "B",
+            "text": "That's in three weeks. We can afford the bus to the reservoir."
+          },
+          {
+            "speaker": "A",
+            "text": "Then put the bus fare in the jar. I'll pack the towels; we're still coming home with wet hair."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S103-single-b",
+      "card": {
+        "id": "S103",
+        "title": "When We Still Believed",
+        "instruction": "Use a shared earlier hope as your emotional home base, returning to it whenever the present feels uncertain or disappointing.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "acc3afd48a694a2b8c4ecf19d7481a2a628cd43a53967b09b60e5c00ee063ccf",
+      "dialogueHash": "2c6e606e9b6f1cb6e4808407013ebdba0fd0adeee8725da56eccf8bf1260cf88",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Remember when this jar was for our anniversary at the seaside?"
+        },
+        {
+          "speaker": "B",
+          "text": "We spent the money on the boiler."
+        },
+        {
+          "speaker": "A",
+          "text": "We promised we'd swim together. The boiler didn't cancel that."
+        },
+        {
+          "speaker": "B",
+          "text": "That's in three weeks. We can afford the bus to the reservoir."
+        },
+        {
+          "speaker": "A",
+          "text": "Then put the bus fare in the jar. I'll pack the towels; we're still coming home with wet hair."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S103-single-a",
+        "dialogueHash": "b0ebb227b3944fa1fee1a931ac90854035043920fa5e8dfb012d54708adc111d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "This napkin still says we'll open a bookshop by the sea."
+          },
+          {
+            "speaker": "B",
+            "text": "We drew that before rent became real."
+          },
+          {
+            "speaker": "A",
+            "text": "We also drew two chairs by the window. Could we put ours together tonight?"
+          },
+          {
+            "speaker": "B",
+            "text": "In the flat? I need to work at that window."
+          },
+          {
+            "speaker": "A",
+            "text": "After work, then. I'll bring our books. Ten minutes pretending we're in our seaside bookshop before we look at the bills."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S104-single-a",
+      "card": {
+        "id": "S104",
+        "title": "You Saw Me Through",
+        "instruction": "Treat past comfort you received as an enduring bond that should now earn honesty, patience, and reciprocal support.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "131d656a1b6bb15bea0b48a71356907d5632486dd8852415017c9dfb90f03ec0",
+      "dialogueHash": "9b209008fa86b3e474903e8504e436f590c13ef4a4e43de52f807daf8c3abee5",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You lent me this scarf when my marriage ended. Tell me honestly: should I answer his message?"
+        },
+        {
+          "speaker": "B",
+          "text": "I can't decide that for you."
+        },
+        {
+          "speaker": "A",
+          "text": "You didn't decide anything that night. You stayed. Tell me what worries you."
+        },
+        {
+          "speaker": "B",
+          "text": "That you'll spend tonight waiting for another message."
+        },
+        {
+          "speaker": "A",
+          "text": "Then stay while I leave it unanswered. I'll make us tea this time."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S104-single-b",
+        "dialogueHash": "ec3e82fe76c766ede2639efff6e7a4636b94abcbb146b9c2deeb8b70cac213d4",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You sat with me when my shop closed. Will you help at the new stall? An honest answer."
+          },
+          {
+            "speaker": "B",
+            "text": "I don't know. My own shop's struggling."
+          },
+          {
+            "speaker": "A",
+            "text": "Then forget the stall. You let me talk for hours when mine went."
+          },
+          {
+            "speaker": "B",
+            "text": "Could we sit without talking first?"
+          },
+          {
+            "speaker": "A",
+            "text": "Of course. You gave me three silent evenings. I've kept this one free."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S104-single-b",
+      "card": {
+        "id": "S104",
+        "title": "You Saw Me Through",
+        "instruction": "Treat past comfort you received as an enduring bond that should now earn honesty, patience, and reciprocal support.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "e88dd5f4d39e1211bb88d37f11355178110213ae94ff04a2eba31627ad035d41",
+      "dialogueHash": "ec3e82fe76c766ede2639efff6e7a4636b94abcbb146b9c2deeb8b70cac213d4",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You sat with me when my shop closed. Will you help at the new stall? An honest answer."
+        },
+        {
+          "speaker": "B",
+          "text": "I don't know. My own shop's struggling."
+        },
+        {
+          "speaker": "A",
+          "text": "Then forget the stall. You let me talk for hours when mine went."
+        },
+        {
+          "speaker": "B",
+          "text": "Could we sit without talking first?"
+        },
+        {
+          "speaker": "A",
+          "text": "Of course. You gave me three silent evenings. I've kept this one free."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S104-single-a",
+        "dialogueHash": "9b209008fa86b3e474903e8504e436f590c13ef4a4e43de52f807daf8c3abee5",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You lent me this scarf when my marriage ended. Tell me honestly: should I answer his message?"
+          },
+          {
+            "speaker": "B",
+            "text": "I can't decide that for you."
+          },
+          {
+            "speaker": "A",
+            "text": "You didn't decide anything that night. You stayed. Tell me what worries you."
+          },
+          {
+            "speaker": "B",
+            "text": "That you'll spend tonight waiting for another message."
+          },
+          {
+            "speaker": "A",
+            "text": "Then stay while I leave it unanswered. I'll make us tea this time."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S105-single-a",
+      "card": {
+        "id": "S105",
+        "title": "The Strong One",
+        "instruction": "Be the strong one: steady everyone else, minimize your own needs, and resist any attempt to care for you.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "5c3091186dfcb90832f4c2591800505f71597bd06c549e71af82659cdb3a9bcf",
+      "dialogueHash": "b4d25ab313c63caf760a588a0beab87be4a5e704804a2699dbadc74c1ad9d9d1",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've made everyone tea. I'll call Dad's friends about the funeral."
+        },
+        {
+          "speaker": "B",
+          "text": "Your hands are shaking."
+        },
+        {
+          "speaker": "A",
+          "text": "Then it's good the calls don't require trays."
+        },
+        {
+          "speaker": "B",
+          "text": "Sit down. I'll call. Just give me their numbers."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll dial for you. Peter will cry; I'll stay on the other phone in case you need rescuing."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S105-single-b",
+        "dialogueHash": "ecc5f830c7bae49e04552473b56c06f808ff0c4c66b32d22943f5b8d5f319d61",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Take the last tissue. Mum's funeral was hard on you. I've got my sleeve."
+          },
+          {
+            "speaker": "B",
+            "text": "You're crying into both sleeves."
+          },
+          {
+            "speaker": "A",
+            "text": "They're washable. How's your daughter holding up?"
+          },
+          {
+            "speaker": "B",
+            "text": "She's asleep. Come here. You can cry on my shoulder."
+          },
+          {
+            "speaker": "A",
+            "text": "You'll need that shoulder when she wakes. I'll get you a dry cardigan."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S105-single-b",
+      "card": {
+        "id": "S105",
+        "title": "The Strong One",
+        "instruction": "Be the strong one: steady everyone else, minimize your own needs, and resist any attempt to care for you.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "8592833bff0685fc5a99bb56b32549df7b7a66f4b1043bab66c7e138b73c67e6",
+      "dialogueHash": "ecc5f830c7bae49e04552473b56c06f808ff0c4c66b32d22943f5b8d5f319d61",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Take the last tissue. Mum's funeral was hard on you. I've got my sleeve."
+        },
+        {
+          "speaker": "B",
+          "text": "You're crying into both sleeves."
+        },
+        {
+          "speaker": "A",
+          "text": "They're washable. How's your daughter holding up?"
+        },
+        {
+          "speaker": "B",
+          "text": "She's asleep. Come here. You can cry on my shoulder."
+        },
+        {
+          "speaker": "A",
+          "text": "You'll need that shoulder when she wakes. I'll get you a dry cardigan."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S105-single-a",
+        "dialogueHash": "b4d25ab313c63caf760a588a0beab87be4a5e704804a2699dbadc74c1ad9d9d1",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've made everyone tea. I'll call Dad's friends about the funeral."
+          },
+          {
+            "speaker": "B",
+            "text": "Your hands are shaking."
+          },
+          {
+            "speaker": "A",
+            "text": "Then it's good the calls don't require trays."
+          },
+          {
+            "speaker": "B",
+            "text": "Sit down. I'll call. Just give me their numbers."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll dial for you. Peter will cry; I'll stay on the other phone in case you need rescuing."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S106-single-a",
+      "card": {
+        "id": "S106",
+        "title": "Whose Pain Counts?",
+        "instruction": "Treat every disappointment as something to measure against what you have endured, competing for whose feelings deserve greater weight.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "8f1ed0e33d925ca335bcdf7ad24a6c8395c43f0284f0ffd302b10ddba72f2222",
+      "dialogueHash": "b0c337224e6a85875bd9ae9ecbab2a39a7d224d0f9e60c6d13b30b8dd36e1c64",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "One publisher turned you down? I've kept fourteen rejection letters."
+        },
+        {
+          "speaker": "B",
+          "text": "Can you put them away? I came here for a hug."
+        },
+        {
+          "speaker": "A",
+          "text": "Of course. Though fourteen rejections ought to qualify me for more than one."
+        },
+        {
+          "speaker": "B",
+          "text": "Come here. We can both have the same hug."
+        },
+        {
+          "speaker": "A",
+          "text": "Then make it a long one. One rejection's worth for you, and thirteen more before you let go of me."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S106-single-b",
+        "dialogueHash": "94b62a3b464d9c2f932a91a553d3cf23dd49a288d99720276ac5eca42dc15f6b",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You've been unemployed a week. I've been out a year. This coffee should really be for me."
+          },
+          {
+            "speaker": "B",
+            "text": "I bought it so you'd listen to what happened."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll listen. Mine will take longer; there's twelve months to cover."
+          },
+          {
+            "speaker": "B",
+            "text": "Ten minutes each. I've got an interview."
+          },
+          {
+            "speaker": "A",
+            "text": "An interview already? Then give me fifteen. You've started recovering."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S106-single-b",
+      "card": {
+        "id": "S106",
+        "title": "Whose Pain Counts?",
+        "instruction": "Treat every disappointment as something to measure against what you have endured, competing for whose feelings deserve greater weight.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "dfcb01f6b4d4ff87a6e83545e636bf419a4423562efbffe3dc8c9721bd2c0e28",
+      "dialogueHash": "94b62a3b464d9c2f932a91a553d3cf23dd49a288d99720276ac5eca42dc15f6b",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You've been unemployed a week. I've been out a year. This coffee should really be for me."
+        },
+        {
+          "speaker": "B",
+          "text": "I bought it so you'd listen to what happened."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll listen. Mine will take longer; there's twelve months to cover."
+        },
+        {
+          "speaker": "B",
+          "text": "Ten minutes each. I've got an interview."
+        },
+        {
+          "speaker": "A",
+          "text": "An interview already? Then give me fifteen. You've started recovering."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S106-single-a",
+        "dialogueHash": "b0c337224e6a85875bd9ae9ecbab2a39a7d224d0f9e60c6d13b30b8dd36e1c64",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "One publisher turned you down? I've kept fourteen rejection letters."
+          },
+          {
+            "speaker": "B",
+            "text": "Can you put them away? I came here for a hug."
+          },
+          {
+            "speaker": "A",
+            "text": "Of course. Though fourteen rejections ought to qualify me for more than one."
+          },
+          {
+            "speaker": "B",
+            "text": "Come here. We can both have the same hug."
+          },
+          {
+            "speaker": "A",
+            "text": "Then make it a long one. One rejection's worth for you, and thirteen more before you let go of me."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S107-single-a",
+      "card": {
+        "id": "S107",
+        "title": "My Safe Person",
+        "instruction": "Use one person’s reactions as your measure of safety, then downplay how much their reassurance changes you.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "99f3e70a66bf6000b9b7522d49af9eb8a19bc4fb325a8ddf8eb8afdc96f538bb",
+      "dialogueHash": "a7f40f6eea3f5f145167a86d0cf974cb8be9167e87cac84cd6ea4d23378491dc",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Stay seated while I open this letter. Your face looks reassuring."
+        },
+        {
+          "speaker": "B",
+          "text": "You can open it without me."
+        },
+        {
+          "speaker": "A",
+          "text": "Certainly. Keep looking like that while I prove it."
+        },
+        {
+          "speaker": "B",
+          "text": "I don't know what's inside."
+        },
+        {
+          "speaker": "A",
+          "text": "You weren't supposed to let your face hear that."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S107-single-b",
+        "dialogueHash": "5c0225bbf7d08300c52afd6b0541ec5c3976d6d253eb434d94bf6f522660f6eb",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Sit beside me while I open the audition result. You've stopped smiling."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm squinting at the screen. You haven't opened it."
+          },
+          {
+            "speaker": "A",
+            "text": "Right. So nothing's wrong. Move closer; the text is small."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm smiling now. Whatever it says, we'll get lunch."
+          },
+          {
+            "speaker": "A",
+            "text": "There. I can click it now. This chair was the problem."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S107-single-b",
+      "card": {
+        "id": "S107",
+        "title": "My Safe Person",
+        "instruction": "Use one person’s reactions as your measure of safety, then downplay how much their reassurance changes you.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "0c0e85d00d5c1f2354297e6f2ed5b6d047c8f3a8e91a5922c58c116db55f6af5",
+      "dialogueHash": "5c0225bbf7d08300c52afd6b0541ec5c3976d6d253eb434d94bf6f522660f6eb",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Sit beside me while I open the audition result. You've stopped smiling."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm squinting at the screen. You haven't opened it."
+        },
+        {
+          "speaker": "A",
+          "text": "Right. So nothing's wrong. Move closer; the text is small."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm smiling now. Whatever it says, we'll get lunch."
+        },
+        {
+          "speaker": "A",
+          "text": "There. I can click it now. This chair was the problem."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S107-single-a",
+        "dialogueHash": "a7f40f6eea3f5f145167a86d0cf974cb8be9167e87cac84cd6ea4d23378491dc",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Stay seated while I open this letter. Your face looks reassuring."
+          },
+          {
+            "speaker": "B",
+            "text": "You can open it without me."
+          },
+          {
+            "speaker": "A",
+            "text": "Certainly. Keep looking like that while I prove it."
+          },
+          {
+            "speaker": "B",
+            "text": "I don't know what's inside."
+          },
+          {
+            "speaker": "A",
+            "text": "You weren't supposed to let your face hear that."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S108-single-a",
+      "card": {
+        "id": "S108",
+        "title": "Careful Around the Scar",
+        "instruction": "Treat one harmless detail as the trigger for an old hurt. Become overly careful, helpful, or controlled whenever it returns.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "4d2e1be04a2b475ae3dba250f6c7735dadf996db80766c0eb974652d92c2a4b6",
+      "dialogueHash": "e1cf8b5ba7ac903666d532ebe8ae7c1cd606a2c176a2fd737f3046ad60740386",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Could we use any cups except the blue ones today?"
+        },
+        {
+          "speaker": "B",
+          "text": "What happened with a blue cup?"
+        },
+        {
+          "speaker": "A",
+          "text": "Nothing breakfast needs to revisit."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll put it away."
+        },
+        {
+          "speaker": "A",
+          "text": "Behind the plates, please. The handle's still looking this way."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S108-single-b",
+        "dialogueHash": "a508475a08d4fab64a5dbdd3bfa9e8b534d3a0e09c6f1e5c267de4279404c0a0",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Could you move that yellow envelope away from my birthday cake?"
+          },
+          {
+            "speaker": "B",
+            "text": "It's a voucher from your sister."
+          },
+          {
+            "speaker": "A",
+            "text": "Lovely. My eviction notice came in yellow. I'll find her a nicer envelope."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll take the voucher out and bin this one."
+          },
+          {
+            "speaker": "A",
+            "text": "Thank you. Under the coffee grounds, please. I'll hold the lid."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S108-single-b",
+      "card": {
+        "id": "S108",
+        "title": "Careful Around the Scar",
+        "instruction": "Treat one harmless detail as the trigger for an old hurt. Become overly careful, helpful, or controlled whenever it returns.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "fb4436075638c5a1b80df3029c2621adb373624e34e80871041b8efc7c0f42d6",
+      "dialogueHash": "a508475a08d4fab64a5dbdd3bfa9e8b534d3a0e09c6f1e5c267de4279404c0a0",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Could you move that yellow envelope away from my birthday cake?"
+        },
+        {
+          "speaker": "B",
+          "text": "It's a voucher from your sister."
+        },
+        {
+          "speaker": "A",
+          "text": "Lovely. My eviction notice came in yellow. I'll find her a nicer envelope."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll take the voucher out and bin this one."
+        },
+        {
+          "speaker": "A",
+          "text": "Thank you. Under the coffee grounds, please. I'll hold the lid."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S108-single-a",
+        "dialogueHash": "e1cf8b5ba7ac903666d532ebe8ae7c1cd606a2c176a2fd737f3046ad60740386",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Could we use any cups except the blue ones today?"
+          },
+          {
+            "speaker": "B",
+            "text": "What happened with a blue cup?"
+          },
+          {
+            "speaker": "A",
+            "text": "Nothing breakfast needs to revisit."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll put it away."
+          },
+          {
+            "speaker": "A",
+            "text": "Behind the plates, please. The handle's still looking this way."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S109-single-a",
+      "card": {
+        "id": "S109",
+        "title": "Braver Than Me",
+        "instruction": "Treat another person’s emotional courage as both inspiring and unfair, resenting how exposed or hesitant it makes you feel.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "1069d2d7d84a8faf278293d277d948a4e67052191bfc611a2b892042bf763e89",
+      "dialogueHash": "b1bcac8bc9b9e51862ce10a33536395a7503ef160504d4db9e5b8da00fd2bd70",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You opened your rejection letter straight away. Must be nice, being brave on demand."
+        },
+        {
+          "speaker": "B",
+          "text": "I was scared too."
+        },
+        {
+          "speaker": "A",
+          "text": "You hid it very efficiently."
+        },
+        {
+          "speaker": "B",
+          "text": "Take your time with yours. I'll leave you alone to open it."
+        },
+        {
+          "speaker": "A",
+          "text": "No, stay. I'm opening it now. You shouldn't get to be brave and considerate while I'm still finding the flap."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S109-single-b",
+        "dialogueHash": "79ff4c28dabca70eda1ddabe22a620dc6b13746a76015c4c53a7643424933b28",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You told them how you felt without rehearsing. I resent how impressive that was."
+          },
+          {
+            "speaker": "B",
+            "text": "I stumbled over half of it."
+          },
+          {
+            "speaker": "A",
+            "text": "Even your stumbling looked courageous."
+          },
+          {
+            "speaker": "B",
+            "text": "Want to practise with me?"
+          },
+          {
+            "speaker": "A",
+            "text": "Yes. Don't make practising look easy too."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S109-single-b",
+      "card": {
+        "id": "S109",
+        "title": "Braver Than Me",
+        "instruction": "Treat another person’s emotional courage as both inspiring and unfair, resenting how exposed or hesitant it makes you feel.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "1b688c142511e0b17ad590b995d01ff46c56157112b92055d18ee61c85e1b9ab",
+      "dialogueHash": "79ff4c28dabca70eda1ddabe22a620dc6b13746a76015c4c53a7643424933b28",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You told them how you felt without rehearsing. I resent how impressive that was."
+        },
+        {
+          "speaker": "B",
+          "text": "I stumbled over half of it."
+        },
+        {
+          "speaker": "A",
+          "text": "Even your stumbling looked courageous."
+        },
+        {
+          "speaker": "B",
+          "text": "Want to practise with me?"
+        },
+        {
+          "speaker": "A",
+          "text": "Yes. Don't make practising look easy too."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S109-single-a",
+        "dialogueHash": "b1bcac8bc9b9e51862ce10a33536395a7503ef160504d4db9e5b8da00fd2bd70",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You opened your rejection letter straight away. Must be nice, being brave on demand."
+          },
+          {
+            "speaker": "B",
+            "text": "I was scared too."
+          },
+          {
+            "speaker": "A",
+            "text": "You hid it very efficiently."
+          },
+          {
+            "speaker": "B",
+            "text": "Take your time with yours. I'll leave you alone to open it."
+          },
+          {
+            "speaker": "A",
+            "text": "No, stay. I'm opening it now. You shouldn't get to be brave and considerate while I'm still finding the flap."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S110-single-a",
+      "card": {
+        "id": "S110",
+        "title": "Before I Knew Better",
+        "instruction": "Perform the more hopeful version of yourself from before disappointment taught you caution, and defend that version when reality intrudes.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "b98aa5ef5be2ba95157d051010407836f8bd8ee0b34589923b0cdc51e65119f6",
+      "dialogueHash": "6ab214a1fafa80733fd6052a4c792632bfe830a990b989c6ce2bd750b26c67d9",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've written when our shop opens. Before the first one failed, I never wrote if."
+        },
+        {
+          "speaker": "B",
+          "text": "We can't afford another empty opening party."
+        },
+        {
+          "speaker": "A",
+          "text": "Then I'll bake. I used to assume people would come for my cake."
+        },
+        {
+          "speaker": "B",
+          "text": "Six portions. That's our budget."
+        },
+        {
+          "speaker": "A",
+          "text": "Six generous portions. I'm writing 'come early' on the invitations."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S110-single-b",
+        "dialogueHash": "d4e9309505d6f2e58ce7b48a41680a3a20b0f7e7f9445de0045561df9f25928a",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'm entering the talent show. At seventeen I invited everyone before I'd even chosen a song."
+          },
+          {
+            "speaker": "B",
+            "text": "Then you lost and wouldn't sing for a year."
+          },
+          {
+            "speaker": "A",
+            "text": "I'm borrowing the version before that. Will you come?"
+          },
+          {
+            "speaker": "B",
+            "text": "Yes. Shall we sit at the back so you can slip out?"
+          },
+          {
+            "speaker": "A",
+            "text": "Front row, please. Seventeen-year-old me expected to spot her friends from the stage."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S110-single-b",
+      "card": {
+        "id": "S110",
+        "title": "Before I Knew Better",
+        "instruction": "Perform the more hopeful version of yourself from before disappointment taught you caution, and defend that version when reality intrudes.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "70c1749bcb84b9d2e439fa9894a2f0a18163e5ba6316e27a3c08395aea525b43",
+      "dialogueHash": "d4e9309505d6f2e58ce7b48a41680a3a20b0f7e7f9445de0045561df9f25928a",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'm entering the talent show. At seventeen I invited everyone before I'd even chosen a song."
+        },
+        {
+          "speaker": "B",
+          "text": "Then you lost and wouldn't sing for a year."
+        },
+        {
+          "speaker": "A",
+          "text": "I'm borrowing the version before that. Will you come?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes. Shall we sit at the back so you can slip out?"
+        },
+        {
+          "speaker": "A",
+          "text": "Front row, please. Seventeen-year-old me expected to spot her friends from the stage."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S110-single-a",
+        "dialogueHash": "6ab214a1fafa80733fd6052a4c792632bfe830a990b989c6ce2bd750b26c67d9",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've written when our shop opens. Before the first one failed, I never wrote if."
+          },
+          {
+            "speaker": "B",
+            "text": "We can't afford another empty opening party."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I'll bake. I used to assume people would come for my cake."
+          },
+          {
+            "speaker": "B",
+            "text": "Six portions. That's our budget."
+          },
+          {
+            "speaker": "A",
+            "text": "Six generous portions. I'm writing 'come early' on the invitations."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S111-single-a",
+      "card": {
+        "id": "S111",
+        "title": "Waiting for the Bad News",
+        "instruction": "Treat pauses, changes, and uncertainty as signs that rejection or loss is approaching, then prepare yourself before it arrives.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "a41977277e58a6f20a2315ddcba95819ad8aa8dca6335af0111013bcd2d26738",
+      "dialogueHash": "71459d30982b719e672c200783f57f4e2b8ad41b2e80b219ecfc850edafbcd07",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You moved our meeting to Friday. I've brought a box for my desk."
+        },
+        {
+          "speaker": "B",
+          "text": "It's a promotion. You'll manage the new branch."
+        },
+        {
+          "speaker": "A",
+          "text": "Away from everyone? I'll pack before they have to say goodbye."
+        },
+        {
+          "speaker": "B",
+          "text": "You can still come to Friday drinks."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll bring my own glass. Better get used to being a visitor before they stop inviting me."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S111-single-b",
+        "dialogueHash": "c539f93e4a572ce109a5d7f177f6463830c70fd898c0680989693b9656f17ee2",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You paused when I asked about Saturday. Should I collect my things from your flat?"
+          },
+          {
+            "speaker": "B",
+            "text": "I was swallowing tea. I'm taking you to dinner."
+          },
+          {
+            "speaker": "A",
+            "text": "Somewhere public. I'll bring tissues that fit in my sleeve."
+          },
+          {
+            "speaker": "B",
+            "text": "It's at home. I'm cooking your favourite."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I'll bring containers. You shouldn't have my leftovers haunting the fridge afterwards."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S111-single-b",
+      "card": {
+        "id": "S111",
+        "title": "Waiting for the Bad News",
+        "instruction": "Treat pauses, changes, and uncertainty as signs that rejection or loss is approaching, then prepare yourself before it arrives.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "64b33bce3d47db871ba4b9343fe2e81c1efd4e25b1f4e45d27832ae2fbabfb6b",
+      "dialogueHash": "c539f93e4a572ce109a5d7f177f6463830c70fd898c0680989693b9656f17ee2",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You paused when I asked about Saturday. Should I collect my things from your flat?"
+        },
+        {
+          "speaker": "B",
+          "text": "I was swallowing tea. I'm taking you to dinner."
+        },
+        {
+          "speaker": "A",
+          "text": "Somewhere public. I'll bring tissues that fit in my sleeve."
+        },
+        {
+          "speaker": "B",
+          "text": "It's at home. I'm cooking your favourite."
+        },
+        {
+          "speaker": "A",
+          "text": "Then I'll bring containers. You shouldn't have my leftovers haunting the fridge afterwards."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S111-single-a",
+        "dialogueHash": "71459d30982b719e672c200783f57f4e2b8ad41b2e80b219ecfc850edafbcd07",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You moved our meeting to Friday. I've brought a box for my desk."
+          },
+          {
+            "speaker": "B",
+            "text": "It's a promotion. You'll manage the new branch."
+          },
+          {
+            "speaker": "A",
+            "text": "Away from everyone? I'll pack before they have to say goodbye."
+          },
+          {
+            "speaker": "B",
+            "text": "You can still come to Friday drinks."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll bring my own glass. Better get used to being a visitor before they stop inviting me."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S112-single-a",
+      "card": {
+        "id": "S112",
+        "title": "Let Me Carry It",
+        "instruction": "Take responsibility for managing everyone’s emotional burden, deciding what they should know, feel, and face.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "6a61d6a93ad4dcd3874fcfdb4353327c8f19d44742c260f2ee75c3f0992d8773",
+      "dialogueHash": "0357ecb43d3f5d730a9b2834f8f29c3ad8b57f04aea17f1a8e7eb02f08109fcf",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Give me the college letter. Your brother's rejection was enough for one morning."
+        },
+        {
+          "speaker": "B",
+          "text": "Mum, it's my application."
+        },
+        {
+          "speaker": "A",
+          "text": "And if it's another rejection, I'll tell you after you've eaten."
+        },
+        {
+          "speaker": "B",
+          "text": "I can see 'Congratulations' through the window."
+        },
+        {
+          "speaker": "A",
+          "text": "Then after your brother's eaten. I'll give you a nod when it's safe to look pleased."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S112-single-b",
+        "dialogueHash": "8024babdf29dbc722f2addf47c7313cbf42b30f2643d265f490bd2fb2844920b",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll take the condolence calls about Dad. You haven't slept."
+          },
+          {
+            "speaker": "B",
+            "text": "I want to speak to Aunt June."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll check whether she's crying before I put her through."
+          },
+          {
+            "speaker": "B",
+            "text": "She wants me to comfort her."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I'll comfort her first. You can have each other once I've got you both steady."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S112-single-b",
+      "card": {
+        "id": "S112",
+        "title": "Let Me Carry It",
+        "instruction": "Take responsibility for managing everyone’s emotional burden, deciding what they should know, feel, and face.",
+        "contentVersion": "0.12.0"
+      },
+      "sourceRecordHash": "c7be10411441207bfce5f46f9ee8a71cd46bd4062e43a0569cf0e9f905b8f94d",
+      "dialogueHash": "8024babdf29dbc722f2addf47c7313cbf42b30f2643d265f490bd2fb2844920b",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll take the condolence calls about Dad. You haven't slept."
+        },
+        {
+          "speaker": "B",
+          "text": "I want to speak to Aunt June."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll check whether she's crying before I put her through."
+        },
+        {
+          "speaker": "B",
+          "text": "She wants me to comfort her."
+        },
+        {
+          "speaker": "A",
+          "text": "Then I'll comfort her first. You can have each other once I've got you both steady."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S112-single-a",
+        "dialogueHash": "0357ecb43d3f5d730a9b2834f8f29c3ad8b57f04aea17f1a8e7eb02f08109fcf",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Give me the college letter. Your brother's rejection was enough for one morning."
+          },
+          {
+            "speaker": "B",
+            "text": "Mum, it's my application."
+          },
+          {
+            "speaker": "A",
+            "text": "And if it's another rejection, I'll tell you after you've eaten."
+          },
+          {
+            "speaker": "B",
+            "text": "I can see 'Congratulations' through the window."
+          },
+          {
+            "speaker": "A",
+            "text": "Then after your brother's eaten. I'll give you a nod when it's safe to look pleased."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

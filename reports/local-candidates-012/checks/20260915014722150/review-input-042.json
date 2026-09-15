@@ -1,0 +1,904 @@
+{
+  "at": "2026-09-15T01:47:22.156Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "D126-single-b",
+      "card": {
+        "id": "D126",
+        "title": "What Really Happened?",
+        "instruction": "Find the truth by comparing details, repeating questions, and testing which parts of the story remain consistent.",
+        "contentVersion": "0.13.0"
+      },
+      "sourceRecordHash": "cfaf27bbe6fa106849993c709fcde4882734feaab938276245f76a378641a1c7",
+      "dialogueHash": "fc329782e7ed7563b1247c5d09903924108314bc5a412a823e689b0697db386e",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "We're claiming for your lost bag. At four, were you on the bus or buying coffee? You've told me both."
+        },
+        {
+          "speaker": "B",
+          "text": "Coffee. Can we finish the form?"
+        },
+        {
+          "speaker": "A",
+          "text": "Was the bag beside you when you paid?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes. The driver waited while I ran in."
+        },
+        {
+          "speaker": "A",
+          "text": "So both fit. Tell me the boarding bit again: did the bag come back out with you?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D126-single-a",
+        "dialogueHash": "23da13e82ba0e3413f334d1ed952f20152e3e3f308c03870174504d5b44811ba",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "For this missing-parcel form: was it a bag or a box? You've said both."
+          },
+          {
+            "speaker": "B",
+            "text": "A bag, I think. I carried it by the handles."
+          },
+          {
+            "speaker": "A",
+            "text": "Describe the handles. Were they attached to fabric or cardboard?"
+          },
+          {
+            "speaker": "B",
+            "text": "Cardboard. It had a rigid lid, too."
+          },
+          {
+            "speaker": "A",
+            "text": "Then why 'bag'? Tell me again what you carried. Was the box inside something?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D127-single-a",
+      "card": {
+        "id": "D127",
+        "title": "Back My Version",
+        "instruction": "Recruit someone to remember, repeat, and defend one shared version of events when questions begin.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "e2d936e39feaad176847519997721e8f88ae393d0ca0570284a1c5cd77074cfe",
+      "dialogueHash": "f985d84cfa23b397b25fde7034a6907a4bf34b1693bf44f70086e884711d9990",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The allotment committee's asking about the greenhouse. We arrived after the glass broke, remember?"
+        },
+        {
+          "speaker": "B",
+          "text": "I saw your wheelbarrow hit it."
+        },
+        {
+          "speaker": "A",
+          "text": "We came inside afterwards. Can we both tell them we were clearing up?"
+        },
+        {
+          "speaker": "B",
+          "text": "I'll say that. I won't lie about the wheelbarrow."
+        },
+        {
+          "speaker": "A",
+          "text": "Then start with clearing up. If they ask about the barrow, we moved it away afterwards. Let's both use that order."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D127-single-b",
+        "dialogueHash": "dc96ccea72f122ddeefcd44095ebfe15f853ebd0fa57eb75c0697e755ce49270",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The caretaker's asking about our extra key. Tell him we were checking the cake cupboard's lock."
+          },
+          {
+            "speaker": "B",
+            "text": "We did check it. Then we ate the cake."
+          },
+          {
+            "speaker": "A",
+            "text": "Start with the part we both remember as maintenance."
+          },
+          {
+            "speaker": "B",
+            "text": "He'll ask why there are crumbs in the lock."
+          },
+          {
+            "speaker": "A",
+            "text": "Then we both remember a blockage. Say that back so we're consistent."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D127-single-b",
+      "card": {
+        "id": "D127",
+        "title": "Back My Version",
+        "instruction": "Recruit someone to remember, repeat, and defend one shared version of events when questions begin.",
+        "contentVersion": "0.18.0"
+      },
+      "sourceRecordHash": "c1e89528400f66d6e64a54eb8bf81881dbc2012a38705d3d173518f2e2ca524e",
+      "dialogueHash": "dc96ccea72f122ddeefcd44095ebfe15f853ebd0fa57eb75c0697e755ce49270",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The caretaker's asking about our extra key. Tell him we were checking the cake cupboard's lock."
+        },
+        {
+          "speaker": "B",
+          "text": "We did check it. Then we ate the cake."
+        },
+        {
+          "speaker": "A",
+          "text": "Start with the part we both remember as maintenance."
+        },
+        {
+          "speaker": "B",
+          "text": "He'll ask why there are crumbs in the lock."
+        },
+        {
+          "speaker": "A",
+          "text": "Then we both remember a blockage. Say that back so we're consistent."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D127-single-a",
+        "dialogueHash": "f985d84cfa23b397b25fde7034a6907a4bf34b1693bf44f70086e884711d9990",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The allotment committee's asking about the greenhouse. We arrived after the glass broke, remember?"
+          },
+          {
+            "speaker": "B",
+            "text": "I saw your wheelbarrow hit it."
+          },
+          {
+            "speaker": "A",
+            "text": "We came inside afterwards. Can we both tell them we were clearing up?"
+          },
+          {
+            "speaker": "B",
+            "text": "I'll say that. I won't lie about the wheelbarrow."
+          },
+          {
+            "speaker": "A",
+            "text": "Then start with clearing up. If they ask about the barrow, we moved it away afterwards. Let's both use that order."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D128-single-a",
+      "card": {
+        "id": "D128",
+        "title": "Test the Story First",
+        "instruction": "Get someone else to repeat the explanation, ask the dangerous question, or test the risky step before you commit.",
+        "contentVersion": "0.13.0"
+      },
+      "sourceRecordHash": "f3cf39df3b22dd21f6b91e250171cf4cdd81e2c5af211d99a1a5f6ac0a681e2d",
+      "dialogueHash": "374e540248ead31b45a294e346153111ef31efccc03ba36ffc08382635812ab2",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Try this banking-delay explanation for the missing raffle money on the chair before I sign it."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm not defending your accounts again."
+        },
+        {
+          "speaker": "A",
+          "text": "Just test the explanation. If she accepts it, I'll sign and handle every question."
+        },
+        {
+          "speaker": "B",
+          "text": "She'll recognise your handwriting before I speak."
+        },
+        {
+          "speaker": "A",
+          "text": "Leave the paper. Ask whether a banking delay sounds plausible. If she asks whose money, come back before answering."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D128-single-b",
+        "dialogueHash": "f0a607871543ba88e456468d5529d720ea869d593f4f8b05c4318d8ae81b9fae",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Ask Dad why our holiday account's empty. I'll wait by the kitchen door."
+          },
+          {
+            "speaker": "B",
+            "text": "Come with me. You booked the flights."
+          },
+          {
+            "speaker": "A",
+            "text": "Ask whether he's angry about the price first. If he isn't, I'll come in."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll ask, but I'm calling you in if he wants the flight receipt."
+          },
+          {
+            "speaker": "A",
+            "text": "Ask whether he wants the total or the breakdown before you call me. The seat upgrades need a longer explanation."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D128-single-b",
+      "card": {
+        "id": "D128",
+        "title": "Test the Story First",
+        "instruction": "Get someone else to repeat the explanation, ask the dangerous question, or test the risky step before you commit.",
+        "contentVersion": "0.13.0"
+      },
+      "sourceRecordHash": "46cdce2878b71d069bcdc80111854edb19f1065527d8cccff51487f84f7f5f10",
+      "dialogueHash": "f0a607871543ba88e456468d5529d720ea869d593f4f8b05c4318d8ae81b9fae",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Ask Dad why our holiday account's empty. I'll wait by the kitchen door."
+        },
+        {
+          "speaker": "B",
+          "text": "Come with me. You booked the flights."
+        },
+        {
+          "speaker": "A",
+          "text": "Ask whether he's angry about the price first. If he isn't, I'll come in."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll ask, but I'm calling you in if he wants the flight receipt."
+        },
+        {
+          "speaker": "A",
+          "text": "Ask whether he wants the total or the breakdown before you call me. The seat upgrades need a longer explanation."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D128-single-a",
+        "dialogueHash": "374e540248ead31b45a294e346153111ef31efccc03ba36ffc08382635812ab2",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Try this banking-delay explanation for the missing raffle money on the chair before I sign it."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm not defending your accounts again."
+          },
+          {
+            "speaker": "A",
+            "text": "Just test the explanation. If she accepts it, I'll sign and handle every question."
+          },
+          {
+            "speaker": "B",
+            "text": "She'll recognise your handwriting before I speak."
+          },
+          {
+            "speaker": "A",
+            "text": "Leave the paper. Ask whether a banking delay sounds plausible. If she asks whose money, come back before answering."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D129-single-a",
+      "card": {
+        "id": "D129",
+        "title": "Credit for the Discovery",
+        "instruction": "Make someone acknowledge that you found the clue, saw through the deception, or designed the successful scheme.",
+        "contentVersion": "0.13.0"
+      },
+      "sourceRecordHash": "45365a3fd79c0da69a090920c401dd9ac7ff0014a821da193b3312cd43ae6337",
+      "dialogueHash": "ef3c116b6e704b11238a9df84317fccf75079c44f32f1361725c5643be8497f2",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before calling it our discovery, mention who found the receipt."
+        },
+        {
+          "speaker": "B",
+          "text": "We all solved the problem."
+        },
+        {
+          "speaker": "A",
+          "text": "Yes. After my receipt introduced it properly."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll put your name in the report."
+        },
+        {
+          "speaker": "A",
+          "text": "Beside found, not beside attended."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D129-single-b",
+        "dialogueHash": "ace7771c2a03bf45d5d0483d0533b6b91950e375fcbd19ea14c21b717f13f632",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "On tomorrow's house tour, will you say my diagram revealed the hidden doorway?"
+          },
+          {
+            "speaker": "B",
+            "text": "Mum spent all week stripping that wall."
+          },
+          {
+            "speaker": "A",
+            "text": "Credit her work. Then say who spotted the door before we stripped it."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll let you open it for the visitors."
+          },
+          {
+            "speaker": "A",
+            "text": "Lovely. Introduce me as the person who found it, or they'll think I'm holding it for them."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D129-single-b",
+      "card": {
+        "id": "D129",
+        "title": "Credit for the Discovery",
+        "instruction": "Make someone acknowledge that you found the clue, saw through the deception, or designed the successful scheme.",
+        "contentVersion": "0.13.0"
+      },
+      "sourceRecordHash": "6fbb91d4e05b6ee2632f9aca05c5b809a9465a2cc1c115ba38ae7f9fa4a4460e",
+      "dialogueHash": "ace7771c2a03bf45d5d0483d0533b6b91950e375fcbd19ea14c21b717f13f632",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "On tomorrow's house tour, will you say my diagram revealed the hidden doorway?"
+        },
+        {
+          "speaker": "B",
+          "text": "Mum spent all week stripping that wall."
+        },
+        {
+          "speaker": "A",
+          "text": "Credit her work. Then say who spotted the door before we stripped it."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll let you open it for the visitors."
+        },
+        {
+          "speaker": "A",
+          "text": "Lovely. Introduce me as the person who found it, or they'll think I'm holding it for them."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D129-single-a",
+        "dialogueHash": "ef3c116b6e704b11238a9df84317fccf75079c44f32f1361725c5643be8497f2",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before calling it our discovery, mention who found the receipt."
+          },
+          {
+            "speaker": "B",
+            "text": "We all solved the problem."
+          },
+          {
+            "speaker": "A",
+            "text": "Yes. After my receipt introduced it properly."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll put your name in the report."
+          },
+          {
+            "speaker": "A",
+            "text": "Beside found, not beside attended."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D130-single-a",
+      "card": {
+        "id": "D130",
+        "title": "Truth or Loyalty",
+        "instruction": "Make someone choose between protecting the relationship and answering a dangerous question honestly.",
+        "contentVersion": "0.13.0"
+      },
+      "sourceRecordHash": "989cbe28163e1865d444360e144af73f731dc13dbd5774fd0077b9176540d465",
+      "dialogueHash": "80d8e93d484469112f6489f13e32e027ab612cdc4551e003fcc8375790942bcb",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Mum's asking who broke her vase. Will you tell her, or keep your promise to your little brother?"
+        },
+        {
+          "speaker": "B",
+          "text": "She's blaming the cleaner. I can't let that happen."
+        },
+        {
+          "speaker": "A",
+          "text": "Clear the cleaner. Do you have to name me?"
+        },
+        {
+          "speaker": "B",
+          "text": "She's asked me directly whether you did it."
+        },
+        {
+          "speaker": "A",
+          "text": "Then are you answering her, or keeping the promise I trusted you with?"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D130-single-b",
+        "dialogueHash": "b96200a2e3019c8d3c0480b5991a3bf7661917f89ccd6bdaff95cff985aade49",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The client asked who wrote our pitch. Will you tell her I copied it, or protect our partnership?"
+          },
+          {
+            "speaker": "B",
+            "text": "We can withdraw it together."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll withdraw it. Will you keep my name out?"
+          },
+          {
+            "speaker": "B",
+            "text": "She asked whether you copied it. Withdrawing doesn't answer her."
+          },
+          {
+            "speaker": "A",
+            "text": "Then before you say yes, decide whether we're still partners when she puts down the phone."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "D130-single-b",
+      "card": {
+        "id": "D130",
+        "title": "Truth or Loyalty",
+        "instruction": "Make someone choose between protecting the relationship and answering a dangerous question honestly.",
+        "contentVersion": "0.13.0"
+      },
+      "sourceRecordHash": "88fd9fee372b96996046bed0d63b95233df65f3bdb24a0a7813f6b14118393aa",
+      "dialogueHash": "b96200a2e3019c8d3c0480b5991a3bf7661917f89ccd6bdaff95cff985aade49",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The client asked who wrote our pitch. Will you tell her I copied it, or protect our partnership?"
+        },
+        {
+          "speaker": "B",
+          "text": "We can withdraw it together."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll withdraw it. Will you keep my name out?"
+        },
+        {
+          "speaker": "B",
+          "text": "She asked whether you copied it. Withdrawing doesn't answer her."
+        },
+        {
+          "speaker": "A",
+          "text": "Then before you say yes, decide whether we're still partners when she puts down the phone."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "D130-single-a",
+        "dialogueHash": "80d8e93d484469112f6489f13e32e027ab612cdc4551e003fcc8375790942bcb",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Mum's asking who broke her vase. Will you tell her, or keep your promise to your little brother?"
+          },
+          {
+            "speaker": "B",
+            "text": "She's blaming the cleaner. I can't let that happen."
+          },
+          {
+            "speaker": "A",
+            "text": "Clear the cleaner. Do you have to name me?"
+          },
+          {
+            "speaker": "B",
+            "text": "She's asked me directly whether you did it."
+          },
+          {
+            "speaker": "A",
+            "text": "Then are you answering her, or keeping the promise I trusted you with?"
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

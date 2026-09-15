@@ -17,7 +17,7 @@
   }
   const id=remaining.shift();return {example:records.find(r=>r.id===id),history:{remaining,last:id},count:records.length,index:ids.indexOf(id)+1};
  }
- function create({manifest,storage,workerFactory=()=>new Worker(new URL('./library-worker.js?v=0.25.0',document.currentScript?.src||new URL('./examples/',document.baseURI)).href),random=Math.random}={}){
+ function create({manifest,storage,workerFactory=()=>new Worker(new URL('./library-worker.js?v=0.26.0-preview.7-4f93b65af4d6',document.currentScript?.src||new URL('./examples/',document.baseURI)).href),random=Math.random}={}){
   let worker=null,serial=0;const pending=new Map();let cycles={};
   try{const parsed=JSON.parse(storage?.getItem(CYCLE_KEY)||'{}');if(parsed&&typeof parsed==='object'&&!Array.isArray(parsed))cycles=parsed;}catch{}
   function spawn(){if(worker)return;worker=workerFactory();worker.onmessage=({data})=>{const p=pending.get(data.id);if(!p)return;if(data.type==='progress'){p.onProgress?.(data);return;}pending.delete(data.id);clearTimeout(p.timer);data.type==='result'?p.resolve(data.result):p.reject(Object.assign(Error(data.error),{name:data.code||'Error'}));};

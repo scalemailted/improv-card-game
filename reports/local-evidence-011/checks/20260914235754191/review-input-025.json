@@ -1,0 +1,604 @@
+{
+  "at": "2026-09-14T23:57:54.195Z",
+  "executionStatus": "not-executed",
+  "instructions": "Assess only the listed primary candidates in a fresh invocation. Read their dialogue first, then the exact card; use the alternate only to judge meaningful differentiation. Supply six criterion ratings with specific turn evidence and full coach-2.0 findings. Do not invent missing backstory or assume earlier approval. No writer scores or rationales are supplied. Report real reservations and failures. Totals are calculated in code.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S194-single-a",
+      "card": {
+        "id": "S194",
+        "title": "One Loss from Irrelevance",
+        "instruction": "Project confidence while treating every setback as proof your standing could vanish. Regain control by raising the importance of the next result.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "de03b8a9ccb1525812d28d984ba3e2cd51642efc55a015574220f22ef8c77a67",
+      "dialogueHash": "7e3c2c50ca1b01bc070b1407c8ad5ead1e4d1e976c059e0cbf9c9185e647ccef",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "That lost chess game was practice. This rematch will establish my reputation."
+        },
+        {
+          "speaker": "B",
+          "text": "We've played here for thirty years."
+        },
+        {
+          "speaker": "A",
+          "text": "Exactly. I won't have thirty years remembered for one dropped rook."
+        },
+        {
+          "speaker": "B",
+          "text": "I just came for tea."
+        },
+        {
+          "speaker": "A",
+          "text": "Then I'll make it. One excellent pot and you'll remember why you keep coming back."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S194-single-b",
+        "dialogueHash": "5897be90b6418517f82f523c0f126c1838e845727bd2c620ff32c3f15f72a9ef",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Ignore my terrible karaoke score. The next song determines whether I still have it."
+          },
+          {
+            "speaker": "B",
+            "text": "Nobody doubted you. It's just closing time."
+          },
+          {
+            "speaker": "A",
+            "text": "Excellent. One flawless song will keep it that way."
+          },
+          {
+            "speaker": "B",
+            "text": "I unplugged it. I'm closing; your friends have gone."
+          },
+          {
+            "speaker": "A",
+            "text": "Perfect. One unaccompanied chorus will decide whether you book me for next Friday or forget my name."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S194-single-b",
+      "card": {
+        "id": "S194",
+        "title": "One Loss from Irrelevance",
+        "instruction": "Project confidence while treating every setback as proof your standing could vanish. Regain control by raising the importance of the next result.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "2e92eb1e7821d8b1cc866c5fbe9aabde9a076755448038ef08aab32a263b602d",
+      "dialogueHash": "5897be90b6418517f82f523c0f126c1838e845727bd2c620ff32c3f15f72a9ef",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Ignore my terrible karaoke score. The next song determines whether I still have it."
+        },
+        {
+          "speaker": "B",
+          "text": "Nobody doubted you. It's just closing time."
+        },
+        {
+          "speaker": "A",
+          "text": "Excellent. One flawless song will keep it that way."
+        },
+        {
+          "speaker": "B",
+          "text": "I unplugged it. I'm closing; your friends have gone."
+        },
+        {
+          "speaker": "A",
+          "text": "Perfect. One unaccompanied chorus will decide whether you book me for next Friday or forget my name."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S194-single-a",
+        "dialogueHash": "7e3c2c50ca1b01bc070b1407c8ad5ead1e4d1e976c059e0cbf9c9185e647ccef",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "That lost chess game was practice. This rematch will establish my reputation."
+          },
+          {
+            "speaker": "B",
+            "text": "We've played here for thirty years."
+          },
+          {
+            "speaker": "A",
+            "text": "Exactly. I won't have thirty years remembered for one dropped rook."
+          },
+          {
+            "speaker": "B",
+            "text": "I just came for tea."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I'll make it. One excellent pot and you'll remember why you keep coming back."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S195-single-a",
+      "card": {
+        "id": "S195",
+        "title": "Official Scorer",
+        "instruction": "Treat standards, margins, and fine distinctions as your craft. Correct how success is measured before allowing anyone to claim it.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "3b14f2a0cc5eabd7f66394948b2146f7b4d176b7c1b83cbc87ae933ea73da6b0",
+      "dialogueHash": "3168797110c19e925c7a65cf4cbd69f2e0dbd3db4d4766b7f6579061b6c3ca5f",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You can't claim longest scarf until we've measured without stretching it."
+        },
+        {
+          "speaker": "B",
+          "text": "It's obviously longer than yours."
+        },
+        {
+          "speaker": "A",
+          "text": "Then you won't mind laying both flat against this tape."
+        },
+        {
+          "speaker": "B",
+          "text": "Yours only reaches because of the tassels."
+        },
+        {
+          "speaker": "A",
+          "text": "Quite right. Separate fringe measurements. I may have to surrender overall length and retain decorative reach."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S195-single-b",
+        "dialogueHash": "5bb1c474e6a25b6e20083a9cc009a05f55c9f64e7c7b53843ec7943ce500d72f",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before I certify your cake as tallest, does that sixty centimetres include the stand?"
+          },
+          {
+            "speaker": "B",
+            "text": "Ten centimetres of stand. But I've already ordered the banner."
+          },
+          {
+            "speaker": "A",
+            "text": "Then the cake is fifty. The banner can't count the furniture."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll put a ten-centimetre sponge underneath. Can you hold this end?"
+          },
+          {
+            "speaker": "A",
+            "text": "Gladly. Then we'll measure again under its own weight. I'm not certifying the height of my hands."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S195-single-b",
+      "card": {
+        "id": "S195",
+        "title": "Official Scorer",
+        "instruction": "Treat standards, margins, and fine distinctions as your craft. Correct how success is measured before allowing anyone to claim it.",
+        "contentVersion": "0.16.0"
+      },
+      "sourceRecordHash": "670199e575965125f911e9343ad4a084356033fecc4e83701454b9aca750f757",
+      "dialogueHash": "5bb1c474e6a25b6e20083a9cc009a05f55c9f64e7c7b53843ec7943ce500d72f",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before I certify your cake as tallest, does that sixty centimetres include the stand?"
+        },
+        {
+          "speaker": "B",
+          "text": "Ten centimetres of stand. But I've already ordered the banner."
+        },
+        {
+          "speaker": "A",
+          "text": "Then the cake is fifty. The banner can't count the furniture."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll put a ten-centimetre sponge underneath. Can you hold this end?"
+        },
+        {
+          "speaker": "A",
+          "text": "Gladly. Then we'll measure again under its own weight. I'm not certifying the height of my hands."
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S195-single-a",
+        "dialogueHash": "3168797110c19e925c7a65cf4cbd69f2e0dbd3db4d4766b7f6579061b6c3ca5f",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You can't claim longest scarf until we've measured without stretching it."
+          },
+          {
+            "speaker": "B",
+            "text": "It's obviously longer than yours."
+          },
+          {
+            "speaker": "A",
+            "text": "Then you won't mind laying both flat against this tape."
+          },
+          {
+            "speaker": "B",
+            "text": "Yours only reaches because of the tassels."
+          },
+          {
+            "speaker": "A",
+            "text": "Quite right. Separate fringe measurements. I may have to surrender overall length and retain decorative reach."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

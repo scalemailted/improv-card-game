@@ -1,0 +1,1443 @@
+{
+  "executionStatus": "not-executed",
+  "instructions": "Fresh review of each primary candidate: read dialogue first, then exact cards. Assess all six unchanged criteria and all coach-2.0 gates with turn-specific evidence. For pairs, show whether the Stance changes HOW A pursues the Drive in one interaction. Do not invent missing backstory or assume prior approval. Use the alternate only to assess meaningful differentiation. Report actual reservations. No writer scores or improvement claims are supplied.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S01+D147-a",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D147",
+          "type": "drive",
+          "title": "Apologize to Reality",
+          "instruction": "Get someone to apologize to an object, rule, place, or idea for violating its impossible expectations.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "333daebbd89fcc41ae5de4656a5c8ecb1b286d85a166648965baba6b9be3f927",
+      "dialogueHash": "e775a455bc4c79074fbcf1cc14414185d527f09be4b32d117e84e138830b9975",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll decide how we handle this. Before your caretaker interview, apologise to that chair. You sat without its consent."
+        },
+        {
+          "speaker": "B",
+          "text": "It can't say yes."
+        },
+        {
+          "speaker": "A",
+          "text": "You can question the details after my decision. Then tell it you're sorry for taking silence as permission."
+        },
+        {
+          "speaker": "B",
+          "text": "Sorry, chair. I'll stand for the interview."
+        },
+        {
+          "speaker": "A",
+          "text": "Then apologise for making it redundant. You're applying to care for furniture, and your first solution is to leave it without a job."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D147-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "4ebf8ffc9ea4dabb855bed590a4e47724e30392042d7a9185b47503e837e9df8",
+          "dialogueHash": "652ec16cff44f04197deb45bd7b687e9c64423afc865933a6424dfe8cfef2060",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D147-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "b90188d7400c7ca8d9e2d12f8ea562023072b051457214766ea04b7cfd2091f5",
+          "dialogueHash": "6985a48af473eb144b325c12eba104d67c3f09162dcf0c0cb968db22097d09e0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D147-b",
+        "dialogueHash": "8ba501e7b21050b2a392e474455178d7fe8d915227ceb23d9e91ef682b82be7f",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll decide how we handle this. Welcome to our inn. Please apologise to the doorway for knocking after you arrived."
+          },
+          {
+            "speaker": "B",
+            "text": "I had to get here to knock."
+          },
+          {
+            "speaker": "A",
+            "text": "You can question the details after my decision. It expected advance notice from your knuckles. Explain that you're sorry."
+          },
+          {
+            "speaker": "B",
+            "text": "Sorry, doorway. I did phone ahead."
+          },
+          {
+            "speaker": "A",
+            "text": "Then apologise for telling the telephone first. It had to hear about its own visitor secondhand."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D147-b",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D147",
+          "type": "drive",
+          "title": "Apologize to Reality",
+          "instruction": "Get someone to apologize to an object, rule, place, or idea for violating its impossible expectations.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "fe2406a8a1f4fbdbee09028c08730e27e73b5310c05fcf6128be5d59b1ea260d",
+      "dialogueHash": "8ba501e7b21050b2a392e474455178d7fe8d915227ceb23d9e91ef682b82be7f",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll decide how we handle this. Welcome to our inn. Please apologise to the doorway for knocking after you arrived."
+        },
+        {
+          "speaker": "B",
+          "text": "I had to get here to knock."
+        },
+        {
+          "speaker": "A",
+          "text": "You can question the details after my decision. It expected advance notice from your knuckles. Explain that you're sorry."
+        },
+        {
+          "speaker": "B",
+          "text": "Sorry, doorway. I did phone ahead."
+        },
+        {
+          "speaker": "A",
+          "text": "Then apologise for telling the telephone first. It had to hear about its own visitor secondhand."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D147-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "4ebf8ffc9ea4dabb855bed590a4e47724e30392042d7a9185b47503e837e9df8",
+          "dialogueHash": "652ec16cff44f04197deb45bd7b687e9c64423afc865933a6424dfe8cfef2060",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D147-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "b90188d7400c7ca8d9e2d12f8ea562023072b051457214766ea04b7cfd2091f5",
+          "dialogueHash": "6985a48af473eb144b325c12eba104d67c3f09162dcf0c0cb968db22097d09e0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D147-a",
+        "dialogueHash": "e775a455bc4c79074fbcf1cc14414185d527f09be4b32d117e84e138830b9975",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll decide how we handle this. Before your caretaker interview, apologise to that chair. You sat without its consent."
+          },
+          {
+            "speaker": "B",
+            "text": "It can't say yes."
+          },
+          {
+            "speaker": "A",
+            "text": "You can question the details after my decision. Then tell it you're sorry for taking silence as permission."
+          },
+          {
+            "speaker": "B",
+            "text": "Sorry, chair. I'll stand for the interview."
+          },
+          {
+            "speaker": "A",
+            "text": "Then apologise for making it redundant. You're applying to care for furniture, and your first solution is to leave it without a job."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D148-a",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D148",
+          "type": "drive",
+          "title": "Approve the Impossible Plan",
+          "instruction": "Get someone to formally approve a plan whose logic becomes stranger each time it is explained.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "c4fefba03779c52d39c657402eb315f74c8c71fc6e01a0488b62a964dceebb56",
+      "dialogueHash": "bfa236e397a4a6d2da89d75cb40bd58c7930b3639b6834d91b7b3e1057928949",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll decide how we handle this. As venue manager, will you approve storing Tuesday's rain in this cup? The wedding needs a dry lawn."
+        },
+        {
+          "speaker": "B",
+          "text": "Tuesday hasn't happened."
+        },
+        {
+          "speaker": "A",
+          "text": "You can question the details after my decision. Exactly. We'll catch the rain before it learns how to fall."
+        },
+        {
+          "speaker": "B",
+          "text": "I have another wedding Wednesday. What if it leaks overnight?"
+        },
+        {
+          "speaker": "A",
+          "text": "I'll seal it with Thursday's drought. Sign for two dry weddings; I'll invoice the drought after it happens."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D148-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "ef500d33ec14c1ebbc4448b4d3c4c9db8dadb6f971338b9f5689fb8a0d1242c7",
+          "dialogueHash": "44684480b40ba8d9f4ecc07da93bfd6c4fe038f8ea4adad83a77a888e061c26e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D148-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "99627fb50500d62c870d2e02588285fbf08da48f717d07b86f83f92f716395bf",
+          "dialogueHash": "f3734c74e179c23b6722ebf138cb7bc6cdadc5d76ddf8f0010892f1ed821c698",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D148-b",
+        "dialogueHash": "a9fe3f8f9193289c2a53b5658bf865e428b2657729fa887d89d3bd838e2a4538",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll decide how we handle this. Inspector, please approve our invisible landing. The museum opens Monday."
+          },
+          {
+            "speaker": "B",
+            "text": "There's nothing supporting it."
+          },
+          {
+            "speaker": "A",
+            "text": "You can question the details after my decision. We've budgeted enough confidence to hold twenty visitors."
+          },
+          {
+            "speaker": "B",
+            "text": "How am I supposed to certify confidence?"
+          },
+          {
+            "speaker": "A",
+            "text": "Sign under 'load-bearing.' Your professional certainty will support the inspectors too, so we won't need scaffolding for the next inspection."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D148-b",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D148",
+          "type": "drive",
+          "title": "Approve the Impossible Plan",
+          "instruction": "Get someone to formally approve a plan whose logic becomes stranger each time it is explained.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "d70c270d561fc2d65e24b01323e2113fba89ac5ca1d4f855e277b77d8f2c7c8a",
+      "dialogueHash": "a9fe3f8f9193289c2a53b5658bf865e428b2657729fa887d89d3bd838e2a4538",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll decide how we handle this. Inspector, please approve our invisible landing. The museum opens Monday."
+        },
+        {
+          "speaker": "B",
+          "text": "There's nothing supporting it."
+        },
+        {
+          "speaker": "A",
+          "text": "You can question the details after my decision. We've budgeted enough confidence to hold twenty visitors."
+        },
+        {
+          "speaker": "B",
+          "text": "How am I supposed to certify confidence?"
+        },
+        {
+          "speaker": "A",
+          "text": "Sign under 'load-bearing.' Your professional certainty will support the inspectors too, so we won't need scaffolding for the next inspection."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D148-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "ef500d33ec14c1ebbc4448b4d3c4c9db8dadb6f971338b9f5689fb8a0d1242c7",
+          "dialogueHash": "44684480b40ba8d9f4ecc07da93bfd6c4fe038f8ea4adad83a77a888e061c26e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D148-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "99627fb50500d62c870d2e02588285fbf08da48f717d07b86f83f92f716395bf",
+          "dialogueHash": "f3734c74e179c23b6722ebf138cb7bc6cdadc5d76ddf8f0010892f1ed821c698",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D148-a",
+        "dialogueHash": "bfa236e397a4a6d2da89d75cb40bd58c7930b3639b6834d91b7b3e1057928949",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll decide how we handle this. As venue manager, will you approve storing Tuesday's rain in this cup? The wedding needs a dry lawn."
+          },
+          {
+            "speaker": "B",
+            "text": "Tuesday hasn't happened."
+          },
+          {
+            "speaker": "A",
+            "text": "You can question the details after my decision. Exactly. We'll catch the rain before it learns how to fall."
+          },
+          {
+            "speaker": "B",
+            "text": "I have another wedding Wednesday. What if it leaks overnight?"
+          },
+          {
+            "speaker": "A",
+            "text": "I'll seal it with Thursday's drought. Sign for two dry weddings; I'll invoice the drought after it happens."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D149-a",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D149",
+          "type": "drive",
+          "title": "You Handle the Impossible Part",
+          "instruction": "Make someone accept responsibility for the one part of the plan that cannot reasonably be done.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "3a82bf8c633b21f5fecbc803d46c4e308dc541a8a872edbdafa2dbeef48f372b",
+      "dialogueHash": "8bac563632f48eb905215785a057d266eed9f59c02fe5a301e37e5337a2f35b0",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll decide how we handle this. For tonight's courtyard film, you fold the moon; I'll switch off the lamps."
+        },
+        {
+          "speaker": "B",
+          "text": "How do I fold the moon?"
+        },
+        {
+          "speaker": "A",
+          "text": "You can question the details after my decision. Start with the crescent. It already has a crease."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll take the lamps. You handle the sky."
+        },
+        {
+          "speaker": "A",
+          "text": "I'll do lamps, chairs and projector if you'll own the moon. Can I tell the audience we're waiting for your blackout?"
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D149-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "bcf345698f6861b8617faf235a1f812bf798467ead738642e9f09b5e455d3fa4",
+          "dialogueHash": "8673d97e770fc9650cfe33660ae4c69664bca00a0102e3052316d07a7e395f95",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D149-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a383d92b109f5d68bce99799223e9d956d2e73e55aff5acbca6b2f3687893b5d",
+          "dialogueHash": "df998078fd54facf55e17b73efd8b82314eb790cda555e693bd15aeda5fd453e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D149-b",
+        "dialogueHash": "ca0e074d50a57c5d139982570cbb9fe76dc6e5e9d9b68dc2a4c7eafdb91f0641",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've approved our museum's lost-time exhibit. You put yesterday's missing hour in this jar; I'll write the label."
+          },
+          {
+            "speaker": "B",
+            "text": "Time doesn't fit in jars. Can I just write the label instead?"
+          },
+          {
+            "speaker": "A",
+            "text": "Reassignment denied. Use the wide-necked jar. I won't have you blaming the equipment."
+          },
+          {
+            "speaker": "B",
+            "text": "Then what do I tell the curator when she sees it's empty?"
+          },
+          {
+            "speaker": "A",
+            "text": "Tell her you're still responsible for the contents. I'll label it 'One hour, awaiting delivery' and put your name beside 'supplier'."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D150-a",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D150",
+          "type": "drive",
+          "title": "What Rule Did I Miss?",
+          "instruction": "Find the hidden rule that makes the strange situation consistent, practical, or at least survivable.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "5076db624725dcbbf8ef3b526ebc6295cf6f139f45281abdd76516b4ec875fad",
+      "dialogueHash": "b0272049b2eb0ac231e7cb1dd4a34c72ab419961c002b4a3aaf942463861eb95",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll decide how we handle this. What keeps the soup inside that upside-down bowl?"
+        },
+        {
+          "speaker": "B",
+          "text": "I've never seen it either."
+        },
+        {
+          "speaker": "A",
+          "text": "You can question the details after my decision. Then turn the spoon over. Let's test which thing owns down."
+        },
+        {
+          "speaker": "B",
+          "text": "The soup followed the spoon."
+        },
+        {
+          "speaker": "A",
+          "text": "Then the spoon sets the direction. Point it into the sink before we try putting it down."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D150-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "e71b1c42c395a20d2bb5bb855ff9cc6f95172a5288762051c7f50e7ec0cba890",
+          "dialogueHash": "e7edd44a5cba16a6b2c60009b74b34efa9182810314b55f2b6e953122e293b05",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D150-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "96931c1842d66d201d720b1ca8ee78e835f0ccc98151d2369b2767f2af226847",
+          "dialogueHash": "1d498a3f151f4ac1f852950eac09248bfe00f86678328c439f08b2eaea485be7",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D150-b",
+        "dialogueHash": "a7e56cd2d74a8976eb719c8f2a5bea2636185f32c77ca099a2643fb7d28dcb92",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll decide how we handle this. Your shadow moved before you. What changed?"
+          },
+          {
+            "speaker": "B",
+            "text": "I was thinking of leaving, but I can't find the exit."
+          },
+          {
+            "speaker": "A",
+            "text": "You can question the details after my decision. Think about that bench without moving. Does it turn?"
+          },
+          {
+            "speaker": "B",
+            "text": "It's gone to the bench. I'm still here."
+          },
+          {
+            "speaker": "A",
+            "text": "It seems to follow your intentions. Think about the exit again; let's follow slowly and see whether it knows the way."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D150-b",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D150",
+          "type": "drive",
+          "title": "What Rule Did I Miss?",
+          "instruction": "Find the hidden rule that makes the strange situation consistent, practical, or at least survivable.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "eb43e5b19ba1df37b018a04779f9c301f2c58e70fe1b028dfb22c49b2928977d",
+      "dialogueHash": "a7e56cd2d74a8976eb719c8f2a5bea2636185f32c77ca099a2643fb7d28dcb92",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll decide how we handle this. Your shadow moved before you. What changed?"
+        },
+        {
+          "speaker": "B",
+          "text": "I was thinking of leaving, but I can't find the exit."
+        },
+        {
+          "speaker": "A",
+          "text": "You can question the details after my decision. Think about that bench without moving. Does it turn?"
+        },
+        {
+          "speaker": "B",
+          "text": "It's gone to the bench. I'm still here."
+        },
+        {
+          "speaker": "A",
+          "text": "It seems to follow your intentions. Think about the exit again; let's follow slowly and see whether it knows the way."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D150-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "e71b1c42c395a20d2bb5bb855ff9cc6f95172a5288762051c7f50e7ec0cba890",
+          "dialogueHash": "e7edd44a5cba16a6b2c60009b74b34efa9182810314b55f2b6e953122e293b05",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D150-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "96931c1842d66d201d720b1ca8ee78e835f0ccc98151d2369b2767f2af226847",
+          "dialogueHash": "1d498a3f151f4ac1f852950eac09248bfe00f86678328c439f08b2eaea485be7",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D150-a",
+        "dialogueHash": "b0272049b2eb0ac231e7cb1dd4a34c72ab419961c002b4a3aaf942463861eb95",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll decide how we handle this. What keeps the soup inside that upside-down bowl?"
+          },
+          {
+            "speaker": "B",
+            "text": "I've never seen it either."
+          },
+          {
+            "speaker": "A",
+            "text": "You can question the details after my decision. Then turn the spoon over. Let's test which thing owns down."
+          },
+          {
+            "speaker": "B",
+            "text": "The soup followed the spoon."
+          },
+          {
+            "speaker": "A",
+            "text": "Then the spoon sets the direction. Point it into the sink before we try putting it down."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D149-b",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D149",
+          "type": "drive",
+          "title": "You Handle the Impossible Part",
+          "instruction": "Make someone accept responsibility for the one part of the plan that cannot reasonably be done.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "6d3d0178a55dd2c601d9625014491b04110a402de0174ceff80cf34b5b8f86fd",
+      "dialogueHash": "ca0e074d50a57c5d139982570cbb9fe76dc6e5e9d9b68dc2a4c7eafdb91f0641",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've approved our museum's lost-time exhibit. You put yesterday's missing hour in this jar; I'll write the label."
+        },
+        {
+          "speaker": "B",
+          "text": "Time doesn't fit in jars. Can I just write the label instead?"
+        },
+        {
+          "speaker": "A",
+          "text": "Reassignment denied. Use the wide-necked jar. I won't have you blaming the equipment."
+        },
+        {
+          "speaker": "B",
+          "text": "Then what do I tell the curator when she sees it's empty?"
+        },
+        {
+          "speaker": "A",
+          "text": "Tell her you're still responsible for the contents. I'll label it 'One hour, awaiting delivery' and put your name beside 'supplier'."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D149-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "bcf345698f6861b8617faf235a1f812bf798467ead738642e9f09b5e455d3fa4",
+          "dialogueHash": "8673d97e770fc9650cfe33660ae4c69664bca00a0102e3052316d07a7e395f95",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D149-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a383d92b109f5d68bce99799223e9d956d2e73e55aff5acbca6b2f3687893b5d",
+          "dialogueHash": "df998078fd54facf55e17b73efd8b82314eb790cda555e693bd15aeda5fd453e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D149-a",
+        "dialogueHash": "8bac563632f48eb905215785a057d266eed9f59c02fe5a301e37e5337a2f35b0",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll decide how we handle this. For tonight's courtyard film, you fold the moon; I'll switch off the lamps."
+          },
+          {
+            "speaker": "B",
+            "text": "How do I fold the moon?"
+          },
+          {
+            "speaker": "A",
+            "text": "You can question the details after my decision. Start with the crescent. It already has a crease."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll take the lamps. You handle the sky."
+          },
+          {
+            "speaker": "A",
+            "text": "I'll do lamps, chairs and projector if you'll own the moon. Can I tell the audience we're waiting for your blackout?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D151-a",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D151",
+          "type": "drive",
+          "title": "Believe This with Me",
+          "instruction": "Recruit someone into treating your impossible explanation as the most useful version of events.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "94260dfc2dfe4b0a967e1dfc3f47ecb543abeaea4e42a2bacc5ad8c1064e821b",
+      "dialogueHash": "680331d7adf060d3bc66adeee831037ab11689f5266847821bb189624b5a7906",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll decide how we handle this. The house is migrating south. Help me redirect it before we lose the driveway."
+        },
+        {
+          "speaker": "B",
+          "text": "The surveyor says subsidence. He's bringing concrete."
+        },
+        {
+          "speaker": "A",
+          "text": "You can question the details after my decision. Concrete traps it halfway across the road. Tell him we're planning a route."
+        },
+        {
+          "speaker": "B",
+          "text": "His truck's blocking the road already."
+        },
+        {
+          "speaker": "A",
+          "text": "Perfect. Ask him to lead slowly toward the empty plot. It needs a guide."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D151-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-002-part-001",
+          "recordHash": "f9a9312eabd7ce7fbc034a62543ed0c1481f4f2ada1bd91082b714074f0488b8",
+          "dialogueHash": "82e5c9a447dba307bc05036480b8201c46d209cca380283649e1cc9112c893d7",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D151-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-002-part-001",
+          "recordHash": "8397eca496c0172580b92dc191646696ac8d9579497e4552e1020540089be74e",
+          "dialogueHash": "3b51d8f22697b591ebda730ea35ad8f7ed9327bdcf4b9d78e56b865f19afca21",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D151-b",
+        "dialogueHash": "4a6307ef01ef8ba6fc97dfae61728f6996698700206d81c82ca105a52b92bffd",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll decide how we handle this. The office kettle's on strike. Help me negotiate before the clients arrive."
+          },
+          {
+            "speaker": "B",
+            "text": "I've filled it twice. It still won't boil."
+          },
+          {
+            "speaker": "A",
+            "text": "You can question the details after my decision. Then water isn't its grievance. Tell it we'll stop leaving it alone after meetings."
+          },
+          {
+            "speaker": "B",
+            "text": "I can take it into the meeting."
+          },
+          {
+            "speaker": "A",
+            "text": "Yes. Give it my chair. A seat at the table should get us tea."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S01+D151-b",
+      "cards": [
+        {
+          "id": "S01",
+          "type": "stance",
+          "title": "Top of the Ladder",
+          "instruction": "Carry yourself as the highest-status person present. Treat questions as requests for your approval.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D151",
+          "type": "drive",
+          "title": "Believe This with Me",
+          "instruction": "Recruit someone into treating your impossible explanation as the most useful version of events.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "4f97339d739bf3e9fc00df12f2a72236dea6ed2f46e502e9a46c78ec1573c52c",
+      "dialogueHash": "4a6307ef01ef8ba6fc97dfae61728f6996698700206d81c82ca105a52b92bffd",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll decide how we handle this. The office kettle's on strike. Help me negotiate before the clients arrive."
+        },
+        {
+          "speaker": "B",
+          "text": "I've filled it twice. It still won't boil."
+        },
+        {
+          "speaker": "A",
+          "text": "You can question the details after my decision. Then water isn't its grievance. Tell it we'll stop leaving it alone after meetings."
+        },
+        {
+          "speaker": "B",
+          "text": "I can take it into the meeting."
+        },
+        {
+          "speaker": "A",
+          "text": "Yes. Give it my chair. A seat at the table should get us tea."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S01-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "a4a9e574213e7ac22b87c7af048e7a48861d28e1a4a3e8eb975cb104bc46d001",
+          "dialogueHash": "e021bd65016e210f9d22b7e5519956d565a26e8703c8ca4eca43dfeaa0063265",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S01-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "96dbab48b145dffa725f180e5ec12156eb65b6a126f7a3868cc60d320f7c2b71",
+          "dialogueHash": "0e29a75dade9b295068df940634818a6b981ee4a98b59c321949f15040dbe7b2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D151-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-002-part-001",
+          "recordHash": "f9a9312eabd7ce7fbc034a62543ed0c1481f4f2ada1bd91082b714074f0488b8",
+          "dialogueHash": "82e5c9a447dba307bc05036480b8201c46d209cca380283649e1cc9112c893d7",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D151-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-002-part-001",
+          "recordHash": "8397eca496c0172580b92dc191646696ac8d9579497e4552e1020540089be74e",
+          "dialogueHash": "3b51d8f22697b591ebda730ea35ad8f7ed9327bdcf4b9d78e56b865f19afca21",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S01+D151-a",
+        "dialogueHash": "680331d7adf060d3bc66adeee831037ab11689f5266847821bb189624b5a7906",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll decide how we handle this. The house is migrating south. Help me redirect it before we lose the driveway."
+          },
+          {
+            "speaker": "B",
+            "text": "The surveyor says subsidence. He's bringing concrete."
+          },
+          {
+            "speaker": "A",
+            "text": "You can question the details after my decision. Concrete traps it halfway across the road. Tell him we're planning a route."
+          },
+          {
+            "speaker": "B",
+            "text": "His truck's blocking the road already."
+          },
+          {
+            "speaker": "A",
+            "text": "Perfect. Ask him to lead slowly toward the empty plot. It needs a guide."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

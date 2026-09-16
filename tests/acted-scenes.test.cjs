@@ -1,3 +1,6 @@
+// A feature-only shell release leaves dataset assets immutable; a later corpus build versions both.
+const shellAssetVersion = require("../examples/manifest.json").version === require("../package.json").version
+  ? require("../examples/manifest.json").assetVersion : require("../package.json").version;
 'use strict';
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const root=path.resolve(__dirname,'..'),m=require('../examples/manifest.json'),src=require('../examples/authoring/single-scenes.json'),pair=require('../examples/authoring/pair-scenes.json'),client=require('../examples/library-client.js'),policies=require('../hint-bible.js'),cards=require('../cards.js');
@@ -31,6 +34,6 @@ test('brief policy chooses complete shorter five-turn scenes and never launches 
 });
 test('all versioned runtime assets and singleton precache point to this exact edition',()=>{
  const html=read('index.html'),sw=read('sw.js');const paths=[...html.matchAll(/<script src="\.\/([^"?]+)\?v=([^\"]+)"/g)];
- for(const match of paths){assert.equal(match[2],require('../examples/manifest.json').assetVersion);assert.ok(fs.existsSync(path.join(root,match[1])));assert.ok(sw.includes(match[1]+'?v='+require('../examples/manifest.json').assetVersion));}
+ for(const match of paths){const expected=['app.js','deck-engine.js'].includes(match[1])?shellAssetVersion:require('../examples/manifest.json').assetVersion;assert.equal(match[2],expected);assert.ok(fs.existsSync(path.join(root,match[1])));assert.ok(sw.includes(match[1]+'?v='+expected));}
  assert.ok(sw.includes(m.files.singles.url));assert.ok(sw.includes(m.files.singles.plainUrl));assert.doesNotMatch(sw,/skipWaiting\(/);
 });

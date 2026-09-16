@@ -1,0 +1,1443 @@
+{
+  "executionStatus": "not-executed",
+  "instructions": "Fresh review of each primary candidate: read dialogue first, then exact cards. Assess all six unchanged criteria and all coach-2.0 gates with turn-specific evidence. For pairs, show whether the Stance changes HOW A pursues the Drive in one interaction. Do not invent missing backstory or assume prior approval. Use the alternate only to assess meaningful differentiation. Report actual reservations. No writer scores or improvement claims are supplied.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S03+D36-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D36",
+          "type": "drive",
+          "title": "Hand It Over",
+          "instruction": "Persuade someone to give up control of a task, object, or decision you believe is being mishandled.",
+          "contentVersion": "0.9.0"
+        }
+      ],
+      "sourceRecordHash": "0258c57098a0a9551e7491eb43ac4acf019ce13d4f971cb6e5f06491769c5d10",
+      "dialogueHash": "521bf3be2f91b07407f655cdba87968fe0efec93f0265d68e8211b0b0d7030f8",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Let me align that hinge. The door is dropping; tightening it at this angle will hold the mistake in place."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm finding the right screw."
+        },
+        {
+          "speaker": "A",
+          "text": "Find it while I support the door. Give me the screwdriver, handle first, please."
+        },
+        {
+          "speaker": "B",
+          "text": "Then you'll tell everyone you fixed it."
+        },
+        {
+          "speaker": "A",
+          "text": "You can announce the repair. Hand me the tool and keep the door level; I would like something worth announcing."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D36-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-005.batch-005-part-001",
+          "recordHash": "481a38e4ef888aba5a944540ddffc092e87c5b148c44afd7ce327db3d61b9869",
+          "dialogueHash": "7d8293e1082f8556dfed61441f0148e5f5c68e7ee6d832c072b151723da316dd",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D36-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "2fb2d000174bba042f54bcb3f34fbe9ce2c5c6e9eaad0b4a80480e9c17e52b3f",
+          "dialogueHash": "33e319f4210662ab4c782512de3d7b4083082ab4af2ead9996fd909dc83e4eb2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D36-b",
+        "dialogueHash": "8360053eec1999cfda17f9bf3c996aaf2aeb4ce433fc5b9da98bebd5449109b3",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Give me the seating pencil. You've put the exes beside each other; a good plan doesn't require guests to manage a reunion all evening."
+          },
+          {
+            "speaker": "B",
+            "text": "They're civil now."
+          },
+          {
+            "speaker": "A",
+            "text": "Civility isn't a seating strategy. Put one at each table and neither has to spend dinner performing it."
+          },
+          {
+            "speaker": "B",
+            "text": "I've spent hours getting everyone else right."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I'll trace your plan first and move only those two names. Hand me the pencil, please. The eraser end first."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D36-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D36",
+          "type": "drive",
+          "title": "Hand It Over",
+          "instruction": "Persuade someone to give up control of a task, object, or decision you believe is being mishandled.",
+          "contentVersion": "0.9.0"
+        }
+      ],
+      "sourceRecordHash": "8fa1911c31d44fbfb2cbcc33a679fda9a70123ac8644cf8abc9033022c1d546d",
+      "dialogueHash": "8360053eec1999cfda17f9bf3c996aaf2aeb4ce433fc5b9da98bebd5449109b3",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Give me the seating pencil. You've put the exes beside each other; a good plan doesn't require guests to manage a reunion all evening."
+        },
+        {
+          "speaker": "B",
+          "text": "They're civil now."
+        },
+        {
+          "speaker": "A",
+          "text": "Civility isn't a seating strategy. Put one at each table and neither has to spend dinner performing it."
+        },
+        {
+          "speaker": "B",
+          "text": "I've spent hours getting everyone else right."
+        },
+        {
+          "speaker": "A",
+          "text": "Then I'll trace your plan first and move only those two names. Hand me the pencil, please. The eraser end first."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D36-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-005.batch-005-part-001",
+          "recordHash": "481a38e4ef888aba5a944540ddffc092e87c5b148c44afd7ce327db3d61b9869",
+          "dialogueHash": "7d8293e1082f8556dfed61441f0148e5f5c68e7ee6d832c072b151723da316dd",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D36-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "2fb2d000174bba042f54bcb3f34fbe9ce2c5c6e9eaad0b4a80480e9c17e52b3f",
+          "dialogueHash": "33e319f4210662ab4c782512de3d7b4083082ab4af2ead9996fd909dc83e4eb2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D36-a",
+        "dialogueHash": "521bf3be2f91b07407f655cdba87968fe0efec93f0265d68e8211b0b0d7030f8",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Let me align that hinge. The door is dropping; tightening it at this angle will hold the mistake in place."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm finding the right screw."
+          },
+          {
+            "speaker": "A",
+            "text": "Find it while I support the door. Give me the screwdriver, handle first, please."
+          },
+          {
+            "speaker": "B",
+            "text": "Then you'll tell everyone you fixed it."
+          },
+          {
+            "speaker": "A",
+            "text": "You can announce the repair. Hand me the tool and keep the door level; I would like something worth announcing."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D37-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D37",
+          "type": "drive",
+          "title": "Put It Back Quietly",
+          "instruction": "Return something you misplaced, used, or damaged without revealing why it needed restoring.",
+          "contentVersion": "0.9.0"
+        }
+      ],
+      "sourceRecordHash": "73f736e6656940aff713e41a44989208b8ebc78c3e9d4aa159f62cd3785a7ae3",
+      "dialogueHash": "b6e5e1490f1c3dc38347c7d9d934165bbe9ababc524e8fe1e43fb9ca616f58d6",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Your umbrella is back in the stand. Handle up, please; we store it so you can take it straight to work."
+        },
+        {
+          "speaker": "B",
+          "text": "Why is it wet? It hasn't rained."
+        },
+        {
+          "speaker": "A",
+          "text": "Routine cleaning. The fabric needs rinsing before the handle is dried; those are separate jobs."
+        },
+        {
+          "speaker": "B",
+          "text": "There's pondweed in the spokes."
+        },
+        {
+          "speaker": "A",
+          "text": "Then we remove debris before closing it. Fetch a dry towel, please. I'll rinse the spokes again; it is going back in that stand properly."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D37-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-005.batch-005-part-001",
+          "recordHash": "bc72e10714adce8f447394d8ee39b27e4c4a1e9cac2f1efca176de6a38c767bd",
+          "dialogueHash": "d21fd6f2989060d915e6bc83e289abd09d062c5f6ed1116cb513125d2993854d",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D37-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-005.batch-005-part-001",
+          "recordHash": "5a44fe7636b3bccdd9a0c4235d0aeed82cc5fff8d33a4d9c24bee5e6b45e843e",
+          "dialogueHash": "11a0211a3b90d8177cc5ff92785f3ce4c230209fc20dffd08f1a9c157c1ece7b",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D37-b",
+        "dialogueHash": "c49719a807d1c7fe1790dc3ae95cc9169984512f9a6ecd93a1f2895b1f655f36",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Your plate is back in the cupboard. Set it down gently, please; rims chip when you drop one plate onto another."
+          },
+          {
+            "speaker": "B",
+            "text": "Our plates are plain. That one has flowers."
+          },
+          {
+            "speaker": "A",
+            "text": "Then this is the serving plate. We distinguish serving pieces from place settings."
+          },
+          {
+            "speaker": "B",
+            "text": "I need all six plain plates for Sunday. Where's the sixth?"
+          },
+          {
+            "speaker": "A",
+            "text": "I'll supply six matching floral ones. Put the plain ones at the back, please. A proper table uses one service; let's get that right first."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D37-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D37",
+          "type": "drive",
+          "title": "Put It Back Quietly",
+          "instruction": "Return something you misplaced, used, or damaged without revealing why it needed restoring.",
+          "contentVersion": "0.9.0"
+        }
+      ],
+      "sourceRecordHash": "aafff33d29936cf2ddd041d4d64a58b219998a8cc9347b65a9c7e0178912678a",
+      "dialogueHash": "c49719a807d1c7fe1790dc3ae95cc9169984512f9a6ecd93a1f2895b1f655f36",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Your plate is back in the cupboard. Set it down gently, please; rims chip when you drop one plate onto another."
+        },
+        {
+          "speaker": "B",
+          "text": "Our plates are plain. That one has flowers."
+        },
+        {
+          "speaker": "A",
+          "text": "Then this is the serving plate. We distinguish serving pieces from place settings."
+        },
+        {
+          "speaker": "B",
+          "text": "I need all six plain plates for Sunday. Where's the sixth?"
+        },
+        {
+          "speaker": "A",
+          "text": "I'll supply six matching floral ones. Put the plain ones at the back, please. A proper table uses one service; let's get that right first."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D37-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-005.batch-005-part-001",
+          "recordHash": "bc72e10714adce8f447394d8ee39b27e4c4a1e9cac2f1efca176de6a38c767bd",
+          "dialogueHash": "d21fd6f2989060d915e6bc83e289abd09d062c5f6ed1116cb513125d2993854d",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D37-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-005.batch-005-part-001",
+          "recordHash": "5a44fe7636b3bccdd9a0c4235d0aeed82cc5fff8d33a4d9c24bee5e6b45e843e",
+          "dialogueHash": "11a0211a3b90d8177cc5ff92785f3ce4c230209fc20dffd08f1a9c157c1ece7b",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D37-a",
+        "dialogueHash": "b6e5e1490f1c3dc38347c7d9d934165bbe9ababc524e8fe1e43fb9ca616f58d6",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Your umbrella is back in the stand. Handle up, please; we store it so you can take it straight to work."
+          },
+          {
+            "speaker": "B",
+            "text": "Why is it wet? It hasn't rained."
+          },
+          {
+            "speaker": "A",
+            "text": "Routine cleaning. The fabric needs rinsing before the handle is dried; those are separate jobs."
+          },
+          {
+            "speaker": "B",
+            "text": "There's pondweed in the spokes."
+          },
+          {
+            "speaker": "A",
+            "text": "Then we remove debris before closing it. Fetch a dry towel, please. I'll rinse the spokes again; it is going back in that stand properly."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D38-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D38",
+          "type": "drive",
+          "title": "Talk Around the Mess",
+          "instruction": "Keep attention on minor details so no one addresses the larger responsibility you avoided.",
+          "contentVersion": "0.9.0"
+        }
+      ],
+      "sourceRecordHash": "a467c2a10f9d32eff03945094cf76dbc9c56fa50218ea025953fad37591c60f0",
+      "dialogueHash": "5a61d4dded2f6fc1629cbbd825d16b752663cd11de65afb53e11212814b97716",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Hold that spoon by the neck, please. Mum's coming for lunch; fingerprints undo the polishing."
+        },
+        {
+          "speaker": "B",
+          "text": "The spoon's clean. You still haven't cleaned the kitchen."
+        },
+        {
+          "speaker": "A",
+          "text": "Clean and polished are different standards. Pass me the forks by their handles and we'll check those too."
+        },
+        {
+          "speaker": "B",
+          "text": "I've asked Mum to bring rubber gloves and help you."
+        },
+        {
+          "speaker": "A",
+          "text": "Then put out a guest towel. The linen one, not the faded striped one. Fold it in thirds, with the stitched edge underneath. Underneath, please."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D38-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-005.batch-005-part-001",
+          "recordHash": "93f8b46f940f5f3aeee9a229d71f6c8760c56da7dd0517eda83ee8d694213488",
+          "dialogueHash": "a58dc9e3b1d9f77cf0f56ea060a1563569bf6a85ea69c02f94f713da99f6df18",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D38-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "36101ed44ec1fa07d0477983ec633a2c0149065362dfae8a0bafc8def7f856a4",
+          "dialogueHash": "6ad86f1377dbc7f3f3113f3007bd7aff9479e5a606d9aeec7b6e3e2496f8abd6",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D38-b",
+        "dialogueHash": "19a9bca718ac1b718540b0be1dd7d90acd0b5e22ce040290a3082420e5282db7",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Use black lettering on these moving labels. Pale blue may look pleasant, but it won't be legible from the van."
+          },
+          {
+            "speaker": "B",
+            "text": "You haven't packed any of the boxes."
+          },
+          {
+            "speaker": "A",
+            "text": "Which is why we can still label them properly. 'Kitchen' at the top, in capitals. Leave room for a contents list."
+          },
+          {
+            "speaker": "B",
+            "text": "The van is outside. They want to start loading."
+          },
+          {
+            "speaker": "A",
+            "text": "Then face every label toward the door. All the same way, please. I'll check the spelling while you turn them."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D38-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D38",
+          "type": "drive",
+          "title": "Talk Around the Mess",
+          "instruction": "Keep attention on minor details so no one addresses the larger responsibility you avoided.",
+          "contentVersion": "0.9.0"
+        }
+      ],
+      "sourceRecordHash": "5fd29d33eb06f022ee6e9eada0cf5f3decc7543419066ed0605d39c563f11934",
+      "dialogueHash": "19a9bca718ac1b718540b0be1dd7d90acd0b5e22ce040290a3082420e5282db7",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Use black lettering on these moving labels. Pale blue may look pleasant, but it won't be legible from the van."
+        },
+        {
+          "speaker": "B",
+          "text": "You haven't packed any of the boxes."
+        },
+        {
+          "speaker": "A",
+          "text": "Which is why we can still label them properly. 'Kitchen' at the top, in capitals. Leave room for a contents list."
+        },
+        {
+          "speaker": "B",
+          "text": "The van is outside. They want to start loading."
+        },
+        {
+          "speaker": "A",
+          "text": "Then face every label toward the door. All the same way, please. I'll check the spelling while you turn them."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D38-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-005.batch-005-part-001",
+          "recordHash": "93f8b46f940f5f3aeee9a229d71f6c8760c56da7dd0517eda83ee8d694213488",
+          "dialogueHash": "a58dc9e3b1d9f77cf0f56ea060a1563569bf6a85ea69c02f94f713da99f6df18",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D38-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "36101ed44ec1fa07d0477983ec633a2c0149065362dfae8a0bafc8def7f856a4",
+          "dialogueHash": "6ad86f1377dbc7f3f3113f3007bd7aff9479e5a606d9aeec7b6e3e2496f8abd6",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D38-a",
+        "dialogueHash": "5a61d4dded2f6fc1629cbbd825d16b752663cd11de65afb53e11212814b97716",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Hold that spoon by the neck, please. Mum's coming for lunch; fingerprints undo the polishing."
+          },
+          {
+            "speaker": "B",
+            "text": "The spoon's clean. You still haven't cleaned the kitchen."
+          },
+          {
+            "speaker": "A",
+            "text": "Clean and polished are different standards. Pass me the forks by their handles and we'll check those too."
+          },
+          {
+            "speaker": "B",
+            "text": "I've asked Mum to bring rubber gloves and help you."
+          },
+          {
+            "speaker": "A",
+            "text": "Then put out a guest towel. The linen one, not the faded striped one. Fold it in thirds, with the stitched edge underneath. Underneath, please."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D39-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D39",
+          "type": "drive",
+          "title": "Spare Them the Hassle",
+          "instruction": "Hide a practical problem because you believe handling it alone is kinder than involving anyone else.",
+          "contentVersion": "0.9.0"
+        }
+      ],
+      "sourceRecordHash": "ac0517e5bffa932f0143fdf7ee4571694b7c7cc1aab765a011aff2591a5c941f",
+      "dialogueHash": "adbf45194b39a46bc6c68d399031c19eb1a7eb093c1d198630f2618f2227bc9d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You've done a night shift. Sit on the sofa, feet up; I have lunch and the house under control."
+        },
+        {
+          "speaker": "B",
+          "text": "Why is there a bucket by the armchair?"
+        },
+        {
+          "speaker": "A",
+          "text": "A little drip. Leave the bucket where it is; catching water properly saves moving it twice. Your tray is here."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll take lunch upstairs and go straight to bed."
+        },
+        {
+          "speaker": "A",
+          "text": "Rest here first. I'll bring the duvet down; bedding goes back only when everything is dry. Please let me finish one job without you starting another shift."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D39-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-005.batch-005-part-001",
+          "recordHash": "4d16a745bb30fc06fd795e05b35bb316a809e8b259ad12ac02b3ec9fc1fda554",
+          "dialogueHash": "439c4c3f1b400dfc3052a9abbc573aded2e07ad46e6f8b67d84df813081a0c8d",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D39-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-005.batch-005-part-001",
+          "recordHash": "49bde86b9e7af89633aef9fe7682852b614e53406bb154330ce7f3f693fc0e2e",
+          "dialogueHash": "86bb654bb093c07e90a8a7ce38adf2ca4381248b0d441041afeca4d5d35e141f",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D39-b",
+        "dialogueHash": "4bbb85f98b14412c642403584290d78224957811b93cd0da2075efc3a8dc0080",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Read your book. I'll have your bike ready tomorrow; repair collections need one coordinator, not two people making calls."
+          },
+          {
+            "speaker": "B",
+            "text": "The shop just asked me to collect a wheel."
+          },
+          {
+            "speaker": "A",
+            "text": "They used the owner number instead of the collection contact. Forward it to me, please. You are off duty."
+          },
+          {
+            "speaker": "B",
+            "text": "They say the frame is at a different shop. How bad is it?"
+          },
+          {
+            "speaker": "A",
+            "text": "Just a scheduling problem. I'll collect the frame first, then the wheel. Read another chapter; I'll handle any further calls."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D39-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D39",
+          "type": "drive",
+          "title": "Spare Them the Hassle",
+          "instruction": "Hide a practical problem because you believe handling it alone is kinder than involving anyone else.",
+          "contentVersion": "0.9.0"
+        }
+      ],
+      "sourceRecordHash": "f0abaf410fe3bbc60ad48a890eca3883068ddc6218bc4e0b1900ebf89543c96f",
+      "dialogueHash": "4bbb85f98b14412c642403584290d78224957811b93cd0da2075efc3a8dc0080",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Read your book. I'll have your bike ready tomorrow; repair collections need one coordinator, not two people making calls."
+        },
+        {
+          "speaker": "B",
+          "text": "The shop just asked me to collect a wheel."
+        },
+        {
+          "speaker": "A",
+          "text": "They used the owner number instead of the collection contact. Forward it to me, please. You are off duty."
+        },
+        {
+          "speaker": "B",
+          "text": "They say the frame is at a different shop. How bad is it?"
+        },
+        {
+          "speaker": "A",
+          "text": "Just a scheduling problem. I'll collect the frame first, then the wheel. Read another chapter; I'll handle any further calls."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D39-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-005.batch-005-part-001",
+          "recordHash": "4d16a745bb30fc06fd795e05b35bb316a809e8b259ad12ac02b3ec9fc1fda554",
+          "dialogueHash": "439c4c3f1b400dfc3052a9abbc573aded2e07ad46e6f8b67d84df813081a0c8d",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D39-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-005.batch-005-part-001",
+          "recordHash": "49bde86b9e7af89633aef9fe7682852b614e53406bb154330ce7f3f693fc0e2e",
+          "dialogueHash": "86bb654bb093c07e90a8a7ce38adf2ca4381248b0d441041afeca4d5d35e141f",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D39-a",
+        "dialogueHash": "adbf45194b39a46bc6c68d399031c19eb1a7eb093c1d198630f2618f2227bc9d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You've done a night shift. Sit on the sofa, feet up; I have lunch and the house under control."
+          },
+          {
+            "speaker": "B",
+            "text": "Why is there a bucket by the armchair?"
+          },
+          {
+            "speaker": "A",
+            "text": "A little drip. Leave the bucket where it is; catching water properly saves moving it twice. Your tray is here."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll take lunch upstairs and go straight to bed."
+          },
+          {
+            "speaker": "A",
+            "text": "Rest here first. I'll bring the duvet down; bedding goes back only when everything is dry. Please let me finish one job without you starting another shift."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D40-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D40",
+          "type": "drive",
+          "title": "Who Changed It?",
+          "instruction": "Ask innocent questions until someone admits altering the plan, schedule, arrangement, or shared space.",
+          "contentVersion": "0.9.0"
+        }
+      ],
+      "sourceRecordHash": "d1357f653db81ff0c7eb2adeadd157c21ebc8c920f225a0a9b88795dda09ea42",
+      "dialogueHash": "c2eb9bbd61491fea0d3a847bc01c269dd42fdde3870c1c93825770f7f06e52ab",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The picnic is now on Friday. Before we notify anyone, whose blue pen made that change on the calendar?"
+        },
+        {
+          "speaker": "B",
+          "text": "Mine, but everybody borrows it."
+        },
+        {
+          "speaker": "A",
+          "text": "Of course. Ownership is not authorship. Who puts a little heart over the 'i' in 'Friday'?"
+        },
+        {
+          "speaker": "B",
+          "text": "I do. I moved it because Saturday looked wet."
+        },
+        {
+          "speaker": "A",
+          "text": "Thank you. A changed date and a notified guest list are separate jobs. Which Saturday guests have you told, precisely?"
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D40-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "1a7cc0df39692cc87b85a83a8a9ae321264b827452ddf81cd688d9500fbe58d9",
+          "dialogueHash": "abf2556d6aa7a94653b22e10ae1c77b38a88a5a3f710cdea78c74d8553954e2b",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D40-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-005.batch-005-part-001",
+          "recordHash": "f27d6b65a95deac86a0751a0c8f91486c87da236809697515f1101b6fd7a32ca",
+          "dialogueHash": "47357cfed9bcf92abb49584b52326f78be662eb8b146f060932baa80f21057b9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D40-b",
+        "dialogueHash": "c70b6a2387b12353944a1f8a057e062bfccbea30dedba9a348539428ea311685",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The cupboard door needs clearance, not just room for its handle. Was the sofa this close yesterday?"
+          },
+          {
+            "speaker": "B",
+            "text": "There's more room for yoga now."
+          },
+          {
+            "speaker": "A",
+            "text": "Floor area and usable access are different measures. Did you move the sofa to make that space?"
+          },
+          {
+            "speaker": "B",
+            "text": "Yes. I moved the mugs into my sock drawer so you could still get them."
+          },
+          {
+            "speaker": "A",
+            "text": "Temporary storage also needs a plan. Where did you put the socks, just so I can understand how much of the room you've improved?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D40-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D40",
+          "type": "drive",
+          "title": "Who Changed It?",
+          "instruction": "Ask innocent questions until someone admits altering the plan, schedule, arrangement, or shared space.",
+          "contentVersion": "0.9.0"
+        }
+      ],
+      "sourceRecordHash": "9b73d2e262ae88e41764822f002913f2f0fc9942747a05efbe62a9f3c232ab53",
+      "dialogueHash": "c70b6a2387b12353944a1f8a057e062bfccbea30dedba9a348539428ea311685",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The cupboard door needs clearance, not just room for its handle. Was the sofa this close yesterday?"
+        },
+        {
+          "speaker": "B",
+          "text": "There's more room for yoga now."
+        },
+        {
+          "speaker": "A",
+          "text": "Floor area and usable access are different measures. Did you move the sofa to make that space?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes. I moved the mugs into my sock drawer so you could still get them."
+        },
+        {
+          "speaker": "A",
+          "text": "Temporary storage also needs a plan. Where did you put the socks, just so I can understand how much of the room you've improved?"
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D40-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "1a7cc0df39692cc87b85a83a8a9ae321264b827452ddf81cd688d9500fbe58d9",
+          "dialogueHash": "abf2556d6aa7a94653b22e10ae1c77b38a88a5a3f710cdea78c74d8553954e2b",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D40-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-005.batch-005-part-001",
+          "recordHash": "f27d6b65a95deac86a0751a0c8f91486c87da236809697515f1101b6fd7a32ca",
+          "dialogueHash": "47357cfed9bcf92abb49584b52326f78be662eb8b146f060932baa80f21057b9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D40-a",
+        "dialogueHash": "c2eb9bbd61491fea0d3a847bc01c269dd42fdde3870c1c93825770f7f06e52ab",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The picnic is now on Friday. Before we notify anyone, whose blue pen made that change on the calendar?"
+          },
+          {
+            "speaker": "B",
+            "text": "Mine, but everybody borrows it."
+          },
+          {
+            "speaker": "A",
+            "text": "Of course. Ownership is not authorship. Who puts a little heart over the 'i' in 'Friday'?"
+          },
+          {
+            "speaker": "B",
+            "text": "I do. I moved it because Saturday looked wet."
+          },
+          {
+            "speaker": "A",
+            "text": "Thank you. A changed date and a notified guest list are separate jobs. Which Saturday guests have you told, precisely?"
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

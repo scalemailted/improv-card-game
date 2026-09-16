@@ -1,3 +1,6 @@
+// A feature-only shell release leaves dataset assets immutable; a later corpus build versions both.
+const shellAssetVersion = require("../examples/manifest.json").version === require("../package.json").version
+  ? require("../examples/manifest.json").assetVersion : require("../package.json").version;
 "use strict";
 const releaseVersion = require("../examples/manifest.json").assetVersion;
 const versionPattern = releaseVersion.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -181,10 +184,11 @@ assert.equal(cards.targetDriveCount, 240);
 
 // Release and offline contract.
 for (const asset of ["styles.css", "card-bible.js", "cards/core-foundations.js", "cards/everyday-friction.js", "cards/power-games.js", "cards/relationship-knots.js", "cards/emotional-pressure.js", "cards/secrets-schemes.js", "cards/absurd-commitment.js", "cards/rules-rituals-institutions.js", "cards/competition-consequences.js", "cards/advanced-scene-engines.js", "cards.js", "hint-bible.js", "examples/manifest.js", "examples/library-client.js", "exercises.js", "deck-engine.js", "vendor/qrcode-core.js", "app.js"]) {
-  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=${versionPattern}`));
-  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=${versionPattern}`));
+  const expectedVersion = ["styles.css", "deck-engine.js", "app.js"].includes(asset) ? shellAssetVersion.replace(/\./g, "\\.") : versionPattern;
+  assert.match(html, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=${expectedVersion}`));
+  assert.match(serviceWorker, new RegExp(`${asset.replace(/[./]/g, "\\$&")}\\?v=${expectedVersion}`));
 }
-assert.ok(serviceWorker.includes(JSON.stringify("imprompt-v" + require("../examples/manifest.json").assetVersion)), "Current release cache namespace required");
+assert.ok(serviceWorker.includes(JSON.stringify("imprompt-v" + shellAssetVersion)), "Current release cache namespace required");
 assert.doesNotMatch(serviceWorker, /skipWaiting/);
 assert.match(app, /updateViaCache:\s*"none"/);
 assert.match(manifest, /"short_name": "Imprompt"/);

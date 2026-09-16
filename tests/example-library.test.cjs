@@ -1,3 +1,6 @@
+// A feature-only shell release leaves dataset assets immutable; a later corpus build versions both.
+const shellAssetVersion = require("../examples/manifest.json").version === require("../package.json").version
+  ? require("../examples/manifest.json").assetVersion : require("../package.json").version;
 'use strict';
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),{webcrypto}=require('node:crypto');
 const client=require('../examples/library-client.js'),m=require('../examples/manifest.json'),cards=require('../cards.js'),bible=require('../hint-bible.js');
@@ -91,7 +94,13 @@ test('deployment has no model-loading runtime and keeps request-specific data ou
  assert.match(app,/examples\/library-worker/);assert.match(html,/Save all examples offline/);assert.doesNotMatch(html,/id="hintDialogIntro"|id="localModelSelect"/);
 });
 
-test('current app, worker, manifest and offline shell use the same dataset-derived asset address',()=>{
+test('app shell and unchanged dataset assets retain their exact versioned addresses',()=>{
  const version=m.assetVersion;assert.ok(version&&version.startsWith(m.version+'-'));const root=require('node:path').resolve(__dirname,'..');
- for(const file of ['index.html','app.js','examples/library-client.js','examples/library-worker.js','sw.js']){const text=fs.readFileSync(require('node:path').join(root,file),'utf8'),versions=[...text.matchAll(/\?v=([a-zA-Z0-9.+_-]+)/g)].map(x=>x[1]);assert.ok(versions.length,file);assert.ok(versions.every(v=>v===version),'Stale asset URL in '+file);}
+ const appVersion=shellAssetVersion;
+ const changedAssets=new Set(['styles.css','deck-engine.js','app.js','manifest.webmanifest']);
+ for(const file of ['index.html','app.js','examples/library-client.js','examples/library-worker.js','sw.js']){
+  const text=fs.readFileSync(require('node:path').join(root,file),'utf8');
+  const urls=[...text.matchAll(/([a-zA-Z0-9./_-]+)\?v=([a-zA-Z0-9.+_-]+)/g)];assert.ok(urls.length,file);
+  for(const [,asset,value] of urls) assert.equal(value,changedAssets.has(asset.replace(/^\.\//,''))?appVersion:version,'Stale asset '+asset+' in '+file);
+ }
 });

@@ -1,0 +1,1443 @@
+{
+  "executionStatus": "not-executed",
+  "instructions": "Fresh review of each primary candidate: read dialogue first, then exact cards. Assess all six unchanged criteria and all coach-2.0 gates with turn-specific evidence. For pairs, show whether the Stance changes HOW A pursues the Drive in one interaction. Do not invent missing backstory or assume prior approval. Use the alternate only to assess meaningful differentiation. Report actual reservations. No writer scores or improvement claims are supplied.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S03+D66-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D66",
+          "type": "drive",
+          "title": "Act Authorized",
+          "instruction": "Behave as though you have full authorization, using certainty and procedure to discourage verification.",
+          "contentVersion": "0.10.0"
+        }
+      ],
+      "sourceRecordHash": "774316a5b506ded658d14a7d3614dd1a7844702233e217102e8542c4223d9700",
+      "dialogueHash": "319cf228bd613e315d93635dae2905e1b2e29384e8b476a9b746b2a79878af70",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Log my arrival for the storeroom inspection, then unlock it, please. Start time first."
+        },
+        {
+          "speaker": "B",
+          "text": "Your pass hasn't been signed."
+        },
+        {
+          "speaker": "A",
+          "text": "That's the completion signature. We haven't completed anything yet. Put the start time in the start-time box, please."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll call the manager to check."
+        },
+        {
+          "speaker": "A",
+          "text": "Certainly. Mark the inspection suspended at your request. Use your full name, please; she'll need to know who stopped the clock."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D66-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "167f5ebb537bb45bf36f0191765d89ac5b888f20d03fe82cd23840e267f887ae",
+          "dialogueHash": "44a317ae79a54006df7e45a9560b6dbffe93a66f452fa18bd91894e4736d4e2d",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D66-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "b549702c2e6aa1c650b9cd5453a5072ee6bae706e2aca6fadd78ede14c5ce83a",
+          "dialogueHash": "c21499b8c4241bb9359102f8762abd1ac4d1f1c047e205ee0ccc1a2ea8dff75b",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D66-b",
+        "dialogueHash": "6a00e0a1458665a7697f66feda03fbeacb7a69fa610d875a6b338d1b0fcce93c",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Enter our rehearsal as confirmed, please. The approval stamp is on the request; we're at the calendar stage now."
+          },
+          {
+            "speaker": "B",
+            "text": "That's your own stamp."
+          },
+          {
+            "speaker": "A",
+            "text": "Yes. I process approvals. You enter the approved booking. Date, room, confirmed; please keep to those fields."
+          },
+          {
+            "speaker": "B",
+            "text": "I can hold the room while the manager checks."
+          },
+          {
+            "speaker": "A",
+            "text": "'Held' sends her another approval request. Use 'confirmed,' please. Let's not ask her to redo a completed stage."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D66-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D66",
+          "type": "drive",
+          "title": "Act Authorized",
+          "instruction": "Behave as though you have full authorization, using certainty and procedure to discourage verification.",
+          "contentVersion": "0.10.0"
+        }
+      ],
+      "sourceRecordHash": "d8fabc60bc83de3142398ae2d261196e2d45564771d63fc338090968099e8241",
+      "dialogueHash": "6a00e0a1458665a7697f66feda03fbeacb7a69fa610d875a6b338d1b0fcce93c",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Enter our rehearsal as confirmed, please. The approval stamp is on the request; we're at the calendar stage now."
+        },
+        {
+          "speaker": "B",
+          "text": "That's your own stamp."
+        },
+        {
+          "speaker": "A",
+          "text": "Yes. I process approvals. You enter the approved booking. Date, room, confirmed; please keep to those fields."
+        },
+        {
+          "speaker": "B",
+          "text": "I can hold the room while the manager checks."
+        },
+        {
+          "speaker": "A",
+          "text": "'Held' sends her another approval request. Use 'confirmed,' please. Let's not ask her to redo a completed stage."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D66-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "167f5ebb537bb45bf36f0191765d89ac5b888f20d03fe82cd23840e267f887ae",
+          "dialogueHash": "44a317ae79a54006df7e45a9560b6dbffe93a66f452fa18bd91894e4736d4e2d",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D66-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "b549702c2e6aa1c650b9cd5453a5072ee6bae706e2aca6fadd78ede14c5ce83a",
+          "dialogueHash": "c21499b8c4241bb9359102f8762abd1ac4d1f1c047e205ee0ccc1a2ea8dff75b",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D66-a",
+        "dialogueHash": "319cf228bd613e315d93635dae2905e1b2e29384e8b476a9b746b2a79878af70",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Log my arrival for the storeroom inspection, then unlock it, please. Start time first."
+          },
+          {
+            "speaker": "B",
+            "text": "Your pass hasn't been signed."
+          },
+          {
+            "speaker": "A",
+            "text": "That's the completion signature. We haven't completed anything yet. Put the start time in the start-time box, please."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll call the manager to check."
+          },
+          {
+            "speaker": "A",
+            "text": "Certainly. Mark the inspection suspended at your request. Use your full name, please; she'll need to know who stopped the clock."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D67-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D67",
+          "type": "drive",
+          "title": "Rank Everything",
+          "instruction": "Turn every new contribution into a ranking that places you nearer the top.",
+          "contentVersion": "0.10.0"
+        }
+      ],
+      "sourceRecordHash": "d8d1dcd78e9ecc66bfed1c6c093b91e12ef227bfeaab6ad0ea3fc2ae2fa84ee5",
+      "dialogueHash": "f6441d52f3869a25086707eb7d2dddfe68fdb455004ecd33c56d97f3d86b09f5",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I planned the picnic, so I choose cake first. Planning sits above delivery; let's use the correct order."
+        },
+        {
+          "speaker": "B",
+          "text": "I drove everyone here."
+        },
+        {
+          "speaker": "A",
+          "text": "Transport. Second place, please. Choosing the destination comes before taking people to it."
+        },
+        {
+          "speaker": "B",
+          "text": "I baked the cake. The baker gets the big end piece."
+        },
+        {
+          "speaker": "A",
+          "text": "Baking goes above transport, yes. But I commissioned the cake, so put commissioning first. Cut my end piece before revising the rest of the list."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D67-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "c12d716cee34f7c53065501e86a7d31540f1ff916b829720bd4a5fcffebe476a",
+          "dialogueHash": "2b62c54d8f3daa5d0350475d16195a3aee7ab552dcdb8e7df8997dbeb20d5c30",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D67-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "fed384317dc839d01f3d4aec4bc3250e9f696bfc12895c89e141880a0dc11631",
+          "dialogueHash": "4a86b40f12e142c4ccdfa081f9c18e3bbf5ba7e313ae5b68fee3e550fe6aee5a",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D67-b",
+        "dialogueHash": "7ccf62d93236dba76ade3477a5162da9bb44a47a479632663c6656d54a0d7b81",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Put my printer troubleshooting above your restart in the project report. Diagnosis before implementation, please."
+          },
+          {
+            "speaker": "B",
+            "text": "The restart got everyone's invoices printed."
+          },
+          {
+            "speaker": "A",
+            "text": "Implementation delivered successfully. Second place. Please don't rank the final button press above identifying the fault."
+          },
+          {
+            "speaker": "B",
+            "text": "Your hundred-page lunch menu was the fault."
+          },
+          {
+            "speaker": "A",
+            "text": "Then add stress testing above diagnosis. My menu exposed the limit. Move your restart to third, please, and renumber the report."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D67-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D67",
+          "type": "drive",
+          "title": "Rank Everything",
+          "instruction": "Turn every new contribution into a ranking that places you nearer the top.",
+          "contentVersion": "0.10.0"
+        }
+      ],
+      "sourceRecordHash": "1a351737260ab5ad2a21ed4d29cb84fccf4026123fae0127359a0ebe03471392",
+      "dialogueHash": "7ccf62d93236dba76ade3477a5162da9bb44a47a479632663c6656d54a0d7b81",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Put my printer troubleshooting above your restart in the project report. Diagnosis before implementation, please."
+        },
+        {
+          "speaker": "B",
+          "text": "The restart got everyone's invoices printed."
+        },
+        {
+          "speaker": "A",
+          "text": "Implementation delivered successfully. Second place. Please don't rank the final button press above identifying the fault."
+        },
+        {
+          "speaker": "B",
+          "text": "Your hundred-page lunch menu was the fault."
+        },
+        {
+          "speaker": "A",
+          "text": "Then add stress testing above diagnosis. My menu exposed the limit. Move your restart to third, please, and renumber the report."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D67-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "c12d716cee34f7c53065501e86a7d31540f1ff916b829720bd4a5fcffebe476a",
+          "dialogueHash": "2b62c54d8f3daa5d0350475d16195a3aee7ab552dcdb8e7df8997dbeb20d5c30",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D67-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "fed384317dc839d01f3d4aec4bc3250e9f696bfc12895c89e141880a0dc11631",
+          "dialogueHash": "4a86b40f12e142c4ccdfa081f9c18e3bbf5ba7e313ae5b68fee3e550fe6aee5a",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D67-a",
+        "dialogueHash": "f6441d52f3869a25086707eb7d2dddfe68fdb455004ecd33c56d97f3d86b09f5",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I planned the picnic, so I choose cake first. Planning sits above delivery; let's use the correct order."
+          },
+          {
+            "speaker": "B",
+            "text": "I drove everyone here."
+          },
+          {
+            "speaker": "A",
+            "text": "Transport. Second place, please. Choosing the destination comes before taking people to it."
+          },
+          {
+            "speaker": "B",
+            "text": "I baked the cake. The baker gets the big end piece."
+          },
+          {
+            "speaker": "A",
+            "text": "Baking goes above transport, yes. But I commissioned the cake, so put commissioning first. Cut my end piece before revising the rest of the list."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D68-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D68",
+          "type": "drive",
+          "title": "More Power, More Problems",
+          "instruction": "Celebrate every burden, restriction, or crisis as evidence that your influence is expanding.",
+          "contentVersion": "0.10.0"
+        }
+      ],
+      "sourceRecordHash": "76589155ad598e3599c4a456476483897a666cb9724ba576c231e259f99390be",
+      "dialogueHash": "1eada5f0d97aaf79047cb17654ec0a2344404ba15a74b066df51092aede7c329",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Three more departments to cover! Put 'cross-department lead' on my schedule, please. We should record the expanded remit accurately."
+        },
+        {
+          "speaker": "B",
+          "text": "There's no extra budget. You'll have to borrow their meeting rooms."
+        },
+        {
+          "speaker": "A",
+          "text": "Excellent. A rotating departmental presence, not borrowed space. List each room under my remit, please."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll get a trolley for your files. We need your desk for the new receptionist."
+        },
+        {
+          "speaker": "A",
+          "text": "A mobile headquarters! Label it with all three departments, please. Full names, on both sides, so they know when headquarters has arrived."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D68-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "4d727e513e873ed97bab9324bf063ce40d2fc8099d05e1958c50fccc1325d68b",
+          "dialogueHash": "c8872d6eec4393cb1b7ba1e4e54680cd09a22a13fd83e88f5085721258b7a3bc",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D68-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "5753ec55c3d2162e474bade11f78550bb9d4dca493768b6c02443a2d5b6fe5b5",
+          "dialogueHash": "21f8dcb6e219304a4ef69ef9a3ce4b2e407a8be9a9b9baa1a661e215b5cc2ac2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D68-b",
+        "dialogueHash": "c519e39db3c125c2fbb55deb0d1018ca5b41b3b976a526fd83839e10f69bfaaf",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Another complaint about me! My influence now reaches the whole hotel. File it under my name, please, not 'general reception.'"
+          },
+          {
+            "speaker": "B",
+            "text": "I'm taking you off reception while I investigate."
+          },
+          {
+            "speaker": "A",
+            "text": "Excellent. Management attention as well. Record the investigation separately; we shouldn't confuse two levels of interest."
+          },
+          {
+            "speaker": "B",
+            "text": "You'll answer every complaint in writing from the laundry office."
+          },
+          {
+            "speaker": "A",
+            "text": "A correspondence operation in another department! Route all the letters there, please. Date order, not room order; I'll show laundry how to run a proper office."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D68-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D68",
+          "type": "drive",
+          "title": "More Power, More Problems",
+          "instruction": "Celebrate every burden, restriction, or crisis as evidence that your influence is expanding.",
+          "contentVersion": "0.10.0"
+        }
+      ],
+      "sourceRecordHash": "632ae86f5d219ace31805feb5e021a319856460ce76de29ddb6e6ce53df71218",
+      "dialogueHash": "c519e39db3c125c2fbb55deb0d1018ca5b41b3b976a526fd83839e10f69bfaaf",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Another complaint about me! My influence now reaches the whole hotel. File it under my name, please, not 'general reception.'"
+        },
+        {
+          "speaker": "B",
+          "text": "I'm taking you off reception while I investigate."
+        },
+        {
+          "speaker": "A",
+          "text": "Excellent. Management attention as well. Record the investigation separately; we shouldn't confuse two levels of interest."
+        },
+        {
+          "speaker": "B",
+          "text": "You'll answer every complaint in writing from the laundry office."
+        },
+        {
+          "speaker": "A",
+          "text": "A correspondence operation in another department! Route all the letters there, please. Date order, not room order; I'll show laundry how to run a proper office."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D68-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "4d727e513e873ed97bab9324bf063ce40d2fc8099d05e1958c50fccc1325d68b",
+          "dialogueHash": "c8872d6eec4393cb1b7ba1e4e54680cd09a22a13fd83e88f5085721258b7a3bc",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D68-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "5753ec55c3d2162e474bade11f78550bb9d4dca493768b6c02443a2d5b6fe5b5",
+          "dialogueHash": "21f8dcb6e219304a4ef69ef9a3ce4b2e407a8be9a9b9baa1a661e215b5cc2ac2",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D68-a",
+        "dialogueHash": "1eada5f0d97aaf79047cb17654ec0a2344404ba15a74b066df51092aede7c329",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Three more departments to cover! Put 'cross-department lead' on my schedule, please. We should record the expanded remit accurately."
+          },
+          {
+            "speaker": "B",
+            "text": "There's no extra budget. You'll have to borrow their meeting rooms."
+          },
+          {
+            "speaker": "A",
+            "text": "Excellent. A rotating departmental presence, not borrowed space. List each room under my remit, please."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll get a trolley for your files. We need your desk for the new receptionist."
+          },
+          {
+            "speaker": "A",
+            "text": "A mobile headquarters! Label it with all three departments, please. Full names, on both sides, so they know when headquarters has arrived."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D69-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D69",
+          "type": "drive",
+          "title": "Gracious Command",
+          "instruction": "Remain warm and appreciative while steadily reducing everyone else’s room to choose.",
+          "contentVersion": "0.10.0"
+        }
+      ],
+      "sourceRecordHash": "00134bcf9a4a20ba18563157724d156d9fbc440497693f588d5f26e7e9aa3a3a",
+      "dialogueHash": "8f21ab3f21b51e87b8cd3cfbdcbbb5b8b12584f9faca57c7e0d2bc0356bcb72e",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Thank you for finding reunion venues. We'll use my garden; you've given me exactly the information I needed."
+        },
+        {
+          "speaker": "B",
+          "text": "The hall has shelter if it rains."
+        },
+        {
+          "speaker": "A",
+          "text": "Excellent catch. I'll hire a gazebo for the garden. Keep the rain plan at the same address, please."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll keep the hall reservation as a backup."
+        },
+        {
+          "speaker": "A",
+          "text": "You're wonderfully thorough. Cancel it, please; two live bookings leave people guessing. Send everyone the garden address."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D69-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "27f25ef6bc66b99df34ef67d179bd454ea04ae4c195e2cc265894b1e1f9e3383",
+          "dialogueHash": "b2ebfff33eb73c27823a4f719107615b8fed4a86e213df429130f488aa9c40f3",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D69-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "5bdcef5532a4e2d23f997f375b44cb5a71ed718fda396f00a2ac3b4cc33c5680",
+          "dialogueHash": "7faa80102c32068d207dfd4651ea95c35d4196e9a4ef28153cc55e1f0b77b99b",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D69-b",
+        "dialogueHash": "4839d18e360a6551ba584b57fdd22eec8d131e2e9204f39c5b406efcabdafc44",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Thank you for helping me move. Would you rather pack books or plates? I'll show you the proper way for either."
+          },
+          {
+            "speaker": "B",
+            "text": "Books, please. I'm nervous about breaking china."
+          },
+          {
+            "speaker": "A",
+            "text": "That care is exactly what the plates need. Paper between each one, please; I'll take the books."
+          },
+          {
+            "speaker": "B",
+            "text": "Could I wrap them while you put them in boxes?"
+          },
+          {
+            "speaker": "A",
+            "text": "Lovely. The boxes are beside you; set the wrapped plates upright in them. I'll get the books downstairs so you have room to work. Thank you."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D69-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D69",
+          "type": "drive",
+          "title": "Gracious Command",
+          "instruction": "Remain warm and appreciative while steadily reducing everyone else’s room to choose.",
+          "contentVersion": "0.10.0"
+        }
+      ],
+      "sourceRecordHash": "908fa49edcb2049ccdf666b51e433f5002297c59629a7bab0ef8a2f663deeacc",
+      "dialogueHash": "4839d18e360a6551ba584b57fdd22eec8d131e2e9204f39c5b406efcabdafc44",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Thank you for helping me move. Would you rather pack books or plates? I'll show you the proper way for either."
+        },
+        {
+          "speaker": "B",
+          "text": "Books, please. I'm nervous about breaking china."
+        },
+        {
+          "speaker": "A",
+          "text": "That care is exactly what the plates need. Paper between each one, please; I'll take the books."
+        },
+        {
+          "speaker": "B",
+          "text": "Could I wrap them while you put them in boxes?"
+        },
+        {
+          "speaker": "A",
+          "text": "Lovely. The boxes are beside you; set the wrapped plates upright in them. I'll get the books downstairs so you have room to work. Thank you."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D69-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "27f25ef6bc66b99df34ef67d179bd454ea04ae4c195e2cc265894b1e1f9e3383",
+          "dialogueHash": "b2ebfff33eb73c27823a4f719107615b8fed4a86e213df429130f488aa9c40f3",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D69-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "5bdcef5532a4e2d23f997f375b44cb5a71ed718fda396f00a2ac3b4cc33c5680",
+          "dialogueHash": "7faa80102c32068d207dfd4651ea95c35d4196e9a4ef28153cc55e1f0b77b99b",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D69-a",
+        "dialogueHash": "8f21ab3f21b51e87b8cd3cfbdcbbb5b8b12584f9faca57c7e0d2bc0356bcb72e",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Thank you for finding reunion venues. We'll use my garden; you've given me exactly the information I needed."
+          },
+          {
+            "speaker": "B",
+            "text": "The hall has shelter if it rains."
+          },
+          {
+            "speaker": "A",
+            "text": "Excellent catch. I'll hire a gazebo for the garden. Keep the rain plan at the same address, please."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll keep the hall reservation as a backup."
+          },
+          {
+            "speaker": "A",
+            "text": "You're wonderfully thorough. Cancel it, please; two live bookings leave people guessing. Send everyone the garden address."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D70-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D70",
+          "type": "drive",
+          "title": "Access Has a Price",
+          "instruction": "Turn every piece of access, information, or approval into a favor, debt, or condition.",
+          "contentVersion": "0.10.0"
+        }
+      ],
+      "sourceRecordHash": "d00c999ffb2abe9ea0e2622d70d85d3a388d3b288a2abb89250dee5ed414391d",
+      "dialogueHash": "c2782aaf23e5dd2322e00327456d6556ec1903053845e2b4ce58c8c11c8546d0",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll unlock the storeroom if you cover my reception break. That's door access, please note, not a key loan."
+        },
+        {
+          "speaker": "B",
+          "text": "Someone spilled coffee in the lobby. Just tell me where the mop is."
+        },
+        {
+          "speaker": "A",
+          "text": "Behind the buckets. Information is five minutes of cover; opening the door is another ten. Please keep the two items separate."
+        },
+        {
+          "speaker": "B",
+          "text": "Lend me the key. I'll mop first, then cover your break."
+        },
+        {
+          "speaker": "A",
+          "text": "A key loan includes tomorrow's break. Add that to your offer, please. The fifteen minutes only gets the door opened."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D70-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "24aa88305942d4a4f9feed534cc83a07d1a15d01707c49bdfee701853cc88f74",
+          "dialogueHash": "41d612be388ba706b3c1bc308b23eb59bb6e126cee387392db60ac89aa495485",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D70-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "35659c2b6d6066fb4ebc391054eb9f39ed0bb57b500e5ec364edebb83d2f721c",
+          "dialogueHash": "645a40e72b941742e1bd662efdde352a4f6cfc9b6d6f8dbe34646b27d92ba6f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D70-b",
+        "dialogueHash": "0fd60ebd09a7ff7e4e8d34188b11088a957fd02505abdf64704a9722ca422d3e",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll introduce you to the curator if you hang my exhibition. Introduction only; let's be precise about the arrangement."
+          },
+          {
+            "speaker": "B",
+            "text": "I'll hang it Saturday. Can you send her portfolio requirements now?"
+          },
+          {
+            "speaker": "A",
+            "text": "That's submission advice. Collect my frames as well, please, and I'll send the requirements with the hanging plan."
+          },
+          {
+            "speaker": "B",
+            "text": "Fine. Give me her email; I'll ask her directly."
+          },
+          {
+            "speaker": "A",
+            "text": "Direct contact is the full package: hanging and taking down. Put Sunday in your diary before I send the address, please."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D70-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D70",
+          "type": "drive",
+          "title": "Access Has a Price",
+          "instruction": "Turn every piece of access, information, or approval into a favor, debt, or condition.",
+          "contentVersion": "0.10.0"
+        }
+      ],
+      "sourceRecordHash": "a2edfb7838da7b702919b847f0da6f34be6d6ef1c3a4d385b0066fabb8d124e0",
+      "dialogueHash": "0fd60ebd09a7ff7e4e8d34188b11088a957fd02505abdf64704a9722ca422d3e",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll introduce you to the curator if you hang my exhibition. Introduction only; let's be precise about the arrangement."
+        },
+        {
+          "speaker": "B",
+          "text": "I'll hang it Saturday. Can you send her portfolio requirements now?"
+        },
+        {
+          "speaker": "A",
+          "text": "That's submission advice. Collect my frames as well, please, and I'll send the requirements with the hanging plan."
+        },
+        {
+          "speaker": "B",
+          "text": "Fine. Give me her email; I'll ask her directly."
+        },
+        {
+          "speaker": "A",
+          "text": "Direct contact is the full package: hanging and taking down. Put Sunday in your diary before I send the address, please."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D70-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "24aa88305942d4a4f9feed534cc83a07d1a15d01707c49bdfee701853cc88f74",
+          "dialogueHash": "41d612be388ba706b3c1bc308b23eb59bb6e126cee387392db60ac89aa495485",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D70-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-003-part-001",
+          "recordHash": "35659c2b6d6066fb4ebc391054eb9f39ed0bb57b500e5ec364edebb83d2f721c",
+          "dialogueHash": "645a40e72b941742e1bd662efdde352a4f6cfc9b6d6f8dbe34646b27d92ba6f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D70-a",
+        "dialogueHash": "c2782aaf23e5dd2322e00327456d6556ec1903053845e2b4ce58c8c11c8546d0",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll unlock the storeroom if you cover my reception break. That's door access, please note, not a key loan."
+          },
+          {
+            "speaker": "B",
+            "text": "Someone spilled coffee in the lobby. Just tell me where the mop is."
+          },
+          {
+            "speaker": "A",
+            "text": "Behind the buckets. Information is five minutes of cover; opening the door is another ten. Please keep the two items separate."
+          },
+          {
+            "speaker": "B",
+            "text": "Lend me the key. I'll mop first, then cover your break."
+          },
+          {
+            "speaker": "A",
+            "text": "A key loan includes tomorrow's break. Add that to your offer, please. The fifteen minutes only gets the door opened."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

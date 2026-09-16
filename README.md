@@ -1,3 +1,5 @@
+> Current application: **0.26.0-preview.8 ? Basic and Advanced Play**. Basic chooses one private Stance or Drive; Advanced uses both. Run `npm.cmd start`. [Feature, migration, tests and two-device playtest](reports/basic-advanced-play/README.md). Authoring remains paused at [allowance-015](reports/local-candidates-015/README.md); no candidate dialogue was integrated. Historical notes below remain unchanged.
+
 > Current source: **0.26.0-preview.5**. S21–S30: twenty two-pass reviews, twelve revisions and eight retentions. Run npm start. See [status](CHECKPOINT-STATUS.md), [applied before/after report](docs/COACH-SINGLES-003-REVISIONS.md), and [verification](BUILD-VERIFICATION-v0.26.0-preview.5.md). Earlier release notes below are historical.
 
 > Current source: **0.26.0-preview.4**. S11–S20: twenty two-pass reviews, ten installed revisions. Run npm start; inspect the reviewed library at tools/checkpoint-example.html. See [status](CHECKPOINT-STATUS.md), [before/after report](docs/COACH-SINGLES-002-REVISIONS.md), and [verification](BUILD-VERIFICATION-v0.26.0-preview.4.md). Earlier release notes below are preserved as history.

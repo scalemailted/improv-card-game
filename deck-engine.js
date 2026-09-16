@@ -8,7 +8,7 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
   "use strict";
 
-  const STATE_VERSION = 5;
+  const STATE_VERSION = 6;
   const ALL_CATEGORIES = "all";
   const HINT_POLICIES = Object.freeze(["full", "nudges", "after-attempt", "off"]);
   const DEFAULT_HINT_POLICY = "full";
@@ -107,11 +107,40 @@
     return filter === ALL_CATEGORIES || categoriesFor(cards, type).includes(filter);
   }
 
+  function playSetup(value = {}) {
+    value = value || {};
+    return { playMode: value.playMode === "basic" ? "basic" : "advanced",
+      basicDeck: value.basicDeck === "drive" ? "drive" : "stance" };
+  }
+
+  function isPlaySetupUsable(value) {
+    return (!Object.hasOwn(value, "playMode") || ["basic", "advanced"].includes(value.playMode))
+      && (!Object.hasOwn(value, "basicDeck") || ["stance", "drive"].includes(value.basicDeck))
+      && (value.playMode !== "basic" || ["stance", "drive"].includes(value.basicDeck));
+  }
+
+  function requiredTypes(value) {
+    const setup = playSetup(value || {});
+    return setup.playMode === "basic" ? [setup.basicDeck] : ["stance", "drive"];
+  }
+
+  function setPlayPreference(state, playMode, basicDeck = "stance") {
+    if (!["basic", "advanced"].includes(playMode) || !["stance", "drive"].includes(basicDeck)) return false;
+    state.playPreference = { playMode, basicDeck };
+    state.updatedAt = nowIso();
+    return true;
+  }
+
+  function canComplete(state) {
+    return Boolean(state.current && requiredTypes(state.current).every(type => state.current[TYPE_CONFIG[type].currentKey] != null));
+  }
+
   function createState(cards, instanceId = createDeckId(), randomFn = secureRandom) {
     validateCards(cards);
     const createdAt = nowIso();
     return {
       version: STATE_VERSION,
+      playPreference: playSetup(),
       instanceId,
       library: librarySnapshot(cards),
       stanceQueue: shuffle(allIds(cards, "stance"), randomFn),
@@ -166,6 +195,7 @@
     const mode = selection.mode === "paired" ? "paired" : selection.mode === "mirror" ? "mirror" : "open";
     const roleId = mode === "paired" && selection.roleId === "b" ? "b" : mode === "paired" ? "a" : "all";
     return {
+      ...playSetup(selection),
       exerciseId: cleanText(selection.exerciseId, 80) || "open-play",
       exerciseVersion: Number.isInteger(selection.exerciseVersion) ? selection.exerciseVersion : 1,
       source: ["open", "preset", "custom"].includes(selection.source) ? selection.source : "custom",
@@ -191,6 +221,10 @@
       throw new Error("The current scene must be completed or discarded before starting another session.");
     }
     const normalized = normalizeSessionSelection(cards, selection);
+    if (normalized.playMode === "basic") {
+      const inactive = normalized.basicDeck === "stance" ? "drive" : "stance";
+      normalized[inactive + "Filter"] = state.drawFilters[inactive];
+    }
     const timestamp = nowIso();
     const session = {
       id: uniqueSessionId(state, randomFn),
@@ -255,6 +289,7 @@
     }
     const session = ensureSession(state, cards, randomFn);
     state.current = {
+      ...playSetup(session.exercise),
       sessionId: session.id,
       sceneNumber: session.scenesCompleted + 1,
       stanceId: null,
@@ -275,6 +310,7 @@
   }
 
   function setDrawFilter(state, cards, type, filter) {
+    if (state.current && !requiredTypes(state.current).includes(type)) return false;
     validateCards(cards);
     const config = configFor(type);
     if (!isValidFilter(cards, type, filter)) {
@@ -348,6 +384,7 @@
     validateCards(cards);
     const config = configFor(type);
     startScene(state, cards, randomFn);
+    if (!requiredTypes(state.current).includes(type)) return null;
     if (state.current[config.currentKey] !== null) {
       return state.current[config.currentKey];
     }
@@ -362,14 +399,13 @@
 
   function drawPair(state, cards, randomFn = secureRandom) {
     startScene(state, cards, randomFn);
-    drawCard(state, cards, "stance", randomFn);
-    drawCard(state, cards, "drive", randomFn);
+    for (const type of requiredTypes(state.current)) drawCard(state, cards, type, randomFn);
     return state.current;
   }
 
   function keepCard(state, type) {
     const config = TYPE_CONFIG[type];
-    if (!config || !state.current || state.current[config.currentKey] === null) {
+    if (!config || !state.current || !requiredTypes(state.current).includes(type) || state.current[config.currentKey] === null) {
       return false;
     }
     state.current[config.keptKey] = true;
@@ -508,6 +544,7 @@
     if (!config || !state.current || state.current[config.currentKey] === null) {
       return null;
     }
+    if (!requiredTypes(state.current).includes(type)) return null;
     const rejectedId = state.current[config.currentKey];
     const filter = state.current[config.filterKey];
     const replacementId = drawOneFiltered(state, cards, type, filter, randomFn, rejectedId);
@@ -547,6 +584,7 @@
   function snapshotExercise(session) {
     const exercise = session.exercise;
     return {
+      ...playSetup(exercise),
       sessionId: session.id,
       exerciseId: exercise.exerciseId,
       exerciseVersion: exercise.exerciseVersion,
@@ -568,6 +606,7 @@
     if (!state || !state.current) {
       return false;
     }
+    if (!canComplete(state)) return false;
     state.current.hintsUnlocked = true;
     state.updatedAt = nowIso();
     return true;
@@ -575,13 +614,13 @@
 
   function completeScene(state, cards) {
     validateCards(cards);
-    if (!state.current || state.current.stanceId === null || state.current.driveId === null) {
+    if (!canComplete(state)) {
       return false;
     }
     const session = sessionById(state, state.current.sessionId);
     const stance = findCard(cards, "stance", state.current.stanceId);
     const drive = findCard(cards, "drive", state.current.driveId);
-    if (!session || !stance || !drive) {
+    if (!session || requiredTypes(state.current).some(type => !findCard(cards, type, state.current[TYPE_CONFIG[type].currentKey]))) {
       return false;
     }
 
@@ -592,10 +631,9 @@
       sessionId: session.id,
       sceneNumber: state.current.sceneNumber,
       globalSceneNumber,
-      stanceId: stance.id,
-      driveId: drive.id,
-      stanceSnapshot: snapshotCard(stance),
-      driveSnapshot: snapshotCard(drive),
+      ...playSetup(state.current),
+      ...(stance ? { stanceId: stance.id, stanceSnapshot: snapshotCard(stance) } : {}),
+      ...(drive ? { driveId: drive.id, driveSnapshot: snapshotCard(drive) } : {}),
       stanceFilter: state.current.stanceFilter,
       driveFilter: state.current.driveFilter,
       stanceVetoes: state.current.stanceVetoes,
@@ -690,6 +728,7 @@
   function isSessionExerciseUsable(exercise, cards) {
     return Boolean(exercise)
       && typeof exercise === "object"
+      && isPlaySetupUsable(exercise)
       && typeof exercise.exerciseId === "string"
       && typeof exercise.name === "string"
       && ["open", "mirror", "paired"].includes(exercise.mode)
@@ -727,12 +766,12 @@
     if (!entry || typeof entry !== "object" || !sessionById(state, entry.sessionId)) {
       return false;
     }
-    return Number.isInteger(entry.sceneNumber)
+    return isPlaySetupUsable(entry)
+      && Number.isInteger(entry.sceneNumber)
       && entry.sceneNumber >= 1
       && Number.isInteger(entry.globalSceneNumber)
       && entry.globalSceneNumber >= 1
-      && isSnapshotUsable(entry.stanceSnapshot)
-      && isSnapshotUsable(entry.driveSnapshot)
+      && requiredTypes(entry).every(type => isSnapshotUsable(entry[type + "Snapshot"]))
       && isValidFilter(cards, "stance", entry.stanceFilter)
       && isValidFilter(cards, "drive", entry.driveFilter)
       && Number.isInteger(entry.stanceVetoes)
@@ -751,7 +790,9 @@
     }
     const stanceValid = current.stanceId === null || (stanceIds.has(current.stanceId) && !state.stanceQueue.includes(current.stanceId));
     const driveValid = current.driveId === null || (driveIds.has(current.driveId) && !state.driveQueue.includes(current.driveId));
-    return Number.isInteger(current.sceneNumber)
+    return isPlaySetupUsable(current)
+      && (current.playMode !== "basic" || current[current.basicDeck === "stance" ? "driveId" : "stanceId"] === null)
+      && Number.isInteger(current.sceneNumber)
       && current.sceneNumber >= 1
       && stanceValid
       && driveValid
@@ -797,6 +838,7 @@
     if (!state || typeof state !== "object" || state.version !== STATE_VERSION || typeof state.instanceId !== "string") {
       return false;
     }
+    if ((state.playPreference && !isPlaySetupUsable(state.playPreference)) || (state.nextPlaySetup && !isPlaySetupUsable(state.nextPlaySetup))) return false;
     if (expectedId && state.instanceId !== expectedId) {
       return false;
     }
@@ -869,6 +911,14 @@
 
   function migrateLegacyState(legacyState, cards, randomFn = secureRandom) {
     validateCards(cards);
+    if (legacyState && legacyState.version === 5) {
+      const migrated = JSON.parse(JSON.stringify(legacyState));
+      migrated.version = STATE_VERSION;
+      migrated.playPreference = playSetup();
+      // Missing scene/session/history mode is explicitly Advanced. Frozen snapshots stay intact.
+      reconcileStateWithLibrary(migrated, cards, randomFn);
+      return isStateUsable(migrated, cards, migrated.instanceId) ? migrated : null;
+    }
     if (!legacyState || typeof legacyState !== "object" || ![2, 3, 4].includes(legacyState.version)) {
       return null;
     }
@@ -999,6 +1049,10 @@
 
   return Object.freeze({
     STATE_VERSION,
+    playSetup,
+    requiredTypes,
+    setPlayPreference,
+    canComplete,
     ALL_CATEGORIES,
     HINT_POLICIES,
     DEFAULT_HINT_POLICY,

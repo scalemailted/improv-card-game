@@ -34,7 +34,7 @@
 
   const elements = {};
   [
-    "titleScreen", "menuScreen", "exercisesScreen", "exerciseDetailScreen", "customExerciseScreen",
+    "basicPlayButton", "advancedPlayButton", "basicChooser", "basicStanceButton", "basicDriveButton", "closeBasicChooser", "setupStatus", "titleScreen", "menuScreen", "exercisesScreen", "exerciseDetailScreen", "customExerciseScreen",
     "exerciseShareScreen", "joinExerciseScreen", "playScreen", "historyScreen", "learnScreen",
     "galleryScreen", "inviteScreen", "appFooter", "enterButton", "menuWordmark", "startSessionButton",
     "startSessionLabel", "startSessionDescription", "exercisesButton", "historyButton", "historyDescription",
@@ -121,7 +121,7 @@
   let galleryIndex = 0;
   let deferredInstallPrompt = null;
   let activeHintContext = null;
-  const revealed = { stance: false, drive: false };
+  const revealed = { stance: Boolean(state.current?.stanceKept), drive: Boolean(state.current?.driveKept) };
   let hintRequestSerial = 0;
   let exampleStorage = null;
   try { exampleStorage = window.localStorage; } catch (_) {}
@@ -524,7 +524,7 @@
   }
 
   function renderPlayCard(type) {
-    if (!state.current) {
+    if (!state.current || !engine.requiredTypes(state.current).includes(type)) {
       return;
     }
     const config = cardConfig(type);
@@ -577,7 +577,11 @@
       return;
     }
     const sceneNumber = state.current ? state.current.sceneNumber : session.scenesCompleted + 1;
-    elements.sceneLabel.textContent = `Scene ${sceneNumber}`;
+    const setup = engine.playSetup(state.current);
+    elements.sceneLabel.textContent = setup.playMode === "basic" ? `Basic · ${setup.basicDeck === "stance" ? "Stance" : "Drive"}` : `Advanced · Scene ${sceneNumber}`;
+    elements.playScreen.classList.toggle("basic-play", setup.playMode === "basic");
+    elements.driveHelpButton.hidden = setup.playMode === "basic";
+    for (const type of ["stance", "drive"]) elements[type + "CardWrap"].hidden = !engine.requiredTypes(state.current).includes(type);
     elements.playExerciseName.textContent = session.exercise.name;
     const roleText = session.exercise.mode === "paired"
       ? session.exercise.roleLabel
@@ -599,8 +603,8 @@
 
     elements.stanceNudgeButton.hidden = !(available && policy.allowsSingle && stanceReady);
     elements.driveNudgeButton.hidden = !(available && policy.allowsSingle && driveReady);
-    elements.combinationHintButton.hidden = !(available && policy.allowsCombination && stanceReady && driveReady);
-    elements.hintUnlockCard.hidden = !(hasScene && policy.requiresUnlock && !unlocked && stanceReady && driveReady);
+    elements.combinationHintButton.hidden = !(engine.playSetup(state.current).playMode === "advanced" && available && policy.allowsCombination && stanceReady && driveReady);
+    elements.hintUnlockCard.hidden = !(hasScene && policy.requiresUnlock && !unlocked && engine.requiredTypes(state.current).every(type => type === "stance" ? stanceReady : driveReady));
     elements.playHintActions.hidden = elements.combinationHintButton.hidden && elements.hintUnlockCard.hidden;
   }
 
@@ -627,6 +631,7 @@
 
   function hintRequestForContext() {
     if (!activeHintContext || !state.current || !hintsAvailableNow()) return null;
+    if (engine.playSetup(state.current).playMode === "basic" && (activeHintContext.kind !== "single" || activeHintContext.type !== state.current.basicDeck)) return null;
     const types = activeHintContext.kind === 'single' ? [activeHintContext.type] : ['stance','drive'];
     const entries = types.map(type => ({revealed: revealed[type] === true,
       card: engine.findCard(cards, type, state.current[cardConfig(type).currentKey])}));
@@ -744,15 +749,15 @@
   function exportExampleFeedback(){
     try{
       const flags=JSON.parse(window.localStorage.getItem('imprompt:example-feedback:v1')||'[]');
-      const file=new Blob([JSON.stringify({appVersion:'0.26.0-preview.7',datasetId:exampleManifest.datasetId,flags},null,2)],{type:'application/json'});
+      const file=new Blob([JSON.stringify({appVersion:'0.26.0-preview.8',datasetId:exampleManifest.datasetId,flags},null,2)],{type:'application/json'});
       const link=document.createElement('a'), url=URL.createObjectURL(file);link.href=url;link.download='imprompt-example-feedback.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
     }catch(error){elements.exampleStorageStatus.textContent=error.message;}
   }
 
   function renderCompleteButton() {
-    const canComplete = Boolean(state.current && state.current.stanceId !== null && state.current.driveId !== null);
+    const canComplete = engine.canComplete(state);
     elements.completeButton.disabled = !canComplete;
-    elements.completeButtonText.textContent = canComplete ? "Scene complete" : "Draw both cards first";
+    elements.completeButtonText.textContent = canComplete ? "Scene complete" : engine.playSetup(state.current).playMode === "basic" ? "Draw your card first" : "Draw both cards first";
   }
 
   function renderMenu() {
@@ -761,6 +766,10 @@
     const hasCurrent = Boolean(state.current);
     const drawnCount = hasCurrent ? Number(state.current.stanceId !== null) + Number(state.current.driveId !== null) : 0;
 
+    elements.startSessionButton.hidden = !session;
+    const preference = engine.playSetup(state.nextPlaySetup || state.playPreference);
+    for (const type of ["stance", "drive"]) elements["basic" + (type === "stance" ? "Stance" : "Drive") + "Button"].setAttribute("aria-pressed", String(preference.basicDeck === type));
+    elements.setupStatus.textContent = `${state.nextPlaySetup ? "Next scene" : "Last setup"}: ${preference.playMode === "basic" ? "Basic · " + (preference.basicDeck === "stance" ? "Stance" : "Drive") : "Advanced"}${state.current ? ". Resume keeps your current scene." : ""}`;
     elements.stancesRemaining.textContent = remaining.stances;
     elements.drivesRemaining.textContent = remaining.drives;
     elements.activeSessionSummary.hidden = !session;
@@ -788,7 +797,28 @@
       : `${session.exercise.name} · ready for scene ${nextScene}`;
   }
 
+  function choosePlay(playMode, basicDeck = "stance") {
+    engine.setPlayPreference(state, playMode, basicDeck);
+    state.nextPlaySetup = { playMode, basicDeck };
+    closeDialog(elements.basicChooser);
+    saveState();
+    if (state.current) {
+      render();
+      announce("Setup saved for the next scene. Resume keeps your current cards.");
+      return;
+    }
+    startOrResumeSession();
+  }
+
   function startOrResumeSession() {
+    if (!state.current && state.nextPlaySetup) {
+      const setup = state.nextPlaySetup;
+      const selection = exercises.createSessionSelection(exercises.OPEN_PLAY, "all");
+      engine.startSession(state, cards, { ...selection, ...setup,
+        stanceFilter: state.drawFilters.stance, driveFilter: state.drawFilters.drive,
+        name: setup.playMode === "basic" ? "Basic Play" : "Advanced Play" });
+      delete state.nextPlaySetup;
+    }
     if (!activeSession()) {
       beginExerciseSession(exercises.OPEN_PLAY, "all");
       return;
@@ -813,6 +843,7 @@
     }
 
     const start = () => {
+      delete state.nextPlaySetup;
       engine.startSession(state, cards, selection);
       engine.startScene(state, cards);
       revealed.stance = false;
@@ -1061,7 +1092,7 @@
     closeHintDialog();
     const entry = engine.completeScene(state, cards);
     if (!entry) {
-      announce("Draw both cards before completing the scene.");
+      announce("Draw the required cards before completing the scene.");
       return;
     }
     revealed.stance = false;
@@ -1707,13 +1738,13 @@
     const summaryCopy = document.createElement("span");
     summaryCopy.className = "history-entry-copy";
     const sceneName = document.createElement("strong");
-    sceneName.textContent = `Scene ${entry.sceneNumber}`;
+    sceneName.textContent = `Scene ${entry.sceneNumber} · ${engine.playSetup(entry).playMode === "basic" ? "Basic · " + (entry.basicDeck === "stance" ? "Stance" : "Drive") : "Advanced"}`;
     const completed = document.createElement("small");
     completed.textContent = formatHistoryDate(entry.completedAt);
     summaryCopy.append(sceneName, completed);
     const summaryCategories = document.createElement("span");
     summaryCategories.className = "history-category-pair";
-    for (const category of [entry.stanceSnapshot.category, entry.driveSnapshot.category]) {
+    for (const category of engine.requiredTypes(entry).map(type => entry[type + "Snapshot"].category)) {
       const dot = document.createElement("i");
       dot.dataset.category = categoryStyleFor(category).id;
       summaryCategories.append(dot);
@@ -1728,10 +1759,7 @@
     summary.append(summaryCopy, summaryCategories, chevron);
     const promptGrid = document.createElement("div");
     promptGrid.className = "history-prompt-grid";
-    promptGrid.append(
-      createHistoryPrompt("stance", entry.stanceSnapshot, entry.stanceVetoes),
-      createHistoryPrompt("drive", entry.driveSnapshot, entry.driveVetoes)
-    );
+    for (const type of engine.requiredTypes(entry)) promptGrid.append(createHistoryPrompt(type, entry[type + "Snapshot"], entry[type + "Vetoes"]));
     details.append(summary, promptGrid);
     return details;
   }
@@ -1843,12 +1871,12 @@
     const driveCategories = engine.categoriesFor(cards, "drive");
     const stanceFragment = document.createDocumentFragment();
     stanceCategories.forEach((category) => {
-      const count = entries.filter((entry) => entry.stanceSnapshot.category === category).length;
+      const count = entries.filter((entry) => entry.stanceSnapshot?.category === category).length;
       stanceFragment.append(createCoverageRow(category, count, entries.length));
     });
     const driveFragment = document.createDocumentFragment();
     driveCategories.forEach((category) => {
-      const count = entries.filter((entry) => entry.driveSnapshot.category === category).length;
+      const count = entries.filter((entry) => entry.driveSnapshot?.category === category).length;
       driveFragment.append(createCoverageRow(category, count, entries.length));
     });
     elements.stanceCoverageList.replaceChildren(stanceFragment);
@@ -2129,6 +2157,11 @@
   }
 
   function registerEvents() {
+    elements.basicPlayButton.addEventListener("click", () => openDialog(elements.basicChooser));
+    elements.advancedPlayButton.addEventListener("click", () => choosePlay("advanced"));
+    elements.basicStanceButton.addEventListener("click", () => choosePlay("basic", "stance"));
+    elements.basicDriveButton.addEventListener("click", () => choosePlay("basic", "drive"));
+    elements.closeBasicChooser.addEventListener("click", () => closeDialog(elements.basicChooser));
     elements.enterButton.addEventListener("click", () => setActiveView("menu"));
     elements.menuWordmark.addEventListener("click", (event) => { event.preventDefault(); setActiveView("title"); });
     elements.startSessionButton.addEventListener("click", startOrResumeSession);

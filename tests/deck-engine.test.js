@@ -20,7 +20,7 @@ assert.equal(new Set(cards.drives.map((card) => card.id)).size, 240, "Drive IDs 
 
 const random = seededRandom(1001);
 const state = engine.createState(cards, "ABCDEFGH", random);
-assert.equal(state.version, 5);
+assert.equal(state.version, 6);
 assert.equal(state.instanceId, "ABCDEFGH");
 assert.equal(engine.isStateUsable(state, cards, "ABCDEFGH"), true);
 assert.deepEqual(state.drawFilters, { stance: "all", drive: "all" });
@@ -519,7 +519,7 @@ const legacyState = {
 };
 const migrated = engine.migrateLegacyState(legacyState, cards, legacyRandom);
 assert.ok(migrated);
-assert.equal(migrated.version, 5);
+assert.equal(migrated.version, 6);
 assert.equal(migrated.sessions.length, 1);
 assert.equal(migrated.sessions[0].exercise.name, "Open Play");
 assert.equal(migrated.history.length, 1);

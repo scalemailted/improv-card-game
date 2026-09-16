@@ -1,0 +1,1443 @@
+{
+  "executionStatus": "not-executed",
+  "instructions": "Fresh review of each primary candidate: read dialogue first, then exact cards. Assess all six unchanged criteria and all coach-2.0 gates with turn-specific evidence. For pairs, show whether the Stance changes HOW A pursues the Drive in one interaction. Do not invent missing backstory or assume prior approval. Use the alternate only to assess meaningful differentiation. Report actual reservations. No writer scores or improvement claims are supplied.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S03+D206-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D206",
+          "type": "drive",
+          "title": "Not About Who Lost",
+          "instruction": "Keep the conversation focused on rules, effort, or next steps instead of the result that embarrasses you.",
+          "contentVersion": "0.16.0"
+        }
+      ],
+      "sourceRecordHash": "58cd0904bc5f44b3daf2afcdba680acec2993756182f7ae64163a04aad3a317c",
+      "dialogueHash": "f55c82a77a803681f72a7f8c2ce807210c2a9ef3b23c5b27520f451ce2eb42f3",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "For our quiz debrief, open a page headed 'preparation'. Leave the score sheet folded, please."
+        },
+        {
+          "speaker": "B",
+          "text": "Did we come last?"
+        },
+        {
+          "speaker": "A",
+          "text": "That's a result question. Start with the rounds we need to revise; geography first."
+        },
+        {
+          "speaker": "B",
+          "text": "I need the scores to see which round was worst."
+        },
+        {
+          "speaker": "A",
+          "text": "Use the questions we couldn't answer. List those countries before you assign any numbers; I don't want the debrief reduced to arithmetic."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D206-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "754cc2a26b44e881c79669109047a67336200cf3f7755fe486c80fb8838f2c9d",
+          "dialogueHash": "5e6254705963ce0487c610123ee4288c1eece85a7ad402c7f23d8f625f81625a",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D206-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "02abd8d0117c2209aef23678659c4945952dec1903164e8d0b6c21e9b1e52215",
+          "dialogueHash": "e193dd8e4dc88638f08cb3f2e0ae5f97b8ddf3d06eba604a44343c8ef1aebb32",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D206-b",
+        "dialogueHash": "98c49fe0adeedbea7a4074e845e2327582d004af37f0d14ab82772415c063c61",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "When we review my race, start with pacing. Please don't open with the finish order."
+          },
+          {
+            "speaker": "B",
+            "text": "You stopped halfway. There isn't a finishing time for you."
+          },
+          {
+            "speaker": "A",
+            "text": "Then don't compare unlike distances. Read my first-half split; we can adjust the training from that."
+          },
+          {
+            "speaker": "B",
+            "text": "The winner's first half was faster than yours too."
+          },
+          {
+            "speaker": "A",
+            "text": "Use my previous split, not the winner's. We're setting my training pace; please keep other people's finishing times out of the session."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D206-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D206",
+          "type": "drive",
+          "title": "Not About Who Lost",
+          "instruction": "Keep the conversation focused on rules, effort, or next steps instead of the result that embarrasses you.",
+          "contentVersion": "0.16.0"
+        }
+      ],
+      "sourceRecordHash": "efc67198d3897909d456dbff3cf63c8b9682a402f882cb40564e27742e52fb7a",
+      "dialogueHash": "98c49fe0adeedbea7a4074e845e2327582d004af37f0d14ab82772415c063c61",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "When we review my race, start with pacing. Please don't open with the finish order."
+        },
+        {
+          "speaker": "B",
+          "text": "You stopped halfway. There isn't a finishing time for you."
+        },
+        {
+          "speaker": "A",
+          "text": "Then don't compare unlike distances. Read my first-half split; we can adjust the training from that."
+        },
+        {
+          "speaker": "B",
+          "text": "The winner's first half was faster than yours too."
+        },
+        {
+          "speaker": "A",
+          "text": "Use my previous split, not the winner's. We're setting my training pace; please keep other people's finishing times out of the session."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D206-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "754cc2a26b44e881c79669109047a67336200cf3f7755fe486c80fb8838f2c9d",
+          "dialogueHash": "5e6254705963ce0487c610123ee4288c1eece85a7ad402c7f23d8f625f81625a",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D206-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "02abd8d0117c2209aef23678659c4945952dec1903164e8d0b6c21e9b1e52215",
+          "dialogueHash": "e193dd8e4dc88638f08cb3f2e0ae5f97b8ddf3d06eba604a44343c8ef1aebb32",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D206-a",
+        "dialogueHash": "f55c82a77a803681f72a7f8c2ce807210c2a9ef3b23c5b27520f451ce2eb42f3",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "For our quiz debrief, open a page headed 'preparation'. Leave the score sheet folded, please."
+          },
+          {
+            "speaker": "B",
+            "text": "Did we come last?"
+          },
+          {
+            "speaker": "A",
+            "text": "That's a result question. Start with the rounds we need to revise; geography first."
+          },
+          {
+            "speaker": "B",
+            "text": "I need the scores to see which round was worst."
+          },
+          {
+            "speaker": "A",
+            "text": "Use the questions we couldn't answer. List those countries before you assign any numbers; I don't want the debrief reduced to arithmetic."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D207-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D207",
+          "type": "drive",
+          "title": "Let Them Think They Won",
+          "instruction": "Protect someone’s confidence by hiding how much you softened the challenge, changed the terms, or withheld an advantage.",
+          "contentVersion": "0.16.0"
+        }
+      ],
+      "sourceRecordHash": "b6b6d23ac2a10cd94186c5de71d6a9195e3c2b7bf56864d718a14b74ca256d4e",
+      "dialogueHash": "a410f102994bf6cee164302315f02d9ca7cf13d8beb730c170d81d6a36b276c8",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Your first chess win. Leave the pieces where they are, please; I'll help you photograph the finish."
+        },
+        {
+          "speaker": "B",
+          "text": "You never moved your queen."
+        },
+        {
+          "speaker": "A",
+          "text": "We're recording the final position, not every move. Get my king and your checking piece in the picture."
+        },
+        {
+          "speaker": "B",
+          "text": "Did you leave the queen out so I'd finally win?"
+        },
+        {
+          "speaker": "A",
+          "text": "Check the king's escape squares before you call it a gift. Show me one it can reach. If you can't, write 'checkmate' under your photograph."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D207-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "bb7075c775ecf6a46f6f03ead84f0e0ec28086a2220e662866650830e20b059e",
+          "dialogueHash": "bb400f6a86239a226518a30e7668c75ae093f56fc6e8437f617fffde085a71b9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D207-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "bb88b97c69a622f607132ab3f7152ac1f5b9bce89a17b5c58bd8f5f6aa20e91c",
+          "dialogueHash": "1106d47619307ea91f556d4497e46ef00cbfd55349b63ec83a0900fb59b8a4ff",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D207-b",
+        "dialogueHash": "064db81124e9ca661f5b8b3ec59f8c8a9a881881b5877969af789942b325da93",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Well done, Mum. Put your cake beside the first-prize card; straight toward the camera, please."
+          },
+          {
+            "speaker": "B",
+            "text": "Where's your cake? You always enter."
+          },
+          {
+            "speaker": "A",
+            "text": "In the kitchen. Please arrange the entries that were judged; mine isn't part of this photograph."
+          },
+          {
+            "speaker": "B",
+            "text": "You kept it out so I could win."
+          },
+          {
+            "speaker": "A",
+            "text": "Count the other entries. Seven. Please name what you beat before subtracting something that wasn't entered; your card belongs beside your cake."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D207-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D207",
+          "type": "drive",
+          "title": "Let Them Think They Won",
+          "instruction": "Protect someone’s confidence by hiding how much you softened the challenge, changed the terms, or withheld an advantage.",
+          "contentVersion": "0.16.0"
+        }
+      ],
+      "sourceRecordHash": "f13ea930d4e683ce60f18a031308e4bac89afb3940b0b989e377a8d22c4791aa",
+      "dialogueHash": "064db81124e9ca661f5b8b3ec59f8c8a9a881881b5877969af789942b325da93",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Well done, Mum. Put your cake beside the first-prize card; straight toward the camera, please."
+        },
+        {
+          "speaker": "B",
+          "text": "Where's your cake? You always enter."
+        },
+        {
+          "speaker": "A",
+          "text": "In the kitchen. Please arrange the entries that were judged; mine isn't part of this photograph."
+        },
+        {
+          "speaker": "B",
+          "text": "You kept it out so I could win."
+        },
+        {
+          "speaker": "A",
+          "text": "Count the other entries. Seven. Please name what you beat before subtracting something that wasn't entered; your card belongs beside your cake."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D207-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "bb7075c775ecf6a46f6f03ead84f0e0ec28086a2220e662866650830e20b059e",
+          "dialogueHash": "bb400f6a86239a226518a30e7668c75ae093f56fc6e8437f617fffde085a71b9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D207-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "bb88b97c69a622f607132ab3f7152ac1f5b9bce89a17b5c58bd8f5f6aa20e91c",
+          "dialogueHash": "1106d47619307ea91f556d4497e46ef00cbfd55349b63ec83a0900fb59b8a4ff",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D207-a",
+        "dialogueHash": "a410f102994bf6cee164302315f02d9ca7cf13d8beb730c170d81d6a36b276c8",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Your first chess win. Leave the pieces where they are, please; I'll help you photograph the finish."
+          },
+          {
+            "speaker": "B",
+            "text": "You never moved your queen."
+          },
+          {
+            "speaker": "A",
+            "text": "We're recording the final position, not every move. Get my king and your checking piece in the picture."
+          },
+          {
+            "speaker": "B",
+            "text": "Did you leave the queen out so I'd finally win?"
+          },
+          {
+            "speaker": "A",
+            "text": "Check the king's escape squares before you call it a gift. Show me one it can reach. If you can't, write 'checkmate' under your photograph."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D208-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D208",
+          "type": "drive",
+          "title": "Admit What You Wanted",
+          "instruction": "Maneuver them into revealing which outcome they truly wanted before you explain your own stake.",
+          "contentVersion": "0.16.0"
+        }
+      ],
+      "sourceRecordHash": "b21c98d36105f085adcfa794d78401aa0af2cc3919c6440d30212215be00da87",
+      "dialogueHash": "9ec35beac08c20d1bcace94cd8fd2a4630c370a9efd3f3a87e4fadc7cdbe30ce",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before I tell you the club election result, name the candidate you hoped would win. Just one name, please."
+        },
+        {
+          "speaker": "B",
+          "text": "You look disappointed. Was it Martin?"
+        },
+        {
+          "speaker": "A",
+          "text": "That's a diagnosis of me, not your preference. Say who you wanted before you read anything into my face."
+        },
+        {
+          "speaker": "B",
+          "text": "Tell me your choice first. I don't want to upset you."
+        },
+        {
+          "speaker": "A",
+          "text": "Write yours down and turn the paper over. I'll give you my answer before we unfold it; please don't edit it once you've heard mine."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D208-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "6c60bf643bc36c5551f2e81b64841bc2cd7126025e9cd5b0f26c40081c2449c7",
+          "dialogueHash": "c956eb3847e0882d595ae20811ebd4290aaba64e52b83d38533f4063c3ddb84a",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D208-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "bedfeca794eea14c9a6df95a6c0983f0fc708bb04d62671364d54985b1e496f3",
+          "dialogueHash": "0f41935246765d6a47a87ccb62b95450b5c22f66d179aef4d1280d2f2729ea45",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D208-b",
+        "dialogueHash": "013289239f20ff1150b786997f55acda8ceb9a84933c9e5f892eddf6bd7f8eef",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Which job did you want me to take: the local school or the one in York? Answer before I show you my acceptance email."
+          },
+          {
+            "speaker": "B",
+            "text": "Whichever makes you happy."
+          },
+          {
+            "speaker": "A",
+            "text": "That describes my preference. I'm asking for yours; please choose a place, not a reason to agree with me."
+          },
+          {
+            "speaker": "B",
+            "text": "I don't want my answer to make you stay here."
+          },
+          {
+            "speaker": "A",
+            "text": "The choice is already sent. Please separate the decision from this question. York or here—which answer were you hoping to read?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D208-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D208",
+          "type": "drive",
+          "title": "Admit What You Wanted",
+          "instruction": "Maneuver them into revealing which outcome they truly wanted before you explain your own stake.",
+          "contentVersion": "0.16.0"
+        }
+      ],
+      "sourceRecordHash": "4d9a88137251f632c6f15bfbfd773a3326d328d33b6ede317b9abd5b0eaecbc5",
+      "dialogueHash": "013289239f20ff1150b786997f55acda8ceb9a84933c9e5f892eddf6bd7f8eef",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Which job did you want me to take: the local school or the one in York? Answer before I show you my acceptance email."
+        },
+        {
+          "speaker": "B",
+          "text": "Whichever makes you happy."
+        },
+        {
+          "speaker": "A",
+          "text": "That describes my preference. I'm asking for yours; please choose a place, not a reason to agree with me."
+        },
+        {
+          "speaker": "B",
+          "text": "I don't want my answer to make you stay here."
+        },
+        {
+          "speaker": "A",
+          "text": "The choice is already sent. Please separate the decision from this question. York or here—which answer were you hoping to read?"
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D208-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "6c60bf643bc36c5551f2e81b64841bc2cd7126025e9cd5b0f26c40081c2449c7",
+          "dialogueHash": "c956eb3847e0882d595ae20811ebd4290aaba64e52b83d38533f4063c3ddb84a",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D208-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "bedfeca794eea14c9a6df95a6c0983f0fc708bb04d62671364d54985b1e496f3",
+          "dialogueHash": "0f41935246765d6a47a87ccb62b95450b5c22f66d179aef4d1280d2f2729ea45",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D208-a",
+        "dialogueHash": "9ec35beac08c20d1bcace94cd8fd2a4630c370a9efd3f3a87e4fadc7cdbe30ce",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before I tell you the club election result, name the candidate you hoped would win. Just one name, please."
+          },
+          {
+            "speaker": "B",
+            "text": "You look disappointed. Was it Martin?"
+          },
+          {
+            "speaker": "A",
+            "text": "That's a diagnosis of me, not your preference. Say who you wanted before you read anything into my face."
+          },
+          {
+            "speaker": "B",
+            "text": "Tell me your choice first. I don't want to upset you."
+          },
+          {
+            "speaker": "A",
+            "text": "Write yours down and turn the paper over. I'll give you my answer before we unfold it; please don't edit it once you've heard mine."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D209-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D209",
+          "type": "drive",
+          "title": "Investment in the Next Round",
+          "instruction": "Describe defeat, penalty, or a bad bargain as a deliberate investment in a larger future win.",
+          "contentVersion": "0.16.0"
+        }
+      ],
+      "sourceRecordHash": "c1a6c742025017f9baad264753a4e07039b9f6cbdb81f8e5391bb0f1bdff7a69",
+      "dialogueHash": "3aa5d6169f8f691618ff1ff40cb07a25147656509516842684d797ab3956f8a9",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "File our lost baking-contest fee under research. Those judges' notes are our plan for a bigger win next year."
+        },
+        {
+          "speaker": "B",
+          "text": "We entered to win this year."
+        },
+        {
+          "speaker": "A",
+          "text": "This year bought the diagnosis. Please separate the trial from the target; highlight the soggy-base comments first."
+        },
+        {
+          "speaker": "B",
+          "text": "We can't afford another entry fee."
+        },
+        {
+          "speaker": "A",
+          "text": "Then use those notes on the cakes we sell. Start with the base, not decoration. We'll build the next entry fund from a tested recipe; don't file the notes away as a loss."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D209-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "ee479c36bf6bcc30ceb3622f226eeb9f7f593c0937992e01127c13201ac1fc37",
+          "dialogueHash": "c43eefdf2b5819fb7d5fe694254ba2e7b9c3ec8274d4cf5884585e39a2d8e10e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D209-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "d6447c8a2a59e0f138fdd70f6daa31c1ae48d7d83c9e23704440f7d829135170",
+          "dialogueHash": "9b530b29315a69490a96cb4efe185a652c2684a5028e3aa81a4950e374d45527",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D209-b",
+        "dialogueHash": "9966c475fa54bcf1e234c3db55ec6a0385d9f205c1f4a1e30ebfe833deb3eb83",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Selling our stall at a loss was research for one that can pay both our wages. Put the five hundred under preparation."
+          },
+          {
+            "speaker": "B",
+            "text": "Which market? We couldn't sell in this one."
+          },
+          {
+            "speaker": "A",
+            "text": "An indoor one. Please compare covered sites; our rain-day records tell us what not to pay for again."
+          },
+          {
+            "speaker": "B",
+            "text": "Covered stalls cost more. We have less money now."
+          },
+          {
+            "speaker": "A",
+            "text": "Ask for a one-day trial rate and attach those sales records. We paid five hundred to learn the conditions; let's use them to negotiate before we buy another full season."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D209-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D209",
+          "type": "drive",
+          "title": "Investment in the Next Round",
+          "instruction": "Describe defeat, penalty, or a bad bargain as a deliberate investment in a larger future win.",
+          "contentVersion": "0.16.0"
+        }
+      ],
+      "sourceRecordHash": "cb2355f3a16cbe8c38a665f976b501b6639b87896d55640f711243730eb5a314",
+      "dialogueHash": "9966c475fa54bcf1e234c3db55ec6a0385d9f205c1f4a1e30ebfe833deb3eb83",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Selling our stall at a loss was research for one that can pay both our wages. Put the five hundred under preparation."
+        },
+        {
+          "speaker": "B",
+          "text": "Which market? We couldn't sell in this one."
+        },
+        {
+          "speaker": "A",
+          "text": "An indoor one. Please compare covered sites; our rain-day records tell us what not to pay for again."
+        },
+        {
+          "speaker": "B",
+          "text": "Covered stalls cost more. We have less money now."
+        },
+        {
+          "speaker": "A",
+          "text": "Ask for a one-day trial rate and attach those sales records. We paid five hundred to learn the conditions; let's use them to negotiate before we buy another full season."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D209-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "ee479c36bf6bcc30ceb3622f226eeb9f7f593c0937992e01127c13201ac1fc37",
+          "dialogueHash": "c43eefdf2b5819fb7d5fe694254ba2e7b9c3ec8274d4cf5884585e39a2d8e10e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D209-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "d6447c8a2a59e0f138fdd70f6daa31c1ae48d7d83c9e23704440f7d829135170",
+          "dialogueHash": "9b530b29315a69490a96cb4efe185a652c2684a5028e3aa81a4950e374d45527",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D209-a",
+        "dialogueHash": "3aa5d6169f8f691618ff1ff40cb07a25147656509516842684d797ab3956f8a9",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "File our lost baking-contest fee under research. Those judges' notes are our plan for a bigger win next year."
+          },
+          {
+            "speaker": "B",
+            "text": "We entered to win this year."
+          },
+          {
+            "speaker": "A",
+            "text": "This year bought the diagnosis. Please separate the trial from the target; highlight the soggy-base comments first."
+          },
+          {
+            "speaker": "B",
+            "text": "We can't afford another entry fee."
+          },
+          {
+            "speaker": "A",
+            "text": "Then use those notes on the cakes we sell. Start with the base, not decoration. We'll build the next entry fund from a tested recipe; don't file the notes away as a loss."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D210-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D210",
+          "type": "drive",
+          "title": "I Know How to Win This",
+          "instruction": "Perform mastery of the rules, odds, and consequences while improvising every decision.",
+          "contentVersion": "0.16.0"
+        }
+      ],
+      "sourceRecordHash": "90ec72910d1c3fde23b7288ec7f4479c753e207a252a2626e071630c5d75827d",
+      "dialogueHash": "8bc3ca719f62c28ea2465eb2c1088fc6c7ae56f49ab73454cc24bea94280410a",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I know this board game. Horse into the lake first; leave the other pieces where they are while I set up."
+        },
+        {
+          "speaker": "B",
+          "text": "That's the scoring marker, not a horse. The blue space is zero."
+        },
+        {
+          "speaker": "A",
+          "text": "Then call it zero, please. I'm establishing the score before committing the playing pieces."
+        },
+        {
+          "speaker": "B",
+          "text": "The marker stays there. You're only allowed to move the red pieces."
+        },
+        {
+          "speaker": "A",
+          "text": "Red pieces, then. Hand me one at a time; don't disturb the marker. We've fixed the score, so now I can manage the opening."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D210-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "8f07fdd94766a1bb12e4e93a92918f2fd796f25a6f827213846941a27d9e0352",
+          "dialogueHash": "9887e2a101817196d67262553a24ca3ba4d3753fce51bf5c0a8f81362a6e7b98",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D210-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "2497917f604d2ac01bc00b00d33c52a9282082764f2c0cc5c6ba9f477f96a709",
+          "dialogueHash": "94c95b19c8f7682762bb8f2b86a4bd26a2871d2bb8aefa7d3796d6e51f55b82e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D210-b",
+        "dialogueHash": "b5128795ed351d748aecad656b95ab1b15384ae39f1c6e40a19ddfdc14cb8dd8",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've worked out the best raffle strategy: buy the last ticket. Hold one back while I assess the odds."
+          },
+          {
+            "speaker": "B",
+            "text": "There isn't a last-ticket advantage. We sell numbered tickets, then draw one."
+          },
+          {
+            "speaker": "A",
+            "text": "Purchase order isn't draw order; of course. Let me choose a number before you mix them."
+          },
+          {
+            "speaker": "B",
+            "text": "They're already shuffled. I hand you the next ticket from the pile."
+          },
+          {
+            "speaker": "A",
+            "text": "Then keep the pile as it is. Don't reshuffle just for me; that would change the conditions I've calculated. Give me the next one."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D210-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D210",
+          "type": "drive",
+          "title": "I Know How to Win This",
+          "instruction": "Perform mastery of the rules, odds, and consequences while improvising every decision.",
+          "contentVersion": "0.16.0"
+        }
+      ],
+      "sourceRecordHash": "d3d1edbece349ae980667c5cac139be3c25f4927be9eb2be4e8ba3c507a576c4",
+      "dialogueHash": "b5128795ed351d748aecad656b95ab1b15384ae39f1c6e40a19ddfdc14cb8dd8",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've worked out the best raffle strategy: buy the last ticket. Hold one back while I assess the odds."
+        },
+        {
+          "speaker": "B",
+          "text": "There isn't a last-ticket advantage. We sell numbered tickets, then draw one."
+        },
+        {
+          "speaker": "A",
+          "text": "Purchase order isn't draw order; of course. Let me choose a number before you mix them."
+        },
+        {
+          "speaker": "B",
+          "text": "They're already shuffled. I hand you the next ticket from the pile."
+        },
+        {
+          "speaker": "A",
+          "text": "Then keep the pile as it is. Don't reshuffle just for me; that would change the conditions I've calculated. Give me the next one."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D210-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "8f07fdd94766a1bb12e4e93a92918f2fd796f25a6f827213846941a27d9e0352",
+          "dialogueHash": "9887e2a101817196d67262553a24ca3ba4d3753fce51bf5c0a8f81362a6e7b98",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D210-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "2497917f604d2ac01bc00b00d33c52a9282082764f2c0cc5c6ba9f477f96a709",
+          "dialogueHash": "94c95b19c8f7682762bb8f2b86a4bd26a2871d2bb8aefa7d3796d6e51f55b82e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D210-a",
+        "dialogueHash": "8bc3ca719f62c28ea2465eb2c1088fc6c7ae56f49ab73454cc24bea94280410a",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I know this board game. Horse into the lake first; leave the other pieces where they are while I set up."
+          },
+          {
+            "speaker": "B",
+            "text": "That's the scoring marker, not a horse. The blue space is zero."
+          },
+          {
+            "speaker": "A",
+            "text": "Then call it zero, please. I'm establishing the score before committing the playing pieces."
+          },
+          {
+            "speaker": "B",
+            "text": "The marker stays there. You're only allowed to move the red pieces."
+          },
+          {
+            "speaker": "A",
+            "text": "Red pieces, then. Hand me one at a time; don't disturb the marker. We've fixed the score, so now I can manage the opening."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

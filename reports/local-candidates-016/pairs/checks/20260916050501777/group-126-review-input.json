@@ -1,0 +1,1443 @@
+{
+  "executionStatus": "not-executed",
+  "instructions": "Fresh review of each primary candidate: read dialogue first, then exact cards. Assess all six unchanged criteria and all coach-2.0 gates with turn-specific evidence. For pairs, show whether the Stance changes HOW A pursues the Drive in one interaction. Do not invent missing backstory or assume prior approval. Use the alternate only to assess meaningful differentiation. Report actual reservations. No writer scores or improvement claims are supplied.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S03+D141-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D141",
+          "type": "drive",
+          "title": "Warmly Withholding",
+          "instruction": "Remain open, caring, and reassuring while revealing less with every new question.",
+          "contentVersion": "0.13.0"
+        }
+      ],
+      "sourceRecordHash": "957118128799e14812f3ff4085e4df0c2330f761168c5e26be39e01c6a7aa7a5",
+      "dialogueHash": "e0cd7df10c0987e3d5a35dc89b84e05409666108bc979b830210a722f47d166d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've sorted your suspension with the headteacher, love. Put the calendar down; I'll take you through it."
+        },
+        {
+          "speaker": "B",
+          "text": "How many days should I mark off?"
+        },
+        {
+          "speaker": "A",
+          "text": "A little break. Don't mark an end date from a guess, sweetheart. Leave the calendar to me."
+        },
+        {
+          "speaker": "B",
+          "text": "Then tell me if I should cross out the school play."
+        },
+        {
+          "speaker": "A",
+          "text": "No crossing anything out. Come here, love. One thing at a time; I know how to get us through this."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D141-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "1cd56fe21e65dc5c0de2b19a6fdd18542848e6587e45dc56f7c56670fbe72817",
+          "dialogueHash": "ae94659d6ce3c99e4d4366a968d317eb5fbd11a5952540c107b07d4feb927b44",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D141-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "e41bc86cb0f5f8fd3fa24f498c7097dba01a50465566c0b2a8aabf3ae4c7b9fa",
+          "dialogueHash": "3ec64a389259b7354f0f65c86bb8b05e43757aeff557b4575c9bf58e5416e717",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D141-b",
+        "dialogueHash": "4f1622805e84433ac0bd3fa395bd040800eb8086449b17bfa7b19eefeab9438c",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Your wedding dress reached our depot this morning. Leave the collection to me; we'll get this sorted."
+          },
+          {
+            "speaker": "B",
+            "text": "Which depot? I can drive there."
+          },
+          {
+            "speaker": "A",
+            "text": "One of ours. Collection is arranged, not improvised. Stay here; I'll look after you."
+          },
+          {
+            "speaker": "B",
+            "text": "Could I ring and arrange it myself?"
+          },
+          {
+            "speaker": "A",
+            "text": "Let's not confuse matters by adding another voice, love. You're in good hands right here."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D141-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D141",
+          "type": "drive",
+          "title": "Warmly Withholding",
+          "instruction": "Remain open, caring, and reassuring while revealing less with every new question.",
+          "contentVersion": "0.13.0"
+        }
+      ],
+      "sourceRecordHash": "9d3933fc59d7f4926723c81c5dc3f5bd9941cf615c940c0be893f8af39ddad91",
+      "dialogueHash": "4f1622805e84433ac0bd3fa395bd040800eb8086449b17bfa7b19eefeab9438c",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Your wedding dress reached our depot this morning. Leave the collection to me; we'll get this sorted."
+        },
+        {
+          "speaker": "B",
+          "text": "Which depot? I can drive there."
+        },
+        {
+          "speaker": "A",
+          "text": "One of ours. Collection is arranged, not improvised. Stay here; I'll look after you."
+        },
+        {
+          "speaker": "B",
+          "text": "Could I ring and arrange it myself?"
+        },
+        {
+          "speaker": "A",
+          "text": "Let's not confuse matters by adding another voice, love. You're in good hands right here."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D141-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "1cd56fe21e65dc5c0de2b19a6fdd18542848e6587e45dc56f7c56670fbe72817",
+          "dialogueHash": "ae94659d6ce3c99e4d4366a968d317eb5fbd11a5952540c107b07d4feb927b44",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D141-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "e41bc86cb0f5f8fd3fa24f498c7097dba01a50465566c0b2a8aabf3ae4c7b9fa",
+          "dialogueHash": "3ec64a389259b7354f0f65c86bb8b05e43757aeff557b4575c9bf58e5416e717",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D141-a",
+        "dialogueHash": "e0cd7df10c0987e3d5a35dc89b84e05409666108bc979b830210a722f47d166d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've sorted your suspension with the headteacher, love. Put the calendar down; I'll take you through it."
+          },
+          {
+            "speaker": "B",
+            "text": "How many days should I mark off?"
+          },
+          {
+            "speaker": "A",
+            "text": "A little break. Don't mark an end date from a guess, sweetheart. Leave the calendar to me."
+          },
+          {
+            "speaker": "B",
+            "text": "Then tell me if I should cross out the school play."
+          },
+          {
+            "speaker": "A",
+            "text": "No crossing anything out. Come here, love. One thing at a time; I know how to get us through this."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D142-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D142",
+          "type": "drive",
+          "title": "Secrets Have Value",
+          "instruction": "Price every fact, introduction, warning, and confession as something that must be traded for equal value.",
+          "contentVersion": "0.13.0"
+        }
+      ],
+      "sourceRecordHash": "3e196347fb3698bb0531c6eb18ef86cd17255410fcb54001c6159907733d8789",
+      "dialogueHash": "f296d4bc4b4cab20a1bd3f013323c1fe7d3e5d0f0530e903f80255ffc688eab9",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll name whoever reported your lateness if you name whoever reported mine. One name each."
+        },
+        {
+          "speaker": "B",
+          "text": "I only know which department."
+        },
+        {
+          "speaker": "A",
+          "text": "A department isn't a name. We can reduce the exchange, but please be precise about what you're offering."
+        },
+        {
+          "speaker": "B",
+          "text": "Payroll. And I can introduce you to my source."
+        },
+        {
+          "speaker": "A",
+          "text": "Marketing. Now, an introduction is a separate trade. Shall we arrange coffee with both our sources?"
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D142-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "318a9cb35b1134225cd4851c74ab03a2b3532bb3d9ce11d6a6774960b65e3970",
+          "dialogueHash": "14d000ef6dd589b298a3a92192e844c2329f35e3ae2988d8b5649b29e06e98f1",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D142-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "19befa251e342e09c09240fe30379095f1b820e6c34630c875b6f8a4223123a2",
+          "dialogueHash": "9cacc7125a90575b281bdf30bcb21aea08b82c3093bb1f49bd00f68de1109dfa",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D142-b",
+        "dialogueHash": "dadd60d499c3a2ecb35f5ad5c21e559fd043a68c493a4d253553ea6dbf30691b",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll tell you why I took Mum's spare key. First, give me a confession worth a month's grounding."
+          },
+          {
+            "speaker": "B",
+            "text": "I dropped her mug."
+          },
+          {
+            "speaker": "A",
+            "text": "Accidental damage. That's a weekend at most. Think carefully; you need something deliberate."
+          },
+          {
+            "speaker": "B",
+            "text": "I lent her car to Jamie without asking."
+          },
+          {
+            "speaker": "A",
+            "text": "You can't lend what isn't yours. But yes, a month. I used the key to let Jamie move into her flat."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D142-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D142",
+          "type": "drive",
+          "title": "Secrets Have Value",
+          "instruction": "Price every fact, introduction, warning, and confession as something that must be traded for equal value.",
+          "contentVersion": "0.13.0"
+        }
+      ],
+      "sourceRecordHash": "293ffa850b31b90ca0988d0def52bd784f87d2ff7bf88bdabb22b5ce9d7f1f6f",
+      "dialogueHash": "dadd60d499c3a2ecb35f5ad5c21e559fd043a68c493a4d253553ea6dbf30691b",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll tell you why I took Mum's spare key. First, give me a confession worth a month's grounding."
+        },
+        {
+          "speaker": "B",
+          "text": "I dropped her mug."
+        },
+        {
+          "speaker": "A",
+          "text": "Accidental damage. That's a weekend at most. Think carefully; you need something deliberate."
+        },
+        {
+          "speaker": "B",
+          "text": "I lent her car to Jamie without asking."
+        },
+        {
+          "speaker": "A",
+          "text": "You can't lend what isn't yours. But yes, a month. I used the key to let Jamie move into her flat."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D142-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "318a9cb35b1134225cd4851c74ab03a2b3532bb3d9ce11d6a6774960b65e3970",
+          "dialogueHash": "14d000ef6dd589b298a3a92192e844c2329f35e3ae2988d8b5649b29e06e98f1",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D142-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "19befa251e342e09c09240fe30379095f1b820e6c34630c875b6f8a4223123a2",
+          "dialogueHash": "9cacc7125a90575b281bdf30bcb21aea08b82c3093bb1f49bd00f68de1109dfa",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D142-a",
+        "dialogueHash": "f296d4bc4b4cab20a1bd3f013323c1fe7d3e5d0f0530e903f80255ffc688eab9",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll name whoever reported your lateness if you name whoever reported mine. One name each."
+          },
+          {
+            "speaker": "B",
+            "text": "I only know which department."
+          },
+          {
+            "speaker": "A",
+            "text": "A department isn't a name. We can reduce the exchange, but please be precise about what you're offering."
+          },
+          {
+            "speaker": "B",
+            "text": "Payroll. And I can introduce you to my source."
+          },
+          {
+            "speaker": "A",
+            "text": "Marketing. Now, an introduction is a separate trade. Shall we arrange coffee with both our sources?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D143-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D143",
+          "type": "drive",
+          "title": "I Told You Enough",
+          "instruction": "Agree to be honest while repeatedly narrowing what honesty requires and which details count.",
+          "contentVersion": "0.13.0"
+        }
+      ],
+      "sourceRecordHash": "8b1889401d283598a75fe75f2172d329a88b4968226483d91d6e673e2619368a",
+      "dialogueHash": "6b62eadd956c48f4ae9965bb26c60a07ee2857834e1f1065e9c60130ec6c32f9",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll be honest about the missing donation box. Ask one question at a time, please."
+        },
+        {
+          "speaker": "B",
+          "text": "Did you take it to the bank?"
+        },
+        {
+          "speaker": "A",
+          "text": "Yes. Note that down before you confuse its location with its contents."
+        },
+        {
+          "speaker": "B",
+          "text": "Was the money still inside when you arrived?"
+        },
+        {
+          "speaker": "A",
+          "text": "At the car park, yes. Please specify which arrival. I can't give an accurate answer to an imprecise question."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D143-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "7a00325c2055192e4b111ae67158fdb659808ec08bf81b590caf13230ec78432",
+          "dialogueHash": "1240475a52694163e454c9bc94441b9d925418a085ebcada901001e33a0294f8",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D143-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "09328cdd5b32b8dbbcaf5f861830c1ebe75625a6588446f1fedd21950f32531f",
+          "dialogueHash": "2a395264b9b5764bdc3aa2c7ad1fba2c12abdd49cd3dbfc016b85fcaa4934981",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D143-b",
+        "dialogueHash": "a23d676be71b32638ecd34fe4b255ca96d3f8f3e6577a405bc8cd25e60726fcc",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll be honest about my birthday. When you rang, I was eating dinner alone. Please get that straight."
+          },
+          {
+            "speaker": "B",
+            "text": "Your brother posted a photo from our kitchen."
+          },
+          {
+            "speaker": "A",
+            "text": "He came for dessert. Dinner means the main course; don't muddle the two."
+          },
+          {
+            "speaker": "B",
+            "text": "He's beside you while you're carving the chicken."
+          },
+          {
+            "speaker": "A",
+            "text": "Carving isn't eating. Look at my mouth in the photograph. We can only settle this if you examine the evidence properly."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D143-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D143",
+          "type": "drive",
+          "title": "I Told You Enough",
+          "instruction": "Agree to be honest while repeatedly narrowing what honesty requires and which details count.",
+          "contentVersion": "0.13.0"
+        }
+      ],
+      "sourceRecordHash": "83d41cde44cc6139bf0353bb3e5436b445d3e3758a1fd7270859e6d60101b9c2",
+      "dialogueHash": "a23d676be71b32638ecd34fe4b255ca96d3f8f3e6577a405bc8cd25e60726fcc",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I'll be honest about my birthday. When you rang, I was eating dinner alone. Please get that straight."
+        },
+        {
+          "speaker": "B",
+          "text": "Your brother posted a photo from our kitchen."
+        },
+        {
+          "speaker": "A",
+          "text": "He came for dessert. Dinner means the main course; don't muddle the two."
+        },
+        {
+          "speaker": "B",
+          "text": "He's beside you while you're carving the chicken."
+        },
+        {
+          "speaker": "A",
+          "text": "Carving isn't eating. Look at my mouth in the photograph. We can only settle this if you examine the evidence properly."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D143-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "7a00325c2055192e4b111ae67158fdb659808ec08bf81b590caf13230ec78432",
+          "dialogueHash": "1240475a52694163e454c9bc94441b9d925418a085ebcada901001e33a0294f8",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D143-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "09328cdd5b32b8dbbcaf5f861830c1ebe75625a6588446f1fedd21950f32531f",
+          "dialogueHash": "2a395264b9b5764bdc3aa2c7ad1fba2c12abdd49cd3dbfc016b85fcaa4934981",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D143-a",
+        "dialogueHash": "6b62eadd956c48f4ae9965bb26c60a07ee2857834e1f1065e9c60130ec6c32f9",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I'll be honest about the missing donation box. Ask one question at a time, please."
+          },
+          {
+            "speaker": "B",
+            "text": "Did you take it to the bank?"
+          },
+          {
+            "speaker": "A",
+            "text": "Yes. Note that down before you confuse its location with its contents."
+          },
+          {
+            "speaker": "B",
+            "text": "Was the money still inside when you arrived?"
+          },
+          {
+            "speaker": "A",
+            "text": "At the car park, yes. Please specify which arrival. I can't give an accurate answer to an imprecise question."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D144-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D144",
+          "type": "drive",
+          "title": "The Conspiracy Expands",
+          "instruction": "Use every denial, coincidence, and missing detail as proof that more people and higher stakes are involved.",
+          "contentVersion": "0.13.0"
+        }
+      ],
+      "sourceRecordHash": "16fb37c6a487a275a7771ce6aae995661a77e1c3cf40b4c5a0e2df3cbdaeb492",
+      "dialogueHash": "6543164fe2deb20e570c575a3fd4d597131ba73a55993d21f568083b5b3a59f8",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "The toaster receipt's gone. The shop has someone inside this house. Don't touch the recycling until I've checked it."
+        },
+        {
+          "speaker": "B",
+          "text": "I probably put it in there. We can get a replacement receipt."
+        },
+        {
+          "speaker": "A",
+          "text": "Never replace evidence before examining it. The shop prints a new version while the collectors remove the original. Convenient."
+        },
+        {
+          "speaker": "B",
+          "text": "The shop's closed. I'll ask the traders' group when the manager's back."
+        },
+        {
+          "speaker": "A",
+          "text": "You'd alert their coordinating body. Please let me handle the enquiries before the whole high street knows we're onto them."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D144-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "111be26a23c1196fa922e30dbec78b428a94ac34cfe9af511c0429ef0a5087a2",
+          "dialogueHash": "9240b47bad64957fd6d2fe6a3e9e16046c9b3258a698124821cda3783d28450e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D144-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "2e1ccaf629bfc272e0e121be4993a99551d6e53a0f8a4ece60016ee9f98df073",
+          "dialogueHash": "1e1541ad566aaef69cd3ff99a63a5d8c21ca9ea0728cafe53b9f2ad048bf0e29",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D144-b",
+        "dialogueHash": "2a718d62c5c17ac6d64f78ece0bd8ff6e4436dd02c6141915d8ebb2bd4a029ba",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "You and your manager both say my train was cancelled. Give me your account separately; I've an interview to get to."
+          },
+          {
+            "speaker": "B",
+            "text": "The signal failed. It's on the public departure board."
+          },
+          {
+            "speaker": "A",
+            "text": "That's a shared source, not independent testimony. Who's operating the board? I'll need their part in this."
+          },
+          {
+            "speaker": "B",
+            "text": "The fault's delaying three counties. Nobody's singling you out."
+          },
+          {
+            "speaker": "A",
+            "text": "Then it needs a regional investigation. Don't classify this as a local complaint; they've stopped three counties to keep me from that job."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D144-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D144",
+          "type": "drive",
+          "title": "The Conspiracy Expands",
+          "instruction": "Use every denial, coincidence, and missing detail as proof that more people and higher stakes are involved.",
+          "contentVersion": "0.13.0"
+        }
+      ],
+      "sourceRecordHash": "454337da65c9f6040690bd4bd5162405cebc940889024841c4ac4f3c796202ce",
+      "dialogueHash": "2a718d62c5c17ac6d64f78ece0bd8ff6e4436dd02c6141915d8ebb2bd4a029ba",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "You and your manager both say my train was cancelled. Give me your account separately; I've an interview to get to."
+        },
+        {
+          "speaker": "B",
+          "text": "The signal failed. It's on the public departure board."
+        },
+        {
+          "speaker": "A",
+          "text": "That's a shared source, not independent testimony. Who's operating the board? I'll need their part in this."
+        },
+        {
+          "speaker": "B",
+          "text": "The fault's delaying three counties. Nobody's singling you out."
+        },
+        {
+          "speaker": "A",
+          "text": "Then it needs a regional investigation. Don't classify this as a local complaint; they've stopped three counties to keep me from that job."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D144-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "111be26a23c1196fa922e30dbec78b428a94ac34cfe9af511c0429ef0a5087a2",
+          "dialogueHash": "9240b47bad64957fd6d2fe6a3e9e16046c9b3258a698124821cda3783d28450e",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D144-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "2e1ccaf629bfc272e0e121be4993a99551d6e53a0f8a4ece60016ee9f98df073",
+          "dialogueHash": "1e1541ad566aaef69cd3ff99a63a5d8c21ca9ea0728cafe53b9f2ad048bf0e29",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D144-a",
+        "dialogueHash": "6543164fe2deb20e570c575a3fd4d597131ba73a55993d21f568083b5b3a59f8",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "The toaster receipt's gone. The shop has someone inside this house. Don't touch the recycling until I've checked it."
+          },
+          {
+            "speaker": "B",
+            "text": "I probably put it in there. We can get a replacement receipt."
+          },
+          {
+            "speaker": "A",
+            "text": "Never replace evidence before examining it. The shop prints a new version while the collectors remove the original. Convenient."
+          },
+          {
+            "speaker": "B",
+            "text": "The shop's closed. I'll ask the traders' group when the manager's back."
+          },
+          {
+            "speaker": "A",
+            "text": "You'd alert their coordinating body. Please let me handle the enquiries before the whole high street knows we're onto them."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D145-a",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D145",
+          "type": "drive",
+          "title": "Help Me Make This Normal",
+          "instruction": "Get someone to help perform the strange behavior until it feels ordinary.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "1d84f7d448a42c1277374291742dcf861fd70c504cc5b5922b42af57d4ef1d26",
+      "dialogueHash": "905aa0760b3b114de87c4a22bdb47c50f6f7ddd580b325b941f7e5e9c80dfd9d",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Please say good morning to the office fern. We all do it; I can show you the proper way."
+        },
+        {
+          "speaker": "B",
+          "text": "Good morning, fern. Now can I answer the phone?"
+        },
+        {
+          "speaker": "A",
+          "text": "Not while you're facing away. Give it your attention, finish the greeting, then take the call."
+        },
+        {
+          "speaker": "B",
+          "text": "The caller's on hold. Shall I say good morning for them too?"
+        },
+        {
+          "speaker": "A",
+          "text": "Ask them first. We don't put words in people's mouths. Then introduce them; the fern hasn't met everyone yet."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D145-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "6812ca1224712c0650a5de5898cc159928309d4f1bd454c5b4632a276d7263ee",
+          "dialogueHash": "6f9fa68549dd5f4764d3663830b92565051a58596a6bf8388f60b288f8e791cd",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D145-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "a95b4a1c2b2aca1c2878f9acb2596fcdb1b94bec1a5a872d1c1b9b32d68d8360",
+          "dialogueHash": "b310667b41f29be8618cc86dbfd5dfc29dbdb4b3c5ac3a57c99db5cbe687c388",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D145-b",
+        "dialogueHash": "4c184f7c235f6f4c396f11e4688b07d11d06fc9f11962aef2bd1e29b2a4ebbf3",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Our invisible dinner guest is here. Introduce Mum while I finish the gravy. I'll help if you get stuck."
+          },
+          {
+            "speaker": "B",
+            "text": "I can't see where to look."
+          },
+          {
+            "speaker": "A",
+            "text": "The chair beside you. Face our guest, please, not me."
+          },
+          {
+            "speaker": "B",
+            "text": "Hello, chair, this is Mum. She needs your seat."
+          },
+          {
+            "speaker": "A",
+            "text": "Introduce her to the guest, love. Then fetch another chair. We don't ask guests to stand just because Mum can't see them."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S03+D145-b",
+      "cards": [
+        {
+          "id": "S03",
+          "type": "stance",
+          "title": "The Only Professional",
+          "instruction": "Behave as the only qualified person present. Correct mistakes with patient, increasingly strained professionalism.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D145",
+          "type": "drive",
+          "title": "Help Me Make This Normal",
+          "instruction": "Get someone to help perform the strange behavior until it feels ordinary.",
+          "contentVersion": "0.14.0"
+        }
+      ],
+      "sourceRecordHash": "d1eedd750fa2e081ef3a48f32b358e92fcc826b98f32ed0bff94702456561ece",
+      "dialogueHash": "4c184f7c235f6f4c396f11e4688b07d11d06fc9f11962aef2bd1e29b2a4ebbf3",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Our invisible dinner guest is here. Introduce Mum while I finish the gravy. I'll help if you get stuck."
+        },
+        {
+          "speaker": "B",
+          "text": "I can't see where to look."
+        },
+        {
+          "speaker": "A",
+          "text": "The chair beside you. Face our guest, please, not me."
+        },
+        {
+          "speaker": "B",
+          "text": "Hello, chair, this is Mum. She needs your seat."
+        },
+        {
+          "speaker": "A",
+          "text": "Introduce her to the guest, love. Then fetch another chair. We don't ask guests to stand just because Mum can't see them."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S03-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "85cc351a5c7a7cd5a07049308cddd82158a79f85232c9912dee79b07f2bcff4c",
+          "dialogueHash": "10a41b30adf665099a57afffd092df466c9236c47a6f8c7c46cf75c781a697f0",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S03-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "0a2bc789ece568674cce1e7a95cd19f504a6477bd32217f12f20df3cfb15e8ad",
+          "dialogueHash": "f4ff2a65e79030fe48cca8d7ee64f46b7d713b781eeabda6e061a388b1f2ebf9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D145-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "6812ca1224712c0650a5de5898cc159928309d4f1bd454c5b4632a276d7263ee",
+          "dialogueHash": "6f9fa68549dd5f4764d3663830b92565051a58596a6bf8388f60b288f8e791cd",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D145-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-001-part-001",
+          "recordHash": "a95b4a1c2b2aca1c2878f9acb2596fcdb1b94bec1a5a872d1c1b9b32d68d8360",
+          "dialogueHash": "b310667b41f29be8618cc86dbfd5dfc29dbdb4b3c5ac3a57c99db5cbe687c388",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S03+D145-a",
+        "dialogueHash": "905aa0760b3b114de87c4a22bdb47c50f6f7ddd580b325b941f7e5e9c80dfd9d",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Please say good morning to the office fern. We all do it; I can show you the proper way."
+          },
+          {
+            "speaker": "B",
+            "text": "Good morning, fern. Now can I answer the phone?"
+          },
+          {
+            "speaker": "A",
+            "text": "Not while you're facing away. Give it your attention, finish the greeting, then take the call."
+          },
+          {
+            "speaker": "B",
+            "text": "The caller's on hold. Shall I say good morning for them too?"
+          },
+          {
+            "speaker": "A",
+            "text": "Ask them first. We don't put words in people's mouths. Then introduce them; the fern hasn't met everyone yet."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

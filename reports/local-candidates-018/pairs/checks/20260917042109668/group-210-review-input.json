@@ -1,0 +1,1443 @@
+{
+  "executionStatus": "not-executed",
+  "instructions": "Fresh review of each primary candidate: read dialogue first, then exact cards. Assess all six unchanged criteria and all coach-2.0 gates with turn-specific evidence. For pairs, show whether the Stance changes HOW A pursues the Drive in one interaction. Do not invent missing backstory or assume prior approval. Use the alternate only to assess meaningful differentiation. Report actual reservations. No writer scores or improvement claims are supplied.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S05+D81-a",
+      "cards": [
+        {
+          "id": "S05",
+          "type": "stance",
+          "title": "The Protégé Problem",
+          "instruction": "Treat another player as someone you trained. Offer corrections, backhanded praise, and reminders of your influence.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D81",
+          "type": "drive",
+          "title": "Acknowledge Our History",
+          "instruction": "Make someone recognize that the relationship, memory, or sacrifice mattered and cannot be treated as incidental.",
+          "contentVersion": "0.11.0"
+        }
+      ],
+      "sourceRecordHash": "670a03164e8cc5a136609b2526625c91ae2bc3f7a6fd416bb2f1dc7ee49ba773",
+      "dialogueHash": "cc35e64d94a1024840ff9a927ebc2bf08d284729c13ee86ded4325bb7999af6a",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Don't box our allotment photo yet. I taught you to grow those carrots; tell me that summer meant something."
+        },
+        {
+          "speaker": "B",
+          "text": "We grew three. I need the shelf."
+        },
+        {
+          "speaker": "A",
+          "text": "Good counting. Now count the mornings you got up to water them with me. You always used to skip the important column."
+        },
+        {
+          "speaker": "B",
+          "text": "I could put it on my desk at work."
+        },
+        {
+          "speaker": "A",
+          "text": "Would you? And when they laugh at three carrots, tell them about our mornings. You've learned to show the harvest; now show them why we kept going."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S05-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "92c15b60d68c5eea717020f6e0ed31a1c15fdbd7a31e91823bfa6cd59c4a2f83",
+          "dialogueHash": "f28f0a09f141feb68de09f35d2857ab521adee59582deee0c5fd9903cc5bd757",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S05-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "5e834a097c72d3fe2aad352d1969865dd75ab0be1fd01297aeff86880971bedb",
+          "dialogueHash": "44df3cace4d93b18e1bade1456fb794bfe84a899d30a9768f39c4d3e4a177eec",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D81-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "dc857d3abd2097ccc7b567385de66bbe2b2b22432df4c42936d99c3a4e4046c3",
+          "dialogueHash": "acef752ab8828df11fecbd91a14593861a09479d8ab63491dc03fda3583dfd10",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D81-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "58a8b4fcec3f1b91329093bcc9350705c4814a7c53e8f086bd27c466ce630460",
+          "dialogueHash": "7b5c1c63bdb5b929a24f4f1c57d9f7e8d95d438bfc2d2e11b9f3d43c46bbcfc5",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S05+D81-b",
+        "dialogueHash": "0db934a581daec01be782f20f66ca7e38666d24db899ba48d8c873353a8b1e68",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before you bin that ferry ticket, remember the overtime we worked. I taught you to keep the good bits, not just count what went wrong."
+          },
+          {
+            "speaker": "B",
+            "text": "We missed the ferry. I hate that reminder."
+          },
+          {
+            "speaker": "A",
+            "text": "You're still marking the journey instead of the weekend. We stayed together when we could have taken a refund."
+          },
+          {
+            "speaker": "B",
+            "text": "Keep the hotel receipt. That part was lovely."
+          },
+          {
+            "speaker": "A",
+            "text": "Good, you've found the part worth keeping. Write 'That was lovely' on its envelope, in your handwriting. I don't want to be the only one giving our weekend a good mark."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S05+D81-b",
+      "cards": [
+        {
+          "id": "S05",
+          "type": "stance",
+          "title": "The Protégé Problem",
+          "instruction": "Treat another player as someone you trained. Offer corrections, backhanded praise, and reminders of your influence.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D81",
+          "type": "drive",
+          "title": "Acknowledge Our History",
+          "instruction": "Make someone recognize that the relationship, memory, or sacrifice mattered and cannot be treated as incidental.",
+          "contentVersion": "0.11.0"
+        }
+      ],
+      "sourceRecordHash": "bd314057e6bd566a31755dd71ef457832b89f0578cfd1a78414b3c66c6842926",
+      "dialogueHash": "0db934a581daec01be782f20f66ca7e38666d24db899ba48d8c873353a8b1e68",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before you bin that ferry ticket, remember the overtime we worked. I taught you to keep the good bits, not just count what went wrong."
+        },
+        {
+          "speaker": "B",
+          "text": "We missed the ferry. I hate that reminder."
+        },
+        {
+          "speaker": "A",
+          "text": "You're still marking the journey instead of the weekend. We stayed together when we could have taken a refund."
+        },
+        {
+          "speaker": "B",
+          "text": "Keep the hotel receipt. That part was lovely."
+        },
+        {
+          "speaker": "A",
+          "text": "Good, you've found the part worth keeping. Write 'That was lovely' on its envelope, in your handwriting. I don't want to be the only one giving our weekend a good mark."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S05-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "92c15b60d68c5eea717020f6e0ed31a1c15fdbd7a31e91823bfa6cd59c4a2f83",
+          "dialogueHash": "f28f0a09f141feb68de09f35d2857ab521adee59582deee0c5fd9903cc5bd757",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S05-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "5e834a097c72d3fe2aad352d1969865dd75ab0be1fd01297aeff86880971bedb",
+          "dialogueHash": "44df3cace4d93b18e1bade1456fb794bfe84a899d30a9768f39c4d3e4a177eec",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D81-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "dc857d3abd2097ccc7b567385de66bbe2b2b22432df4c42936d99c3a4e4046c3",
+          "dialogueHash": "acef752ab8828df11fecbd91a14593861a09479d8ab63491dc03fda3583dfd10",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D81-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "58a8b4fcec3f1b91329093bcc9350705c4814a7c53e8f086bd27c466ce630460",
+          "dialogueHash": "7b5c1c63bdb5b929a24f4f1c57d9f7e8d95d438bfc2d2e11b9f3d43c46bbcfc5",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S05+D81-a",
+        "dialogueHash": "cc35e64d94a1024840ff9a927ebc2bf08d284729c13ee86ded4325bb7999af6a",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Don't box our allotment photo yet. I taught you to grow those carrots; tell me that summer meant something."
+          },
+          {
+            "speaker": "B",
+            "text": "We grew three. I need the shelf."
+          },
+          {
+            "speaker": "A",
+            "text": "Good counting. Now count the mornings you got up to water them with me. You always used to skip the important column."
+          },
+          {
+            "speaker": "B",
+            "text": "I could put it on my desk at work."
+          },
+          {
+            "speaker": "A",
+            "text": "Would you? And when they laugh at three carrots, tell them about our mornings. You've learned to show the harvest; now show them why we kept going."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S05+D82-a",
+      "cards": [
+        {
+          "id": "S05",
+          "type": "stance",
+          "title": "The Protégé Problem",
+          "instruction": "Treat another player as someone you trained. Offer corrections, backhanded praise, and reminders of your influence.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D82",
+          "type": "drive",
+          "title": "Choose the Relationship",
+          "instruction": "Make someone prioritize this connection over a competing person, promise, or opportunity.",
+          "contentVersion": "0.11.0"
+        }
+      ],
+      "sourceRecordHash": "d411c3e2f216515df26d2e4e30a6eb9ba91294965f991cd46760efa6e8cd7f9a",
+      "dialogueHash": "8ee6924762b1dfe3de6d3809ab754790d7e836a54f6cd0e2815adb42aaa591bf",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Let work ring. I taught you to keep appointments; we're supposed to be choosing our wedding vows."
+        },
+        {
+          "speaker": "B",
+          "text": "The client won't sign unless I'm there."
+        },
+        {
+          "speaker": "A",
+          "text": "You've become very reliable for clients. Can the person promising you a whole life have ten minutes first?"
+        },
+        {
+          "speaker": "B",
+          "text": "I'll ask Maya to cover. She'll want a reason."
+        },
+        {
+          "speaker": "A",
+          "text": "Tell her you're keeping an earlier promise. Put us in the calendar, like I showed you. I'd like to stop being the appointment you can erase without calling."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S05-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "92c15b60d68c5eea717020f6e0ed31a1c15fdbd7a31e91823bfa6cd59c4a2f83",
+          "dialogueHash": "f28f0a09f141feb68de09f35d2857ab521adee59582deee0c5fd9903cc5bd757",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S05-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "5e834a097c72d3fe2aad352d1969865dd75ab0be1fd01297aeff86880971bedb",
+          "dialogueHash": "44df3cace4d93b18e1bade1456fb794bfe84a899d30a9768f39c4d3e4a177eec",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D82-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "0da7245a02253fecd7eaf109b7effafb002363e068546ec49b6eb6e41fd1bf8f",
+          "dialogueHash": "1f49551649e44751fccc9df3dd421744d76dfac7cd2244940b2b9e972caf3479",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D82-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "75b7d3c90ba24e00950d50962cb11367293fb0e6d35941410d6299660aee007f",
+          "dialogueHash": "8bcfeed7e3e66e117428b9269aae35483639a8ebb0db12a9d9db05831b2f3800",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S05+D82-b",
+        "dialogueHash": "a24165272618a61fa4e6d8bc7f64a2a56b2f11a73e82255e1575d803a9529a60",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Stay home for the dumplings. I taught you to say no to invitations; try it on tonight's networking dinner."
+          },
+          {
+            "speaker": "B",
+            "text": "The director's coming. I could get promoted."
+          },
+          {
+            "speaker": "A",
+            "text": "You're very good at spotting an opportunity now. Could you spot the person who wants dinner with you?"
+          },
+          {
+            "speaker": "B",
+            "text": "Freeze them. We'll eat them tomorrow."
+          },
+          {
+            "speaker": "A",
+            "text": "That's what you said on our anniversary. Remember the short refusal we practised? 'I've already made a promise.' Call and use it. I'm asking you to keep this one with me."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S05+D82-b",
+      "cards": [
+        {
+          "id": "S05",
+          "type": "stance",
+          "title": "The Protégé Problem",
+          "instruction": "Treat another player as someone you trained. Offer corrections, backhanded praise, and reminders of your influence.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D82",
+          "type": "drive",
+          "title": "Choose the Relationship",
+          "instruction": "Make someone prioritize this connection over a competing person, promise, or opportunity.",
+          "contentVersion": "0.11.0"
+        }
+      ],
+      "sourceRecordHash": "bc2666946e61ed43ad42b00e5a38301c3c286f58f2aaa6bdf6adb6879fff052c",
+      "dialogueHash": "a24165272618a61fa4e6d8bc7f64a2a56b2f11a73e82255e1575d803a9529a60",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Stay home for the dumplings. I taught you to say no to invitations; try it on tonight's networking dinner."
+        },
+        {
+          "speaker": "B",
+          "text": "The director's coming. I could get promoted."
+        },
+        {
+          "speaker": "A",
+          "text": "You're very good at spotting an opportunity now. Could you spot the person who wants dinner with you?"
+        },
+        {
+          "speaker": "B",
+          "text": "Freeze them. We'll eat them tomorrow."
+        },
+        {
+          "speaker": "A",
+          "text": "That's what you said on our anniversary. Remember the short refusal we practised? 'I've already made a promise.' Call and use it. I'm asking you to keep this one with me."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S05-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "92c15b60d68c5eea717020f6e0ed31a1c15fdbd7a31e91823bfa6cd59c4a2f83",
+          "dialogueHash": "f28f0a09f141feb68de09f35d2857ab521adee59582deee0c5fd9903cc5bd757",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S05-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "5e834a097c72d3fe2aad352d1969865dd75ab0be1fd01297aeff86880971bedb",
+          "dialogueHash": "44df3cace4d93b18e1bade1456fb794bfe84a899d30a9768f39c4d3e4a177eec",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D82-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "0da7245a02253fecd7eaf109b7effafb002363e068546ec49b6eb6e41fd1bf8f",
+          "dialogueHash": "1f49551649e44751fccc9df3dd421744d76dfac7cd2244940b2b9e972caf3479",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D82-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "75b7d3c90ba24e00950d50962cb11367293fb0e6d35941410d6299660aee007f",
+          "dialogueHash": "8bcfeed7e3e66e117428b9269aae35483639a8ebb0db12a9d9db05831b2f3800",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S05+D82-a",
+        "dialogueHash": "8ee6924762b1dfe3de6d3809ab754790d7e836a54f6cd0e2815adb42aaa591bf",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Let work ring. I taught you to keep appointments; we're supposed to be choosing our wedding vows."
+          },
+          {
+            "speaker": "B",
+            "text": "The client won't sign unless I'm there."
+          },
+          {
+            "speaker": "A",
+            "text": "You've become very reliable for clients. Can the person promising you a whole life have ten minutes first?"
+          },
+          {
+            "speaker": "B",
+            "text": "I'll ask Maya to cover. She'll want a reason."
+          },
+          {
+            "speaker": "A",
+            "text": "Tell her you're keeping an earlier promise. Put us in the calendar, like I showed you. I'd like to stop being the appointment you can erase without calling."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S05+D83-a",
+      "cards": [
+        {
+          "id": "S05",
+          "type": "stance",
+          "title": "The Protégé Problem",
+          "instruction": "Treat another player as someone you trained. Offer corrections, backhanded praise, and reminders of your influence.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D83",
+          "type": "drive",
+          "title": "Remember Me Correctly",
+          "instruction": "Create small tests of whether someone remembers your preferences, stories, or shared history.",
+          "contentVersion": "0.11.0"
+        }
+      ],
+      "sourceRecordHash": "b2f5224bbebd941f6862b2306e8988a552ddf2d050ef6b566c563994d5f1d0b2",
+      "dialogueHash": "0bc9dbeeb32cb8478cf97ed971943133f84ebed2d256fb7467cfcfbb1e69d5d3",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Let's use what I taught you. Before you take the tea through, which cup is mine?"
+        },
+        {
+          "speaker": "B",
+          "text": "Can you just take one? Everyone's waiting."
+        },
+        {
+          "speaker": "A",
+          "text": "You're nearly doing it my way. Twelve years of breakfast together. Which one have I always used?"
+        },
+        {
+          "speaker": "B",
+          "text": "The blue one. Your name's underneath."
+        },
+        {
+          "speaker": "A",
+          "text": "Correct, but turn it upright. How much milk? I haven't written that on the handle."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S05-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "92c15b60d68c5eea717020f6e0ed31a1c15fdbd7a31e91823bfa6cd59c4a2f83",
+          "dialogueHash": "f28f0a09f141feb68de09f35d2857ab521adee59582deee0c5fd9903cc5bd757",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S05-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "5e834a097c72d3fe2aad352d1969865dd75ab0be1fd01297aeff86880971bedb",
+          "dialogueHash": "44df3cace4d93b18e1bade1456fb794bfe84a899d30a9768f39c4d3e4a177eec",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D83-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "a310e2db5a4f5a59651736d8b76c5cdfaa99784f1a252d3434efff2240d150b5",
+          "dialogueHash": "2f2edcaa3dfcca590a277d615740da117fa70756b828f0c57f67d6ea736c56f5",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D83-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "ebf92cfbd8678f80bc2faf86105ceddf637f3838239f923c55a5247d39351bb0",
+          "dialogueHash": "83cefa0ea132fe75d3a62811ffa277113129f5b30f240b6ab9fc38d89c85e425",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S05+D83-b",
+        "dialogueHash": "cb51feee64ae89854bcbac9cb929d332631ac21f4076ee20d1505295e4a137db",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Let's use what I taught you. Before you caption our holiday photo, what did I say when we missed that boat?"
+          },
+          {
+            "speaker": "B",
+            "text": "I remember you laughing. Not the words."
+          },
+          {
+            "speaker": "A",
+            "text": "You're nearly doing it my way. I'll start you off: 'Well, that's the last time we trust...'"
+          },
+          {
+            "speaker": "B",
+            "text": "Can I just write 'Happy memories'?"
+          },
+          {
+            "speaker": "A",
+            "text": "Let's try multiple choice. Your watch, my French, or the man selling us watches?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S05+D83-b",
+      "cards": [
+        {
+          "id": "S05",
+          "type": "stance",
+          "title": "The Protégé Problem",
+          "instruction": "Treat another player as someone you trained. Offer corrections, backhanded praise, and reminders of your influence.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D83",
+          "type": "drive",
+          "title": "Remember Me Correctly",
+          "instruction": "Create small tests of whether someone remembers your preferences, stories, or shared history.",
+          "contentVersion": "0.11.0"
+        }
+      ],
+      "sourceRecordHash": "71cb45013cb701c485891145ce6383766b3a5b26598b3267bbddef2c82b07159",
+      "dialogueHash": "cb51feee64ae89854bcbac9cb929d332631ac21f4076ee20d1505295e4a137db",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Let's use what I taught you. Before you caption our holiday photo, what did I say when we missed that boat?"
+        },
+        {
+          "speaker": "B",
+          "text": "I remember you laughing. Not the words."
+        },
+        {
+          "speaker": "A",
+          "text": "You're nearly doing it my way. I'll start you off: 'Well, that's the last time we trust...'"
+        },
+        {
+          "speaker": "B",
+          "text": "Can I just write 'Happy memories'?"
+        },
+        {
+          "speaker": "A",
+          "text": "Let's try multiple choice. Your watch, my French, or the man selling us watches?"
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S05-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "92c15b60d68c5eea717020f6e0ed31a1c15fdbd7a31e91823bfa6cd59c4a2f83",
+          "dialogueHash": "f28f0a09f141feb68de09f35d2857ab521adee59582deee0c5fd9903cc5bd757",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S05-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "5e834a097c72d3fe2aad352d1969865dd75ab0be1fd01297aeff86880971bedb",
+          "dialogueHash": "44df3cace4d93b18e1bade1456fb794bfe84a899d30a9768f39c4d3e4a177eec",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D83-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "a310e2db5a4f5a59651736d8b76c5cdfaa99784f1a252d3434efff2240d150b5",
+          "dialogueHash": "2f2edcaa3dfcca590a277d615740da117fa70756b828f0c57f67d6ea736c56f5",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D83-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "ebf92cfbd8678f80bc2faf86105ceddf637f3838239f923c55a5247d39351bb0",
+          "dialogueHash": "83cefa0ea132fe75d3a62811ffa277113129f5b30f240b6ab9fc38d89c85e425",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S05+D83-a",
+        "dialogueHash": "0bc9dbeeb32cb8478cf97ed971943133f84ebed2d256fb7467cfcfbb1e69d5d3",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Let's use what I taught you. Before you take the tea through, which cup is mine?"
+          },
+          {
+            "speaker": "B",
+            "text": "Can you just take one? Everyone's waiting."
+          },
+          {
+            "speaker": "A",
+            "text": "You're nearly doing it my way. Twelve years of breakfast together. Which one have I always used?"
+          },
+          {
+            "speaker": "B",
+            "text": "The blue one. Your name's underneath."
+          },
+          {
+            "speaker": "A",
+            "text": "Correct, but turn it upright. How much milk? I haven't written that on the handle."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S05+D84-a",
+      "cards": [
+        {
+          "id": "S05",
+          "type": "stance",
+          "title": "The Protégé Problem",
+          "instruction": "Treat another player as someone you trained. Offer corrections, backhanded praise, and reminders of your influence.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D84",
+          "type": "drive",
+          "title": "Let Go of the Grudge",
+          "instruction": "Persuade someone to surrender resentment, distance, or a claim that keeps the relationship stuck.",
+          "contentVersion": "0.11.0"
+        }
+      ],
+      "sourceRecordHash": "ed897337af21953e8f62b035232dabf35c1ca73c4e8941ea97ed16e6dd7e1aec",
+      "dialogueHash": "f5acc6823ad1495f49a5190baa4ad63ba96a853a6c1fd327376a9a911dc2c07a",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Sit beside me at dinner. I taught you to project on stage; you don't have to project your anger from the other end of the table."
+        },
+        {
+          "speaker": "B",
+          "text": "You left a seat empty at my opening. You can have one tonight."
+        },
+        {
+          "speaker": "A",
+          "text": "Finally, you remember where everyone was sitting. I deserved that. Now come and tell me what I missed instead of leaving another gap."
+        },
+        {
+          "speaker": "B",
+          "text": "I'm going to tell you every scene."
+        },
+        {
+          "speaker": "A",
+          "text": "Please do. Move your plate here. You used to rush the difficult bits; take your time tonight. I'd rather hear all of it beside you than eat with your empty chair."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S05-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "92c15b60d68c5eea717020f6e0ed31a1c15fdbd7a31e91823bfa6cd59c4a2f83",
+          "dialogueHash": "f28f0a09f141feb68de09f35d2857ab521adee59582deee0c5fd9903cc5bd757",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S05-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "5e834a097c72d3fe2aad352d1969865dd75ab0be1fd01297aeff86880971bedb",
+          "dialogueHash": "44df3cace4d93b18e1bade1456fb794bfe84a899d30a9768f39c4d3e4a177eec",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D84-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "9bc3e3bf92a2843f0903c21911b551ff301d6e1ed180099853d244cc8ffb385f",
+          "dialogueHash": "bae535e32b9437526e67cf23579a9ab1831037f24e9e3efd5753a91d53ac7e18",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D84-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "82b1248dea9dbd1048d2375a779b0b057fa36bc401833078e75672749b80c81a",
+          "dialogueHash": "38730eb95627cc701647bdf2e808573cd2b1342626f46e61ebf0b31f85c0b21d",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S05+D84-b",
+        "dialogueHash": "e88c197598afb357b79ef6be13eb1acc7ede8bba213947b878e2e32e9ae0d1d3",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Let me help you move. I taught you to wrap a glass; surely you can trust me with one box, even after I missed your birthday."
+          },
+          {
+            "speaker": "B",
+            "text": "I needed you then. You didn't come."
+          },
+          {
+            "speaker": "A",
+            "text": "I know. You're right to be careful. Give your teacher one chance to do the careful part now."
+          },
+          {
+            "speaker": "B",
+            "text": "The birthday glasses. I wrapped them for the move. They never got used, since nobody came."
+          },
+          {
+            "speaker": "A",
+            "text": "Neatly wrapped—you did remember. I'll carry them exactly as I showed you. At the new place, could we unwrap two together instead of keeping the whole birthday packed away?"
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S05+D84-b",
+      "cards": [
+        {
+          "id": "S05",
+          "type": "stance",
+          "title": "The Protégé Problem",
+          "instruction": "Treat another player as someone you trained. Offer corrections, backhanded praise, and reminders of your influence.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D84",
+          "type": "drive",
+          "title": "Let Go of the Grudge",
+          "instruction": "Persuade someone to surrender resentment, distance, or a claim that keeps the relationship stuck.",
+          "contentVersion": "0.11.0"
+        }
+      ],
+      "sourceRecordHash": "c02d0690c0cb40a5980c3f71f4dbc99a154d009d483e31ccf60cfc2068b8f8d6",
+      "dialogueHash": "e88c197598afb357b79ef6be13eb1acc7ede8bba213947b878e2e32e9ae0d1d3",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Let me help you move. I taught you to wrap a glass; surely you can trust me with one box, even after I missed your birthday."
+        },
+        {
+          "speaker": "B",
+          "text": "I needed you then. You didn't come."
+        },
+        {
+          "speaker": "A",
+          "text": "I know. You're right to be careful. Give your teacher one chance to do the careful part now."
+        },
+        {
+          "speaker": "B",
+          "text": "The birthday glasses. I wrapped them for the move. They never got used, since nobody came."
+        },
+        {
+          "speaker": "A",
+          "text": "Neatly wrapped—you did remember. I'll carry them exactly as I showed you. At the new place, could we unwrap two together instead of keeping the whole birthday packed away?"
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S05-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "92c15b60d68c5eea717020f6e0ed31a1c15fdbd7a31e91823bfa6cd59c4a2f83",
+          "dialogueHash": "f28f0a09f141feb68de09f35d2857ab521adee59582deee0c5fd9903cc5bd757",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S05-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "5e834a097c72d3fe2aad352d1969865dd75ab0be1fd01297aeff86880971bedb",
+          "dialogueHash": "44df3cace4d93b18e1bade1456fb794bfe84a899d30a9768f39c4d3e4a177eec",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D84-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "9bc3e3bf92a2843f0903c21911b551ff301d6e1ed180099853d244cc8ffb385f",
+          "dialogueHash": "bae535e32b9437526e67cf23579a9ab1831037f24e9e3efd5753a91d53ac7e18",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D84-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "82b1248dea9dbd1048d2375a779b0b057fa36bc401833078e75672749b80c81a",
+          "dialogueHash": "38730eb95627cc701647bdf2e808573cd2b1342626f46e61ebf0b31f85c0b21d",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S05+D84-a",
+        "dialogueHash": "f5acc6823ad1495f49a5190baa4ad63ba96a853a6c1fd327376a9a911dc2c07a",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Sit beside me at dinner. I taught you to project on stage; you don't have to project your anger from the other end of the table."
+          },
+          {
+            "speaker": "B",
+            "text": "You left a seat empty at my opening. You can have one tonight."
+          },
+          {
+            "speaker": "A",
+            "text": "Finally, you remember where everyone was sitting. I deserved that. Now come and tell me what I missed instead of leaving another gap."
+          },
+          {
+            "speaker": "B",
+            "text": "I'm going to tell you every scene."
+          },
+          {
+            "speaker": "A",
+            "text": "Please do. Move your plate here. You used to rush the difficult bits; take your time tonight. I'd rather hear all of it beside you than eat with your empty chair."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S05+D85-a",
+      "cards": [
+        {
+          "id": "S05",
+          "type": "stance",
+          "title": "The Protégé Problem",
+          "instruction": "Treat another player as someone you trained. Offer corrections, backhanded praise, and reminders of your influence.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D85",
+          "type": "drive",
+          "title": "I Pulled Away First",
+          "instruction": "Hide your role in creating the distance while working urgently to repair it.",
+          "contentVersion": "0.11.0"
+        }
+      ],
+      "sourceRecordHash": "74f6311a1f49ff75d9a34d77302e337983c0705c4b742ab1ecba73206144f16f",
+      "dialogueHash": "c7783c19376c09d811b2c3cd8e54647213427ab3f41a347e499157dc75e2a76e",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Before your taxi comes, let's write to each other again. I've brought the paper I taught you to use for proper letters."
+        },
+        {
+          "speaker": "B",
+          "text": "You never answered my last three."
+        },
+        {
+          "speaker": "A",
+          "text": "The post's hopeless. You still send things and assume they've arrived. We'll write here and hand them over."
+        },
+        {
+          "speaker": "B",
+          "text": "I handed you the last one."
+        },
+        {
+          "speaker": "A",
+          "text": "Good, you remembered that lesson. Sit down; I'll show you how to start a fresh one. You won't leave without a whole page from me this time."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S05-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "92c15b60d68c5eea717020f6e0ed31a1c15fdbd7a31e91823bfa6cd59c4a2f83",
+          "dialogueHash": "f28f0a09f141feb68de09f35d2857ab521adee59582deee0c5fd9903cc5bd757",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S05-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "5e834a097c72d3fe2aad352d1969865dd75ab0be1fd01297aeff86880971bedb",
+          "dialogueHash": "44df3cace4d93b18e1bade1456fb794bfe84a899d30a9768f39c4d3e4a177eec",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D85-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "7ea38ac639d8049c7bc8b21655733dd83fddaa1b99d2315bccb671d6e9bdf803",
+          "dialogueHash": "dc821cc8574a0c7e4dcc9df7dd4fea50d70e3083df8a1bdc5f564d79b723de4d",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D85-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "4c174f16b914f32eb63384c1099d3b85b0b4b18b1c32059df61d646f09d11346",
+          "dialogueHash": "0dce7a0df011c4e6b515931e32918818edfc67e9c7534fbc9ba1550788093382",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S05+D85-b",
+        "dialogueHash": "b96e68a700d8d69813efbc65567e16797e122adf8bdc3c6cbcef67ba9f8c61e4",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Here's a new key. Come in; I've made your favourite lunch. Remember the kitchen routine I taught you?"
+          },
+          {
+            "speaker": "B",
+            "text": "You changed the lock without telling me."
+          },
+          {
+            "speaker": "A",
+            "text": "This one does both doors. You're good at checking details now; try it before lunch gets cold."
+          },
+          {
+            "speaker": "B",
+            "text": "I stood outside on my birthday."
+          },
+          {
+            "speaker": "A",
+            "text": "Then I'll find candles. Let yourself in and set two places, like I showed you. You're finally going to get the birthday lunch properly; come on, it's ready."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S05+D85-b",
+      "cards": [
+        {
+          "id": "S05",
+          "type": "stance",
+          "title": "The Protégé Problem",
+          "instruction": "Treat another player as someone you trained. Offer corrections, backhanded praise, and reminders of your influence.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D85",
+          "type": "drive",
+          "title": "I Pulled Away First",
+          "instruction": "Hide your role in creating the distance while working urgently to repair it.",
+          "contentVersion": "0.11.0"
+        }
+      ],
+      "sourceRecordHash": "ed3f7b3722f28cf87961f5c50c05c5e37e0ad9113f8255462621bacc59039d46",
+      "dialogueHash": "b96e68a700d8d69813efbc65567e16797e122adf8bdc3c6cbcef67ba9f8c61e4",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "Here's a new key. Come in; I've made your favourite lunch. Remember the kitchen routine I taught you?"
+        },
+        {
+          "speaker": "B",
+          "text": "You changed the lock without telling me."
+        },
+        {
+          "speaker": "A",
+          "text": "This one does both doors. You're good at checking details now; try it before lunch gets cold."
+        },
+        {
+          "speaker": "B",
+          "text": "I stood outside on my birthday."
+        },
+        {
+          "speaker": "A",
+          "text": "Then I'll find candles. Let yourself in and set two places, like I showed you. You're finally going to get the birthday lunch properly; come on, it's ready."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S05-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "92c15b60d68c5eea717020f6e0ed31a1c15fdbd7a31e91823bfa6cd59c4a2f83",
+          "dialogueHash": "f28f0a09f141feb68de09f35d2857ab521adee59582deee0c5fd9903cc5bd757",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S05-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "5e834a097c72d3fe2aad352d1969865dd75ab0be1fd01297aeff86880971bedb",
+          "dialogueHash": "44df3cace4d93b18e1bade1456fb794bfe84a899d30a9768f39c4d3e4a177eec",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D85-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "7ea38ac639d8049c7bc8b21655733dd83fddaa1b99d2315bccb671d6e9bdf803",
+          "dialogueHash": "dc821cc8574a0c7e4dcc9df7dd4fea50d70e3083df8a1bdc5f564d79b723de4d",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D85-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-006.batch-005-part-001",
+          "recordHash": "4c174f16b914f32eb63384c1099d3b85b0b4b18b1c32059df61d646f09d11346",
+          "dialogueHash": "0dce7a0df011c4e6b515931e32918818edfc67e9c7534fbc9ba1550788093382",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S05+D85-a",
+        "dialogueHash": "c7783c19376c09d811b2c3cd8e54647213427ab3f41a347e499157dc75e2a76e",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "Before your taxi comes, let's write to each other again. I've brought the paper I taught you to use for proper letters."
+          },
+          {
+            "speaker": "B",
+            "text": "You never answered my last three."
+          },
+          {
+            "speaker": "A",
+            "text": "The post's hopeless. You still send things and assume they've arrived. We'll write here and hand them over."
+          },
+          {
+            "speaker": "B",
+            "text": "I handed you the last one."
+          },
+          {
+            "speaker": "A",
+            "text": "Good, you remembered that lesson. Sit down; I'll show you how to start a fresh one. You won't leave without a whole page from me this time."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

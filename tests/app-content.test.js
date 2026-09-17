@@ -67,7 +67,7 @@ assert.match(html, /Make both role assignments public/);
 assert.match(app, /exercises\.createSessionSelection/);
 assert.match(app, /exercises\.buildShareUrl/);
 assert.match(app, /exercises\.parseInviteUrl/);
-assert.match(app, /engine\.startSession/);
+assert.match(app, /engine\.startNewGame/);
 assert.match(app, /function renderExerciseShare/);
 assert.match(app, /function renderJoinExercise/);
 assert.match(app, /function saveCustomExercise/);

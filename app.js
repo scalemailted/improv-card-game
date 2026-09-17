@@ -749,7 +749,7 @@
   function exportExampleFeedback(){
     try{
       const flags=JSON.parse(window.localStorage.getItem('imprompt:example-feedback:v1')||'[]');
-      const file=new Blob([JSON.stringify({appVersion:'0.26.0-preview.8',datasetId:exampleManifest.datasetId,flags},null,2)],{type:'application/json'});
+      const file=new Blob([JSON.stringify({appVersion:'0.26.0-preview.9',datasetId:exampleManifest.datasetId,flags},null,2)],{type:'application/json'});
       const link=document.createElement('a'), url=URL.createObjectURL(file);link.href=url;link.download='imprompt-example-feedback.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
     }catch(error){elements.exampleStorageStatus.textContent=error.message;}
   }
@@ -767,9 +767,9 @@
     const drawnCount = hasCurrent ? Number(state.current.stanceId !== null) + Number(state.current.driveId !== null) : 0;
 
     elements.startSessionButton.hidden = !session;
-    const preference = engine.playSetup(state.nextPlaySetup || state.playPreference);
+    const preference = engine.playSetup(state.playPreference);
     for (const type of ["stance", "drive"]) elements["basic" + (type === "stance" ? "Stance" : "Drive") + "Button"].setAttribute("aria-pressed", String(preference.basicDeck === type));
-    elements.setupStatus.textContent = `${state.nextPlaySetup ? "Next scene" : "Last setup"}: ${preference.playMode === "basic" ? "Basic · " + (preference.basicDeck === "stance" ? "Stance" : "Drive") : "Advanced"}${state.current ? ". Resume keeps your current scene." : ""}`;
+    elements.setupStatus.textContent = `Last setup: ${preference.playMode === "basic" ? "Basic · " + (preference.basicDeck === "stance" ? "Stance" : "Drive") : "Advanced"}${state.current ? ". Resume keeps your current scene." : ""}`;
     elements.stancesRemaining.textContent = remaining.stances;
     elements.drivesRemaining.textContent = remaining.drives;
     elements.activeSessionSummary.hidden = !session;
@@ -799,26 +799,21 @@
 
   function choosePlay(playMode, basicDeck = "stance") {
     engine.setPlayPreference(state, playMode, basicDeck);
-    state.nextPlaySetup = { playMode, basicDeck };
     closeDialog(elements.basicChooser);
+    const selection = exercises.createSessionSelection(exercises.OPEN_PLAY, "all");
+    engine.startNewGame(state, cards, { ...selection, playMode, basicDeck,
+      stanceFilter: state.drawFilters.stance, driveFilter: state.drawFilters.drive,
+      name: playMode === "basic" ? "Basic Play" : "Advanced Play" });
+    revealed.stance = false;
+    revealed.drive = false;
+    activeHintContext = null;
+    closeDialog(elements.hintDialog);
     saveState();
-    if (state.current) {
-      render();
-      announce("Setup saved for the next scene. Resume keeps your current cards.");
-      return;
-    }
-    startOrResumeSession();
+    setActiveView("play");
+    announce(playMode === "basic" ? "New Basic game started." : "New Advanced game started.");
   }
 
   function startOrResumeSession() {
-    if (!state.current && state.nextPlaySetup) {
-      const setup = state.nextPlaySetup;
-      const selection = exercises.createSessionSelection(exercises.OPEN_PLAY, "all");
-      engine.startSession(state, cards, { ...selection, ...setup,
-        stanceFilter: state.drawFilters.stance, driveFilter: state.drawFilters.drive,
-        name: setup.playMode === "basic" ? "Basic Play" : "Advanced Play" });
-      delete state.nextPlaySetup;
-    }
     if (!activeSession()) {
       beginExerciseSession(exercises.OPEN_PLAY, "all");
       return;
@@ -844,8 +839,7 @@
 
     const start = () => {
       delete state.nextPlaySetup;
-      engine.startSession(state, cards, selection);
-      engine.startScene(state, cards);
+      engine.startNewGame(state, cards, selection);
       revealed.stance = false;
       revealed.drive = false;
       activeHintContext = null;
@@ -859,12 +853,6 @@
       }
     };
 
-    if (state.current) {
-      pendingSessionAction = start;
-      elements.sessionConflictCopy.textContent = `Starting ${selection.name} will return the unfinished scene’s drawn cards to their decks. No Scene Log entry will be created.`;
-      openDialog(elements.sessionConflictDialog);
-      return;
-    }
     start();
   }
 
@@ -1668,12 +1656,6 @@
       pendingJoinRole = null;
       beginExerciseSession(original.exercise, roleId);
     };
-    if (state.current) {
-      pendingSessionAction = start;
-      elements.sessionConflictCopy.textContent = `Joining ${exercise.name} will return the unfinished scene’s drawn cards to their decks. No Scene Log entry will be created.`;
-      openDialog(elements.sessionConflictDialog);
-      return;
-    }
     start();
   }
 

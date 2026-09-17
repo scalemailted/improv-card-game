@@ -1,10 +1,10 @@
 "use strict";
-const CACHE_NAME = "imprompt-v0.26.0-preview.8";
+const CACHE_NAME = "imprompt-v0.26.0-preview.9";
 const BASE_URL = new URL("./", self.location.href);
 const PRECACHE_PATHS = [
   "./",
   "./index.html",
-  "./styles.css?v=0.26.0-preview.8",
+  "./styles.css?v=0.26.0-preview.9",
   "./card-bible.js?v=0.26.0-preview.7-4f93b65af4d6",
   "./cards/core-foundations.js?v=0.26.0-preview.7-4f93b65af4d6",
   "./cards/everyday-friction.js?v=0.26.0-preview.7-4f93b65af4d6",
@@ -19,13 +19,13 @@ const PRECACHE_PATHS = [
   "./cards.js?v=0.26.0-preview.7-4f93b65af4d6",
   "./hint-bible.js?v=0.26.0-preview.7-4f93b65af4d6",
   "./exercises.js?v=0.26.0-preview.7-4f93b65af4d6",
-  "./deck-engine.js?v=0.26.0-preview.8",
+  "./deck-engine.js?v=0.26.0-preview.9",
   "./vendor/qrcode-core.js?v=0.26.0-preview.7-4f93b65af4d6",
   "./examples/manifest.js?v=0.26.0-preview.7-4f93b65af4d6",
   "./examples/library-client.js?v=0.26.0-preview.7-4f93b65af4d6",
-  "./app.js?v=0.26.0-preview.8",
+  "./app.js?v=0.26.0-preview.9",
   "./examples/library-worker.js?v=0.26.0-preview.7-4f93b65af4d6",
-  "./manifest.webmanifest?v=0.26.0-preview.8",
+  "./manifest.webmanifest?v=0.26.0-preview.9",
   "./assets/improv-card-game-qr.png?v=0.26.0-preview.7-4f93b65af4d6",
   "./icons/icon.svg?v=0.26.0-preview.7-4f93b65af4d6",
   "./icons/icon-192.png?v=0.26.0-preview.7-4f93b65af4d6",

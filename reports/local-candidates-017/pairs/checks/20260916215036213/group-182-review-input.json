@@ -1,0 +1,795 @@
+{
+  "executionStatus": "not-executed",
+  "instructions": "Fresh review of each primary candidate: read dialogue first, then exact cards. Assess all six unchanged criteria and all coach-2.0 gates with turn-specific evidence. For pairs, show whether the Stance changes HOW A pursues the Drive in one interaction. Do not invent missing backstory or assume prior approval. Use the alternate only to assess meaningful differentiation. Report actual reservations. No writer scores or improvement claims are supplied.",
+  "productionStandard": "PRODUCTION STANDARD coach-2.0. Historical coach-1.0 acceptance is not coach-2.0 acceptance. Read the dialogue first and record what the spoken words establish before interpreting the card. Exact cards are already in this invocation: label internal-dialogue-first, never blind or human review. Do not invent a charitable backstory; harmless unspecified names/history are not defects. Fill coach2 for ORIGINAL dialogue in writer output and CANDIDATE dialogue in reviewer output. Copy the supplied dialogue hash for the text being assessed. Give concise actual turn evidence, not generic claims.\nG1: legible immediate situation, wants/stakes; separate stated, ordinary inferred, and missing essentials. Identify first material defect or explicitly none.\nG2: coherent facts, ownership, timing, language, knowledge; recognizable misunderstanding/revelation is allowed, unstated intervening events are not.\nG3: assess all A1-B2, B2-A3, A3-B4, B4-A5 links. Vocabulary repetition alone is insufficient. Purposeful avoidance must read as behavior.\nG4: B is a plausible participant with an intelligible practical/emotional position, not a contrived punchline cue. B can help, concede or solve.\nG5: exact card changes A's choices. For pairs Stance changes HOW A pursues Drive and B responds to the merged behavior; neither card may be decorative.\nG6: ending develops the same behavior using B4. Investigate if A5 would work after unrelated B4; more obstacles are not required for heightening.\nformat: five spoken ABABA turns, existing word/schema limit, no narration/coaching/truncation.\nEvery mandatory gate and transition is PASS, FAIL or UNCLEAR with evidence; UNCLEAR cannot be accepted. All gates pass AND total >=85 AND fidelity/response >=4 AND others >=3; preserve the six weights 30/20/15/15/10/10. A 5 is not merely presence. Totals are derived in code. Retain good originals; no rewrite quota. Review both alternatives for different tactics, relationships or pressure. Scene outline identifies roles, task, A want, B want, stakes, exact-card tactic and B's contribution; it is private planning evidence, not a substitute for missing spoken facts. Humour must come from sincere priorities and responsive choices, not stock hierarchy or unrelated slogans. Record actual weaknesses and reservations. Writer corrections target only rejected/materially changed scenes; preserve all accepted records and prior original assessments exactly. No coach-1.0 failure or exhausted allowance is erased by this separately versioned cycle.",
+  "rubric": {
+    "version": "coach-2.0",
+    "criteria": [
+      {
+        "id": "cardFidelity",
+        "weight": 30
+      },
+      {
+        "id": "responseLogic",
+        "weight": 20
+      },
+      {
+        "id": "relationship",
+        "weight": 15
+      },
+      {
+        "id": "heightening",
+        "weight": 15
+      },
+      {
+        "id": "specificity",
+        "weight": 10
+      },
+      {
+        "id": "brevityWit",
+        "weight": 10
+      }
+    ],
+    "internalAcceptance": {
+      "minimumWeightedTotal": 85,
+      "minimumEachDimension": 3,
+      "minimumCardFidelity": 4,
+      "minimumResponseLogic": 4
+    }
+  },
+  "coach2OutputSchema": {
+    "type": "object",
+    "properties": {
+      "rubricVersion": {
+        "type": "string",
+        "const": "coach-2.0"
+      },
+      "dialogueHash": {
+        "type": "string"
+      },
+      "inspectionMode": {
+        "type": "string",
+        "const": "internal-dialogue-first"
+      },
+      "situation": {
+        "type": "string"
+      },
+      "stated": {
+        "type": "string"
+      },
+      "inferred": {
+        "type": "string"
+      },
+      "missing": {
+        "type": "string"
+      },
+      "firstDefect": {
+        "type": "string"
+      },
+      "transitions": {
+        "type": "object",
+        "properties": {
+          "A1-B2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B2-A3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "A3-B4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "B4-A5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "A1-B2",
+          "B2-A3",
+          "A3-B4",
+          "B4-A5"
+        ],
+        "additionalProperties": false
+      },
+      "mechanism": {
+        "type": "string"
+      },
+      "sceneOutline": {
+        "type": "string"
+      },
+      "mandatoryGates": {
+        "type": "object",
+        "properties": {
+          "G1": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G2": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G3": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G4": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G5": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "G6": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "type": "object",
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNCLEAR"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "decision",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "format"
+        ],
+        "additionalProperties": false
+      },
+      "humanReviewed": {
+        "type": "boolean",
+        "const": false
+      },
+      "liveTested": {
+        "type": "boolean",
+        "const": false
+      }
+    },
+    "required": [
+      "rubricVersion",
+      "dialogueHash",
+      "inspectionMode",
+      "situation",
+      "stated",
+      "inferred",
+      "missing",
+      "firstDefect",
+      "transitions",
+      "mechanism",
+      "sceneOutline",
+      "mandatoryGates",
+      "humanReviewed",
+      "liveTested"
+    ],
+    "additionalProperties": false
+  },
+  "records": [
+    {
+      "exampleId": "S04+D181-a",
+      "cards": [
+        {
+          "id": "S04",
+          "type": "stance",
+          "title": "Act Like You Belong",
+          "instruction": "You do not understand what is happening. Copy the confidence around you and never admit confusion.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D181",
+          "type": "drive",
+          "title": "Lost in the Process",
+          "instruction": "Hide your role in the problem by distributing blame across steps, policies, and unnamed procedures.",
+          "contentVersion": "0.15.0"
+        }
+      ],
+      "sourceRecordHash": "1cfe1e02ff109f839a7200b49994e976c06166384d719cff47434958568212ab",
+      "dialogueHash": "954e14918bb4cab74053679ee318c6c369317db74b42d1efe34b5d35c00338ec",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've put my slip in the tray like yours. Dispatch complete. Your parcel's stuck between reception and transport."
+        },
+        {
+          "speaker": "B",
+          "text": "Mine was scrap paper. You left the parcel on the bus."
+        },
+        {
+          "speaker": "A",
+          "text": "Tray cleared. Dispatch handed it to transport without a receipt."
+        },
+        {
+          "speaker": "B",
+          "text": "Both departments are you. Call the bus company."
+        },
+        {
+          "speaker": "A",
+          "text": "Certainly. I'll report a failure across dispatch, transport and receipt control. They'll need to investigate all three."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S04-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "8006ce72d611b937dab12f22fd8e7c0f8663a3a10298c330294f6c28788367b1",
+          "dialogueHash": "56da36fc078e2c44e23ad75df92685d1e8d307792d8688e79c860de555579ced",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S04-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "41b8e09284430a36742d23d9ecb308a2035b3d2b5c569cdef92d1926b8597714",
+          "dialogueHash": "54447271dcb7dab07777f816f7b758da2c83c1885d071a16a934cfc7c24f99e9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D181-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-005-part-001",
+          "recordHash": "a22aad9d7e925fe897267f64b6f31d1d8529ef9fcfab5745293ce9f282fd44f4",
+          "dialogueHash": "a784e11fdd79c6c25c9619eee028950c4beec74313bcd24061be76c874e81afe",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D181-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "06ef27914323d3f6e9e22bbf6ab696b04bad39fb1c34125e8f33d4ad038486b2",
+          "dialogueHash": "e0d2478e38658459b25d2efaad30ddbf507887594e2b5df75a6c00ac825593b5",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S04+D181-b",
+        "dialogueHash": "ad9f31f34fb5abdcc7a84034612fbcafbdfe0f462fffe0b752aa419091c35059",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've held my envelopes up to the light like you. Addresses verified. The birthday invitations failed somewhere in mailing."
+          },
+          {
+            "speaker": "B",
+            "text": "I was checking whether the cheque was inside. You wrote our old address on every one."
+          },
+          {
+            "speaker": "A",
+            "text": "Contents checked. The archive supplied an outdated location."
+          },
+          {
+            "speaker": "B",
+            "text": "You are the archive."
+          },
+          {
+            "speaker": "A",
+            "text": "Then address verification needs another checker. Read the new list to dispatch; we'll rewrite the envelopes."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S04+D181-b",
+      "cards": [
+        {
+          "id": "S04",
+          "type": "stance",
+          "title": "Act Like You Belong",
+          "instruction": "You do not understand what is happening. Copy the confidence around you and never admit confusion.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D181",
+          "type": "drive",
+          "title": "Lost in the Process",
+          "instruction": "Hide your role in the problem by distributing blame across steps, policies, and unnamed procedures.",
+          "contentVersion": "0.15.0"
+        }
+      ],
+      "sourceRecordHash": "9f6f976a62ca74e90022a141cc36f8a031446b3635dfbf6b53737639eca9bcf6",
+      "dialogueHash": "ad9f31f34fb5abdcc7a84034612fbcafbdfe0f462fffe0b752aa419091c35059",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've held my envelopes up to the light like you. Addresses verified. The birthday invitations failed somewhere in mailing."
+        },
+        {
+          "speaker": "B",
+          "text": "I was checking whether the cheque was inside. You wrote our old address on every one."
+        },
+        {
+          "speaker": "A",
+          "text": "Contents checked. The archive supplied an outdated location."
+        },
+        {
+          "speaker": "B",
+          "text": "You are the archive."
+        },
+        {
+          "speaker": "A",
+          "text": "Then address verification needs another checker. Read the new list to dispatch; we'll rewrite the envelopes."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S04-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "8006ce72d611b937dab12f22fd8e7c0f8663a3a10298c330294f6c28788367b1",
+          "dialogueHash": "56da36fc078e2c44e23ad75df92685d1e8d307792d8688e79c860de555579ced",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S04-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "41b8e09284430a36742d23d9ecb308a2035b3d2b5c569cdef92d1926b8597714",
+          "dialogueHash": "54447271dcb7dab07777f816f7b758da2c83c1885d071a16a934cfc7c24f99e9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D181-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-005-part-001",
+          "recordHash": "a22aad9d7e925fe897267f64b6f31d1d8529ef9fcfab5745293ce9f282fd44f4",
+          "dialogueHash": "a784e11fdd79c6c25c9619eee028950c4beec74313bcd24061be76c874e81afe",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D181-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "06ef27914323d3f6e9e22bbf6ab696b04bad39fb1c34125e8f33d4ad038486b2",
+          "dialogueHash": "e0d2478e38658459b25d2efaad30ddbf507887594e2b5df75a6c00ac825593b5",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S04+D181-a",
+        "dialogueHash": "954e14918bb4cab74053679ee318c6c369317db74b42d1efe34b5d35c00338ec",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've put my slip in the tray like yours. Dispatch complete. Your parcel's stuck between reception and transport."
+          },
+          {
+            "speaker": "B",
+            "text": "Mine was scrap paper. You left the parcel on the bus."
+          },
+          {
+            "speaker": "A",
+            "text": "Tray cleared. Dispatch handed it to transport without a receipt."
+          },
+          {
+            "speaker": "B",
+            "text": "Both departments are you. Call the bus company."
+          },
+          {
+            "speaker": "A",
+            "text": "Certainly. I'll report a failure across dispatch, transport and receipt control. They'll need to investigate all three."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S04+D182-a",
+      "cards": [
+        {
+          "id": "S04",
+          "type": "stance",
+          "title": "Act Like You Belong",
+          "instruction": "You do not understand what is happening. Copy the confidence around you and never admit confusion.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D182",
+          "type": "drive",
+          "title": "Outside the Scope",
+          "instruction": "Redirect personal or dangerous questions by declaring them irrelevant, premature, or assigned to another process.",
+          "contentVersion": "0.15.0"
+        }
+      ],
+      "sourceRecordHash": "f145f82a3c79093502e0a50982f2f3b93736520330fcfa049decd94558703430",
+      "dialogueHash": "6369483e3557b9da6bc5fdbe34567340e1cad5442f73fa9f923bae49ff38c863",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I raised my hand like you. Repairs only. Whether I broke the window is outside this meeting's scope."
+        },
+        {
+          "speaker": "B",
+          "text": "I was checking how high the crack goes. Then let's hold a responsibility meeting."
+        },
+        {
+          "speaker": "A",
+          "text": "Height checked. After the repairs; we need a safe venue."
+        },
+        {
+          "speaker": "B",
+          "text": "We can meet outside."
+        },
+        {
+          "speaker": "A",
+          "text": "Location changes require a separate planning discussion."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S04-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "8006ce72d611b937dab12f22fd8e7c0f8663a3a10298c330294f6c28788367b1",
+          "dialogueHash": "56da36fc078e2c44e23ad75df92685d1e8d307792d8688e79c860de555579ced",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S04-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "41b8e09284430a36742d23d9ecb308a2035b3d2b5c569cdef92d1926b8597714",
+          "dialogueHash": "54447271dcb7dab07777f816f7b758da2c83c1885d071a16a934cfc7c24f99e9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D182-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "45b2967211b8bdd75f1ec200d562b786cab76cb6469cac85a8165978a2c8ec33",
+          "dialogueHash": "ca3ae8a6187d9d2e8e60938eec0aecc8466caaf766954dd3bd1974d64635e48c",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D182-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-005-part-001",
+          "recordHash": "da87989534e47cff4e91d0c8db496502ef4b5c7452b8282ca01fc9daab663aab",
+          "dialogueHash": "d5b3d6ecd6d3e39a58a21294d4f30d59b9edfc55d31bc10b6d24d5a175cb2098",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S04+D182-b",
+        "dialogueHash": "5d4a8e1e40eaf82b55b6fb787caae1f7138ab5f0977998d7527d6dc9b3ca90d0",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I've folded my menu like yours. Dinner session. Why I missed our anniversary belongs in the calendar review."
+          },
+          {
+            "speaker": "B",
+            "text": "Mine's propping up the table leg. This is our replacement dinner. Explain."
+          },
+          {
+            "speaker": "A",
+            "text": "Table ready. This booking covers dinner, not the review."
+          },
+          {
+            "speaker": "B",
+            "text": "Fine. I'll cancel dessert and we can talk."
+          },
+          {
+            "speaker": "A",
+            "text": "Then we need to resolve the cancellation before opening a second complaint."
+          }
+        ],
+        "contextOnly": true
+      }
+    },
+    {
+      "exampleId": "S04+D182-b",
+      "cards": [
+        {
+          "id": "S04",
+          "type": "stance",
+          "title": "Act Like You Belong",
+          "instruction": "You do not understand what is happening. Copy the confidence around you and never admit confusion.",
+          "contentVersion": "1.0.0"
+        },
+        {
+          "id": "D182",
+          "type": "drive",
+          "title": "Outside the Scope",
+          "instruction": "Redirect personal or dangerous questions by declaring them irrelevant, premature, or assigned to another process.",
+          "contentVersion": "0.15.0"
+        }
+      ],
+      "sourceRecordHash": "5e664eb41255a99f9b94af4262aeb4cd82987480bd3738d1ff227565dc04104e",
+      "dialogueHash": "5d4a8e1e40eaf82b55b6fb787caae1f7138ab5f0977998d7527d6dc9b3ca90d0",
+      "beats": [
+        {
+          "speaker": "A",
+          "text": "I've folded my menu like yours. Dinner session. Why I missed our anniversary belongs in the calendar review."
+        },
+        {
+          "speaker": "B",
+          "text": "Mine's propping up the table leg. This is our replacement dinner. Explain."
+        },
+        {
+          "speaker": "A",
+          "text": "Table ready. This booking covers dinner, not the review."
+        },
+        {
+          "speaker": "B",
+          "text": "Fine. I'll cancel dessert and we can talk."
+        },
+        {
+          "speaker": "A",
+          "text": "Then we need to resolve the cancellation before opening a second complaint."
+        }
+      ],
+      "seedReferences": [
+        {
+          "id": "S04-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "8006ce72d611b937dab12f22fd8e7c0f8663a3a10298c330294f6c28788367b1",
+          "dialogueHash": "56da36fc078e2c44e23ad75df92685d1e8d307792d8688e79c860de555579ced",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "S04-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.3",
+          "recordHash": "41b8e09284430a36742d23d9ecb308a2035b3d2b5c569cdef92d1926b8597714",
+          "dialogueHash": "54447271dcb7dab07777f816f7b758da2c83c1885d071a16a934cfc7c24f99e9",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D182-single-a",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.25.0",
+          "recordHash": "45b2967211b8bdd75f1ec200d562b786cab76cb6469cac85a8165978a2c8ec33",
+          "dialogueHash": "ca3ae8a6187d9d2e8e60938eec0aecc8466caaf766954dd3bd1974d64635e48c",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        },
+        {
+          "id": "D182-single-b",
+          "source": "examples/authoring/single-scenes.json",
+          "exampleVersion": "0.26.0-preview.7+audit.standing-coach-window-008.batch-005-part-001",
+          "recordHash": "da87989534e47cff4e91d0c8db496502ef4b5c7452b8282ca01fc9daab663aab",
+          "dialogueHash": "d5b3d6ecd6d3e39a58a21294d4f30d59b9edfc55d31bc10b6d24d5a175cb2098",
+          "provisional": false,
+          "role": "canonical creative context, not pair-review evidence"
+        }
+      ],
+      "alternateContext": {
+        "exampleId": "S04+D182-a",
+        "dialogueHash": "6369483e3557b9da6bc5fdbe34567340e1cad5442f73fa9f923bae49ff38c863",
+        "beats": [
+          {
+            "speaker": "A",
+            "text": "I raised my hand like you. Repairs only. Whether I broke the window is outside this meeting's scope."
+          },
+          {
+            "speaker": "B",
+            "text": "I was checking how high the crack goes. Then let's hold a responsibility meeting."
+          },
+          {
+            "speaker": "A",
+            "text": "Height checked. After the repairs; we need a safe venue."
+          },
+          {
+            "speaker": "B",
+            "text": "We can meet outside."
+          },
+          {
+            "speaker": "A",
+            "text": "Location changes require a separate planning discussion."
+          }
+        ],
+        "contextOnly": true
+      }
+    }
+  ],
+  "humanFeedback": ""
+}

@@ -243,6 +243,22 @@
     return session;
   }
 
+  // An explicit completed setup replaces only active play, retaining saved history.
+  function startNewGame(state, cards, selection, randomFn = secureRandom) {
+    validateCards(cards);
+    const normalized = normalizeSessionSelection(cards, selection);
+    const stanceQueue = shuffle(allIds(cards, "stance"), randomFn);
+    const driveQueue = shuffle(allIds(cards, "drive"), randomFn);
+    state.current = null;
+    state.stanceQueue = stanceQueue;
+    state.driveQueue = driveQueue;
+    state.cycles = { stance: 1, drive: 1 };
+    state.vetoes = { stance: 0, drive: 0 };
+    delete state.nextPlaySetup;
+    startSession(state, cards, normalized, randomFn);
+    return startScene(state, cards);
+  }
+
   function activeSession(state) {
     if (!state || !state.activeSessionId || !Array.isArray(state.sessions)) {
       return null;
@@ -1066,6 +1082,7 @@
     librarySnapshot,
     reconcileStateWithLibrary,
     startSession,
+    startNewGame,
     activeSession,
     sessionById,
     startScene,

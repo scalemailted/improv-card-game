@@ -2,7 +2,7 @@
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'reports/basic-advanced-play';OUT.mkdir(exist_ok=True)
+OUT=Path(os.environ.get('NATIVE_OUT',str(ROOT/'reports/menu-new-game-fix/play-modes')));OUT.mkdir(parents=True,exist_ok=True)
 with socket.socket() as sock:
  sock.bind(('127.0.0.1',0));port=sock.getsockname()[1]
 server=subprocess.Popen(['node','tools/serve-local.cjs'],cwd=ROOT,env={**os.environ,'PORT':str(port)},stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,creationflags=subprocess.CREATE_NO_WINDOW)
@@ -14,7 +14,7 @@ try:
   try:urllib.request.urlopen(url,timeout=1).close();break
   except OSError:time.sleep(.1)
  with sync_playwright() as p:
-  browser=p.chromium.launch(headless=True)
+  browser=p.chromium.launch(headless=True,executable_path=os.environ.get('CHROMIUM_PATH'))
   for width in [320,412,1280]:
    for mode in ['stance','drive','advanced']:
     ctx=browser.new_context(viewport={'width':width,'height':900},has_touch=width<700,is_mobile=width<700)
@@ -24,6 +24,7 @@ try:
     else:
      page.click('#basicPlayButton');assert state(page)==initial
      page.locator('#basic'+mode.title()+'Button').focus();page.keyboard.press('Enter');types=[mode]
+    initial=state(page)
     for t in types:page.click('#'+t+'Card')
     for t in ['stance','drive']:
      if t in types:expect(page.locator('#'+t+'CardWrap')).to_be_visible()
@@ -38,12 +39,12 @@ try:
     if mode=='advanced':
      page.click('#combinationHintButton');expect(page.locator('.scene-line')).to_have_count(5);page.click('#doneHintButton')
     saved=state(page);page.reload();page.click('#enterButton');page.click('#startSessionButton');assert state(page)['current']==saved['current']
-    # Set next setup without replacing current, then resume it.
-    page.click('#playMenuButton');page.click('#basicPlayButton');page.click('#basicDriveButton');assert state(page)['current']==saved['current'];page.click('#startSessionButton');page.click('#completeButton');assert len(state(page)['history'])==1
+    # Complete the resumed scene, then explicitly start a fresh setup.
+    page.click('#completeButton');assert len(state(page)['history'])==1
     entry=state(page)['history'][0]
     if mode!='advanced':assert entry['basicDeck']==mode and ('driveSnapshot' if mode=='stance' else 'stanceSnapshot') not in entry
     page.click('#historyButton');expect(page.locator('.history-prompt')).to_have_count(len(types));page.click('#historyBackButton')
-    page.click('#startSessionButton');assert state(page)['current']['basicDeck']=='drive';assert state(page)['current']['playMode']=='basic'
+    page.click('#basicPlayButton');page.click('#basicDriveButton');assert state(page)['current']['basicDeck']=='drive';assert state(page)['current']['playMode']=='basic'
     # Native service worker + cached singles offline.
     page.evaluate('navigator.serviceWorker.ready');page.reload();ctx.set_offline(True);page.reload();page.click('#enterButton');page.click('#startSessionButton');page.click('#driveCard');page.click('#driveNudgeButton');expect(page.locator('.scene-line')).to_have_count(5)
     assert not errors,errors;results.append({'mode':mode,'width':width,'nativeChromium':True,'offline':True,'pass':True});ctx.close()
